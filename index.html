@@ -267,14 +267,16 @@ tailwind.config = {
 </header>
 
 <!-- ═══════════════════════════════════════════════ HERO -->
-<section style="min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:68px;">
+<section id="hero-section" style="min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:68px;">
+  <!-- Wavy background canvas -->
+  <canvas id="wavy-canvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
   <!-- Glows -->
-  <div style="position:absolute;top:-15%;left:-10%;width:70vw;height:70vw;max-width:900px;max-height:900px;border-radius:50%;background:radial-gradient(circle,rgba(0,207,255,0.07) 0%,transparent 65%);pointer-events:none;"></div>
-  <div style="position:absolute;bottom:-10%;right:-5%;width:55vw;height:55vw;max-width:700px;max-height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,179,0.05) 0%,transparent 65%);pointer-events:none;"></div>
+  <div style="position:absolute;top:-15%;left:-10%;width:70vw;height:70vw;max-width:900px;max-height:900px;border-radius:50%;background:radial-gradient(circle,rgba(0,207,255,0.07) 0%,transparent 65%);pointer-events:none;z-index:1;"></div>
+  <div style="position:absolute;bottom:-10%;right:-5%;width:55vw;height:55vw;max-width:700px;max-height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,179,0.05) 0%,transparent 65%);pointer-events:none;z-index:1;"></div>
   <!-- Grid -->
-  <div class="grid-bg" style="position:absolute;inset:0;pointer-events:none;"></div>
+  <div class="grid-bg" style="position:absolute;inset:0;pointer-events:none;z-index:1;"></div>
 
-  <div style="max-width:1280px;margin:0 auto;padding:0 24px;position:relative;z-index:1;width:100%;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;position:relative;z-index:2;width:100%;">
     <!-- Eyebrow -->
     <div class="animate-fade-up" style="display:flex;align-items:center;gap:10px;margin-bottom:28px;">
       <div class="ping"><div class="ping-dot"></div></div>
@@ -847,5 +849,56 @@ applyResponsive()
 window.addEventListener('resize', applyResponsive)
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
+
+<!-- ── Wavy Background (port of WavyBackground React component) ── -->
+<script type="module">
+import { createNoise3D } from 'https://cdn.jsdelivr.net/npm/simplex-noise@4.0.1/dist/esm/simplex-noise.js';
+
+const canvas = document.getElementById('wavy-canvas');
+const section = document.getElementById('hero-section');
+const ctx = canvas.getContext('2d');
+const noise3D = createNoise3D();
+
+const colors = ['#00CFFF', '#00FFB3', '#7B61FF', '#00CFFF', '#00FFB3'];
+const waveWidth = 48;
+const blur = 12;
+const waveOpacity = 0.45;
+const speed = 0.0015;
+
+let w, h, nt = 0, animId;
+
+function resize() {
+  w = canvas.width  = section.offsetWidth;
+  h = canvas.height = section.offsetHeight;
+  ctx.filter = `blur(${blur}px)`;
+}
+
+function drawWave(n) {
+  nt += speed;
+  for (let i = 0; i < n; i++) {
+    ctx.beginPath();
+    ctx.lineWidth = waveWidth;
+    ctx.strokeStyle = colors[i % colors.length];
+    for (let x = 0; x < w; x += 5) {
+      const y = noise3D(x / 800, 0.3 * i, nt) * 100;
+      ctx.lineTo(x, y + h * 0.5);
+    }
+    ctx.stroke();
+    ctx.closePath();
+  }
+}
+
+function render() {
+  ctx.fillStyle = '#0A0F1E';
+  ctx.globalAlpha = waveOpacity;
+  ctx.fillRect(0, 0, w, h);
+  drawWave(5);
+  animId = requestAnimationFrame(render);
+}
+
+resize();
+window.addEventListener('resize', resize);
+render();
+</script>
 </body>
 </html>
