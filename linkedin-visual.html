@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1200">
+<title>TNK — Process Visual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    width: 1200px;
+    height: 628px;
+    overflow: hidden;
+    background: #0A0F1E;
+    font-family: 'Inter', sans-serif;
+    color: #F0F4FF;
+    position: relative;
+  }
+
+  /* Grain texture */
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Background radial glows */
+  .bg-glow-1 {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,207,255,0.08) 0%, transparent 70%);
+    top: -150px; left: -100px;
+    pointer-events: none;
+  }
+  .bg-glow-2 {
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,255,179,0.06) 0%, transparent 70%);
+    bottom: -150px; right: 0;
+    pointer-events: none;
+  }
+  .bg-glow-3 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(123,97,255,0.05) 0%, transparent 70%);
+    top: 100px; left: 50%;
+    pointer-events: none;
+  }
+
+  /* Grid lines */
+  .grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,207,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,207,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* Main layout */
+  .layout {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 56px;
+    gap: 48px;
+  }
+
+  /* Left: branding */
+  .left {
+    flex-shrink: 0;
+    width: 220px;
+  }
+
+  .brand-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,207,255,0.08);
+    border: 1px solid rgba(0,207,255,0.2);
+    border-radius: 20px;
+    padding: 4px 14px;
+    margin-bottom: 20px;
+  }
+  .brand-tag span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #00CFFF;
+    letter-spacing: 0.08em;
+  }
+  .brand-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #00CFFF;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  .left h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+  }
+  .left h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #00CFFF 0%, #00FFB3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .left p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #8A9CC8;
+    margin-bottom: 24px;
+  }
+
+  /* Stats row */
+  .stats {
+    display: flex;
+    gap: 20px;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #00CFFF;
+    letter-spacing: -0.02em;
+    display: block;
+  }
+  .stat-label {
+    font-size: 10px;
+    color: #4D5E87;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .stat-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.07);
+    align-self: stretch;
+  }
+
+  /* Center: flow diagram */
+  .center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .flow-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #4D5E87;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Tool cards */
+  .tool-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #0F1629;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 12px 16px;
+    position: relative;
+    flex: 1;
+  }
+  .tool-card.highlight {
+    border-color: rgba(0,207,255,0.3);
+    background: rgba(0,207,255,0.05);
+    box-shadow:
+      0 0 0 1px rgba(0,207,255,0.1),
+      0 8px 32px rgba(0,207,255,0.08),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .tool-card.highlight-green {
+    border-color: rgba(0,255,179,0.3);
+    background: rgba(0,255,179,0.04);
+    box-shadow:
+      0 0 0 1px rgba(0,255,179,0.1),
+      0 8px 32px rgba(0,255,179,0.07),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .tool-card.highlight-purple {
+    border-color: rgba(123,97,255,0.3);
+    background: rgba(123,97,255,0.04);
+    box-shadow:
+      0 0 0 1px rgba(123,97,255,0.1),
+      0 8px 32px rgba(123,97,255,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  .tool-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+  .tool-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #F0F4FF;
+  }
+  .tool-desc {
+    font-size: 11px;
+    color: #4D5E87;
+    margin-top: 1px;
+  }
+
+  /* Arrow connector */
+  .arrow {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: #4D5E87;
+    font-size: 18px;
+  }
+  .arrow svg {
+    width: 20px; height: 20px;
+  }
+
+  /* Output card (bottom) */
+  .output-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .output-card {
+    flex: 1;
+    background: #0F1629;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* Right: result preview */
+  .right {
+    flex-shrink: 0;
+    width: 260px;
+  }
+
+  .preview-shell {
+    background: #162038;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow:
+      0 2px 4px rgba(0,0,0,0.3),
+      0 20px 60px rgba(0,0,0,0.5),
+      0 0 0 1px rgba(0,207,255,0.06);
+  }
+
+  .preview-bar {
+    background: #0F1629;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .dot-r { width:8px;height:8px;border-radius:50%;background:#FF5F57; }
+  .dot-y { width:8px;height:8px;border-radius:50%;background:#FEBC2E; }
+  .dot-g { width:8px;height:8px;border-radius:50%;background:#28C840; }
+  .url-bar {
+    flex: 1;
+    background: #162038;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #4D5E87;
+  }
+
+  .preview-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Mini site preview */
+  .mini-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .mini-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #00CFFF, #00FFB3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .mini-nav-links {
+    display: flex;
+    gap: 8px;
+  }
+  .mini-nav-links span {
+    font-size: 8px;
+    color: #4D5E87;
+  }
+
+  .mini-hero {
+    background: linear-gradient(135deg, rgba(0,207,255,0.08), rgba(0,255,179,0.04));
+    border: 1px solid rgba(0,207,255,0.1);
+    border-radius: 8px;
+    padding: 14px 12px;
+    margin-bottom: 6px;
+  }
+  .mini-hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px;
+    color: #00CFFF;
+    margin-bottom: 4px;
+  }
+  .mini-hero-h {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .mini-hero-h em {
+    font-style: normal;
+    background: linear-gradient(135deg, #00CFFF 0%, #00FFB3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .mini-btns {
+    display: flex;
+    gap: 5px;
+  }
+  .mini-btn-p {
+    background: #00CFFF;
+    color: #0A0F1E;
+    font-size: 7px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .mini-btn-s {
+    background: rgba(0,207,255,0.08);
+    border: 1px solid rgba(0,207,255,0.3);
+    color: #00CFFF;
+    font-size: 7px;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .mini-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .mini-card {
+    background: #0F1629;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 8px;
+  }
+  .mini-card-line {
+    height: 4px;
+    border-radius: 2px;
+    margin-bottom: 4px;
+  }
+  .mini-card-line.cyan { background: linear-gradient(90deg, #00CFFF, rgba(0,207,255,0.2)); width: 70%; }
+  .mini-card-line.green { background: linear-gradient(90deg, #00FFB3, rgba(0,255,179,0.2)); width: 60%; }
+  .mini-card-line.purple { background: linear-gradient(90deg, #7B61FF, rgba(123,97,255,0.2)); width: 80%; }
+  .mini-card-line.orange { background: linear-gradient(90deg, #FF8C42, rgba(255,140,66,0.2)); width: 55%; }
+  .mini-card-sub {
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    width: 90%;
+  }
+
+  /* URL badge */
+  .url-badge {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(0,255,179,0.06);
+    border: 1px solid rgba(0,255,179,0.2);
+    border-radius: 8px;
+    padding: 8px;
+  }
+  .url-badge-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #00FFB3;
+  }
+  .url-badge span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #00FFB3;
+  }
+
+  /* Divider line */
+  .vdivider {
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.06) 70%, transparent);
+    align-self: stretch;
+    flex-shrink: 0;
+  }
+
+  /* Step number badge */
+  .step-num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #4D5E87;
+    flex-shrink: 0;
+  }
+
+  /* Bottom bar */
+  .bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00CFFF 30%, #00FFB3 70%, transparent);
+    opacity: 0.5;
+  }
+
+  /* Corner watermark */
+  .watermark {
+    position: absolute;
+    bottom: 18px;
+    right: 56px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #4D5E87;
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .watermark em {
+    font-style: normal;
+    background: linear-gradient(135deg, #00CFFF, #00FFB3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+</style>
+</head>
+<body>
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
+  <div class="bg-glow-3"></div>
+  <div class="grid-lines"></div>
+
+  <!-- Layout -->
+  <div class="layout">
+
+    <!-- LEFT -->
+    <div class="left">
+      <div class="brand-tag">
+        <div class="brand-dot"></div>
+        <span>TNK Designs</span>
+      </div>
+      <h1>Cómo construí<br>este <em>portfolio</em></h1>
+      <p>Analytics, diseño y código generado con IA. Un flujo de trabajo moderno de principio a fin.</p>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-num">0</span>
+          <span class="stat-label">líneas manuales</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">1</span>
+          <span class="stat-label">modelo de IA</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">∞</span>
+          <span class="stat-label">iteraciones</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="vdivider"></div>
+
+    <!-- CENTER: Flow -->
+    <div class="center">
+      <div class="flow-label">// workflow</div>
+
+      <!-- Row 1: Idea + VS Code + Claude Code -->
+      <div class="flow-row">
+        <!-- VS Code -->
+        <div class="tool-card highlight-purple">
+          <div class="tool-icon" style="background:rgba(0,120,212,0.15);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M17.5 2L22 6.5V17.5L17.5 22H6.5L2 17.5V6.5L6.5 2H17.5Z" stroke="#007ACC" stroke-width="1.5"/>
+              <path d="M17 7L10 12.5L17 18" stroke="#007ACC" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M7 7V18" stroke="#007ACC" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="tool-name">VS Code</div>
+            <div class="tool-desc">Editor & entorno</div>
+          </div>
+        </div>
+
+        <div class="arrow">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 10h12M12 6l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Claude Code -->
+        <div class="tool-card highlight">
+          <div class="tool-icon" style="background:rgba(0,207,255,0.12);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="9" stroke="#00CFFF" stroke-width="1.5"/>
+              <path d="M8 12.5C8 10.5 9.5 9 11.5 9S15 10.5 15 12.5" stroke="#00CFFF" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M9 15.5h6" stroke="#00CFFF" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="tool-name">Claude Code</div>
+            <div class="tool-desc">IA generativa (CLI)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Code output -->
+      <div style="padding: 0 4px;">
+        <div style="background:#0F1629;border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#4D5E87;">$</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#8A9CC8;">
+            <span style="color:#00CFFF;">git</span> commit -m <span style="color:#00FFB3;">"feat: add wavy hero animation"</span>
+          </span>
+          <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;color:#00FFB3;background:rgba(0,255,179,0.08);border:1px solid rgba(0,255,179,0.2);border-radius:4px;padding:2px 6px;">✓ pushed</span>
+        </div>
+      </div>
+
+      <!-- Row 3: GitHub + Vercel -->
+      <div class="flow-row">
+        <!-- GitHub -->
+        <div class="tool-card">
+          <div class="tool-icon" style="background:rgba(255,255,255,0.05);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#F0F4FF">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="tool-name">GitHub</div>
+            <div class="tool-desc">Control de versiones</div>
+          </div>
+        </div>
+
+        <div class="arrow">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 10h12M12 6l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Vercel -->
+        <div class="tool-card highlight-green">
+          <div class="tool-icon" style="background:rgba(0,255,179,0.08);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#00FFB3">
+              <path d="M12 2L22 20H2L12 2Z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="tool-name">Vercel</div>
+            <div class="tool-desc">Deploy automático</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="vdivider"></div>
+
+    <!-- RIGHT: Result preview -->
+    <div class="right">
+      <div class="preview-shell">
+        <div class="preview-bar">
+          <div class="dot-r"></div>
+          <div class="dot-y"></div>
+          <div class="dot-g"></div>
+          <div class="url-bar">tnk-project.vercel.app</div>
+        </div>
+        <div class="preview-content">
+          <div class="mini-nav">
+            <div class="mini-logo">TNK</div>
+            <div class="mini-nav-links">
+              <span>Work</span>
+              <span>Blog</span>
+              <span>About</span>
+            </div>
+          </div>
+          <div class="mini-hero">
+            <div class="mini-hero-tag">// Analytics & Design</div>
+            <div class="mini-hero-h">Data-driven<br><em>design</em> studio</div>
+            <div class="mini-btns">
+              <div class="mini-btn-p">Ver proyectos</div>
+              <div class="mini-btn-s">Blog →</div>
+            </div>
+          </div>
+          <div class="mini-cards">
+            <div class="mini-card">
+              <div class="mini-card-line cyan"></div>
+              <div class="mini-card-sub"></div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-line green"></div>
+              <div class="mini-card-sub"></div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-line purple"></div>
+              <div class="mini-card-sub"></div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-line orange"></div>
+              <div class="mini-card-sub"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="url-badge">
+        <div class="url-badge-dot"></div>
+        <span>tnk-project.vercel.app</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottom-bar"></div>
+  <div class="watermark">by <em>TNK Designs</em> · 2025</div>
+</body>
+</html>
