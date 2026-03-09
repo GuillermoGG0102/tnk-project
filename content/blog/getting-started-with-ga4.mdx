@@ -1,0 +1,192 @@
+---
+title: "Getting Started with GA4: What Every Digital Marketer Needs to Know"
+excerpt: "Universal Analytics is gone. GA4 is the new standard — but it's a fundamentally different product. Here's everything you need to understand to hit the ground running."
+date: "2024-03-01"
+category: analytics
+tags: ["GA4", "Google Analytics", "Analytics Implementation", "Measurement"]
+coverImage: "https://placehold.co/1200x630/0F1629/00CFFF?text=GA4+Guide"
+published: true
+author:
+  name: Guillermo García
+  bio: Digital Analytics Specialist & Designer. Data strategy, tracking, experimentation.
+  linkedin: "https://www.linkedin.com/in/guillermo-garc%C3%ADa-gonz%C3%A1lez-l%C3%B3pez/"
+  instagram: "https://www.instagram.com/tnkdesigns_/"
+---
+
+GA4 has been the default Google Analytics product since July 2023, when Universal Analytics was permanently sunset. And yet, a year later, I still encounter companies running on incomplete migrations, broken event schemas, and dashboards that tell half the story.
+
+This guide is the one I wish had existed when I started. Let's fix that.
+
+---
+
+## Why GA4 is Fundamentally Different
+
+The biggest mistake people make is treating GA4 as a "UA upgrade." It isn't. It's a completely different data model.
+
+**Universal Analytics** used a **session-based model**:
+- A session was the primary unit of measurement
+- Hits (pageviews, events, transactions) happened inside sessions
+- Everything was scoped to sessions or users
+
+**GA4** uses an **event-based model**:
+- *Every interaction* is an event
+- There are no "categories", "actions", or "labels"
+- Parameters carry the meaning
+
+This sounds abstract, but the practical implication is huge: your UA reports will *not* map to GA4 reports. You need to rethink your measurement framework from scratch.
+
+## The Core Concepts You Must Understand
+
+### 1. Events and Parameters
+
+In GA4, everything is an event. A pageview is an event (`page_view`). A purchase is an event (`purchase`). A button click is an event you define yourself.
+
+Each event can carry up to 25 custom parameters that describe the action:
+
+```javascript
+// Sending a custom event
+gtag('event', 'cta_click', {
+  cta_label: 'View Projects',
+  cta_location: 'hero',
+  page_path: '/home'
+})
+```
+
+### 2. Automatically Collected Events
+
+GA4 automatically collects these events without any code changes:
+
+- `session_start` — when a new session begins
+- `first_visit` — on first visit
+- `page_view` — on each page view
+- `scroll` — when a user scrolls 90% of a page
+- `click` — on outbound clicks
+
+Enhanced Measurement (enable in the Admin) also tracks:
+- `file_download` — PDF, ZIP, etc.
+- `video_start`, `video_progress`, `video_complete` — YouTube embeds
+- `form_start`, `form_submit` — basic form interactions
+
+### 3. Recommended Events
+
+Google provides a schema of [recommended events](https://support.google.com/analytics/answer/9267735) for common use cases. Use them where possible — they enable **Predictive Analytics** and future integrations:
+
+| Event | Use Case |
+|---|---|
+| `purchase` | E-commerce transactions |
+| `generate_lead` | Lead generation forms |
+| `begin_checkout` | Checkout funnel |
+| `view_item` | Product page views |
+| `login` | User authentication |
+
+### 4. User Properties
+
+User properties describe the user, not the action. They persist across sessions and are great for segmentation:
+
+```javascript
+// Setting user properties
+gtag('set', 'user_properties', {
+  user_type: 'premium',
+  preferred_language: 'es'
+})
+```
+
+---
+
+## Setting Up GA4 Correctly
+
+### Step 1: Create a GA4 Property
+
+1. Go to **Google Analytics Admin**
+2. Click **Create Property**
+3. Select your industry and reporting time zone
+4. Create a **Web Data Stream** and enter your URL
+
+You'll get a **Measurement ID** (format: `G-XXXXXXXXXX`).
+
+### Step 2: Implement via Google Tag Manager
+
+Don't add the GA4 snippet directly to your code. Use GTM:
+
+1. In GTM, create a new **Tag** → Google Tag
+2. Enter your Measurement ID
+3. Set trigger to **All Pages**
+4. Publish
+
+This gives you flexibility to add events without code deployments.
+
+### Step 3: Define Your Measurement Framework
+
+*Before* adding any events, answer these questions:
+
+- What are my 3 most important business outcomes?
+- What user behaviours predict those outcomes?
+- What events will I use to measure them?
+- What parameters will each event carry?
+
+Document this in a **tracking plan** (I'll cover this in a future post).
+
+### Step 4: Configure Conversions
+
+GA4 lets you mark any event as a conversion:
+
+- Go to **Admin → Conversions**
+- Click **New conversion event**
+- Enter the exact event name
+
+I recommend starting with 3–5 key conversions. Don't mark everything — it dilutes the signal.
+
+---
+
+## Common GA4 Mistakes to Avoid
+
+### 1. Not enabling Google Signals
+
+Google Signals enables cross-device reporting and demographic data. Enable it in **Admin → Data Settings → Data Collection**.
+
+### 2. Using the default retention period
+
+GA4 defaults to **2 months** of event data retention. Change it to **14 months** in **Admin → Data Settings → Data Retention**.
+
+### 3. Not connecting BigQuery
+
+GA4's free BigQuery export is one of the best things about it. Connect it immediately:
+
+- **Admin → BigQuery Linking**
+- Select your GCP project
+- Enable daily export
+
+This gives you access to raw event data for advanced analysis.
+
+### 4. Relying on Realtime for validation
+
+Realtime has a ~30 second delay and excludes some events. For validation, use the **DebugView** (enable `debug_mode: true` in GTM or use GA4 Debugger Chrome extension).
+
+---
+
+## What to Track First
+
+If you're starting from scratch, here's my recommended event priority:
+
+1. **Page views** (automatic)
+2. **Scroll depth** — 25%, 50%, 75%, 90%
+3. **Outbound clicks** (Enhanced Measurement)
+4. **CTA clicks** — your most important buttons
+5. **Form submissions** — lead generation, newsletter, contact
+6. **File downloads**
+7. **Video engagement**
+8. **Purchase / lead events** (if applicable)
+
+---
+
+## Conclusion
+
+GA4 is more powerful than UA when properly implemented. The event-based model, combined with BigQuery export and predictive audiences, opens doors that UA never could.
+
+The key is to invest in a proper measurement framework upfront — not retrofit tracking after launch. Start with your business objectives, work backwards to events, and document everything.
+
+In my next post, I'll walk through how to build a production-grade tracking plan that your whole team can use.
+
+---
+
+*Have questions about your GA4 setup? [Drop me a message](/contact) — I'm always happy to chat tracking.*

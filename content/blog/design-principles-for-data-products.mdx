@@ -1,0 +1,171 @@
+---
+title: "Design Principles for Data Products: Making Dashboards People Actually Use"
+excerpt: "Most dashboards are never used after the first week. Here's the design framework I use to build data products that stick."
+date: "2024-02-15"
+category: design
+tags: ["Design", "Data Visualisation", "Dashboards", "UX"]
+coverImage: "https://placehold.co/1200x630/0F1629/00FFB3?text=Data+Design"
+published: true
+author:
+  name: Guillermo García
+  bio: Digital Analytics Specialist & Designer.
+  linkedin: "https://www.linkedin.com/in/guillermo-garc%C3%ADa-gonz%C3%A1lez-l%C3%B3pez/"
+  instagram: "https://www.instagram.com/tnkdesigns_/"
+---
+
+I've built hundreds of dashboards. And I can tell you with confidence that most of them will be forgotten within a month.
+
+Not because the data is wrong. Not because the metrics are irrelevant. But because the *experience* of using them is painful.
+
+This post is about applying design thinking to data products — the principles I follow to make dashboards people actually open every morning.
+
+---
+
+## The Problem with Most Dashboards
+
+Before we fix it, let's diagnose it. The typical enterprise dashboard fails for one of these reasons:
+
+1. **It answers questions nobody asked.** Built by analytics teams for analytics teams, not for the person making decisions.
+2. **It shows everything, decides nothing.** 40 KPIs, 8 charts, 3 date pickers. No hierarchy, no narrative.
+3. **It's slow to load.** Nothing kills a habit faster than a 12-second load time.
+4. **It doesn't match the mental model.** The layout doesn't match how the user thinks about the business.
+
+Good dashboard design is fundamentally about *empathy* with the person reading it.
+
+---
+
+## Principle 1: Design for the Decision, Not the Data
+
+Before opening Figma or Looker, ask: **what decision does this dashboard support?**
+
+Every chart, metric, and filter should serve that decision. If you can't explain how a visual element helps someone decide something, remove it.
+
+> "A dashboard is not a data inventory. It's a decision support tool."
+
+**Practical exercise:** Write one sentence at the top of your design doc: *"This dashboard helps [person] decide [decision] by showing [key metrics]."*
+
+If you can't complete that sentence, you're not ready to design yet.
+
+---
+
+## Principle 2: Apply the 3-Second Rule
+
+A user should understand the key insight of your dashboard within 3 seconds.
+
+This means:
+- **One primary metric** — the number that matters most, large and prominent
+- **Clear trend direction** — up/down arrows, colour coding, sparklines
+- **Minimal cognitive load** — less is more
+
+The order of visual hierarchy should match the importance hierarchy of the business:
+
+```
+Level 1 (first 3 seconds):  North Star metric + trend
+Level 2 (next 10 seconds):  Key performance areas
+Level 3 (exploration):       Detail, filters, drill-downs
+```
+
+---
+
+## Principle 3: Use Colour with Restraint and Purpose
+
+Colour is the most abused element in data visualisation. Here's my ruleset:
+
+**Do:**
+- Use colour to encode categorical differences (blue for organic, orange for paid)
+- Use colour to indicate status (green = good, red = bad)
+- Use a consistent, brand-aligned palette
+
+**Don't:**
+- Use more than 5–6 colours in a single chart
+- Use red/green for anything other than good/bad status
+- Use colour just to make it look "interesting"
+
+My go-to palette for dark dashboards:
+
+```
+Primary metric:    #00CFFF (electric blue)
+Secondary metric:  #00FFB3 (neon green)
+Warning:          #FFBE6A (amber)
+Critical:         #FF6B6B (coral red)
+Neutral:          #8A9CC8 (muted blue-grey)
+```
+
+---
+
+## Principle 4: Typography as Information Architecture
+
+Most dashboard designers use the same font size for everything. Don't.
+
+Create a deliberate type hierarchy:
+
+| Level | Size | Weight | Purpose |
+|---|---|---|---|
+| Display | 48–64px | Bold | North Star KPI value |
+| Headline | 24–32px | Bold | Section headers |
+| Body | 14–16px | Regular | Labels, explanations |
+| Caption | 11–12px | Medium | Axis labels, timestamps |
+
+Apply consistent tracking (letter-spacing) to small-caps labels: `tracking-widest` on anything uppercase.
+
+---
+
+## Principle 5: Tell a Story with Layout
+
+The F-pattern and Z-pattern describe how Western readers naturally scan a page. Design your dashboard to work with these patterns:
+
+**F-pattern** (for dense, report-style layouts):
+- Put the most important metrics in the top row
+- Put supporting context in the left column
+- Use bold text to create visual anchors for scanning
+
+**Z-pattern** (for hero-style dashboards):
+- Top-left: primary KPI
+- Top-right: date range / context
+- Bottom-left: secondary metric
+- Bottom-right: CTA or drill-down
+
+---
+
+## Principle 6: Make the Loading State Beautiful
+
+Slow dashboards kill engagement. Two strategies:
+
+**Optimise the query:**
+- Use aggregated tables, not raw event data
+- Pre-compute common date ranges with scheduled queries
+- Cache frequently-accessed results
+
+**Design skeleton states:**
+- Show content placeholders while data loads
+- Animate them with a shimmer effect
+- Never show a blank white screen
+
+The difference between a 12-second load and a 2-second load is not just technical — it's whether your dashboard becomes a daily habit.
+
+---
+
+## Putting It Together: My Design Process
+
+1. **Discovery call** — understand the decision, the user, and the frequency of use
+2. **Data audit** — verify the data exists, is clean, and is trustworthy
+3. **Wireframe** — sketch layout with content hierarchy, no colour yet
+4. **Feedback round** — show it to the end user before building
+5. **High-fidelity design** — apply visual design system
+6. **Build & validate** — build in BI tool, validate numbers with stakeholder
+7. **Launch + training** — 15-minute walkthrough with the team
+8. **Monthly review** — track usage metrics, prune unused views
+
+The feedback round (step 4) is the most skipped and the most important. Always show your user a wireframe before you spend 2 weeks building.
+
+---
+
+## The Best Dashboard is Often Simpler Than You Think
+
+The dashboards I'm proudest of are usually the simplest ones. One screen. One primary metric. Three supporting charts. A clean date selector.
+
+The hardest part of dashboard design isn't adding things. It's knowing what to remove.
+
+---
+
+*Have a dashboard that nobody uses? [Let's fix it together](/contact).*

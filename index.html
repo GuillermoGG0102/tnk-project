@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TNK – Design & Analytics</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['Space Grotesk', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #0A0F1E;
+    color: #F0F4FF;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+  }
+  h1,h2,h3,h4,h5,h6 { font-family: 'Space Grotesk', sans-serif; }
+  ::selection { background: rgba(0,207,255,0.2); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #0A0F1E; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #00CFFF; }
+
+  /* Gradient text */
+  .text-gradient {
+    background: linear-gradient(135deg, #00CFFF 0%, #00FFB3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Noise overlay */
+  .noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* Card surface */
+  .card {
+    background: #0F1629;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
+  }
+
+  /* Skill bar */
+  .skill-bar-fill {
+    height: 6px;
+    border-radius: 3px;
+    transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  /* Fade-up animation */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes ping {
+    75%, 100% { transform: scale(2); opacity: 0; }
+  }
+  @keyframes pulse-glow {
+    0%,100% { box-shadow: 0 0 20px rgba(0,207,255,0.3); }
+    50%      { box-shadow: 0 0 40px rgba(0,207,255,0.6); }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+
+  .animate-fade-up { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+  .animate-fade-in { animation: fadeIn 0.5s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+  .delay-5 { animation-delay: 0.5s; }
+  .delay-6 { animation-delay: 0.6s; }
+  .delay-7 { animation-delay: 0.7s; }
+
+  .btn-primary {
+    background: #00CFFF;
+    color: #0A0F1E;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 0 24px rgba(0,207,255,0.3);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    text-decoration: none;
+  }
+  .btn-primary:hover {
+    background: #1AD5FF;
+    box-shadow: 0 0 32px rgba(0,207,255,0.5);
+    transform: translateY(-1px);
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,0.05);
+    color: #F0F4FF;
+    font-weight: 500;
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    text-decoration: none;
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.09);
+    border-color: rgba(255,255,255,0.2);
+    transform: translateY(-1px);
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .tag-neutral { background: rgba(255,255,255,0.06); color: #8A9CC8; border: 1px solid rgba(255,255,255,0.09); }
+  .tag-primary { background: rgba(0,207,255,0.1); color: #00CFFF; border: 1px solid rgba(0,207,255,0.2); }
+  .tag-accent  { background: rgba(0,255,179,0.1); color: #00FFB3; border: 1px solid rgba(0,255,179,0.2); }
+  .tag-purple  { background: rgba(183,127,255,0.1); color: #B77FFF; border: 1px solid rgba(183,127,255,0.2); }
+
+  /* Nav active dot */
+  .nav-active { position: relative; }
+  .nav-active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #00CFFF;
+  }
+
+  /* Timeline connector */
+  .timeline-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #00CFFF;
+    box-shadow: 0 0 12px rgba(0,207,255,0.6);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  /* Glow card hover */
+  .card:hover {
+    border-color: rgba(255,255,255,0.13);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.4);
+    transition: all 0.3s ease;
+  }
+
+  /* Grid bg pattern */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  /* Section spacing */
+  .section { padding: 90px 0; }
+  @media (max-width: 768px) { .section { padding: 56px 0; } }
+
+  /* Navbar blur */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,15,30,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* Mobile menu */
+  #mobile-menu { display: none; }
+  #mobile-menu.open { display: block; }
+
+  /* Ping animation */
+  .ping {
+    position: relative;
+    display: inline-flex;
+    width: 10px; height: 10px;
+  }
+  .ping::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: #00FFB3;
+    animation: ping 1.5s cubic-bezier(0,0,0.2,1) infinite;
+    opacity: 0.6;
+  }
+  .ping-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #00FFB3;
+    position: relative;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════ NAVBAR -->
+<header class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <nav style="display:flex;align-items:center;justify-content:space-between;height:68px;">
+      <!-- Logo -->
+      <a href="#" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="fotossss/TNK LOGOPNG.png" alt="TNK Logo" style="height:38px;width:auto;display:block;" />
+      </a>
+      <!-- Desktop links -->
+      <div style="display:flex;align-items:center;gap:4px;" class="hidden md:flex">
+        <a href="index.html" style="padding:8px 16px;border-radius:9px;font-size:14px;font-weight:500;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;" class="nav-active">Home</a>
+        <a href="projects.html" style="padding:8px 16px;border-radius:9px;font-size:14px;font-weight:500;color:#8A9CC8;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="blog.html" style="padding:8px 16px;border-radius:9px;font-size:14px;font-weight:500;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Blog</a>
+        <a href="contact.html" style="padding:8px 16px;border-radius:9px;font-size:14px;font-weight:500;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Contact</a>
+      </div>
+      <!-- Right -->
+      <div style="display:flex;align-items:center;gap:8px;">
+        <a href="contact.html" style="padding:8px 16px;border-radius:9px;font-size:13px;font-weight:500;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(0,207,255,0.15)'" onmouseout="this.style.background='rgba(0,207,255,0.08)'">Get in touch</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════ HERO -->
+<section style="min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:68px;">
+  <!-- Glows -->
+  <div style="position:absolute;top:-15%;left:-10%;width:70vw;height:70vw;max-width:900px;max-height:900px;border-radius:50%;background:radial-gradient(circle,rgba(0,207,255,0.07) 0%,transparent 65%);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-10%;right:-5%;width:55vw;height:55vw;max-width:700px;max-height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,179,0.05) 0%,transparent 65%);pointer-events:none;"></div>
+  <!-- Grid -->
+  <div class="grid-bg" style="position:absolute;inset:0;pointer-events:none;"></div>
+
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;position:relative;z-index:1;width:100%;">
+    <!-- Eyebrow -->
+    <div class="animate-fade-up" style="display:flex;align-items:center;gap:10px;margin-bottom:28px;">
+      <div class="ping"><div class="ping-dot"></div></div>
+      <span style="font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#8A9CC8;">Available for new opportunities</span>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="animate-fade-up delay-1" style="font-size:clamp(48px,8vw,96px);font-weight:700;line-height:1.02;letter-spacing:-0.04em;margin:0 0 24px 0;">
+      <span style="color:#F0F4FF;">Design meets</span><br>
+      <span class="text-gradient">Analytics.</span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="animate-fade-up delay-2" style="font-size:clamp(16px,2vw,20px);color:#8A9CC8;line-height:1.7;max-width:640px;margin:0 0 12px 0;">
+      Hi, I'm <strong style="color:#F0F4FF;font-weight:600;">Guillermo García</strong> — Digital Analytics Specialist & Designer. I bridge the gap between data strategy and creative vision to build experiences that are both measurable and beautiful.
+    </p>
+    <p class="animate-fade-up delay-3" style="font-size:13px;color:#4D5E87;margin:0 0 44px 0;font-family:'JetBrains Mono',monospace;">GA4 · GTM · Data Strategy · UI Design · Branding</p>
+
+    <!-- CTAs -->
+    <div class="animate-fade-up delay-4" style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:72px;">
+      <a href="#projects" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        View Projects
+      </a>
+      <a href="#blog" class="btn-secondary">Read the Blog</a>
+    </div>
+
+    <!-- Stats -->
+    <div class="animate-fade-up delay-5" style="padding-top:36px;border-top:1px solid rgba(255,255,255,0.06);display:grid;grid-template-columns:repeat(4,1fr);gap:32px;max-width:560px;">
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;line-height:1.1;" class="text-gradient">5+</div>
+        <div style="font-size:11px;color:#4D5E87;text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;">Years in<br>Analytics</div>
+      </div>
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;line-height:1.1;" class="text-gradient">30+</div>
+        <div style="font-size:11px;color:#4D5E87;text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;">Projects<br>Delivered</div>
+      </div>
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;line-height:1.1;" class="text-gradient">100%</div>
+        <div style="font-size:11px;color:#4D5E87;text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;">Data-<br>Driven</div>
+      </div>
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;line-height:1.1;" class="text-gradient">∞</div>
+        <div style="font-size:11px;color:#4D5E87;text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;">Curiosity</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom fade -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to top,#0A0F1E,transparent);pointer-events:none;"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ ABOUT -->
+<section id="about" class="section">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="about-grid">
+      <!-- Text -->
+      <div>
+        <p style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#00CFFF;margin:0 0 12px 0;">About me</p>
+        <h2 style="font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;margin:0 0 16px 0;" class="text-gradient">Data meets craft</h2>
+        <p style="color:#8A9CC8;line-height:1.8;margin:0 0 16px 0;">Marketing and Digital Business graduate (Esic University) and Business Analytics graduate (European University) with experience in Digital Analytics Consultancy. I have worked with clients from various industries such as Bizum, Bankinter, Nebrija University, AXA, Oysho, and Airzone, delivering measurement solutions (data collection with GTM across Web and App), analysis (GA4 / BigQuery), and data visualization (dashboard creation using Looker Studio and Power BI).</p>
+        <p style="color:#8A9CC8;line-height:1.8;margin:0 0 16px 0;">From my perspective, data and its analysis begin with a solid measurement logic defined in the central analytics framework (the tagging guide), where it is essential to clearly determine what should be measured (events and parameters) with future analysis and visualization needs in mind.</p>
+        <p style="color:#8A9CC8;line-height:1.8;margin:0 0 16px 0;">Without a clear definition, both analysis and visualization may become superficial and lack the robustness required for <em style="color:#F0F4FF;font-style:normal;">data-driven decision-making</em>.</p>
+        <p style="color:#8A9CC8;line-height:1.8;margin:0 0 28px 0;">My professional objective is to provide clients with reliable, scalable, and well-structured data that enables them to make decisions with a real business impact. That is why the tagging guide must be understandable to all stakeholders (analysts, business teams, and developers) to ensure proper and efficient implementation.</p>
+        <!-- Interests -->
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:24px;background:#0F1629;border:1px solid rgba(255,255,255,0.08);font-size:13px;color:#8A9CC8;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00CFFF" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Analytics
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:24px;background:#0F1629;border:1px solid rgba(255,255,255,0.08);font-size:13px;color:#8A9CC8;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00FFB3" stroke-width="2"><circle cx="13.5" cy="6.5" r="0.5" fill="#00FFB3"/><circle cx="17.5" cy="10.5" r="0.5" fill="#00FFB3"/><circle cx="8.5" cy="7.5" r="0.5" fill="#00FFB3"/><circle cx="6.5" cy="12.5" r="0.5" fill="#00FFB3"/><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"/></svg>Design
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:24px;background:#0F1629;border:1px solid rgba(255,255,255,0.08);font-size:13px;color:#8A9CC8;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C89B3C" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M22 10H2"/></svg>League of Legends
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:24px;background:#0F1629;border:1px solid rgba(255,255,255,0.08);font-size:13px;color:#8A9CC8;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FF6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/></svg>Padel
+          </div>
+        </div>
+      </div>
+      <!-- Visual -->
+      <div style="position:relative;">
+        <div style="position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/5;">
+          <img src="ME/MOA__RETRATOS_183.jpg" alt="Guillermo García" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.65),transparent);"></div>
+          <div style="position:absolute;inset:0;background:rgba(0,207,255,0.04);mix-blend-mode:overlay;"></div>
+        </div>
+        <!-- Floating card -->
+        <div style="position:absolute;bottom:-24px;left:-24px;padding:16px 20px;border-radius:14px;background:rgba(15,22,41,0.96);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.5);">
+          <div style="font-size:10px;color:#4D5E87;margin-bottom:4px;">Current focus</div>
+          <div style="font-size:14px;font-weight:600;color:#F0F4FF;">Digital Analytics</div>
+          <div style="font-size:11px;color:#00CFFF;margin-top:2px;">GA4 · GTM · Data Strategy</div>
+        </div>
+        <!-- Corner glow -->
+        <div style="position:absolute;top:-24px;right:-24px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,179,0.12) 0%,transparent 70%);pointer-events:none;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ EXPERIENCE -->
+<section id="experience" class="section" style="background:rgba(15,22,41,0.35);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <p style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#00CFFF;margin:0 0 12px 0;">Work history</p>
+    <h2 style="font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;margin:0 0 56px 0;" class="text-gradient">Where I've worked</h2>
+
+    <div style="display:flex;flex-direction:column;gap:24px;">
+
+      <!-- Ayesa — current -->
+      <div class="card" style="padding:28px 32px;border-color:rgba(0,207,255,0.15);">
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <div style="width:52px;height:52px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;">
+            <img src="LOGOS/ayesa_logo.jpg" alt="Ayesa" style="width:100%;height:100%;object-fit:contain;" />
+          </div>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:6px;">
+              <div>
+                <h3 style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:#F0F4FF;margin:0 0 3px 0;">Digital Analytics Engineer</h3>
+                <span style="font-size:14px;font-weight:500;color:#00CFFF;">Ayesa</span>
+                <span style="font-size:13px;color:#4D5E87;margin-left:8px;">· Full-time · Hybrid · Madrid</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#00FFB3;background:rgba(0,255,179,0.1);border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;">
+                  <span style="width:5px;height:5px;background:#00FFB3;border-radius:50%;display:inline-block;animation:ping 1.5s infinite;"></span>
+                  Current
+                </span>
+                <span style="font-size:12px;color:#4D5E87;background:rgba(255,255,255,0.05);padding:4px 12px;border-radius:20px;white-space:nowrap;">Nov 2025 – Present</span>
+              </div>
+            </div>
+            <ul style="margin:14px 0 18px 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;">
+              <li style="display:flex;gap:10px;font-size:14px;color:#8A9CC8;line-height:1.6;"><span style="width:6px;height:6px;background:rgba(0,207,255,0.5);border-radius:50%;flex-shrink:0;margin-top:7px;"></span>Implementation, governance, and data quality in digital Web and App environments — end-to-end measurement cycle from strategic definition to final validation.</li>
+              <li style="display:flex;gap:10px;font-size:14px;color:#8A9CC8;line-height:1.6;"><span style="width:6px;height:6px;background:rgba(0,207,255,0.5);border-radius:50%;flex-shrink:0;margin-top:7px;"></span>Configuration of Google Analytics, Firebase, and Google Tag Manager ensuring accurate data collection aligned with business objectives.</li>
+              <li style="display:flex;gap:10px;font-size:14px;color:#8A9CC8;line-height:1.6;"><span style="width:6px;height:6px;background:rgba(0,207,255,0.5);border-radius:50%;flex-shrink:0;margin-top:7px;"></span>Definition and creation of implementation guides and measurement plans — translating business requirements into scalable technical solutions.</li>
+              <li style="display:flex;gap:10px;font-size:14px;color:#8A9CC8;line-height:1.6;"><span style="width:6px;height:6px;background:rgba(0,207,255,0.5);border-radius:50%;flex-shrink:0;margin-top:7px;"></span>Clients: <strong style="color:#F0F4FF;font-weight:500;">Oysho, Lefties, Pelayo, AXA & Direct Seguros, Airzone, ISDIN</strong></li>
+            </ul>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              <span class="tag tag-primary">Google Tag Manager</span><span class="tag tag-primary">Google Analytics</span><span class="tag tag-primary">Firebase</span><span class="tag tag-neutral">JavaScript</span><span class="tag tag-neutral">Chrome DevTools</span><span class="tag tag-neutral">Measurement Strategy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- t2ó -->
+      <div class="card" style="padding:28px 32px;">
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <div style="width:52px;height:52px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;">
+            <img src="LOGOS/1719255736018.jpg" alt="t2ó" style="width:100%;height:100%;object-fit:contain;" />
+          </div>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:6px;">
+              <div>
+                <h3 style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:#F0F4FF;margin:0 0 3px 0;">Digital Analytics Consultant</h3>
+                <span style="font-size:14px;font-weight:500;color:#00CFFF;">t2ó</span>
+                <span style="font-size:13px;color:#4D5E87;margin-left:8px;">· Full-time · Hybrid · Madrid</span>
+              </div>
+              <span style="font-size:12px;color:#4D5E87;background:rgba(255,255,255,0.05);padding:4px 12px;border-radius:20px;white-space:nowrap;">Oct 2024 – Oct 2025 · 1 yr</span>
+            </div>
+            <ul style="margin:14px 0 18px 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;">
+              <li style="display:flex;gap:10px;font-size:14px;color:#8A9CC8;line-height:1.6;"><span style="width:6px;height:6px;background:rgba(0,207,255,0.4);border-radius:50%;flex-shrink:0;margin-top:7px;"></span>Technical implementation and data analysis across multiple clients: <strong style="color:#F0F4FF;font-weight:500;">EVO/Bankinter, Línea Directa, Bizum, Nebrija University, Visalia</strong></li>
+              <li style="display:flex;gap:10px;font-size:14px;color:#8A9CC8;line-height:1.6;"><span style="width:6px;height:6px;background:rgba(0,207,255,0.4);border-radius:50%;flex-shrink:0;margin-top:7px;"></span>GA4 & GTM audits, measurement plans, full GA4 implementations, analytics incident support.</li>
+              <li style="display:flex;gap:10px;font-size:14px;color:#8A9CC8;line-height:1.6;"><span style="width:6px;height:6px;background:rgba(0,207,255,0.4);border-radius:50%;flex-shrink:0;margin-top:7px;"></span>Dashboarding & BI (Looker Studio / Power BI) — data model planning, ETL via funnel.io, and BigQuery.</li>
+            </ul>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              <span class="tag tag-neutral">GA4</span><span class="tag tag-neutral">GTM</span><span class="tag tag-neutral">Looker Studio</span><span class="tag tag-neutral">Power BI</span><span class="tag tag-neutral">BigQuery</span><span class="tag tag-neutral">funnel.io</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Incubeta -->
+      <div class="card" style="padding:28px 32px;">
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <div style="width:52px;height:52px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;">
+            <img src="LOGOS/incubeta_logo.jpg" alt="Incubeta" style="width:100%;height:100%;object-fit:contain;" />
+          </div>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:6px;">
+              <div>
+                <h3 style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:#F0F4FF;margin:0 0 3px 0;">Digital Analytics Consultant</h3>
+                <span style="font-size:14px;font-weight:500;color:#00CFFF;">Incubeta</span>
+                <span style="font-size:13px;color:#4D5E87;margin-left:8px;">· Full-time → Internship · Hybrid · Madrid</span>
+              </div>
+              <span style="font-size:12px;color:#4D5E87;background:rgba(255,255,255,0.05);padding:4px 12px;border-radius:20px;white-space:nowrap;">Mar 2024 – Oct 2024 · 8 mo</span>
+            </div>
+            <ul style="margin:14px 0 18px 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;">
+              <li style="display:flex;gap:10px;font-size:14px;color:#8A9CC8;line-height:1.6;"><span style="width:6px;height:6px;background:rgba(0,255,179,0.4);border-radius:50%;flex-shrink:0;margin-top:7px;"></span>Part-time internship (Mar–Jul 2024) → Full-time role after completing Master's in Business Analytics (Jul–Oct 2024).</li>
+              <li style="display:flex;gap:10px;font-size:14px;color:#8A9CC8;line-height:1.6;"><span style="width:6px;height:6px;background:rgba(0,255,179,0.4);border-radius:50%;flex-shrink:0;margin-top:7px;"></span>GA4, GTM, Looker Studio dashboards, debugging, exploratory Web Analytics analysis, Python & SQL (BigQuery).</li>
+              <li style="display:flex;gap:10px;font-size:14px;color:#8A9CC8;line-height:1.6;"><span style="width:6px;height:6px;background:rgba(0,255,179,0.4);border-radius:50%;flex-shrink:0;margin-top:7px;"></span>End-to-end CMP implementation (Didomi) — platform config to GTM data collection. Clients: <strong style="color:#F0F4FF;font-weight:500;">Prosegur, SGS, Victorinox, Telefónica</strong></li>
+            </ul>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              <span class="tag tag-neutral">GA4</span><span class="tag tag-neutral">GTM</span><span class="tag tag-neutral">Looker Studio</span><span class="tag tag-neutral">Python</span><span class="tag tag-neutral">SQL</span><span class="tag tag-neutral">BigQuery</span><span class="tag tag-neutral">Didomi CMP</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Telefónica -->
+      <div class="card" style="padding:28px 32px;">
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <div style="width:52px;height:52px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;">
+            <img src="LOGOS/telefonica_logo.jpg" alt="Telefónica" style="width:100%;height:100%;object-fit:contain;" />
+          </div>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:6px;">
+              <div>
+                <h3 style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:#F0F4FF;margin:0 0 3px 0;">Paid Social — Marketing Associate</h3>
+                <span style="font-size:14px;font-weight:500;color:#00CFFF;">Telefónica</span>
+                <span style="font-size:13px;color:#4D5E87;margin-left:8px;">· Internship · Madrid</span>
+              </div>
+              <span style="font-size:12px;color:#4D5E87;background:rgba(255,255,255,0.05);padding:4px 12px;border-radius:20px;white-space:nowrap;">Oct 2021 – Mar 2022 · 6 mo</span>
+            </div>
+            <ul style="margin:14px 0 18px 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;">
+              <li style="display:flex;gap:10px;font-size:14px;color:#8A9CC8;line-height:1.6;"><span style="width:6px;height:6px;background:rgba(0,207,255,0.25);border-radius:50%;flex-shrink:0;margin-top:7px;"></span>Customer Experience, Advertising & Multi-brand area — Communications Department (Media and Social Networks).</li>
+              <li style="display:flex;gap:10px;font-size:14px;color:#8A9CC8;line-height:1.6;"><span style="width:6px;height:6px;background:rgba(0,207,255,0.25);border-radius:50%;flex-shrink:0;margin-top:7px;"></span>Campaign monitoring (KPIs), reporting, performance summaries. Collaboration with Havas media agency.</li>
+              <li style="display:flex;gap:10px;font-size:14px;color:#8A9CC8;line-height:1.6;"><span style="width:6px;height:6px;background:rgba(0,207,255,0.25);border-radius:50%;flex-shrink:0;margin-top:7px;"></span>Paid Social campaign management: Facebook & Instagram (Business Manager), TikTok (TikTok Business Center).</li>
+            </ul>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              <span class="tag tag-neutral">Meta Business Manager</span><span class="tag tag-neutral">TikTok Ads</span><span class="tag tag-neutral">Campaign Reporting</span><span class="tag tag-neutral">Paid Social</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ PROJECTS -->
+<section id="projects" class="section">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:20px;">
+      <div>
+        <p style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#00CFFF;margin:0 0 12px 0;">Featured work</p>
+        <h2 style="font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;margin:0 0 12px 0;" class="text-gradient">Selected projects</h2>
+        <p style="color:#8A9CC8;font-size:16px;max-width:500px;margin:0;">A curated selection across analytics and digital art.</p>
+      </div>
+      <a href="projects.html" style="font-size:14px;color:#00CFFF;text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.2s;" onmouseover="this.style.color='#1AD5FF'" onmouseout="this.style.color='#00CFFF'">All projects →</a>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" class="projects-grid">
+
+      <!-- TNK Designs -->
+      <article class="card" style="overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.3s;" onclick="location.href='projects/tnk-designs.html'" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="position:relative;aspect-ratio:16/10;overflow:hidden;">
+          <img src="fotossss/SKRINTRO.png" style="width:100%;height:100%;object-fit:cover;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.8),transparent);"></div>
+          <span style="position:absolute;top:12px;right:12px;font-size:11px;font-family:'JetBrains Mono',monospace;padding:4px 10px;background:rgba(10,15,30,0.85);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#8A9CC8;">2019 — Now</span>
+          <span style="position:absolute;top:12px;left:12px;font-size:10px;font-weight:700;letter-spacing:0.08em;padding:4px 10px;background:rgba(255,82,185,0.15);border:1px solid rgba(255,82,185,0.3);border-radius:6px;color:#FF52B9;text-transform:uppercase;">Personal</span>
+        </div>
+        <div style="padding:22px 24px;">
+          <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#FF52B9;margin:0 0 10px 0;">Digital Art</p>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:700;color:#F0F4FF;margin:0 0 10px 0;line-height:1.3;">TNK Designs</h3>
+          <p style="font-size:14px;color:#8A9CC8;line-height:1.6;margin:0 0 14px 0;">Personal graphic design brand — cover art for underground artists, photo manipulations, illustrations, and creative multimedia content.</p>
+          <p style="font-size:12px;font-weight:500;padding:8px 12px;border-radius:8px;background:rgba(255,82,185,0.08);color:#FF52B9;margin:0 0 16px 0;">Instagram · YouTube · Twitter</p>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px;">
+            <span class="tag tag-neutral">Photography</span><span class="tag tag-neutral">Cover Art</span><span class="tag tag-neutral">Illustration</span>
+          </div>
+          <div style="font-size:13px;color:#4D5E87;display:flex;align-items:center;gap:5px;">View project <span>→</span></div>
+        </div>
+      </article>
+
+      <!-- TNK Portfolio Web -->
+      <article class="card" style="overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.3s;" onclick="location.href='projects/tnk-portfolio-web.html'" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="position:relative;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#0A0F1E,#0F1629,#0A1830);">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+            <img src="fotossss/TNK LOGOPNG.png" alt="TNK Logo" style="height:38px;width:auto;opacity:0.9;" />
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#4D5E87;text-align:center;line-height:1.8;"><span style="color:#00CFFF;">localhost:3000</span><br/>TNK Design & Analytics</div>
+          </div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.5),transparent);"></div>
+          <span style="position:absolute;top:12px;right:12px;font-size:11px;font-family:'JetBrains Mono',monospace;padding:4px 10px;background:rgba(10,15,30,0.85);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#8A9CC8;">2025</span>
+          <span style="position:absolute;top:12px;left:12px;font-size:10px;font-weight:700;letter-spacing:0.08em;padding:4px 10px;background:rgba(0,207,255,0.12);border:1px solid rgba(0,207,255,0.25);border-radius:6px;color:#00CFFF;text-transform:uppercase;">Personal</span>
+        </div>
+        <div style="padding:22px 24px;">
+          <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#00CFFF;margin:0 0 10px 0;">Web Development</p>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:700;color:#F0F4FF;margin:0 0 10px 0;line-height:1.3;">TNK Design & Analytics</h3>
+          <p style="font-size:14px;color:#8A9CC8;line-height:1.6;margin:0 0 14px 0;">This very website — 13 pages built entirely with Claude Code. Static HTML, Tailwind CSS, consistent design system. Zero lines hand-written.</p>
+          <p style="font-size:12px;font-weight:500;padding:8px 12px;border-radius:8px;background:rgba(0,207,255,0.08);color:#00CFFF;margin:0 0 16px 0;">13 pages · 0 lines hand-written · 100% AI</p>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px;">
+            <span class="tag tag-neutral">HTML5</span><span class="tag tag-neutral">Tailwind CSS</span><span class="tag tag-neutral">Claude Code</span>
+          </div>
+          <div style="font-size:13px;color:#4D5E87;display:flex;align-items:center;gap:5px;">View project <span>→</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ SKILLS -->
+<section id="skills" class="section" style="background:rgba(15,22,41,0.35);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <p style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#00CFFF;margin:0 0 12px 0;">Expertise</p>
+    <h2 style="font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;margin:0 0 16px 0;" class="text-gradient">Skills & tools</h2>
+    <p style="color:#8A9CC8;font-size:16px;max-width:560px;margin:0 0 52px 0;">Two distinct but complementary skill sets — data-driven thinking and visual craft.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;" class="skills-grid">
+      <!-- Analytics -->
+      <div class="card" style="padding:32px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:32px;">
+          <div style="padding:9px;border-radius:10px;background:rgba(0,207,255,0.1);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00CFFF" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:#F0F4FF;">Digital Analytics</div>
+            <div style="font-size:11px;color:#4D5E87;">Data strategy & measurement</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:20px;" id="analytics-skills"></div>
+      </div>
+      <!-- Design -->
+      <div class="card" style="padding:32px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:32px;">
+          <div style="padding:9px;border-radius:10px;background:rgba(0,255,179,0.1);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00FFB3" stroke-width="2"><circle cx="13.5" cy="6.5" r="0.5" fill="#00FFB3"/><circle cx="17.5" cy="10.5" r="0.5" fill="#00FFB3"/><circle cx="8.5" cy="7.5" r="0.5" fill="#00FFB3"/><circle cx="6.5" cy="12.5" r="0.5" fill="#00FFB3"/><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"/></svg>
+          </div>
+          <div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:#F0F4FF;">Design</div>
+            <div style="font-size:11px;color:#4D5E87;">Visual craft & interaction</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:20px;" id="design-skills"></div>
+      </div>
+    </div>
+
+    <!-- Tool pills -->
+    <div class="card" style="padding:24px 28px;">
+      <p style="font-size:10px;color:#4D5E87;text-align:center;text-transform:uppercase;letter-spacing:0.15em;margin:0 0 18px 0;">Also familiar with</p>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;">
+        <span class="tag tag-neutral">Supermetrics</span><span class="tag tag-neutral">funnel.io</span><span class="tag tag-neutral">Didomi</span><span class="tag tag-neutral">OneTrust</span><span class="tag tag-neutral">Analytics Debugger for Apps</span><span class="tag tag-neutral">Adobe Analytics</span><span class="tag tag-neutral">Adobe Launch</span><span class="tag tag-neutral">Claude Code</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ BLOG -->
+<section id="blog" class="section">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:20px;">
+      <div>
+        <p style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#00CFFF;margin:0 0 12px 0;">Writing</p>
+        <h2 style="font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;margin:0 0 12px 0;" class="text-gradient">Latest posts</h2>
+        <p style="color:#8A9CC8;font-size:16px;max-width:500px;margin:0;">Thoughts on analytics, design, gaming and life on the padel court.</p>
+      </div>
+      <a href="blog.html" style="font-size:14px;color:#00CFFF;text-decoration:none;display:flex;align-items:center;gap:6px;" onmouseover="this.style.color='#1AD5FF'" onmouseout="this.style.color='#00CFFF'">All posts →</a>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" class="blog-grid">
+      <!-- Post 1 -->
+      <article class="card" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.3s;" onclick="location.href='blog/getting-started-with-ga4.html'" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;">
+          <img src="https://placehold.co/800x450/0F1629/00CFFF?text=GA4+Guide" style="width:100%;height:100%;object-fit:cover;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);"></div>
+        </div>
+        <div style="padding:22px 24px;flex:1;display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <span class="tag tag-accent">Analytics</span>
+            <span style="font-size:11px;color:#4D5E87;display:flex;align-items:center;gap:4px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8 min read
+            </span>
+          </div>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:#F0F4FF;line-height:1.35;margin:0 0 10px 0;">Getting Started with GA4: What Every Digital Marketer Needs to Know</h3>
+          <p style="font-size:13px;color:#8A9CC8;line-height:1.65;flex:1;margin:0 0 18px 0;">Universal Analytics is gone. GA4 is the new standard — but it's a fundamentally different product. Here's everything you need to understand.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
+            <span style="font-size:12px;color:#4D5E87;">Mar 1, 2024</span>
+            <span style="font-size:12px;color:#4D5E87;">Read →</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Post 2 -->
+      <article class="card" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform 0.2s;" onclick="location.href='blog/design-principles-for-data-products.html'" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;">
+          <img src="https://placehold.co/800x450/0F1629/00FFB3?text=Data+Design" style="width:100%;height:100%;object-fit:cover;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);"></div>
+        </div>
+        <div style="padding:22px 24px;flex:1;display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <span class="tag tag-primary">Design</span>
+            <span style="font-size:11px;color:#4D5E87;display:flex;align-items:center;gap:4px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>7 min read
+            </span>
+          </div>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:#F0F4FF;line-height:1.35;margin:0 0 10px 0;">Design Principles for Data Products: Making Dashboards People Actually Use</h3>
+          <p style="font-size:13px;color:#8A9CC8;line-height:1.65;flex:1;margin:0 0 18px 0;">Most dashboards are never used after the first week. Here's the design framework I use to build data products that stick.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
+            <span style="font-size:12px;color:#4D5E87;">Feb 15, 2024</span>
+            <span style="font-size:12px;color:#4D5E87;">Read →</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Post 3 — placeholder -->
+      <article class="card" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;border:1px dashed rgba(255,255,255,0.08);background:rgba(15,22,41,0.5);transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="padding:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;text-align:center;gap:12px;min-height:260px;">
+          <div style="width:48px;height:48px;border-radius:12px;background:rgba(0,207,255,0.08);display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00CFFF" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;color:#4D5E87;">More posts coming soon</div>
+          <p style="font-size:13px;color:#4D5E87;line-height:1.5;">League of Legends ranked tips, padel strategy, and more analytics deep-dives.</p>
+          <a href="#" style="font-size:13px;color:#00CFFF;text-decoration:none;margin-top:4px;">Subscribe for updates →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ CONTACT CTA -->
+<section id="contact" class="section">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <div style="position:relative;overflow:hidden;border-radius:28px;border:1px solid rgba(255,255,255,0.08);">
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0F1629 0%,#162038 50%,#0F1629 100%);"></div>
+      <div style="position:absolute;top:0;left:0;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(0,207,255,0.07) 0%,transparent 70%);pointer-events:none;"></div>
+      <div style="position:absolute;bottom:0;right:0;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,179,0.05) 0%,transparent 70%);pointer-events:none;"></div>
+      <div style="position:relative;z-index:1;padding:80px 48px;text-align:center;">
+        <p style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#00CFFF;margin:0 0 16px 0;">Let's work together</p>
+        <h2 style="font-size:clamp(36px,5vw,64px);font-weight:700;letter-spacing:-0.04em;margin:0 0 20px 0;line-height:1.05;" class="text-gradient">Ready to level up<br>your analytics?</h2>
+        <p style="color:#8A9CC8;font-size:18px;max-width:520px;margin:0 auto 44px auto;line-height:1.7;">Whether you need a robust tracking implementation, a data strategy overhaul, or a beautiful interface — let's talk.</p>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:14px;">
+          <a href="mailto:hello@tnk.design" class="btn-primary">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Get in touch
+          </a>
+          <a href="projects.html" class="btn-secondary">View projects →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ FOOTER -->
+<footer style="border-top:1px solid rgba(255,255,255,0.06);padding:64px 0 40px;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;" class="footer-grid">
+      <!-- Brand -->
+      <div>
+        <a href="#" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:20px;">
+          <img src="fotossss/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
+        </a>
+        <p style="font-size:14px;color:#8A9CC8;line-height:1.7;max-width:280px;margin:0 0 24px 0;">Design & Analytics. Turning data into decisions and pixels into stories. Based in Spain.</p>
+        <div style="display:flex;gap:10px;">
+          <a href="https://www.linkedin.com/in/guillermo-garc%C3%ADa-gonz%C3%A1lez-l%C3%B3pez/" target="_blank" style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:#4D5E87;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.color='#00CFFF';this.style.background='rgba(0,207,255,0.1)'" onmouseout="this.style.color='#4D5E87';this.style.background='rgba(255,255,255,0.05)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://www.instagram.com/tnkdesigns_/" target="_blank" style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:#4D5E87;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.color='#00CFFF';this.style.background='rgba(0,207,255,0.1)'" onmouseout="this.style.color='#4D5E87';this.style.background='rgba(255,255,255,0.05)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="mailto:hello@tnk.design" style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:#4D5E87;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.color='#00CFFF';this.style.background='rgba(0,207,255,0.1)'" onmouseout="this.style.color='#4D5E87';this.style.background='rgba(255,255,255,0.05)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </a>
+        </div>
+      </div>
+      <!-- Site -->
+      <div>
+        <h4 style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#4D5E87;margin:0 0 20px 0;">Site</h4>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a href="index.html" style="font-size:14px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">Home</a>
+          <a href="projects.html" style="font-size:14px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">Projects</a>
+          <a href="blog.html" style="font-size:14px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">Blog</a>
+          <a href="contact.html" style="font-size:14px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">Contact</a>
+        </div>
+      </div>
+      <!-- Topics -->
+      <div>
+        <h4 style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#4D5E87;margin:0 0 20px 0;">Topics</h4>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a href="#" style="font-size:14px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">Design</a>
+          <a href="#" style="font-size:14px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">Analytics</a>
+          <a href="#" style="font-size:14px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">League of Legends</a>
+          <a href="#" style="font-size:14px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">Padel</a>
+        </div>
+      </div>
+      <!-- Projects -->
+      <div>
+        <h4 style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#4D5E87;margin:0 0 20px 0;">Projects</h4>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a href="#" style="font-size:14px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">Analytics</a>
+          <a href="#" style="font-size:14px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">Design</a>
+
+        </div>
+      </div>
+    </div>
+    <!-- Bottom -->
+    <div style="padding-top:28px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <p style="font-size:12px;color:#4D5E87;margin:0;">© 2024 Guillermo García — TNK Design & Analytics. All rights reserved.</p>
+      <span style="font-size:12px;color:#4D5E87;">Built with Next.js & ♥</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Skill bars ──────────────────────────────────────────────────────
+const analyticsSkills = [
+  { label: 'GA4 / Universal Analytics', pct: 95 },
+  { label: 'Google Tag Manager',         pct: 92 },
+
+  { label: 'BigQuery & SQL',             pct: 78 },
+  { label: 'Looker Studio / Tableau',    pct: 88 },
+  { label: 'Power BI',                   pct: 75 },
+  { label: 'Python for Analytics',       pct: 40 },
+  { label: 'Google Apps Script',         pct: 50 },
+  { label: 'CMP / RGPD',                 pct: 80 },
+]
+const designSkills = [
+  { label: 'UI / UX Design',         pct: 90 },
+  { label: 'Figma',                   pct: 95 },
+  { label: 'Brand Identity',          pct: 85 },
+  { label: 'Procreate',               pct: 90 },
+  { label: 'Photoshop',               pct: 80 },
+  { label: 'Canva',                   pct: 90 },
+  { label: 'HTML / CSS / Tailwind',   pct: 50 },
+  { label: 'Webflow / Next.js',       pct: 30 },
+]
+
+function renderSkills(skills, containerId, color) {
+  const el = document.getElementById(containerId)
+  skills.forEach(s => {
+    el.innerHTML += `
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span style="font-size:13px;color:#8A9CC8;font-weight:500;">${s.label}</span>
+          <span style="font-size:11px;color:#4D5E87;font-family:'JetBrains Mono',monospace;">${s.pct}%</span>
+        </div>
+        <div style="height:6px;border-radius:3px;background:rgba(255,255,255,0.05);overflow:hidden;">
+          <div class="skill-bar-fill" data-width="${s.pct}" style="width:0%;background:linear-gradient(90deg,${color}70,${color});"></div>
+        </div>
+      </div>`
+  })
+}
+
+renderSkills(analyticsSkills, 'analytics-skills', '#00CFFF')
+renderSkills(designSkills,    'design-skills',    '#00FFB3')
+
+// Animate bars on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+        bar.style.width = bar.dataset.width + '%'
+      })
+    }
+  })
+}, { threshold: 0.2 })
+
+document.querySelectorAll('#analytics-skills, #design-skills').forEach(el => observer.observe(el))
+
+// ── Navbar scroll ───────────────────────────────────────────────────
+let lastScroll = 0
+const navbar = document.querySelector('.navbar')
+
+// ── Responsive tweaks ───────────────────────────────────────────────
+function applyResponsive() {
+  const w = window.innerWidth
+  // About grid
+  const ag = document.querySelector('.about-grid')
+  if (ag) ag.style.gridTemplateColumns = w < 1024 ? '1fr' : '1fr 1fr'
+  // Projects grid
+  const pg = document.querySelector('.projects-grid')
+  if (pg) pg.style.gridTemplateColumns = w < 768 ? '1fr' : w < 1024 ? '1fr 1fr' : 'repeat(3,1fr)'
+  // Blog grid
+  const bg = document.querySelector('.blog-grid')
+  if (bg) bg.style.gridTemplateColumns = w < 768 ? '1fr' : w < 1024 ? '1fr 1fr' : 'repeat(3,1fr)'
+  // Skills grid
+  const sg = document.querySelector('.skills-grid')
+  if (sg) sg.style.gridTemplateColumns = w < 1024 ? '1fr' : '1fr 1fr'
+  // Footer grid
+  const fg = document.querySelector('.footer-grid')
+  if (fg) fg.style.gridTemplateColumns = w < 768 ? '1fr 1fr' : w < 1024 ? '1fr 1fr 1fr' : '2fr 1fr 1fr 1fr'
+}
+
+applyResponsive()
+window.addEventListener('resize', applyResponsive)
+</script>
+</body>
+</html>

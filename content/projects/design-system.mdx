@@ -1,0 +1,190 @@
+---
+title: "Brand Design System"
+shortDescription: "Comprehensive design system and component library for a SaaS startup — from design tokens to full documentation."
+category: design
+tags: ["Design System", "Component Library", "Figma", "Storybook", "UI/UX"]
+tools: ["Figma", "Storybook", "React", "Tailwind CSS", "Design Tokens"]
+coverImage: "https://placehold.co/1200x630/0F1629/00FFB3?text=Design+System"
+results:
+  - "200+ components documented and built"
+  - "40% reduction in design-to-dev handoff time"
+  - "Used by a team of 6 across 8 products"
+  - "Accessibility score improved from 62 to 94"
+impact: "200+ components · 40% faster delivery · 6-person team"
+year: "2022"
+featured: true
+published: true
+---
+
+## The Challenge
+
+A B2B SaaS startup had grown from 3 to 25 people over 18 months. What started as a single product was now 3 separate web apps and a mobile app — each built by different contractors with different design decisions.
+
+The result: 8 different button styles, 4 conflicting colour palettes, inconsistent typography, and a team spending 30% of design time on "pixel pushing" rather than product thinking.
+
+They needed a design system.
+
+---
+
+## Approach
+
+### Phase 1: Audit (Week 1–2)
+
+I audited all three web products and the mobile app:
+
+- **UI inventory**: Every unique button, form element, card, modal, and navigation pattern
+- **Colour usage**: All hex values in use across the products (result: 94 unique colours)
+- **Typography**: All font/size/weight combinations in use (result: 47 unique combinations)
+- **Spacing**: All margin/padding values (result: no discernible pattern)
+
+The audit revealed that most inconsistency wasn't intentional — it was entropy. Designers and developers making micro-decisions independently, with no shared reference.
+
+### Phase 2: Foundation — Design Tokens
+
+Before building any components, I established the design tokens:
+
+**Colour Palette**
+
+```
+Brand
+├── Primary: #2563EB         (vivid blue)
+├── Primary-light: #DBEAFE   (10% primary)
+├── Primary-dark: #1E40AF    (pressed state)
+
+Neutral
+├── 50: #F8FAFC
+├── 100: #F1F5F9
+├── 200: #E2E8F0
+├── ...
+└── 950: #0F172A
+
+Semantic
+├── success: #10B981
+├── warning: #F59E0B
+├── error: #EF4444
+└── info: #3B82F6
+```
+
+**Typography Scale**
+
+```
+Display   64px / 700 / -0.04em
+H1        48px / 700 / -0.03em
+H2        36px / 700 / -0.03em
+H3        28px / 600 / -0.02em
+H4        22px / 600
+Body-lg   18px / 400 / 1.75
+Body      16px / 400 / 1.7
+Body-sm   14px / 400 / 1.6
+Caption   12px / 500 / tracking-wide
+```
+
+**Spacing Scale (4px base)**
+
+```
+1:  4px    5: 20px   9:  36px
+2:  8px    6: 24px   10: 40px
+3: 12px    7: 28px   12: 48px
+4: 16px    8: 32px   16: 64px
+```
+
+**Elevation / Shadow System**
+
+```
+elevation-0: none (base surface)
+elevation-1: 0 1px 2px rgba(0,0,0,0.05) (subtle lift)
+elevation-2: 0 4px 6px rgba(0,0,0,0.07) (cards)
+elevation-3: 0 10px 15px rgba(0,0,0,0.1) (dropdowns)
+elevation-4: 0 20px 25px rgba(0,0,0,0.1) (modals)
+```
+
+### Phase 3: Component Architecture
+
+Components were built in three tiers:
+
+**Tier 1: Primitives** (atoms)
+- Button (6 variants × 3 sizes)
+- Input, Textarea, Select
+- Checkbox, Radio, Toggle
+- Badge, Tag, Chip
+- Avatar, Icon
+- Divider, Spacer
+
+**Tier 2: Compositions** (molecules)
+- Form Field (label + input + error)
+- Search Bar
+- Card (header + body + footer)
+- Alert / Toast
+- Modal / Drawer
+- Dropdown Menu
+- Tooltip
+
+**Tier 3: Patterns** (organisms)
+- Data Table (sortable, paginated, selectable)
+- Navigation (sidebar + topbar)
+- Empty State
+- Loading State / Skeleton
+- Form layouts
+- Dashboard cards
+
+### Phase 4: Documentation
+
+Each component in Figma includes:
+
+- **Usage guidelines**: When to use vs. alternatives
+- **Anatomy**: Every element labeled
+- **States**: Default, hover, focus, active, disabled, error
+- **Variants**: All props documented as Figma variants
+- **Accessibility notes**: ARIA roles, keyboard interactions, contrast ratios
+- **Code snippet**: Copy-paste React + Tailwind implementation
+
+In Storybook, every component has:
+- Stories for every variant and state
+- Interactive controls (Storybook Controls)
+- Accessibility audit (Storybook A11y plugin)
+- Design tokens displayed inline
+
+---
+
+## The Token Pipeline
+
+One of the most impactful architectural decisions was connecting Figma tokens directly to code:
+
+```
+Figma (Tokens Studio plugin)
+      ↓  export JSON
+Style Dictionary (transform & build)
+      ↓
+CSS Custom Properties + Tailwind preset + JS constants
+      ↓
+Component Library (React + Tailwind)
+      ↓
+Product Apps
+```
+
+When a colour value changes in Figma, running `npm run tokens:build` updates the design tokens across all apps automatically. No more manual sync.
+
+---
+
+## Results
+
+| Metric | Before | After |
+|---|---|---|
+| Unique colours in production | 94 | 24 |
+| Typography combinations | 47 | 12 |
+| Design-to-dev handoff time | ~3 days avg | ~1.5 days avg |
+| Accessibility score | 62 | 94 |
+| Designer onboarding time | 2 weeks | 3 days |
+| Component reuse rate | ~20% | ~78% |
+
+The most unexpected benefit: **engineering velocity**. Developers reported spending significantly less time on styling decisions when a clear component existed. The design system became the source of truth, not the wireframe.
+
+---
+
+## What I'd Do Differently
+
+**Start with the hardest component.** I built buttons first (always easy), but the data table was 10× harder and took twice as long. Starting with the complex components forces you to solve hard architectural problems early.
+
+**Involve developers in token naming.** The token names I created made sense to a designer. Developers renamed half of them during implementation. Do it together from the start.
+
+**Build the governance model before you build the system.** Who approves new components? Who owns the Figma file? Who writes the Storybook stories? Answering these questions late causes political problems.

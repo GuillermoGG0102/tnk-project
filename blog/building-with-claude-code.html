@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>I Built My Entire Portfolio with Claude Code — Here's What Happened | TNK</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body{background:#0A0F1E;color:#F0F4FF;font-family:'Inter',sans-serif;margin:0;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;}
+  .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);}
+  .prose{color:#8A9CC8;line-height:1.85;font-size:17px;}
+  .prose h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:#F0F4FF;letter-spacing:-0.03em;margin:2.5em 0 0.75em;}
+  .prose h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:#F0F4FF;margin:2em 0 0.6em;}
+  .prose p{margin:0 0 1.4em;}
+  .prose strong{color:#F0F4FF;font-weight:600;}
+  .prose em{color:#C0CBE8;font-style:italic;}
+  .prose ul,.prose ol{padding-left:1.5rem;margin-bottom:1.5em;}
+  .prose li{margin-bottom:0.7em;}
+  .prose hr{border:none;border-top:1px solid rgba(255,255,255,0.08);margin:3em 0;}
+  .prose pre{background:#0d1528;border:1px solid rgba(0,207,255,0.15);border-radius:12px;padding:20px 24px;overflow-x:auto;margin:1.5em 0;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.8;color:#F0F4FF;}
+  .prose code{font-family:'JetBrains Mono',monospace;font-size:13px;padding:2px 7px;background:#162038;border-radius:4px;color:#00FFB3;}
+  .prose pre code{background:transparent;padding:0;}
+  .prose blockquote{border-left:3px solid #00CFFF;margin:1.5em 0;padding:14px 20px 14px 22px;background:rgba(0,207,255,0.04);border-radius:0 10px 10px 0;}
+  .prose blockquote p{margin:0;color:#C0CBE8;font-size:16px;font-style:italic;}
+  .tag-primary{background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
+  .tag-neutral{background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
+  .tag-accent{background:rgba(0,255,179,0.1);color:#00FFB3;border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
+  /* Stat cards */
+  .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:2em 0;}
+  .stat-box{background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:20px 18px;text-align:center;}
+  .stat-box .num{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;letter-spacing:-0.03em;margin-bottom:4px;}
+  .stat-box .label{font-size:12px;color:#4D5E87;}
+  /* Timeline */
+  .timeline{display:flex;flex-direction:column;gap:0;margin:2em 0;}
+  .tl-item{display:flex;gap:18px;padding-bottom:28px;position:relative;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px;position:relative;z-index:1;}
+  .tl-item:not(:last-child) .tl-dot::after{content:'';position:absolute;left:4px;top:14px;width:1px;height:calc(100% + 18px);background:rgba(255,255,255,0.08);}
+  .tl-content .tl-step{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 4px 0;}
+  .tl-content .tl-title{font-size:15px;font-weight:600;color:#F0F4FF;margin:0 0 5px 0;font-family:'Space Grotesk',sans-serif;}
+  .tl-content .tl-desc{font-size:13px;color:#8A9CC8;margin:0;line-height:1.6;}
+  /* Callout */
+  .callout-green{background:rgba(0,255,179,0.06);border-left:3px solid #00FFB3;border-radius:0 10px 10px 0;padding:16px 20px;margin:1.5em 0;}
+  .callout-green p{margin:0;color:#8A9CC8;font-size:15px;}
+  .callout-green strong{color:#00FFB3;}
+  /* Hero visual */
+  .hero-terminal{background:#0d1528;border:1px solid rgba(0,207,255,0.15);border-radius:16px;overflow:hidden;margin-bottom:48px;}
+  .terminal-bar{background:#162038;padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.06);}
+  .terminal-dot{width:10px;height:10px;border-radius:50%;}
+  .terminal-body{padding:24px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.9;}
+  .t-prompt{color:#4D5E87;}
+  .t-cmd{color:#00CFFF;}
+  .t-out{color:#8A9CC8;}
+  .t-green{color:#00FFB3;}
+  .t-pink{color:#FF52B9;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  .fade-up{animation:fadeUp 0.55s ease forwards;}
+  .fade-up-1{animation-delay:0.05s;opacity:0;}
+  .fade-up-2{animation-delay:0.15s;opacity:0;}
+  @media(max-width:640px){.stat-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <nav style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="../fotossss/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
+      </a>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <a href="../index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
+        <a href="../projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.right.background='transparent'">Projects</a>
+        <a href="../blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
+        <a href="../contact.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div style="max-width:780px;margin:0 auto;padding:110px 24px 80px;">
+
+  <a href="../blog.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#8A9CC8;text-decoration:none;margin-bottom:40px;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">← Back to Blog</a>
+
+  <!-- Meta -->
+  <div class="fade-up fade-up-1" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:20px;">
+    <span class="tag-accent">Dev</span>
+    <span class="tag-neutral">AI</span>
+    <span class="tag-neutral">Claude Code</span>
+    <span style="font-size:12px;color:#4D5E87;font-family:'JetBrains Mono',monospace;">7 min read</span>
+    <span style="font-size:12px;color:#4D5E87;">·</span>
+    <time style="font-size:12px;color:#4D5E87;">2025</time>
+  </div>
+
+  <div class="fade-up fade-up-1">
+    <h1 style="font-size:clamp(28px,4vw,46px);font-weight:700;letter-spacing:-0.04em;color:#F0F4FF;margin:0 0 18px 0;line-height:1.15;">I Built My Entire Portfolio with Claude Code.<br/><span style="background:linear-gradient(90deg,#00CFFF,#00FFB3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Here's What Happened.</span></h1>
+    <p style="font-size:19px;color:#8A9CC8;line-height:1.75;margin:0 0 40px 0;">No boilerplate. No templates. No hand-coding. Just a terminal, a clear brief, and an AI agent that built everything you're looking at right now — from scratch.</p>
+  </div>
+
+  <!-- Terminal hero -->
+  <div class="hero-terminal fade-up fade-up-2">
+    <div class="terminal-bar">
+      <div class="terminal-dot" style="background:#FF5F57;"></div>
+      <div class="terminal-dot" style="background:#FFBD2E;"></div>
+      <div class="terminal-dot" style="background:#28C840;"></div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#4D5E87;margin-left:8px;">claude — WEBPROYECT</span>
+    </div>
+    <div class="terminal-body">
+      <div><span class="t-prompt">~/WEBPROYECT </span><span class="t-cmd">claude</span></div>
+      <div style="margin-top:8px;"><span class="t-out">✓ Claude Code initialized</span></div>
+      <div><span class="t-out">✓ Reading CLAUDE.md...</span></div>
+      <div style="margin-top:8px;"><span class="t-prompt">▸ </span><span class="t-out">Build a modern personal portfolio website. Dark navy. Electric blue + neon green accents. Space Grotesk headings, Inter body. Multi-page: Home, Blog, Projects, Contact. Real job history, real photos, real content.</span></div>
+      <div style="margin-top:8px;">
+        <span class="t-green">✓ index.html created</span><br/>
+        <span class="t-green">✓ blog.html created</span><br/>
+        <span class="t-green">✓ projects.html created</span><br/>
+        <span class="t-green">✓ contact.html created</span><br/>
+        <span class="t-green">✓ 5 project detail pages</span><br/>
+        <span class="t-green">✓ 4 blog article pages</span><br/>
+        <span class="t-pink">→ All navigation linked. All assets wired. Fully functional.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stat-grid fade-up fade-up-2">
+    <div class="stat-box">
+      <div class="num" style="color:#00CFFF;">13+</div>
+      <div class="label">HTML pages built</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" style="color:#00FFB3;">0</div>
+      <div class="label">Lines hand-coded</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" style="color:#FF52B9;">100%</div>
+      <div class="label">Claude Code</div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="prose">
+
+    <h2>The starting point</h2>
+    <p>I needed a personal site. Portfolio, blog, contact form — the usual. The kind of thing that would normally take a weekend of fighting with CSS frameworks, fiddling with component libraries, and wrestling with deployment configs.</p>
+    <p>Instead, I opened a terminal and typed <code>claude</code>.</p>
+    <p>What followed was one of the most interesting creative processes I've been through. Not because the AI did everything automatically — but because of <em>how the collaboration worked</em>. I directed. Claude built. I reviewed, corrected, and refined. It felt less like using a tool and more like working with a very capable developer who never needed sleep.</p>
+
+    <hr />
+
+    <h2>How it was built</h2>
+    <p>The build happened across multiple conversations, each focused on a specific piece of the site. Here's roughly the sequence:</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#00CFFF;"></div>
+        <div class="tl-content">
+          <p class="tl-step" style="color:#00CFFF;">Session 1</p>
+          <p class="tl-title">Full scaffold + home page</p>
+          <p class="tl-desc">Navbar, hero section, about, experience timeline, featured projects, skills bars, blog preview, contact CTA, footer. All in one shot from a detailed brief.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#00FFB3;"></div>
+        <div class="tl-content">
+          <p class="tl-step" style="color:#00FFB3;">Session 2</p>
+          <p class="tl-title">All missing pages</p>
+          <p class="tl-desc">Blog listing, project listing, blog article pages, project detail pages, contact page — including internal navigation between all of them.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#FF52B9;"></div>
+        <div class="tl-content">
+          <p class="tl-step" style="color:#FF52B9;">Session 3+</p>
+          <p class="tl-title">Real content + refinements</p>
+          <p class="tl-desc">Swapping placeholders for real assets: actual logo PNG, real portrait photo, real job history with company logos, real project descriptions, and this very blog post.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>What Claude Code actually does</h2>
+    <p>If you haven't used it: Claude Code is Anthropic's CLI tool that runs in your terminal and has direct access to your filesystem. It can read files, write files, search the codebase, run commands, and maintain context across a session.</p>
+    <p>The key difference from a chat interface is <strong>agency</strong>. You don't copy-paste code snippets back and forth. You describe what you want, and Claude reads the existing files, decides what to change, and makes the edits directly. It's the difference between a consultant who emails you a document and one who sits next to you and works in your codebase.</p>
+
+    <div class="callout-green">
+      <p><strong>The mental model that worked for me:</strong> treat Claude Code like a senior developer joining your project. Give it context, give it constraints, give it real content — and get out of the way.</p>
+    </div>
+
+    <h2>What it got right immediately</h2>
+    <ul>
+      <li><strong>Design consistency.</strong> I gave the design system upfront (colors, fonts, spacing tokens) and it held to them religiously across every page and every session. No color drift, no font inconsistencies.</li>
+      <li><strong>Component reuse.</strong> The navbar, footer, and card patterns are identical across all pages — built once and replicated with precision.</li>
+      <li><strong>Responsive behavior.</strong> Every page handles mobile, tablet, and desktop. It added JavaScript grid-switching automatically, without being asked, because it knew that was appropriate for a static HTML site.</li>
+      <li><strong>Real content integration.</strong> When I said "use the photo from the ME folder" or "use logos from LOGOS", it found the files, used the right relative paths, and handled edge cases like <code>object-position: center top</code> to keep the face in frame.</li>
+    </ul>
+
+    <h2>The moments that surprised me</h2>
+    <p>A few things stood out that I didn't expect from an AI building frontend:</p>
+    <p><strong>It read the brief and inferred intent.</strong> When I described the experience section, it didn't just list jobs — it added a "Current" badge with an animated dot for the active role, made older roles visually dimmer, and used white-background tiles for the logos so they'd render cleanly on a dark background. None of that was in my instructions.</p>
+    <p><strong>It maintained project memory.</strong> Across different sessions, it remembered the design system, the file structure, and the established patterns. It didn't ask me to repeat myself.</p>
+    <p><strong>It handled the meta.</strong> When I asked it to write a blog post about building the site with Claude Code... it wrote this.</p>
+
+    <h2>What required iteration</h2>
+    <p>Not everything was one-shot. A few things needed back-and-forth:</p>
+    <ul>
+      <li><strong>Internal navigation.</strong> The first version had <code>href="#"</code> placeholders throughout. I had to explicitly ask it to wire up all the links to real pages — which it then did comprehensively across every file.</li>
+      <li><strong>Content accuracy.</strong> Placeholder content (fake job titles, invented companies) needed replacing with real information. That's on me — you get out what you put in. The more real context I gave, the better the output.</li>
+      <li><strong>Deletions.</strong> Removing entire sections (like the A/B Testing project) required explicit instruction. It doesn't self-edit without direction.</li>
+    </ul>
+
+    <hr />
+
+    <h2>What this means for how I work</h2>
+    <p>I'm a Digital Analytics Engineer. My day job is implementing tracking, building measurement frameworks, and making data useful. I'm not a frontend developer. And yet, I now have a custom-built portfolio site with a consistent design system, multiple pages, real content, and no technical debt.</p>
+    <p>That's the actual story here. Not "AI replaces developers" — it doesn't, and this site isn't a production Next.js app with a CMS and auth. But for someone who knows what they want and can communicate it clearly, <strong>Claude Code dramatically lowers the barrier between idea and working product</strong>.</p>
+    <p>The skill that mattered most wasn't coding. It was brief-writing. Being precise about what I wanted. Knowing when to push back on an output. Understanding the structure well enough to review the work.</p>
+
+    <blockquote>
+      <p>The future of building things isn't no-code. It's better-briefed.</p>
+    </blockquote>
+
+    <h2>Try it yourself</h2>
+    <p>If you're curious, Claude Code is available as a CLI tool from Anthropic. The workflow is: <code>npm install -g @anthropic-ai/claude-code</code>, then <code>claude</code> in your project directory. Start with a <code>CLAUDE.md</code> file that defines your design system and conventions — it makes a significant difference in output quality.</p>
+    <p>Everything you're looking at — the design, the content, the structure, the navigation — was built in that terminal. The only things I brought were the brief, the assets, and the judgment to know when it was right.</p>
+
+  </div>
+
+  <!-- Author -->
+  <div style="margin-top:52px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <img src="../ME/MOA__RETRATOS_183.jpg" alt="Guillermo García" style="width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(0,207,255,0.25);" />
+      <div>
+        <p style="font-size:14px;font-weight:600;color:#F0F4FF;margin:0 0 2px 0;">Guillermo García</p>
+        <p style="font-size:12px;color:#4D5E87;margin:0;">Digital Analytics Engineer · TNK</p>
+      </div>
+    </div>
+    <a href="../blog.html" style="font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">← All posts</a>
+  </div>
+
+  <!-- Related -->
+  <div style="margin-top:48px;">
+    <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#4D5E87;margin:0 0 16px 0;">You might also like</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;" id="related-grid">
+      <a href="datalayer-medicion-robusta.html" style="display:block;background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:18px;text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+        <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00CFFF;">Analytics</span>
+        <p style="font-size:14px;font-weight:600;color:#F0F4FF;margin:8px 0 4px 0;line-height:1.4;">dataLayer: La Clave de una Medición Robusta</p>
+        <span style="font-size:12px;color:#4D5E87;">Read →</span>
+      </a>
+      <a href="getting-started-with-ga4.html" style="display:block;background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:18px;text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+        <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00FFB3;">Analytics</span>
+        <p style="font-size:14px;font-weight:600;color:#F0F4FF;margin:8px 0 4px 0;line-height:1.4;">Getting Started with GA4</p>
+        <span style="font-size:12px;color:#4D5E87;">Read →</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer style="border-top:1px solid rgba(255,255,255,0.06);padding:40px 0;margin-top:40px;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <p style="font-size:13px;color:#4D5E87;margin:0;">© 2024 Guillermo García — TNK Design & Analytics</p>
+    <div style="display:flex;gap:20px;"><a href="../index.html" style="font-size:13px;color:#4D5E87;text-decoration:none;">Home</a><a href="../blog.html" style="font-size:13px;color:#4D5E87;text-decoration:none;">Blog</a><a href="../contact.html" style="font-size:13px;color:#4D5E87;text-decoration:none;">Contact</a></div>
+  </div>
+</footer>
+
+<script>
+function setGrid(){
+  const w = window.innerWidth;
+  const r = document.getElementById('related-grid');
+  if(r) r.style.gridTemplateColumns = w < 560 ? '1fr' : '1fr 1fr';
+}
+setGrid(); window.addEventListener('resize', setGrid);
+</script>
+</body>
+</html>

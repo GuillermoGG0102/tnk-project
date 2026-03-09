@@ -1,0 +1,263 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Google Fonts ─────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ─── CSS Custom Properties ────────────────────────────────────── */
+:root {
+  --color-bg:        #0A0F1E;
+  --color-surface:   #0F1629;
+  --color-elevated:  #162038;
+  --color-floating:  #1C2A4A;
+  --color-primary:   #00CFFF;
+  --color-accent:    #00FFB3;
+  --color-text:      #F0F4FF;
+  --color-muted:     #8A9CC8;
+  --color-subtle:    #4D5E87;
+  --color-border:    rgba(255,255,255,0.08);
+  --color-border-2:  rgba(255,255,255,0.12);
+}
+
+/* Light mode overrides */
+.light {
+  --color-bg:        #F4F7FF;
+  --color-surface:   #FFFFFF;
+  --color-elevated:  #EEF2FF;
+  --color-floating:  #E4ECFF;
+  --color-primary:   #006B9E;
+  --color-accent:    #008A5E;
+  --color-text:      #0A0F1E;
+  --color-muted:     #4D5E87;
+  --color-subtle:    #8A9CC8;
+  --color-border:    rgba(0,0,0,0.08);
+  --color-border-2:  rgba(0,0,0,0.12);
+}
+
+/* ─── Base Reset ────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--color-text);
+  }
+
+  ::selection {
+    background-color: rgba(0, 207, 255, 0.2);
+    color: var(--color-text);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-2);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+  }
+}
+
+/* ─── Utility Classes ───────────────────────────────────────────── */
+@layer utilities {
+  .text-gradient-primary {
+    background: linear-gradient(135deg, #00CFFF 0%, #00FFB3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-noise {
+    position: relative;
+  }
+  .bg-noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .surface-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
+  }
+
+  .surface-elevated {
+    background: var(--color-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 20px rgba(0, 207, 255, 0.2), 0 0 40px rgba(0, 207, 255, 0.08);
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 20px rgba(0, 255, 179, 0.2), 0 0 40px rgba(0, 255, 179, 0.08);
+  }
+
+  .border-gradient {
+    border: 1px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .focus-ring {
+    outline: none;
+  }
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .section-padding {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: 7rem;
+      padding-bottom: 7rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-padding {
+      padding-top: 9rem;
+      padding-bottom: 9rem;
+    }
+  }
+}
+
+/* ─── MDX Prose Styles ──────────────────────────────────────────── */
+.prose-tnk {
+  color: var(--color-text);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.8;
+  font-size: 1.0625rem;
+}
+
+.prose-tnk h1,
+.prose-tnk h2,
+.prose-tnk h3,
+.prose-tnk h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.03em;
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  color: var(--color-text);
+}
+
+.prose-tnk h2 { font-size: 1.875rem; }
+.prose-tnk h3 { font-size: 1.5rem; }
+
+.prose-tnk p {
+  margin-bottom: 1.5em;
+  color: var(--color-muted);
+}
+
+.prose-tnk a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-color: rgba(0,207,255,0.3);
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+.prose-tnk a:hover {
+  text-decoration-color: var(--color-primary);
+}
+
+.prose-tnk code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875em;
+  padding: 0.125em 0.375em;
+  background: var(--color-elevated);
+  border-radius: 4px;
+  color: var(--color-accent);
+}
+
+.prose-tnk pre {
+  background: var(--color-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin-bottom: 1.5em;
+}
+
+.prose-tnk pre code {
+  background: transparent;
+  padding: 0;
+  color: var(--color-text);
+}
+
+.prose-tnk blockquote {
+  border-left: 3px solid var(--color-primary);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+.prose-tnk ul,
+.prose-tnk ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5em;
+  color: var(--color-muted);
+}
+
+.prose-tnk li { margin-bottom: 0.5em; }
+
+.prose-tnk hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 3rem 0;
+}
+
+.prose-tnk img {
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+}
+
+/* ─── Page transition ───────────────────────────────────────────── */
+.page-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}

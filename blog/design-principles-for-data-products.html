@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Design Principles for Data Products | TNK – Design & Analytics</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { background:#0A0F1E; color:#F0F4FF; font-family:'Inter',sans-serif; margin:0; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; }
+  .navbar { position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06); }
+  .card { background:#0F1629; border:1px solid rgba(255,255,255,0.07); border-radius:14px; }
+  .tag-primary { background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-neutral { background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-accent { background:rgba(0,255,179,0.1);color:#00FFB3;border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .text-gradient { background:linear-gradient(135deg,#00CFFF,#00FFB3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+  .prose { color:#8A9CC8; line-height:1.8; font-size:17px; }
+  .prose h2 { font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#F0F4FF;letter-spacing:-0.03em;margin:2.5em 0 0.75em; }
+  .prose h3 { font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#F0F4FF;letter-spacing:-0.02em;margin:2em 0 0.6em; }
+  .prose p { margin:0 0 1.4em; }
+  .prose strong { color:#F0F4FF;font-weight:600; }
+  .prose em { color:#F0F4FF;font-style:italic; }
+  .prose a { color:#00CFFF;text-decoration:underline;text-decoration-color:rgba(0,207,255,0.3); }
+  .prose ul,.prose ol { padding-left:1.5rem;margin-bottom:1.5em; }
+  .prose li { margin-bottom:0.5em; }
+  .prose hr { border:none;border-top:1px solid rgba(255,255,255,0.08);margin:3em 0; }
+  .prose blockquote { border-left:3px solid #00CFFF;padding-left:1.5rem;margin:2em 0;font-style:italic;color:#8A9CC8; }
+  .prose pre { background:#162038;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px 24px;overflow-x:auto;margin:1.5em 0;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.6;color:#F0F4FF; }
+  .prose code { font-family:'JetBrains Mono',monospace;font-size:13px;padding:2px 6px;background:#162038;border-radius:4px;color:#00FFB3; }
+  .prose pre code { background:transparent;padding:0;color:#F0F4FF; }
+  .prose table { width:100%;border-collapse:collapse;margin:2em 0; }
+  .prose th { background:#162038;color:#F0F4FF;font-weight:600;font-size:13px;padding:10px 14px;text-align:left;border:1px solid rgba(255,255,255,0.08); }
+  .prose td { padding:10px 14px;border:1px solid rgba(255,255,255,0.06);font-size:14px; }
+  .prose tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+  .fade-up { animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <nav style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="../fotossss/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
+      </a>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <a href="../index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
+        <a href="../projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="../blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
+        <a href="../contact.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div style="max-width:780px;margin:0 auto;padding:110px 24px 80px;">
+
+  <a href="../blog.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#8A9CC8;text-decoration:none;margin-bottom:40px;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">← Back to Blog</a>
+
+  <div class="fade-up">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:20px;">
+      <span class="tag-primary">Design</span>
+      <span style="font-size:12px;color:#4D5E87;display:flex;align-items:center;gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>7 min read</span>
+      <span style="font-size:12px;color:#4D5E87;">Feb 15, 2024</span>
+    </div>
+    <h1 style="font-size:clamp(28px,4.5vw,46px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:#F0F4FF;margin:0 0 20px 0;">Design Principles for Data Products: Making Dashboards People Actually Use</h1>
+    <p style="font-size:19px;color:#8A9CC8;line-height:1.7;margin:0 0 36px 0;">Most dashboards are never used after the first week. Here's the design framework I use to build data products that stick.</p>
+  </div>
+
+  <div style="border-radius:18px;overflow:hidden;margin-bottom:44px;border:1px solid rgba(255,255,255,0.07);">
+    <img src="https://placehold.co/1200x600/0F1629/00FFB3?text=Data+Design" style="width:100%;display:block;" />
+  </div>
+
+  <div class="card" style="display:flex;align-items:center;gap:14px;padding:16px 20px;margin-bottom:52px;">
+    <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00CFFF,#00FFB3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#0A0F1E;font-size:16px;">G</span></div>
+    <div><div style="font-weight:600;font-size:14px;color:#F0F4FF;">Guillermo García</div><div style="font-size:12px;color:#8A9CC8;">Digital Analytics Specialist & Designer</div></div>
+  </div>
+
+  <div class="prose">
+    <p>I've built hundreds of dashboards. And I can tell you with confidence that most of them will be forgotten within a month.</p>
+    <p>Not because the data is wrong. Not because the metrics are irrelevant. But because the <em>experience</em> of using them is painful.</p>
+    <p>This post is about applying design thinking to data products — the principles I follow to make dashboards people actually open every morning.</p>
+
+    <hr />
+
+    <h2>The Problem with Most Dashboards</h2>
+    <p>Before we fix it, let's diagnose it. The typical enterprise dashboard fails for one of these reasons:</p>
+    <ol>
+      <li><strong>It answers questions nobody asked.</strong> Built by analytics teams for analytics teams, not for the person making decisions.</li>
+      <li><strong>It shows everything, decides nothing.</strong> 40 KPIs, 8 charts, 3 date pickers. No hierarchy, no narrative.</li>
+      <li><strong>It's slow to load.</strong> Nothing kills a habit faster than a 12-second load time.</li>
+      <li><strong>It doesn't match the mental model.</strong> The layout doesn't match how the user thinks about the business.</li>
+    </ol>
+    <p>Good dashboard design is fundamentally about <em>empathy</em> with the person reading it.</p>
+
+    <hr />
+
+    <h2>Principle 1: Design for the Decision, Not the Data</h2>
+    <p>Before opening Figma or Looker, ask: <strong>what decision does this dashboard support?</strong></p>
+    <p>Every chart, metric, and filter should serve that decision. If you can't explain how a visual element helps someone decide something, remove it.</p>
+    <blockquote>"A dashboard is not a data inventory. It's a decision support tool."</blockquote>
+    <p><strong>Practical exercise:</strong> Write one sentence at the top of your design doc: <em>"This dashboard helps [person] decide [decision] by showing [key metrics]."</em></p>
+
+    <h2>Principle 2: Apply the 3-Second Rule</h2>
+    <p>A user should understand the key insight of your dashboard within 3 seconds. This means:</p>
+    <ul>
+      <li><strong>One primary metric</strong> — the number that matters most, large and prominent</li>
+      <li><strong>Clear trend direction</strong> — up/down arrows, colour coding, sparklines</li>
+      <li><strong>Minimal cognitive load</strong> — less is more</li>
+    </ul>
+    <p>The order of visual hierarchy should match the importance hierarchy of the business:</p>
+    <pre><code>Level 1 (first 3 seconds):  North Star metric + trend
+Level 2 (next 10 seconds):  Key performance areas
+Level 3 (exploration):       Detail, filters, drill-downs</code></pre>
+
+    <h2>Principle 3: Use Colour with Restraint and Purpose</h2>
+    <p>Colour is the most abused element in data visualisation. My ruleset:</p>
+    <p><strong>Do:</strong></p>
+    <ul>
+      <li>Use colour to encode categorical differences</li>
+      <li>Use colour to indicate status (green = good, red = bad)</li>
+      <li>Use a consistent, brand-aligned palette</li>
+    </ul>
+    <p><strong>Don't:</strong></p>
+    <ul>
+      <li>Use more than 5–6 colours in a single chart</li>
+      <li>Use colour just to make it look "interesting"</li>
+    </ul>
+    <p>My go-to palette for dark dashboards:</p>
+    <pre><code>Primary metric:    #00CFFF  (electric blue)
+Secondary metric:  #00FFB3  (neon green)
+Warning:           #FFBE6A  (amber)
+Critical:          #FF6B6B  (coral red)
+Neutral:           #8A9CC8  (muted blue-grey)</code></pre>
+
+    <h2>Principle 4: Typography as Information Architecture</h2>
+    <p>Create a deliberate type hierarchy:</p>
+    <table>
+      <tr><th>Level</th><th>Size</th><th>Weight</th><th>Purpose</th></tr>
+      <tr><td>Display</td><td>48–64px</td><td>Bold</td><td>North Star KPI value</td></tr>
+      <tr><td>Headline</td><td>24–32px</td><td>Bold</td><td>Section headers</td></tr>
+      <tr><td>Body</td><td>14–16px</td><td>Regular</td><td>Labels, explanations</td></tr>
+      <tr><td>Caption</td><td>11–12px</td><td>Medium</td><td>Axis labels, timestamps</td></tr>
+    </table>
+
+    <h2>Principle 5: Tell a Story with Layout</h2>
+    <p>The <strong>F-pattern</strong> (for dense, report-style layouts): put the most important metrics in the top row, supporting context in the left column, use bold text to create visual anchors for scanning.</p>
+    <p>The <strong>Z-pattern</strong> (for hero-style dashboards): top-left primary KPI, top-right context, bottom-left secondary metric, bottom-right CTA or drill-down.</p>
+
+    <h2>Principle 6: Make the Loading State Beautiful</h2>
+    <p>Slow dashboards kill engagement. Two strategies:</p>
+    <ul>
+      <li><strong>Optimise the query:</strong> use aggregated tables, pre-compute common date ranges, cache frequently-accessed results.</li>
+      <li><strong>Design skeleton states:</strong> show content placeholders with a shimmer animation while data loads. Never show a blank screen.</li>
+    </ul>
+
+    <hr />
+
+    <h2>The Best Dashboard is Often Simpler Than You Think</h2>
+    <p>The dashboards I'm proudest of are usually the simplest ones. One screen. One primary metric. Three supporting charts. A clean date selector.</p>
+    <p>The hardest part of dashboard design isn't adding things. It's knowing what to remove.</p>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.07);">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4D5E87" stroke-width="2" style="margin-top:3px;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+    <span class="tag-neutral">Design</span><span class="tag-neutral">Data Visualisation</span><span class="tag-neutral">Dashboards</span><span class="tag-neutral">UX</span>
+  </div>
+
+  <div style="margin-top:56px;padding:40px;border-radius:24px;background:linear-gradient(135deg,#0F1629,#162038);border:1px solid rgba(255,255,255,0.08);text-align:center;">
+    <div style="width:44px;height:44px;border-radius:12px;background:rgba(0,207,255,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00CFFF" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#F0F4FF;margin:0 0 8px 0;">Enjoyed this post?</h3>
+    <p style="font-size:14px;color:#8A9CC8;max-width:380px;margin:0 auto 24px;line-height:1.6;">Get analytics insights and design experiments to your inbox. No spam, ever.</p>
+    <form style="display:flex;gap:10px;max-width:380px;margin:0 auto;" onsubmit="this.innerHTML='<p style=\'color:#00FFB3;font-size:14px;padding:10px;\'>✓ You\'re subscribed!</p>';return false;">
+      <input type="email" required placeholder="your@email.com" style="flex:1;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F0F4FF;font-size:14px;font-family:'Inter',sans-serif;outline:none;" />
+      <button type="submit" style="padding:10px 20px;background:#00CFFF;color:#0A0F1E;font-weight:600;font-size:14px;border:none;border-radius:10px;cursor:pointer;font-family:'Inter',sans-serif;">Subscribe</button>
+    </form>
+  </div>
+
+  <div style="margin-top:64px;">
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:#F0F4FF;margin:0 0 24px 0;">Related posts</h2>
+    <div onclick="location.href='getting-started-with-ga4.html'" class="card" style="padding:24px;cursor:pointer;display:flex;gap:16px;align-items:center;" onmouseover="this.style.borderColor='rgba(255,255,255,0.14)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+      <img src="https://placehold.co/100x70/0F1629/00CFFF?text=GA4" style="width:100px;height:70px;object-fit:cover;border-radius:8px;flex-shrink:0;" />
+      <div>
+        <span style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#00FFB3;">Analytics</span>
+        <h4 style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F0F4FF;margin:6px 0 4px;line-height:1.35;">Getting Started with GA4: What Every Digital Marketer Needs to Know</h4>
+        <span style="font-size:12px;color:#4D5E87;">Mar 1, 2024 · 8 min read</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer style="border-top:1px solid rgba(255,255,255,0.06);padding:40px 0;margin-top:40px;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <p style="font-size:13px;color:#4D5E87;margin:0;">© 2024 Guillermo García — TNK Design & Analytics</p>
+    <div style="display:flex;gap:20px;">
+      <a href="../index.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Home</a>
+      <a href="../blog.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Blog</a>
+      <a href="../contact.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Contact</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

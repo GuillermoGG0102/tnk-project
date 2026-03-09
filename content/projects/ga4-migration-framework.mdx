@@ -1,0 +1,181 @@
+---
+title: "GA4 Migration Framework"
+shortDescription: "End-to-end migration strategy from Universal Analytics to GA4 for a 3M+ sessions/month e-commerce platform."
+description: "Comprehensive migration from UA to GA4, including custom event schema, GTM restructuring, BigQuery pipeline, and stakeholder reporting migration."
+category: analytics
+tags: ["GA4", "Google Analytics", "Migration", "E-commerce", "Measurement Strategy"]
+tools: ["Google Analytics 4", "Google Tag Manager", "BigQuery", "Looker Studio", "Python", "dbt"]
+coverImage: "https://placehold.co/1200x630/0F1629/00CFFF?text=GA4+Migration"
+results:
+  - "+40% data coverage vs previous UA setup"
+  - "Zero critical tracking gaps post-migration"
+  - "Delivered on schedule across 12-week roadmap"
+  - "8 stakeholder dashboards rebuilt in Looker Studio"
+impact: "+40% data coverage · 0 tracking gaps · Delivered on time"
+year: "2023"
+featured: true
+published: true
+---
+
+## The Problem
+
+A major e-commerce client — 3M+ monthly sessions, 8-figure annual revenue — was running on Universal Analytics with a fragile, undocumented tracking setup built over 5 years. When Google announced UA's sunset, they had 8 months to migrate.
+
+Their key challenges:
+
+- **600+ GTM tags** with no documentation or ownership
+- **No event naming convention** — every team used different schemas
+- **9 stakeholder dashboards** built on UA custom dimensions that wouldn't map to GA4
+- **Zero internal analytics capacity** to manage the migration
+
+---
+
+## Approach
+
+### Phase 1: Audit (Weeks 1–3)
+
+Before writing a single line of tracking code, I ran a complete audit:
+
+**GTM Container Audit**
+- Catalogued all 600+ tags, triggers, and variables
+- Identified 240 redundant/broken tags for removal
+- Mapped surviving tags to GA4 equivalents
+
+**Data Layer Audit**
+- Documented existing `dataLayer.push()` calls across the codebase
+- Identified gaps: add-to-cart, wishlist, and recommendation clicks had no tracking
+- Mapped e-commerce events to GA4's recommended event schema
+
+**Stakeholder Report Audit**
+- Interviewed all 9 report owners (Marketing, Product, Finance, SEO)
+- Catalogued every metric, dimension, and segment used
+- Prioritised by business criticality
+
+### Phase 2: Schema Design (Weeks 3–5)
+
+With the audit complete, I designed the new GA4 measurement framework:
+
+**Event Naming Convention**
+
+```
+{object}_{action}_{modifier}
+
+Examples:
+- product_view (standard)
+- cart_add (standard)
+- checkout_begin (standard)
+- search_result_click
+- recommendation_impression
+- filter_apply
+```
+
+**Custom Parameters Schema**
+
+Every event carries consistent parameters:
+
+```javascript
+// Core parameters (all events)
+{
+  session_id: '{{session_id}}',
+  user_type: 'logged_in | guest',
+  platform: 'web | mobile_web',
+  page_category: 'pdp | plp | cart | checkout | home',
+}
+
+// E-commerce parameters (transaction events)
+{
+  currency: 'EUR',
+  value: 249.99,
+  items: [{ item_id, item_name, item_category, price, quantity }]
+}
+```
+
+**Conversion Event Hierarchy**
+
+| Priority | Event | Description |
+|---|---|---|
+| P1 | `purchase` | Revenue-generating transaction |
+| P1 | `begin_checkout` | Checkout intent |
+| P2 | `add_to_cart` | Purchase intent |
+| P2 | `generate_lead` | Newsletter/account signup |
+| P3 | `search` | On-site search |
+
+### Phase 3: GTM Implementation (Weeks 5–9)
+
+I rebuilt the GTM container from scratch in a new workspace:
+
+**Container Architecture**
+
+```
+Variables/
+├── Constants/          (GA4 Measurement ID, environment flags)
+├── DataLayer/          (all datalayer variables, typed)
+├── JS/                 (computed variables, formatters)
+└── Auto-Event/         (click, scroll, visibility listeners)
+
+Tags/
+├── GA4/
+│   ├── Config          (base config tag)
+│   ├── Ecommerce/      (purchase, cart, checkout events)
+│   ├── Navigation/     (page_view, scroll, clicks)
+│   └── Engagement/     (search, filter, wishlist)
+└── Utilities/
+    └── DataLayer Push  (server-side enrichment)
+
+Triggers/
+├── Page Views/
+├── Ecommerce Events/
+└── Custom Events/
+```
+
+**QA Process**
+
+Each tag went through a 3-stage QA:
+1. **Dev environment** — GTM Preview Mode + GA4 DebugView
+2. **Staging** — automated data validation against expected schema
+3. **Production** — 48-hour parallel run comparing UA vs GA4 data
+
+### Phase 4: BigQuery Pipeline (Weeks 8–10)
+
+Connected GA4's raw export to BigQuery and built:
+
+- **Daily partitioned event tables** for cost-efficient querying
+- **dbt transformation layer** producing clean, analysis-ready tables
+- **Python scripts** for anomaly detection and automated data quality alerts
+
+### Phase 5: Dashboard Migration (Weeks 10–12)
+
+Rebuilt all 9 stakeholder reports in Looker Studio, connected to:
+- GA4 via native connector (real-time reports)
+- BigQuery via BI Engine (historical/complex reports)
+
+Each dashboard went through a **2-week parallel validation period** where stakeholders compared old UA numbers with new GA4 numbers and approved sign-off.
+
+---
+
+## Results
+
+| Metric | Before | After |
+|---|---|---|
+| Event coverage | 62% (estimated) | 97% |
+| GTM tags | 600+ (undocumented) | 180 (documented) |
+| Data quality alerts | None | Automated daily |
+| Dashboard load time | 8–12 seconds | <2 seconds |
+| Time to insight | 48 hours (manual) | Real-time |
+
+**Key wins beyond the numbers:**
+- Created an internal analytics wiki documenting the entire measurement framework
+- Trained 3 internal team members on GA4 and GTM basics
+- Established a monthly tracking audit process to prevent future tag bloat
+
+---
+
+## Lessons Learned
+
+1. **Audit before you build.** The upfront investment in a proper audit saved weeks of rework downstream.
+
+2. **Stakeholder buy-in is the hardest part.** The technical migration is solvable. Getting 9 teams to agree on a new data model is where projects fail.
+
+3. **Document everything as you go.** Tracking implementations decay quickly. A living document prevents a repeat of the "600 undocumented tags" situation.
+
+4. **Parallel run is non-negotiable.** Running GA4 alongside UA for 4 weeks before switching over built stakeholder trust and caught 3 significant discrepancies early.

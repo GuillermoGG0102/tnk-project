@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Blog | TNK – Design & Analytics</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { background:#0A0F1E; color:#F0F4FF; font-family:'Inter',sans-serif; margin:0; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3 { font-family:'Space Grotesk',sans-serif; }
+  .navbar { position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06); }
+  .card { background:#0F1629; border:1px solid rgba(255,255,255,0.07); border-radius:14px; transition:border-color 0.25s,box-shadow 0.25s; }
+  .card:hover { border-color:rgba(255,255,255,0.14); box-shadow:0 8px 36px rgba(0,0,0,0.4); }
+  .text-gradient { background:linear-gradient(135deg,#00CFFF,#00FFB3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+  .tag-neutral { background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block; }
+  .tag-accent  { background:rgba(0,255,179,0.1);color:#00FFB3;border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block; }
+  .tag-primary { background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block; }
+  .filter-btn { padding:7px 18px;border-radius:24px;font-size:13px;font-weight:500;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#8A9CC8;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif; }
+  .filter-btn:hover { color:#F0F4FF;border-color:rgba(255,255,255,0.2); }
+  .filter-btn.active { background:rgba(0,207,255,0.15);color:#00CFFF;border-color:rgba(0,207,255,0.3); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+  .fade-up { animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+  .post-card { cursor:pointer; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <nav style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="fotossss/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
+      </a>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <a href="index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
+        <a href="projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
+        <a href="contact.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div style="max-width:1280px;margin:0 auto;padding:110px 24px 80px;">
+
+  <!-- Header -->
+  <div class="fade-up" style="margin-bottom:56px;">
+    <p style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#00CFFF;margin:0 0 12px 0;">Writing</p>
+    <h1 style="font-size:clamp(40px,6vw,72px);font-weight:700;letter-spacing:-0.04em;margin:0 0 16px 0;" class="text-gradient">The blog</h1>
+    <p style="font-size:18px;color:#8A9CC8;max-width:520px;margin:0;line-height:1.7;">Thoughts on analytics, design, competitive gaming, and life on the padel court.</p>
+  </div>
+
+  <!-- Filters -->
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:48px;" id="filters">
+    <button class="filter-btn active" onclick="filterPosts('all',this)">All</button>
+    <button class="filter-btn" onclick="filterPosts('analytics',this)">Analytics</button>
+    <button class="filter-btn" onclick="filterPosts('design',this)">Design</button>
+    <button class="filter-btn" onclick="filterPosts('league-of-legends',this)" style="color:#C89B3C;border-color:rgba(200,155,60,0.2);" onmouseover="this.style.borderColor='rgba(200,155,60,0.5)'" onmouseout="this.style.borderColor='rgba(200,155,60,0.2)'">League of Legends</button>
+    <button class="filter-btn" onclick="filterPosts('padel',this)" style="color:#FF6B6B;border-color:rgba(255,107,107,0.2);" onmouseover="this.style.borderColor='rgba(255,107,107,0.5)'" onmouseout="this.style.borderColor='rgba(255,107,107,0.2)'">Padel</button>
+  </div>
+
+  <!-- Featured post -->
+  <div class="card post-card" id="featured" onclick="location.href='blog/datalayer-medicion-robusta.html'" data-category="analytics" style="display:grid;grid-template-columns:1fr 1fr;margin-bottom:32px;overflow:hidden;border-color:rgba(0,207,255,0.15);">
+    <div style="position:relative;overflow:hidden;min-height:260px;background:#0d1528;display:flex;align-items:center;justify-content:center;">
+      <!-- dataLayer visual diagram -->
+      <div style="padding:28px;width:100%;">
+        <p style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#4D5E87;margin:0 0 20px 0;text-align:center;">Data flow</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;font-size:12px;color:#8A9CC8;font-family:'JetBrains Mono',monospace;">Web / App event</div>
+            <span style="color:#4D5E87;font-size:14px;">→</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding-left:16px;">
+            <div style="flex:1;background:rgba(0,255,179,0.08);border:1px solid rgba(0,255,179,0.25);border-radius:8px;padding:10px 12px;font-size:12px;color:#00FFB3;font-family:'JetBrains Mono',monospace;font-weight:600;">window.dataLayer.push(&#123;…&#125;)</div>
+            <span style="color:#4D5E87;font-size:14px;">→</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding-left:32px;">
+            <div style="flex:1;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);border-radius:8px;padding:8px 12px;font-size:12px;color:#00CFFF;font-family:'JetBrains Mono',monospace;">GTM → GA4 / Ads</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:36px 32px;display:flex;flex-direction:column;justify-content:center;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <span class="tag-accent">Analytics</span>
+        <span class="tag-neutral" style="font-size:10px;">GTM</span>
+        <span style="font-size:12px;color:#4D5E87;">5 min read</span>
+      </div>
+      <h2 style="font-size:clamp(18px,2.2vw,26px);font-weight:700;letter-spacing:-0.02em;color:#F0F4FF;line-height:1.3;margin:0 0 12px 0;">dataLayer: La Clave de una Medición Robusta y Escalable</h2>
+      <p style="font-size:14px;color:#8A9CC8;line-height:1.7;margin:0 0 20px 0;">El dataLayer es la estructura que separa una implementación sólida de una frágil. Publicado también en MOA Institute.</p>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <time style="font-size:12px;color:#4D5E87;">2024</time>
+          <span style="font-size:11px;color:#4D5E87;">·</span>
+          <span style="font-size:11px;color:#4D5E87;display:flex;align-items:center;gap:4px;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" stroke="currentColor" stroke-width="2"/><polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="currentColor"/></svg>
+            Video included
+          </span>
+        </div>
+        <span style="font-size:13px;font-weight:500;color:#00CFFF;">Read post →</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" id="posts-grid">
+
+    <article class="card post-card" onclick="location.href='blog/getting-started-with-ga4.html'" data-category="analytics" style="overflow:hidden;display:flex;flex-direction:column;">
+      <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;">
+        <img src="https://placehold.co/800x450/0F1629/00CFFF?text=GA4+Guide" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'" />
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);"></div>
+      </div>
+      <div style="padding:22px 22px;flex:1;display:flex;flex-direction:column;">
+        <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
+          <span class="tag-accent">Analytics</span>
+          <span style="font-size:11px;color:#4D5E87;">8 min read</span>
+        </div>
+        <h3 style="font-size:17px;font-weight:700;color:#F0F4FF;line-height:1.35;margin:0 0 10px 0;">Getting Started with GA4</h3>
+        <p style="font-size:13px;color:#8A9CC8;line-height:1.6;flex:1;margin:0 0 16px 0;">Universal Analytics is gone. GA4 is the new standard — but it's a fundamentally different product.</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);">
+          <time style="font-size:12px;color:#4D5E87;">Mar 1, 2024</time>
+          <span style="font-size:12px;color:#4D5E87;">Read →</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="card post-card" onclick="location.href='blog/design-principles-for-data-products.html'" data-category="design" style="overflow:hidden;display:flex;flex-direction:column;">
+      <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;">
+        <img src="https://placehold.co/800x450/0F1629/00FFB3?text=Data+Design" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'" />
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);"></div>
+      </div>
+      <div style="padding:22px 22px;flex:1;display:flex;flex-direction:column;">
+        <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
+          <span class="tag-primary">Design</span>
+          <span style="font-size:11px;color:#4D5E87;">7 min read</span>
+        </div>
+        <h3 style="font-size:17px;font-weight:700;color:#F0F4FF;line-height:1.35;margin:0 0 10px 0;">Design Principles for Data Products</h3>
+        <p style="font-size:13px;color:#8A9CC8;line-height:1.6;flex:1;margin:0 0 16px 0;">Most dashboards are never used after the first week. Here's the framework that changes that.</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);">
+          <time style="font-size:12px;color:#4D5E87;">Feb 15, 2024</time>
+          <span style="font-size:12px;color:#4D5E87;">Read →</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="card post-card" onclick="location.href='blog/building-with-claude-code.html'" data-category="dev" style="overflow:hidden;display:flex;flex-direction:column;">
+      <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:#0d1528;display:flex;align-items:center;justify-content:center;">
+        <div style="padding:20px;width:100%;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.9;">
+          <div><span style="color:#4D5E87;">$ </span><span style="color:#00CFFF;">claude</span></div>
+          <div style="color:#00FFB3;">✓ index.html created</div>
+          <div style="color:#00FFB3;">✓ 13 pages built</div>
+          <div style="color:#FF52B9;">→ 0 lines hand-coded</div>
+        </div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(13,21,40,0.7),transparent);"></div>
+      </div>
+      <div style="padding:22px 22px;flex:1;display:flex;flex-direction:column;">
+        <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
+          <span class="tag-accent">Dev</span>
+          <span class="tag-neutral" style="font-size:10px;">AI</span>
+          <span style="font-size:11px;color:#4D5E87;">7 min read</span>
+        </div>
+        <h3 style="font-size:17px;font-weight:700;color:#F0F4FF;line-height:1.35;margin:0 0 10px 0;">I Built This Entire Site with Claude Code</h3>
+        <p style="font-size:13px;color:#8A9CC8;line-height:1.6;flex:1;margin:0 0 16px 0;">13 pages, zero hand-coding. An honest breakdown of what AI-assisted development actually looks like in practice.</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);">
+          <time style="font-size:12px;color:#4D5E87;">2025</time>
+          <span style="font-size:12px;color:#4D5E87;">Read →</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="card post-card" onclick="location.href='blog/beautiful-dashboards.html'" data-category="design" style="overflow:hidden;display:flex;flex-direction:column;">
+      <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#0A0F1E,#0d1528);display:flex;align-items:center;justify-content:center;padding:16px;">
+        <div style="width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <div style="background:rgba(0,207,255,0.07);border:1px solid rgba(0,207,255,0.2);border-radius:7px;padding:8px;">
+            <div style="font-size:13px;font-weight:700;color:#00CFFF;font-family:'Space Grotesk',sans-serif;">24,310</div>
+            <div style="font-size:8px;color:#4D5E87;margin-top:1px;">Sessions</div>
+            <div style="margin-top:6px;height:4px;border-radius:2px;overflow:hidden;background:rgba(255,255,255,0.06);"><div style="height:100%;width:72%;background:linear-gradient(90deg,#00CFFF80,#00CFFF);border-radius:2px;"></div></div>
+          </div>
+          <div style="background:rgba(0,255,179,0.07);border:1px solid rgba(0,255,179,0.2);border-radius:7px;padding:8px;">
+            <div style="font-size:13px;font-weight:700;color:#00FFB3;font-family:'Space Grotesk',sans-serif;">3.2%</div>
+            <div style="font-size:8px;color:#4D5E87;margin-top:1px;">Conv. Rate</div>
+            <div style="margin-top:6px;height:4px;border-radius:2px;overflow:hidden;background:rgba(255,255,255,0.06);"><div style="height:100%;width:45%;background:linear-gradient(90deg,#00FFB380,#00FFB3);border-radius:2px;"></div></div>
+          </div>
+          <div style="background:rgba(255,82,185,0.07);border:1px solid rgba(255,82,185,0.2);border-radius:7px;padding:8px;">
+            <div style="font-size:13px;font-weight:700;color:#FF52B9;font-family:'Space Grotesk',sans-serif;">€84k</div>
+            <div style="font-size:8px;color:#4D5E87;margin-top:1px;">Revenue</div>
+            <div style="margin-top:6px;height:4px;border-radius:2px;overflow:hidden;background:rgba(255,255,255,0.06);"><div style="height:100%;width:88%;background:linear-gradient(90deg,#FF52B980,#FF52B9);border-radius:2px;"></div></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:8px;">
+            <div style="font-size:13px;font-weight:700;color:#F0F4FF;font-family:'Space Grotesk',sans-serif;">4.1%</div>
+            <div style="font-size:8px;color:#4D5E87;margin-top:1px;">CVR</div>
+            <div style="margin-top:6px;height:4px;border-radius:2px;overflow:hidden;background:rgba(255,255,255,0.06);"><div style="height:100%;width:55%;background:linear-gradient(90deg,#8A9CC880,#8A9CC8);border-radius:2px;"></div></div>
+          </div>
+        </div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);"></div>
+      </div>
+      <div style="padding:22px 22px;flex:1;display:flex;flex-direction:column;">
+        <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
+          <span class="tag-primary">Design</span>
+          <span class="tag-accent">Analytics</span>
+          <span style="font-size:11px;color:#4D5E87;">6 min read</span>
+        </div>
+        <h3 style="font-size:17px;font-weight:700;color:#F0F4FF;line-height:1.35;margin:0 0 10px 0;">Smart Solutions to Build Beautiful Dashboards</h3>
+        <p style="font-size:13px;color:#8A9CC8;line-height:1.6;flex:1;margin:0 0 16px 0;">How I broke out of the grey-grid trap using Canva and Claude Code to make dashboards people actually want to look at.</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);">
+          <time style="font-size:12px;color:#4D5E87;">2025</time>
+          <span style="font-size:12px;color:#4D5E87;">Read →</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Coming soon cards -->
+    <article class="card" data-category="league-of-legends" style="overflow:hidden;display:flex;flex-direction:column;border-style:dashed;opacity:0.7;">
+      <div style="padding:32px 22px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;min-height:240px;">
+        <span style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#C89B3C;">League of Legends</span>
+        <h3 style="font-size:16px;font-weight:600;color:#4D5E87;margin:0;">Climbing to Diamond: An Analyst's Approach to Ranked</h3>
+        <p style="font-size:12px;color:#4D5E87;">Coming soon</p>
+      </div>
+    </article>
+
+    <article class="card" data-category="padel" style="overflow:hidden;display:flex;flex-direction:column;border-style:dashed;opacity:0.7;">
+      <div style="padding:32px 22px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;min-height:240px;">
+        <span style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#FF6B6B;">Padel</span>
+        <h3 style="font-size:16px;font-weight:600;color:#4D5E87;margin:0;">Data-Driven Padel: Tracking My Game with a Spreadsheet</h3>
+        <p style="font-size:12px;color:#4D5E87;">Coming soon</p>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- Newsletter -->
+  <div style="margin-top:72px;padding:48px;border-radius:24px;background:linear-gradient(135deg,#0F1629,#162038);border:1px solid rgba(255,255,255,0.08);text-align:center;">
+    <div style="width:48px;height:48px;border-radius:14px;background:rgba(0,207,255,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00CFFF" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:#F0F4FF;margin:0 0 10px 0;">Stay in the loop</h3>
+    <p style="font-size:15px;color:#8A9CC8;max-width:420px;margin:0 auto 28px;line-height:1.7;">Analytics insights, design experiments, and occasional padel updates — delivered to your inbox. No spam, unsubscribe anytime.</p>
+    <form style="display:flex;gap:10px;max-width:400px;margin:0 auto;" onsubmit="this.innerHTML='<p style=\'color:#00FFB3;font-weight:600;\'>✓ You\'re subscribed! Check your inbox.</p>';return false;">
+      <input type="email" required placeholder="your@email.com" style="flex:1;padding:12px 16px;border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F0F4FF;font-size:14px;font-family:'Inter',sans-serif;outline:none;" />
+      <button type="submit" style="padding:12px 22px;background:#00CFFF;color:#0A0F1E;font-weight:600;font-size:14px;border:none;border-radius:12px;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif;">Subscribe</button>
+    </form>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid rgba(255,255,255,0.06);padding:40px 0;margin-top:40px;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <p style="font-size:13px;color:#4D5E87;margin:0;">© 2024 Guillermo García — TNK Design & Analytics</p>
+    <div style="display:flex;gap:20px;">
+      <a href="index.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Home</a>
+      <a href="projects.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Projects</a>
+      <a href="contact.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function filterPosts(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  const featured = document.getElementById('featured')
+  const posts = document.querySelectorAll('#posts-grid article')
+  if (cat === 'all') {
+    featured.style.display = 'grid'
+    posts.forEach(p => p.style.display = 'flex')
+  } else {
+    featured.style.display = featured.dataset.category === cat ? 'grid' : 'none'
+    posts.forEach(p => { p.style.display = p.dataset.category === cat ? 'flex' : 'none' })
+  }
+}
+
+// Responsive grid
+function setGrid() {
+  const w = window.innerWidth
+  const g = document.getElementById('posts-grid')
+  if (g) g.style.gridTemplateColumns = w < 768 ? '1fr' : w < 1024 ? '1fr 1fr' : 'repeat(3,1fr)'
+  const f = document.getElementById('featured')
+  if (f) f.style.gridTemplateColumns = w < 768 ? '1fr' : '1fr 1fr'
+}
+setGrid(); window.addEventListener('resize', setGrid)
+</script>
+</body>
+</html>

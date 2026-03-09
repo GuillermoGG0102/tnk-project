@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>dataLayer: La Clave de una Medición Robusta y Escalable | TNK</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body{background:#0A0F1E;color:#F0F4FF;font-family:'Inter',sans-serif;margin:0;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;}
+  .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);}
+  .prose{color:#8A9CC8;line-height:1.85;font-size:17px;}
+  .prose h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:#F0F4FF;letter-spacing:-0.03em;margin:2.5em 0 0.75em;}
+  .prose h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:#F0F4FF;margin:2em 0 0.6em;}
+  .prose p{margin:0 0 1.4em;}
+  .prose strong{color:#F0F4FF;font-weight:600;}
+  .prose ul{padding-left:1.5rem;margin-bottom:1.5em;}
+  .prose li{margin-bottom:0.6em;}
+  .prose hr{border:none;border-top:1px solid rgba(255,255,255,0.08);margin:3em 0;}
+  .prose pre{background:#0d1528;border:1px solid rgba(0,207,255,0.15);border-radius:12px;padding:20px 24px;overflow-x:auto;margin:1.5em 0;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.8;color:#F0F4FF;}
+  .prose code{font-family:'JetBrains Mono',monospace;font-size:13px;padding:2px 7px;background:#162038;border-radius:4px;color:#00FFB3;}
+  .prose pre code{background:transparent;padding:0;color:#F0F4FF;}
+  .prose pre .kw{color:#00CFFF;}
+  .prose pre .str{color:#00FFB3;}
+  .prose pre .cm{color:#4D5E87;font-style:italic;}
+  .prose pre .key{color:#FF52B9;}
+  .prose pre .val{color:#FFB347;}
+  .tag-primary{background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
+  .tag-neutral{background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
+  .callout{background:rgba(0,207,255,0.06);border-left:3px solid #00CFFF;border-radius:0 10px 10px 0;padding:16px 20px;margin:1.5em 0;}
+  .callout p{margin:0;color:#8A9CC8;font-size:15px;}
+  .callout strong{color:#00CFFF;}
+  .ext-link{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity 0.2s,transform 0.15s;}
+  .ext-link:hover{opacity:0.88;transform:translateY(-1px);}
+  /* Diagram */
+  .diagram{background:#0d1528;border:1px solid rgba(0,207,255,0.12);border-radius:14px;padding:32px 24px;margin:2em 0;overflow-x:auto;}
+  .flow-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;}
+  .flow-box{background:linear-gradient(135deg,rgba(0,207,255,0.08),rgba(0,255,179,0.05));border:1px solid rgba(0,207,255,0.2);border-radius:10px;padding:12px 18px;text-align:center;min-width:110px;}
+  .flow-box .label{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#4D5E87;margin-bottom:4px;}
+  .flow-box .name{font-size:13px;font-weight:600;color:#F0F4FF;font-family:'Space Grotesk',sans-serif;}
+  .flow-arrow{font-size:20px;color:#4D5E87;padding:0 6px;flex-shrink:0;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  .fade-up{animation:fadeUp 0.55s ease forwards;}
+  .fade-up-1{animation-delay:0.05s;opacity:0;}
+  .fade-up-2{animation-delay:0.15s;opacity:0;}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <nav style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="../fotossss/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
+      </a>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <a href="../index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
+        <a href="../projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="../blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
+        <a href="../contact.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div style="max-width:780px;margin:0 auto;padding:110px 24px 80px;">
+
+  <a href="../blog.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#8A9CC8;text-decoration:none;margin-bottom:40px;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">← Back to Blog</a>
+
+  <!-- Meta -->
+  <div class="fade-up fade-up-1" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:20px;">
+    <span class="tag-primary">Analytics</span>
+    <span class="tag-neutral">GTM</span>
+    <span class="tag-neutral">Tracking</span>
+    <span style="font-size:12px;color:#4D5E87;font-family:'JetBrains Mono',monospace;">5 min read</span>
+    <span style="font-size:12px;color:#4D5E87;">·</span>
+    <time style="font-size:12px;color:#4D5E87;">2024</time>
+  </div>
+
+  <div class="fade-up fade-up-1">
+    <h1 style="font-size:clamp(28px,4vw,46px);font-weight:700;letter-spacing:-0.04em;color:#F0F4FF;margin:0 0 18px 0;line-height:1.15;">dataLayer: La Clave de una Medición Robusta y Escalable</h1>
+    <p style="font-size:19px;color:#8A9CC8;line-height:1.75;margin:0 0 36px 0;">Si trabajas con Google Tag Manager, el dataLayer es la estructura que separa una implementación sólida de una frágil. Aquí te cuento por qué — y cómo aprovecharlo bien.</p>
+  </div>
+
+  <!-- Cover image / diagram -->
+  <div class="fade-up fade-up-2" style="margin-bottom:48px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,0.07);">
+    <div class="diagram" style="border-radius:18px;border:none;padding:40px 24px;">
+      <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#4D5E87;text-align:center;margin:0 0 28px 0;">Cómo fluye la información a través del dataLayer</p>
+      <div class="flow-row" style="margin-bottom:20px;">
+        <div class="flow-box"><div class="label">Fuente</div><div class="name">Web / App</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="border-color:rgba(0,255,179,0.3);background:linear-gradient(135deg,rgba(0,255,179,0.1),rgba(0,207,255,0.06));"><div class="label">Capa de datos</div><div class="name" style="color:#00FFB3;">dataLayer</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box"><div class="label">Gestor</div><div class="name">GTM</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="border-color:rgba(0,207,255,0.3);"><div class="label">Destino</div><div class="name" style="color:#00CFFF;">GA4 / Ads</div></div>
+      </div>
+      <p style="font-size:12px;color:#4D5E87;text-align:center;margin:0;font-family:'JetBrains Mono',monospace;">window.dataLayer = window.dataLayer || []</p>
+    </div>
+  </div>
+
+  <!-- Article body -->
+  <div class="prose">
+
+    <h2>¿Qué es el dataLayer?</h2>
+    <p>El <code>dataLayer</code> es un array de JavaScript que actúa como <strong>intermediario entre tu web y Google Tag Manager</strong>. En lugar de que GTM raspe directamente el DOM o dependa de variables de la URL frágiles, el dataLayer te permite enviar datos estructurados y semánticos de forma fiable.</p>
+
+    <div class="callout">
+      <p><strong>La regla de oro:</strong> Si un dato importa para tu medición, ponlo en el dataLayer. No lo saques del DOM.</p>
+    </div>
+
+    <h2>¿Por qué importa?</h2>
+    <p>Una implementación sin dataLayer es como construir una casa sobre arena. Funciona hoy, pero cualquier cambio en el HTML de la página puede romper tu tracking sin que te enteres. Los problemas más comunes:</p>
+    <ul>
+      <li>Variables que dependen de selectores CSS que un desarrollador cambia sin avisar</li>
+      <li>Datos que solo están disponibles en ciertos contextos (SPAs, checkout, área privada)</li>
+      <li>Imposibilidad de enviar datos de backend (precios reales, IDs internos, estado del usuario)</li>
+    </ul>
+    <p>Con el dataLayer, <strong>el contrato está entre tu equipo de desarrollo y el equipo de analytics</strong> — no entre GTM y el HTML.</p>
+
+    <h2>La estructura básica</h2>
+    <p>Así luce un push típico al dataLayer para un evento de ecommerce:</p>
+    <pre><code><span class="cm">// Inicialización (en el &lt;head&gt;, antes del snippet de GTM)</span>
+<span class="kw">window</span>.dataLayer = <span class="kw">window</span>.dataLayer || [];
+
+<span class="cm">// Push de evento — ejemplo: añadir al carrito</span>
+<span class="kw">window</span>.dataLayer.push({
+  <span class="key">'event'</span>: <span class="str">'add_to_cart'</span>,
+  <span class="key">'ecommerce'</span>: {
+    <span class="key">'currency'</span>: <span class="str">'EUR'</span>,
+    <span class="key">'value'</span>: <span class="val">49.95</span>,
+    <span class="key">'items'</span>: [{
+      <span class="key">'item_id'</span>:   <span class="str">'SKU_12345'</span>,
+      <span class="key">'item_name'</span>: <span class="str">'Camiseta TNK'</span>,
+      <span class="key">'price'</span>:     <span class="val">49.95</span>,
+      <span class="key">'quantity'</span>:  <span class="val">1</span>
+    }]
+  }
+});</code></pre>
+
+    <p>GTM escucha cada push, detecta el <code>event</code>, y dispara los tags configurados para ese evento — enviando los datos exactos a GA4, Google Ads o cualquier otro destino.</p>
+
+    <h2>Tres principios para una implementación escalable</h2>
+    <ul>
+      <li><strong>Consistencia en los nombres:</strong> usa siempre <code>snake_case</code> y define una convención de nombres desde el principio. Un <code>addToCart</code> y un <code>add_to_cart</code> son dos eventos distintos en GA4.</li>
+      <li><strong>Un plan de medición primero:</strong> antes de pedir cualquier implementación al equipo de desarrollo, documenta qué eventos y parámetros necesitas. El dataLayer sin plan se convierte en caos.</li>
+      <li><strong>Limpiar entre eventos:</strong> restablece los objetos de ecommerce entre pushes para evitar que datos de una acción anterior contaminen la siguiente. GTM tiene la variable "Clear ecommerce" para esto.</li>
+    </ul>
+
+    <hr />
+
+    <p>Este post es un resumen. En el artículo completo que escribí para <strong>MOA Institute</strong> encontrarás más detalle técnico, ejemplos reales y las mejores prácticas que aplico en mis implementaciones.</p>
+
+  </div>
+
+  <!-- CTA buttons -->
+  <div style="margin-top:44px;padding:32px;border-radius:16px;background:#0F1629;border:1px solid rgba(0,207,255,0.12);display:flex;flex-direction:column;gap:20px;">
+    <div>
+      <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#4D5E87;margin:0 0 8px 0;">¿Quieres profundizar?</p>
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:#F0F4FF;margin:0 0 4px 0;">Lee el artículo completo en MOA Institute</h3>
+      <p style="font-size:14px;color:#8A9CC8;margin:0;">Publicado en el blog de MOA — escuela de referencia en analítica digital.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <a href="https://moainstitute.com/importancia-del-datalayer-para-una-medicion-robusta-y-escalable-moa/" target="_blank" rel="noopener" class="ext-link" style="background:#00CFFF;color:#0A0F1E;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="15,3 21,3 21,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Leer artículo completo →
+      </a>
+      <a href="https://www.youtube.com/watch?v=bUnnp-poZxk" target="_blank" rel="noopener" class="ext-link" style="background:rgba(255,0,0,0.1);border:1px solid rgba(255,0,0,0.25);color:#F0F4FF;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" stroke="#FF0000" stroke-width="1.8"/><polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="#FF0000"/></svg>
+        Ver en YouTube
+      </a>
+    </div>
+  </div>
+
+  <!-- YouTube embed -->
+  <div style="margin-top:40px;">
+    <p style="font-size:13px;font-weight:600;color:#4D5E87;letter-spacing:0.06em;text-transform:uppercase;margin:0 0 14px 0;">Video</p>
+    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;border:1px solid rgba(255,255,255,0.07);">
+      <iframe
+        src="https://www.youtube.com/embed/bUnnp-poZxk"
+        title="dataLayer para una medición robusta y escalable — MOA"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:14px;">
+      </iframe>
+    </div>
+  </div>
+
+  <!-- Author + back -->
+  <div style="margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <img src="../ME/MOA__RETRATOS_183.jpg" alt="Guillermo García" style="width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(0,207,255,0.25);" />
+      <div>
+        <p style="font-size:14px;font-weight:600;color:#F0F4FF;margin:0 0 2px 0;">Guillermo García</p>
+        <p style="font-size:12px;color:#4D5E87;margin:0;">Digital Analytics Engineer · TNK</p>
+      </div>
+    </div>
+    <a href="../blog.html" style="font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">← All posts</a>
+  </div>
+
+</div>
+
+<footer style="border-top:1px solid rgba(255,255,255,0.06);padding:40px 0;margin-top:40px;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <p style="font-size:13px;color:#4D5E87;margin:0;">© 2024 Guillermo García — TNK Design & Analytics</p>
+    <div style="display:flex;gap:20px;"><a href="../index.html" style="font-size:13px;color:#4D5E87;text-decoration:none;">Home</a><a href="../blog.html" style="font-size:13px;color:#4D5E87;text-decoration:none;">Blog</a><a href="../contact.html" style="font-size:13px;color:#4D5E87;text-decoration:none;">Contact</a></div>
+  </div>
+</footer>
+
+</body>
+</html>

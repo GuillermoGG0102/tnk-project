@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Beautiful Dashboards: Canva & Claude Code as Design Tools | TNK</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body{background:#0A0F1E;color:#F0F4FF;font-family:'Inter',sans-serif;margin:0;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;}
+  .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);}
+  .prose{color:#8A9CC8;line-height:1.85;font-size:17px;}
+  .prose h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:#F0F4FF;letter-spacing:-0.03em;margin:2.5em 0 0.75em;}
+  .prose h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:#F0F4FF;margin:2em 0 0.6em;}
+  .prose p{margin:0 0 1.4em;}
+  .prose strong{color:#F0F4FF;font-weight:600;}
+  .prose em{color:#C0CBE8;font-style:italic;}
+  .prose ul,.prose ol{padding-left:1.5rem;margin-bottom:1.5em;}
+  .prose li{margin-bottom:0.7em;}
+  .prose hr{border:none;border-top:1px solid rgba(255,255,255,0.08);margin:3em 0;}
+  .prose blockquote{border-left:3px solid #00CFFF;margin:1.5em 0;padding:14px 20px 14px 22px;background:rgba(0,207,255,0.04);border-radius:0 10px 10px 0;}
+  .prose blockquote p{margin:0;color:#C0CBE8;font-size:16px;font-style:italic;}
+  .tag-primary{background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
+  .tag-accent{background:rgba(0,255,179,0.1);color:#00FFB3;border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
+  .tag-neutral{background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
+  .callout{background:rgba(0,207,255,0.06);border-left:3px solid #00CFFF;border-radius:0 10px 10px 0;padding:16px 20px;margin:1.5em 0;}
+  .callout p{margin:0;color:#8A9CC8;font-size:15px;}
+  .callout strong{color:#00CFFF;}
+  .callout-green{background:rgba(0,255,179,0.06);border-left:3px solid #00FFB3;border-radius:0 10px 10px 0;padding:16px 20px;margin:1.5em 0;}
+  .callout-green p{margin:0;color:#8A9CC8;font-size:15px;}
+  .callout-green strong{color:#00FFB3;}
+  /* Dashboard mockup cards */
+  .dash-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:2em 0;}
+  .dash-card{border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.07);}
+  .dash-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.06);}
+  /* Bar chart mini */
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .bar-track{flex:1;height:6px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:4px;}
+  /* Fake metric card */
+  .metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 14px;}
+  .metric-box{background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px;}
+  .metric-num{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.03em;}
+  .metric-lbl{font-size:10px;color:#4D5E87;margin-top:2px;}
+  /* Prose code */
+  .prose code{font-family:'JetBrains Mono',monospace;font-size:13px;padding:2px 7px;background:#162038;border-radius:4px;color:#00FFB3;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  .fade-up{animation:fadeUp 0.55s ease forwards;}
+  .fade-up-1{animation-delay:0.05s;opacity:0;}
+  .fade-up-2{animation-delay:0.15s;opacity:0;}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <nav style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="../fotossss/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
+      </a>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <a href="../index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
+        <a href="../projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="../blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
+        <a href="../contact.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div style="max-width:760px;margin:0 auto;padding:110px 24px 80px;">
+
+  <a href="../blog.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#8A9CC8;text-decoration:none;margin-bottom:40px;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">← Back to Blog</a>
+
+  <!-- Header -->
+  <div class="fade-up fade-up-1" style="margin-bottom:40px;">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:20px;">
+      <span class="tag-primary">Design</span>
+      <span class="tag-accent">Analytics</span>
+      <span class="tag-neutral">Dashboards</span>
+      <span style="font-size:12px;color:#4D5E87;font-family:'JetBrains Mono',monospace;">6 min read · 2025</span>
+    </div>
+    <h1 style="font-size:clamp(28px,4.5vw,48px);font-weight:700;letter-spacing:-0.04em;color:#F0F4FF;margin:0 0 20px 0;line-height:1.1;">Smart Solutions to Build Beautiful Dashboards</h1>
+    <p style="font-size:19px;color:#8A9CC8;line-height:1.7;margin:0;">How I broke out of the grey-grid trap and started using Canva and Claude Code to make dashboards that people actually want to look at.</p>
+  </div>
+
+  <!-- Hero visual: before/after dashboard mockup -->
+  <div class="fade-up fade-up-2" style="margin-bottom:52px;">
+    <div class="dash-wrap">
+      <!-- "Before" — default style -->
+      <div class="dash-card" style="background:#1a1f2e;">
+        <div class="dash-label" style="background:#1e2435;color:#4D5E87;">Before — default</div>
+        <div style="padding:14px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+            <div style="background:#222838;border-radius:6px;padding:10px;">
+              <div style="font-size:16px;font-weight:700;color:#8A9CC8;font-family:'Space Grotesk',sans-serif;">24,310</div>
+              <div style="font-size:9px;color:#4D5E87;margin-top:2px;">Sessions</div>
+            </div>
+            <div style="background:#222838;border-radius:6px;padding:10px;">
+              <div style="font-size:16px;font-weight:700;color:#8A9CC8;font-family:'Space Grotesk',sans-serif;">3.2%</div>
+              <div style="font-size:9px;color:#4D5E87;margin-top:2px;">Conv. Rate</div>
+            </div>
+          </div>
+          <div style="background:#222838;border-radius:6px;padding:10px;">
+            <div style="font-size:9px;color:#4D5E87;margin-bottom:8px;">Traffic by channel</div>
+            <div class="bar-row"><span style="font-size:9px;color:#4D5E87;width:52px;flex-shrink:0;">Organic</span><div class="bar-track"><div class="bar-fill" style="width:72%;background:#4D5E87;"></div></div></div>
+            <div class="bar-row"><span style="font-size:9px;color:#4D5E87;width:52px;flex-shrink:0;">Direct</span><div class="bar-track"><div class="bar-fill" style="width:48%;background:#4D5E87;"></div></div></div>
+            <div class="bar-row"><span style="font-size:9px;color:#4D5E87;width:52px;flex-shrink:0;">Paid</span><div class="bar-track"><div class="bar-fill" style="width:35%;background:#4D5E87;"></div></div></div>
+          </div>
+        </div>
+      </div>
+      <!-- "After" — designed -->
+      <div class="dash-card" style="background:linear-gradient(135deg,#0A0F1E,#0d1528);">
+        <div class="dash-label" style="background:rgba(0,207,255,0.06);color:#00CFFF;border-bottom-color:rgba(0,207,255,0.1);">After — designed</div>
+        <div style="padding:14px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+            <div style="background:rgba(0,207,255,0.07);border:1px solid rgba(0,207,255,0.15);border-radius:8px;padding:10px;">
+              <div style="font-size:16px;font-weight:700;color:#00CFFF;font-family:'Space Grotesk',sans-serif;">24,310</div>
+              <div style="font-size:9px;color:#4D5E87;margin-top:2px;">Sessions</div>
+            </div>
+            <div style="background:rgba(0,255,179,0.07);border:1px solid rgba(0,255,179,0.15);border-radius:8px;padding:10px;">
+              <div style="font-size:16px;font-weight:700;color:#00FFB3;font-family:'Space Grotesk',sans-serif;">3.2%</div>
+              <div style="font-size:9px;color:#4D5E87;margin-top:2px;">Conv. Rate</div>
+            </div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px;">
+            <div style="font-size:9px;color:#4D5E87;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Traffic by channel</div>
+            <div class="bar-row"><span style="font-size:9px;color:#8A9CC8;width:52px;flex-shrink:0;">Organic</span><div class="bar-track"><div class="bar-fill" style="width:72%;background:linear-gradient(90deg,#00CFFF80,#00CFFF);"></div></div></div>
+            <div class="bar-row"><span style="font-size:9px;color:#8A9CC8;width:52px;flex-shrink:0;">Direct</span><div class="bar-track"><div class="bar-fill" style="width:48%;background:linear-gradient(90deg,#00FFB380,#00FFB3);"></div></div></div>
+            <div class="bar-row"><span style="font-size:9px;color:#8A9CC8;width:52px;flex-shrink:0;">Paid</span><div class="bar-track"><div class="bar-fill" style="width:35%;background:linear-gradient(90deg,#FF52B980,#FF52B9);"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#4D5E87;text-align:center;margin:0;font-style:italic;">Same data. Same KPIs. One is a grid to be closed. The other is a story to be read.</p>
+  </div>
+
+  <!-- Article body -->
+  <div class="prose">
+
+    <h2>The grey-grid problem</h2>
+    <p>If you've built enough dashboards in Looker Studio or Power BI, you know the feeling: you spend hours getting the data right, the metrics are accurate, the filters work — and then the client opens it, skims it for 30 seconds, and never comes back. Not because the data is wrong. Because it <strong>looks like every other dashboard they've ever seen</strong>.</p>
+    <p>The default design language of BI tools is functional, not engaging. White backgrounds, thin grey borders, the same 5 chart types, the same blue. It gets the job done, but it doesn't create the feeling that someone put real thought into communicating something to you.</p>
+    <p>I got tired of it. And since I come from a design background — not professional, but genuinely passionate — I started looking for ways to make dashboards that actually feel like they were <em>designed</em>.</p>
+
+    <hr />
+
+    <h2>Method 1: Canva as a dashboard design layer</h2>
+    <p>The first tool I tried was Canva, and it changed everything. Not as a replacement for Looker or Power BI — you still build your charts there — but as a <strong>design layer for the look and feel</strong>.</p>
+    <p>Here's the workflow:</p>
+    <ol>
+      <li>Define the layout and visual identity in Canva — background color, card shapes, icon set, typography, color palette for the charts</li>
+      <li>Export the background as an image (PNG or PDF)</li>
+      <li>Import it as the dashboard background in Looker Studio or Power BI</li>
+      <li>Drop your charts on top, matching the positions to the layout you designed</li>
+    </ol>
+
+    <div class="callout-green">
+      <p><strong>The key insight:</strong> you're not fighting the tool's limitations — you're bypassing them entirely. Canva has hundreds of templates, icon libraries, gradient options, and layout systems that BI tools will never have. Use them for the shell. Use the BI tool for what it's actually good at: data.</p>
+    </div>
+
+    <p>What this unlocks in practice:</p>
+    <ul>
+      <li><strong>Dark mode dashboards</strong> — not the washed-out dark themes BI tools ship with, but properly designed dark UIs with contrast ratios that work</li>
+      <li><strong>Custom icon sets</strong> — replacing generic chart icons with ones that actually match the client's brand</li>
+      <li><strong>Branded color palettes</strong> — applying the exact hex codes from a brand guide to every chart, not approximations</li>
+      <li><strong>Intentional typography</strong> — section labels, KPI names, and footnotes that feel like they were art-directed, not autogenerated</li>
+      <li><strong>Visual hierarchy</strong> — using Canva's layout tools to make the most important metric the most visually dominant thing on the page</li>
+    </ul>
+
+    <blockquote>
+      <p>"A dashboard is a communication tool. If it doesn't communicate clearly and beautifully, it doesn't matter how correct the numbers are."</p>
+    </blockquote>
+
+    <hr />
+
+    <h2>Method 2: Claude Code for HTML dashboard backgrounds</h2>
+    <p>The second approach is more technical — and produces results that Canva can't match. Using <strong>Claude Code</strong>, you can generate full HTML/CSS dashboard layouts and then use them in two ways: as a static background image (screenshot the HTML and import it), or as a standalone interactive HTML dashboard.</p>
+    <p>What's powerful here is the level of customisation you get from a plain-language prompt. You describe what you want, and Claude Code generates the HTML. Then you <strong>ask it specifically for the background and icon components</strong>, and you drop your real charts on top inside the BI tool.</p>
+
+    <h3>What you can generate with Claude Code</h3>
+
+    <!-- Dashboard example grid -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:1.5em 0;">
+
+      <!-- E-commerce dashboard mockup -->
+      <div style="background:linear-gradient(135deg,#0A0F1E,#0d1528);border:1px solid rgba(0,207,255,0.12);border-radius:12px;overflow:hidden;">
+        <div style="padding:12px 14px;border-bottom:1px solid rgba(0,207,255,0.08);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:10px;font-weight:700;color:#00CFFF;letter-spacing:0.1em;text-transform:uppercase;">E-commerce</span>
+          <span style="font-size:9px;color:#4D5E87;font-family:'JetBrains Mono',monospace;">HTML dashboard</span>
+        </div>
+        <div style="padding:12px 14px;">
+          <div class="metric-row" style="padding:0;margin-bottom:10px;">
+            <div class="metric-box"><div class="metric-num" style="color:#00CFFF;">€84k</div><div class="metric-lbl">Revenue</div></div>
+            <div class="metric-box"><div class="metric-num" style="color:#00FFB3;">1.8k</div><div class="metric-lbl">Orders</div></div>
+            <div class="metric-box"><div class="metric-num" style="color:#FF52B9;">4.1%</div><div class="metric-lbl">CVR</div></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;">
+            <div style="font-size:9px;color:#4D5E87;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Weekly revenue</div>
+            <div style="display:flex;align-items:flex-end;gap:5px;height:36px;">
+              <div style="flex:1;background:linear-gradient(to top,#00CFFF40,#00CFFF20);border-radius:3px 3px 0 0;height:55%;"></div>
+              <div style="flex:1;background:linear-gradient(to top,#00CFFF40,#00CFFF20);border-radius:3px 3px 0 0;height:70%;"></div>
+              <div style="flex:1;background:linear-gradient(to top,#00CFFF40,#00CFFF20);border-radius:3px 3px 0 0;height:48%;"></div>
+              <div style="flex:1;background:linear-gradient(to top,#00CFFF80,#00CFFF);border-radius:3px 3px 0 0;height:90%;"></div>
+              <div style="flex:1;background:linear-gradient(to top,#00CFFF40,#00CFFF20);border-radius:3px 3px 0 0;height:62%;"></div>
+              <div style="flex:1;background:linear-gradient(to top,#00CFFF40,#00CFFF20);border-radius:3px 3px 0 0;height:75%;"></div>
+              <div style="flex:1;background:linear-gradient(to top,#00FFB380,#00FFB3);border-radius:3px 3px 0 0;height:100%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Marketing dashboard mockup -->
+      <div style="background:linear-gradient(135deg,#0f0a1e,#160d28);border:1px solid rgba(255,82,185,0.12);border-radius:12px;overflow:hidden;">
+        <div style="padding:12px 14px;border-bottom:1px solid rgba(255,82,185,0.08);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:10px;font-weight:700;color:#FF52B9;letter-spacing:0.1em;text-transform:uppercase;">Paid Media</span>
+          <span style="font-size:9px;color:#4D5E87;font-family:'JetBrains Mono',monospace;">HTML dashboard</span>
+        </div>
+        <div style="padding:12px 14px;">
+          <div class="metric-row" style="padding:0;margin-bottom:10px;">
+            <div class="metric-box"><div class="metric-num" style="color:#FF52B9;">€2.4</div><div class="metric-lbl">CPA</div></div>
+            <div class="metric-box"><div class="metric-num" style="color:#C89B3C;">3.8x</div><div class="metric-lbl">ROAS</div></div>
+            <div class="metric-box"><div class="metric-num" style="color:#8A9CC8;">12k</div><div class="metric-lbl">Clicks</div></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;">
+            <div style="font-size:9px;color:#4D5E87;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Spend by platform</div>
+            <div class="bar-row"><span style="font-size:9px;color:#8A9CC8;width:48px;flex-shrink:0;">Google</span><div class="bar-track"><div class="bar-fill" style="width:68%;background:linear-gradient(90deg,#FF52B980,#FF52B9);"></div></div></div>
+            <div class="bar-row"><span style="font-size:9px;color:#8A9CC8;width:48px;flex-shrink:0;">Meta</span><div class="bar-track"><div class="bar-fill" style="width:45%;background:linear-gradient(90deg,#C89B3C80,#C89B3C);"></div></div></div>
+            <div class="bar-row"><span style="font-size:9px;color:#8A9CC8;width:48px;flex-shrink:0;">TikTok</span><div class="bar-track"><div class="bar-fill" style="width:22%;background:linear-gradient(90deg,#8A9CC880,#8A9CC8);"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ops / SLA dashboard -->
+      <div style="background:linear-gradient(135deg,#0a1a10,#0d2018);border:1px solid rgba(0,255,179,0.12);border-radius:12px;overflow:hidden;">
+        <div style="padding:12px 14px;border-bottom:1px solid rgba(0,255,179,0.08);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:10px;font-weight:700;color:#00FFB3;letter-spacing:0.1em;text-transform:uppercase;">Operations</span>
+          <span style="font-size:9px;color:#4D5E87;font-family:'JetBrains Mono',monospace;">HTML dashboard</span>
+        </div>
+        <div style="padding:12px 14px;">
+          <div class="metric-row" style="padding:0;margin-bottom:10px;">
+            <div class="metric-box"><div class="metric-num" style="color:#00FFB3;">99.4%</div><div class="metric-lbl">Uptime</div></div>
+            <div class="metric-box"><div class="metric-num" style="color:#00CFFF;">1.2s</div><div class="metric-lbl">Avg. Load</div></div>
+            <div class="metric-box"><div class="metric-num" style="color:#C89B3C;">3</div><div class="metric-lbl">Incidents</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;">
+            <div style="height:20px;border-radius:3px;background:rgba(0,255,179,0.15);border:1px solid rgba(0,255,179,0.2);"></div>
+            <div style="height:20px;border-radius:3px;background:rgba(0,255,179,0.15);border:1px solid rgba(0,255,179,0.2);"></div>
+            <div style="height:20px;border-radius:3px;background:rgba(0,255,179,0.15);border:1px solid rgba(0,255,179,0.2);"></div>
+            <div style="height:20px;border-radius:3px;background:rgba(255,107,107,0.3);border:1px solid rgba(255,107,107,0.4);"></div>
+            <div style="height:20px;border-radius:3px;background:rgba(0,255,179,0.15);border:1px solid rgba(0,255,179,0.2);"></div>
+            <div style="height:20px;border-radius:3px;background:rgba(0,255,179,0.15);border:1px solid rgba(0,255,179,0.2);"></div>
+            <div style="height:20px;border-radius:3px;background:rgba(0,255,179,0.4);border:1px solid rgba(0,255,179,0.5);"></div>
+          </div>
+          <div style="font-size:9px;color:#4D5E87;text-align:center;margin-top:5px;">Daily status — last 7 days</div>
+        </div>
+      </div>
+
+      <!-- Web analytics dashboard -->
+      <div style="background:linear-gradient(135deg,#0A0F1E,#131826);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;">
+        <div style="padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:10px;font-weight:700;color:#8A9CC8;letter-spacing:0.1em;text-transform:uppercase;">Web Analytics</span>
+          <span style="font-size:9px;color:#4D5E87;font-family:'JetBrains Mono',monospace;">HTML dashboard</span>
+        </div>
+        <div style="padding:12px 14px;">
+          <div class="metric-row" style="padding:0;margin-bottom:10px;">
+            <div class="metric-box"><div class="metric-num" style="color:#F0F4FF;">41k</div><div class="metric-lbl">Users</div></div>
+            <div class="metric-box"><div class="metric-num" style="color:#F0F4FF;">2:34</div><div class="metric-lbl">Avg. Time</div></div>
+            <div class="metric-box"><div class="metric-num" style="color:#F0F4FF;">58%</div><div class="metric-lbl">Bounce</div></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;">
+            <div style="font-size:9px;color:#4D5E87;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Device split</div>
+            <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;gap:2px;">
+              <div style="flex:6;background:#00CFFF;border-radius:4px 0 0 4px;"></div>
+              <div style="flex:3;background:#00FFB3;"></div>
+              <div style="flex:1;background:#FF52B9;border-radius:0 4px 4px 0;"></div>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:6px;">
+              <span style="font-size:9px;color:#8A9CC8;display:flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;background:#00CFFF;border-radius:50%;display:inline-block;"></span>Desktop 60%</span>
+              <span style="font-size:9px;color:#8A9CC8;display:flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;background:#00FFB3;border-radius:50%;display:inline-block;"></span>Mobile 30%</span>
+              <span style="font-size:9px;color:#8A9CC8;display:flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;background:#FF52B9;border-radius:50%;display:inline-block;"></span>Tablet 10%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <p style="font-size:12px;color:#4D5E87;text-align:center;margin:0 0 2em;font-style:italic;">All four of the above were generated purely with HTML/CSS — no design tool, no images.</p>
+
+    <p>These are the kinds of outputs you can generate with a single Claude Code prompt. The workflow is:</p>
+    <ol>
+      <li>Describe the dashboard to Claude Code: industry, KPIs, color palette, layout</li>
+      <li>Ask it to generate the <strong>background + icon layer only</strong> — placeholder boxes where the charts will go</li>
+      <li>Screenshot the result at the exact dashboard resolution (e.g. 1280×720 for a Looker Studio page)</li>
+      <li>Import the screenshot as the background image in your BI tool</li>
+      <li>Overlay your real charts on the placeholder positions</li>
+    </ol>
+
+    <div class="callout">
+      <p><strong>Tip:</strong> ask Claude Code to output the layout with a grid overlay — labelled boxes like "KPI 1", "Chart A", "Table B". This makes it trivial to align your real charts on top when you switch to the BI tool.</p>
+    </div>
+
+    <hr />
+
+    <h2>When to use which approach</h2>
+    <p>Both tools solve the same problem — breaking out of the default aesthetic — but they suit different situations:</p>
+    <ul>
+      <li><strong>Canva:</strong> best when you need something fast, when you're working with non-technical stakeholders who want to review the design before data is added, or when the client already has a strong visual brand to adapt from</li>
+      <li><strong>Claude Code:</strong> best when you need pixel-perfect control, when you want to iterate quickly on layout variations, or when you're building something standalone in HTML that doesn't need a BI tool at all</li>
+    </ul>
+    <p>In practice, I often combine both: rough concept in Canva, refined in Claude Code, then back to Looker Studio or Power BI for the live data layer.</p>
+
+    <hr />
+
+    <h2>The real shift</h2>
+    <p>The most important thing I learned from this is that <strong>dashboard design is a communication skill, not a technical one</strong>. The data can be identical. The structure can be identical. But the difference between a dashboard that gets used every Monday and one that gets ignored after the first demo is almost entirely visual.</p>
+    <p>Good tools — whether Canva or Claude Code — just lower the barrier to applying that skill. You don't need to be a UI designer. You just need to care enough to try.</p>
+
+  </div>
+
+  <!-- Author card -->
+  <div style="margin-top:60px;padding:28px;border-radius:16px;background:#0F1629;border:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+    <div style="width:52px;height:52px;border-radius:12px;overflow:hidden;flex-shrink:0;">
+      <img src="../ME/MOA__RETRATOS_183.jpg" alt="Guillermo García" style="width:100%;height:100%;object-fit:cover;object-position:center top;" />
+    </div>
+    <div style="flex:1;min-width:200px;">
+      <p style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#F0F4FF;margin:0 0 3px 0;">Guillermo García</p>
+      <p style="font-size:13px;color:#4D5E87;margin:0;">Digital Analytics Engineer · TNK Design & Analytics</p>
+    </div>
+    <a href="../contact.html" style="padding:10px 20px;background:rgba(0,207,255,0.08);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);border-radius:10px;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;">Get in touch →</a>
+  </div>
+
+  <!-- Related -->
+  <div style="margin-top:48px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.07);">
+    <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#4D5E87;margin:0 0 20px 0;">Related posts</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <a href="design-principles-for-data-products.html" style="display:block;padding:18px 20px;background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+        <p style="font-size:11px;font-weight:600;color:#00FFB3;text-transform:uppercase;letter-spacing:0.08em;margin:0 0 6px 0;">Design</p>
+        <p style="font-size:14px;font-weight:600;color:#F0F4FF;margin:0;line-height:1.4;">Design Principles for Data Products</p>
+      </a>
+      <a href="building-with-claude-code.html" style="display:block;padding:18px 20px;background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+        <p style="font-size:11px;font-weight:600;color:#00CFFF;text-transform:uppercase;letter-spacing:0.08em;margin:0 0 6px 0;">Dev · AI</p>
+        <p style="font-size:14px;font-weight:600;color:#F0F4FF;margin:0;line-height:1.4;">I Built This Entire Site with Claude Code</p>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer style="border-top:1px solid rgba(255,255,255,0.06);padding:40px 0;margin-top:40px;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <p style="font-size:13px;color:#4D5E87;margin:0;">© 2025 Guillermo García — TNK Design & Analytics</p>
+    <div style="display:flex;gap:20px;">
+      <a href="../index.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Home</a>
+      <a href="../blog.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Blog</a>
+      <a href="../contact.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

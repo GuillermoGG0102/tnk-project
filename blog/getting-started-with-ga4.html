@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Getting Started with GA4 | TNK – Design & Analytics</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { background:#0A0F1E; color:#F0F4FF; font-family:'Inter',sans-serif; margin:0; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; }
+  .navbar { position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06); }
+  .card { background:#0F1629; border:1px solid rgba(255,255,255,0.07); border-radius:14px; }
+  .tag-accent { background:rgba(0,255,179,0.1);color:#00FFB3;border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-primary { background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-neutral { background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .text-gradient { background:linear-gradient(135deg,#00CFFF,#00FFB3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+  /* Prose */
+  .prose { color:#8A9CC8; line-height:1.8; font-size:17px; }
+  .prose h2 { font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#F0F4FF;letter-spacing:-0.03em;margin:2.5em 0 0.75em; }
+  .prose h3 { font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#F0F4FF;letter-spacing:-0.02em;margin:2em 0 0.6em; }
+  .prose p { margin:0 0 1.4em; }
+  .prose strong { color:#F0F4FF;font-weight:600; }
+  .prose em { color:#F0F4FF;font-style:italic; }
+  .prose a { color:#00CFFF;text-decoration:underline;text-decoration-color:rgba(0,207,255,0.3); }
+  .prose ul,.prose ol { padding-left:1.5rem;margin-bottom:1.5em; }
+  .prose li { margin-bottom:0.5em; }
+  .prose hr { border:none;border-top:1px solid rgba(255,255,255,0.08);margin:3em 0; }
+  .prose pre { background:#162038;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px 24px;overflow-x:auto;margin:1.5em 0;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.6;color:#F0F4FF; }
+  .prose code { font-family:'JetBrains Mono',monospace;font-size:13px;padding:2px 6px;background:#162038;border-radius:4px;color:#00FFB3; }
+  .prose pre code { background:transparent;padding:0;color:#F0F4FF; }
+  .prose blockquote { border-left:3px solid #00CFFF;padding-left:1.5rem;margin:2em 0;font-style:italic; }
+  .prose table { width:100%;border-collapse:collapse;margin:2em 0; }
+  .prose th { background:#162038;color:#F0F4FF;font-weight:600;font-size:13px;padding:10px 14px;text-align:left;border:1px solid rgba(255,255,255,0.08); }
+  .prose td { padding:10px 14px;border:1px solid rgba(255,255,255,0.06);font-size:14px; }
+  .prose tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+  .fade-up { animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <nav style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="../fotossss/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
+      </a>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <a href="../index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
+        <a href="../projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="../blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
+        <a href="../contact.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<div style="max-width:780px;margin:0 auto;padding:110px 24px 80px;">
+
+  <!-- Back -->
+  <a href="../blog.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#8A9CC8;text-decoration:none;margin-bottom:40px;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">
+    ← Back to Blog
+  </a>
+
+  <!-- Header -->
+  <div class="fade-up">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:20px;">
+      <span class="tag-accent">Analytics</span>
+      <span style="font-size:12px;color:#4D5E87;display:flex;align-items:center;gap:4px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8 min read
+      </span>
+      <span style="font-size:12px;color:#4D5E87;">Mar 1, 2024</span>
+    </div>
+    <h1 style="font-size:clamp(28px,4.5vw,46px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:#F0F4FF;margin:0 0 20px 0;">Getting Started with GA4: What Every Digital Marketer Needs to Know</h1>
+    <p style="font-size:19px;color:#8A9CC8;line-height:1.7;margin:0 0 36px 0;">Universal Analytics is gone. GA4 is the new standard — but it's a fundamentally different product. Here's everything you need to understand to hit the ground running.</p>
+  </div>
+
+  <!-- Cover -->
+  <div style="border-radius:18px;overflow:hidden;margin-bottom:44px;border:1px solid rgba(255,255,255,0.07);">
+    <img src="https://placehold.co/1200x600/0F1629/00CFFF?text=GA4+Guide" style="width:100%;display:block;" />
+  </div>
+
+  <!-- Author -->
+  <div class="card" style="display:flex;align-items:center;gap:14px;padding:16px 20px;margin-bottom:52px;">
+    <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00CFFF,#00FFB3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#0A0F1E;font-size:16px;">G</span></div>
+    <div>
+      <div style="font-weight:600;font-size:14px;color:#F0F4FF;">Guillermo García</div>
+      <div style="font-size:12px;color:#8A9CC8;">Digital Analytics Specialist & Designer</div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:10px;">
+      <a href="https://www.linkedin.com/in/guillermo-garc%C3%ADa-gonz%C3%A1lez-l%C3%B3pez/" target="_blank" style="color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#00CFFF'" onmouseout="this.style.color='#4D5E87'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    </div>
+  </div>
+
+  <!-- Article body -->
+  <div class="prose">
+
+    <p>GA4 has been the default Google Analytics product since July 2023, when Universal Analytics was permanently sunset. And yet, a year later, I still encounter companies running on incomplete migrations, broken event schemas, and dashboards that tell half the story.</p>
+    <p>This guide is the one I wish had existed when I started. Let's fix that.</p>
+
+    <hr />
+
+    <h2>Why GA4 is Fundamentally Different</h2>
+    <p>The biggest mistake people make is treating GA4 as a "UA upgrade." It isn't. It's a completely different data model.</p>
+    <p><strong>Universal Analytics</strong> used a <strong>session-based model</strong>:</p>
+    <ul>
+      <li>A session was the primary unit of measurement</li>
+      <li>Hits (pageviews, events, transactions) happened inside sessions</li>
+      <li>Everything was scoped to sessions or users</li>
+    </ul>
+    <p><strong>GA4</strong> uses an <strong>event-based model</strong>:</p>
+    <ul>
+      <li><em>Every interaction</em> is an event</li>
+      <li>There are no "categories", "actions", or "labels"</li>
+      <li>Parameters carry the meaning</li>
+    </ul>
+    <p>This sounds abstract, but the practical implication is huge: your UA reports will <em>not</em> map to GA4 reports. You need to rethink your measurement framework from scratch.</p>
+
+    <h2>The Core Concepts You Must Understand</h2>
+
+    <h3>1. Events and Parameters</h3>
+    <p>In GA4, everything is an event. A pageview is an event (<code>page_view</code>). A purchase is an event (<code>purchase</code>). A button click is an event you define yourself.</p>
+    <p>Each event can carry up to 25 custom parameters that describe the action:</p>
+    <pre><code>// Sending a custom event
+gtag('event', 'cta_click', {
+  cta_label: 'View Projects',
+  cta_location: 'hero',
+  page_path: '/home'
+})</code></pre>
+
+    <h3>2. Automatically Collected Events</h3>
+    <p>GA4 automatically collects these events without any code changes:</p>
+    <ul>
+      <li><code>session_start</code> — when a new session begins</li>
+      <li><code>first_visit</code> — on first visit</li>
+      <li><code>page_view</code> — on each page view</li>
+      <li><code>scroll</code> — when a user scrolls 90% of a page</li>
+      <li><code>click</code> — on outbound clicks</li>
+    </ul>
+
+    <h3>3. Recommended Events</h3>
+    <p>Google provides a schema of recommended events for common use cases. Use them where possible — they enable <strong>Predictive Analytics</strong> and future integrations:</p>
+    <table>
+      <tr><th>Event</th><th>Use Case</th></tr>
+      <tr><td><code>purchase</code></td><td>E-commerce transactions</td></tr>
+      <tr><td><code>generate_lead</code></td><td>Lead generation forms</td></tr>
+      <tr><td><code>begin_checkout</code></td><td>Checkout funnel</td></tr>
+      <tr><td><code>view_item</code></td><td>Product page views</td></tr>
+      <tr><td><code>login</code></td><td>User authentication</td></tr>
+    </table>
+
+    <hr />
+
+    <h2>Setting Up GA4 Correctly</h2>
+
+    <h3>Step 1: Create a GA4 Property</h3>
+    <ol>
+      <li>Go to <strong>Google Analytics Admin</strong></li>
+      <li>Click <strong>Create Property</strong></li>
+      <li>Select your industry and reporting time zone</li>
+      <li>Create a <strong>Web Data Stream</strong> and enter your URL</li>
+    </ol>
+    <p>You'll get a <strong>Measurement ID</strong> (format: <code>G-XXXXXXXXXX</code>).</p>
+
+    <h3>Step 2: Implement via Google Tag Manager</h3>
+    <p>Don't add the GA4 snippet directly to your code. Use GTM:</p>
+    <ol>
+      <li>In GTM, create a new <strong>Tag</strong> → Google Tag</li>
+      <li>Enter your Measurement ID</li>
+      <li>Set trigger to <strong>All Pages</strong></li>
+      <li>Publish</li>
+    </ol>
+
+    <h3>Step 3: Configure Data Retention</h3>
+    <p>GA4 defaults to <strong>2 months</strong> of event data retention. Change it to <strong>14 months</strong> in Admin → Data Settings → Data Retention. Do this immediately — you can't recover data retroactively.</p>
+
+    <h3>Step 4: Connect BigQuery</h3>
+    <p>GA4's free BigQuery export is one of the best things about it. Connect it immediately in Admin → BigQuery Linking. This gives you access to raw event data for advanced analysis.</p>
+
+    <hr />
+
+    <h2>Common GA4 Mistakes to Avoid</h2>
+
+    <h3>Not enabling Google Signals</h3>
+    <p>Google Signals enables cross-device reporting and demographic data. Enable it in Admin → Data Settings → Data Collection.</p>
+
+    <h3>Relying on Realtime for validation</h3>
+    <p>For validation, use the <strong>DebugView</strong> — enable <code>debug_mode: true</code> in GTM or use the GA4 Debugger Chrome extension. Realtime has a ~30 second delay and excludes some events.</p>
+
+    <h3>Not having a tracking plan</h3>
+    <p>Before you start tagging, document your measurement framework. What decisions does this data support? What events map to those decisions? A tracking plan saves weeks of rework.</p>
+
+    <hr />
+
+    <h2>What to Track First</h2>
+    <p>If you're starting from scratch, here's my recommended event priority:</p>
+    <ol>
+      <li><strong>Page views</strong> (automatic)</li>
+      <li><strong>Scroll depth</strong> — 25%, 50%, 75%, 90%</li>
+      <li><strong>Outbound clicks</strong> (Enhanced Measurement)</li>
+      <li><strong>CTA clicks</strong> — your most important buttons</li>
+      <li><strong>Form submissions</strong> — lead generation, newsletter, contact</li>
+      <li><strong>Purchase / lead events</strong> (if applicable)</li>
+    </ol>
+
+    <hr />
+
+    <h2>Conclusion</h2>
+    <p>GA4 is more powerful than UA when properly implemented. The event-based model, combined with BigQuery export and predictive audiences, opens doors that UA never could.</p>
+    <p>The key is to invest in a proper measurement framework upfront — not retrofit tracking after launch. Start with your business objectives, work backwards to events, and document everything.</p>
+
+  </div>
+
+  <!-- Tags -->
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.07);">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4D5E87" stroke-width="2" style="margin-top:3px;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+    <span class="tag-neutral">GA4</span>
+    <span class="tag-neutral">Google Analytics</span>
+    <span class="tag-neutral">Analytics Implementation</span>
+    <span class="tag-neutral">Measurement</span>
+  </div>
+
+  <!-- Newsletter -->
+  <div style="margin-top:56px;padding:40px;border-radius:24px;background:linear-gradient(135deg,#0F1629,#162038);border:1px solid rgba(255,255,255,0.08);text-align:center;">
+    <div style="width:44px;height:44px;border-radius:12px;background:rgba(0,207,255,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00CFFF" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#F0F4FF;margin:0 0 8px 0;">Enjoyed this post?</h3>
+    <p style="font-size:14px;color:#8A9CC8;max-width:380px;margin:0 auto 24px;line-height:1.6;">Get analytics insights and design experiments delivered to your inbox. No spam, ever.</p>
+    <form style="display:flex;gap:10px;max-width:380px;margin:0 auto;" onsubmit="this.innerHTML='<p style=\'color:#00FFB3;font-size:14px;padding:10px;\'>✓ You\'re subscribed!</p>';return false;">
+      <input type="email" required placeholder="your@email.com" style="flex:1;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F0F4FF;font-size:14px;font-family:'Inter',sans-serif;outline:none;" />
+      <button type="submit" style="padding:10px 20px;background:#00CFFF;color:#0A0F1E;font-weight:600;font-size:14px;border:none;border-radius:10px;cursor:pointer;font-family:'Inter',sans-serif;">Subscribe</button>
+    </form>
+  </div>
+
+  <!-- Related -->
+  <div style="margin-top:64px;">
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:#F0F4FF;margin:0 0 24px 0;">Related posts</h2>
+    <div onclick="location.href='design-principles-for-data-products.html'" class="card" style="padding:24px;cursor:pointer;display:flex;gap:16px;align-items:center;" onmouseover="this.style.borderColor='rgba(255,255,255,0.14)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+      <img src="https://placehold.co/100x70/0F1629/00FFB3?text=Design" style="width:100px;height:70px;object-fit:cover;border-radius:8px;flex-shrink:0;" />
+      <div>
+        <span style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#00CFFF;">Design</span>
+        <h4 style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F0F4FF;margin:6px 0 4px;line-height:1.35;">Design Principles for Data Products: Making Dashboards People Actually Use</h4>
+        <span style="font-size:12px;color:#4D5E87;">Feb 15, 2024 · 7 min read</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid rgba(255,255,255,0.06);padding:40px 0;margin-top:40px;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <p style="font-size:13px;color:#4D5E87;margin:0;">© 2024 Guillermo García — TNK Design & Analytics</p>
+    <div style="display:flex;gap:20px;">
+      <a href="../index.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Home</a>
+      <a href="../blog.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Blog</a>
+      <a href="../contact.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Contact</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
