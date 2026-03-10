@@ -53,6 +53,19 @@
     <p style="font-size:18px;color:#8A9CC8;max-width:520px;margin:0;line-height:1.7;">Thoughts on analytics, design, competitive gaming, and life on the padel court.</p>
   </div>
 
+  <!-- Search bar -->
+  <div style="position:relative;max-width:480px;margin-bottom:28px;">
+    <div style="position:absolute;left:15px;top:50%;transform:translateY(-50%);pointer-events:none;color:#4D5E87;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </div>
+    <input id="blog-search" type="text" placeholder="Search posts…" autocomplete="off"
+      style="width:100%;padding:11px 40px 11px 42px;background:#0F1629;border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#F0F4FF;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s;"
+      onfocus="this.style.borderColor='rgba(0,207,255,0.35)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"
+      oninput="handleSearch(this.value)" />
+    <button id="search-clear" onclick="clearSearch()"
+      style="display:none;position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.08);border:none;color:#8A9CC8;font-size:16px;width:22px;height:22px;border-radius:50%;cursor:pointer;line-height:1;padding:0;">×</button>
+  </div>
+
   <!-- Filters -->
   <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:48px;" id="filters">
     <button class="filter-btn active" onclick="filterPosts('all',this)">All</button>
@@ -231,6 +244,16 @@
 
   </div>
 
+  <!-- No results -->
+  <div id="no-results" style="display:none;flex-direction:column;align-items:center;justify-content:center;padding:72px 24px;text-align:center;gap:14px;">
+    <div style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:#4D5E87;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </div>
+    <p style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:#F0F4FF;margin:0;">No posts found</p>
+    <p style="font-size:14px;color:#4D5E87;margin:0;">No results for "<span id="no-results-term" style="color:#8A9CC8;"></span>" — try a different term or clear the search.</p>
+    <button onclick="clearSearch()" style="margin-top:6px;padding:8px 20px;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);color:#00CFFF;font-size:13px;border-radius:8px;cursor:pointer;font-family:'Inter',sans-serif;">Clear search</button>
+  </div>
+
   <!-- Newsletter -->
   <div style="margin-top:72px;padding:48px;border-radius:24px;background:linear-gradient(135deg,#0F1629,#162038);border:1px solid rgba(255,255,255,0.08);text-align:center;">
     <div style="width:48px;height:48px;border-radius:14px;background:rgba(0,207,255,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00CFFF" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
@@ -257,31 +280,98 @@
 </footer>
 
 <script>
+let currentFilter = 'all';
+let currentSearch = '';
+let searchTimer   = null;
+
+// ── Filter button click ───────────────────────────────────────────────────────
 function filterPosts(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'))
-  btn.classList.add('active')
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = cat;
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event: 'select_content', content_type: 'filter', content_id: cat, content_name: btn.textContent.trim(), item_list_name: 'blog_filters' });
-  const featured = document.getElementById('featured')
-  const posts = document.querySelectorAll('#posts-grid article')
-  if (cat === 'all') {
-    featured.style.display = 'grid'
-    posts.forEach(p => p.style.display = 'flex')
-  } else {
-    featured.style.display = featured.dataset.category === cat ? 'grid' : 'none'
-    posts.forEach(p => { p.style.display = p.dataset.category === cat ? 'flex' : 'none' })
+  applyFilters();
+}
+
+// ── Search input ──────────────────────────────────────────────────────────────
+function handleSearch(query) {
+  currentSearch = query.trim().toLowerCase();
+  document.getElementById('search-clear').style.display = currentSearch ? 'block' : 'none';
+  applyFilters();
+  // Debounce dataLayer push — fires 500ms after user stops typing, min 2 chars
+  clearTimeout(searchTimer);
+  if (currentSearch.length >= 2) {
+    searchTimer = setTimeout(pushSearchEvent, 500);
   }
 }
 
-// Responsive grid
-function setGrid() {
-  const w = window.innerWidth
-  const g = document.getElementById('posts-grid')
-  if (g) g.style.gridTemplateColumns = w < 768 ? '1fr' : w < 1024 ? '1fr 1fr' : 'repeat(3,1fr)'
-  const f = document.getElementById('featured')
-  if (f) f.style.gridTemplateColumns = w < 768 ? '1fr' : '1fr 1fr'
+function clearSearch() {
+  document.getElementById('blog-search').value = '';
+  handleSearch('');
 }
-setGrid(); window.addEventListener('resize', setGrid)
+
+// ── Core filter + search logic ────────────────────────────────────────────────
+function applyFilters() {
+  const featured = document.getElementById('featured');
+  const posts    = document.querySelectorAll('#posts-grid article');
+  let visible    = 0;
+
+  // Featured post
+  const fCat    = currentFilter === 'all' || featured.dataset.category === currentFilter;
+  const fTitle  = (featured.querySelector('h2')?.textContent || '').toLowerCase();
+  const fDesc   = (featured.querySelector('p')?.textContent  || '').toLowerCase();
+  const fSearch = !currentSearch || fTitle.includes(currentSearch) || fDesc.includes(currentSearch);
+  const fShow   = fCat && fSearch;
+  featured.style.display = fShow ? 'grid' : 'none';
+  if (fShow) visible++;
+
+  // Grid posts
+  posts.forEach(p => {
+    const catOk    = currentFilter === 'all' || p.dataset.category === currentFilter;
+    const title    = (p.querySelector('h3')?.textContent || '').toLowerCase();
+    const desc     = (p.querySelector('p')?.textContent  || '').toLowerCase();
+    const searchOk = !currentSearch || title.includes(currentSearch) || desc.includes(currentSearch);
+    const show     = catOk && searchOk;
+    p.style.display = show ? 'flex' : 'none';
+    if (show) visible++;
+  });
+
+  // No-results state
+  const nr = document.getElementById('no-results');
+  nr.style.display = visible === 0 ? 'flex' : 'none';
+  if (visible === 0) document.getElementById('no-results-term').textContent = currentSearch || currentFilter;
+}
+
+// ── Search dataLayer event ────────────────────────────────────────────────────
+function pushSearchEvent() {
+  let count = 0;
+  if (document.getElementById('featured').style.display !== 'none') count++;
+  document.querySelectorAll('#posts-grid article').forEach(p => {
+    if (p.style.display !== 'none') count++;
+  });
+  const activeFilter = document.querySelector('.filter-btn.active')?.textContent.trim() || 'all';
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event:                 'search',
+    search_term:           currentSearch,
+    search_results_count:  count,
+    search_has_results:    count > 0,
+    search_term_length:    currentSearch.length,
+    search_section:        'blog',
+    search_active_filter:  activeFilter,
+  });
+}
+
+// ── Responsive grid ───────────────────────────────────────────────────────────
+function setGrid() {
+  const w = window.innerWidth;
+  const g = document.getElementById('posts-grid');
+  if (g) g.style.gridTemplateColumns = w < 768 ? '1fr' : w < 1024 ? '1fr 1fr' : 'repeat(3,1fr)';
+  const f = document.getElementById('featured');
+  if (f) f.style.gridTemplateColumns = w < 768 ? '1fr' : '1fr 1fr';
+}
+setGrid(); window.addEventListener('resize', setGrid);
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
