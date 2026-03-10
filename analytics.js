@@ -55,14 +55,45 @@
   });
 
   // ─── Contact form ──────────────────────────────────────────────────────────
+  // Dynamically collects all non-PII form fields on submit.
+  // Skips: email, password, tel, hidden types + fields whose name matches PII keywords.
+  // Textareas: captured as word_count + char_count, never raw content.
+  var PII_TYPES   = ['email', 'password', 'tel', 'hidden'];
+  var PII_PATTERN = /^(name|firstname|lastname|surname|nombre|apellido|email|phone|tel|address|direccion)$/i;
+
   document.addEventListener('submit', function (e) {
     var form = e.target.closest('form[data-track-form]');
     if (!form) return;
-    window.dataLayer.push({
+
+    var payload = {
       event:     'generate_lead',
       form_name: form.getAttribute('data-track-form') || 'contact_form',
       form_id:   form.id || 'unknown',
+    };
+
+    Array.from(form.elements).forEach(function (el) {
+      var key = el.name || el.id;
+      if (!key) return;                                        // skip unnamed
+      if (PII_TYPES.indexOf(el.type) !== -1) return;          // skip PII types
+      if (PII_PATTERN.test(key)) return;                       // skip PII names
+      if (el.type === 'submit' || el.tagName === 'BUTTON') return;
+
+      if (el.tagName === 'TEXTAREA') {
+        var txt = (el.value || '').trim();
+        payload[key + '_word_count'] = txt ? txt.split(/\s+/).length : 0;
+        payload[key + '_char_count'] = txt.length;
+        payload[key + '_filled']     = txt.length > 0;
+      } else if (el.type === 'checkbox') {
+        payload[key] = el.checked;
+      } else if (el.type === 'radio') {
+        if (el.checked) payload[key] = el.value;
+      } else {
+        // select or text-like (non-PII)
+        payload[key] = el.value || '(not set)';
+      }
     });
+
+    window.dataLayer.push(payload);
   });
 
 })();

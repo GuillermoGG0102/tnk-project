@@ -74,17 +74,17 @@
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;" id="name-email-grid">
             <div>
               <label style="display:block;font-size:12px;font-weight:600;color:#8A9CC8;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:7px;">Name</label>
-              <input type="text" class="input-field" placeholder="Your name" required />
+              <input type="text" name="name" class="input-field" placeholder="Your name" required />
             </div>
             <div>
               <label style="display:block;font-size:12px;font-weight:600;color:#8A9CC8;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:7px;">Email</label>
-              <input type="email" class="input-field" placeholder="you@company.com" required />
+              <input type="email" name="email" class="input-field" placeholder="you@company.com" required />
             </div>
           </div>
 
           <div style="margin-bottom:14px;">
             <label style="display:block;font-size:12px;font-weight:600;color:#8A9CC8;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:7px;">Subject</label>
-            <select class="input-field" style="appearance:none;cursor:pointer;">
+            <select name="subject" class="input-field" style="appearance:none;cursor:pointer;">
               <option value="">Select a topic…</option>
               <option value="analytics">Analytics & Data Strategy</option>
               <option value="design">Design System or UI/UX</option>
@@ -97,7 +97,7 @@
 
           <div style="margin-bottom:14px;">
             <label style="display:block;font-size:12px;font-weight:600;color:#8A9CC8;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:7px;">Budget range</label>
-            <select class="input-field" style="appearance:none;cursor:pointer;">
+            <select name="budget" class="input-field" style="appearance:none;cursor:pointer;">
               <option value="">Prefer not to say</option>
               <option value="small">Under €2,000</option>
               <option value="medium">€2,000 – €5,000</option>
@@ -108,7 +108,7 @@
 
           <div style="margin-bottom:24px;">
             <label style="display:block;font-size:12px;font-weight:600;color:#8A9CC8;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:7px;">Message</label>
-            <textarea class="input-field" placeholder="Tell me about your project — what are you trying to achieve?" rows="5" style="resize:vertical;" required></textarea>
+            <textarea name="message" class="input-field" placeholder="Tell me about your project — what are you trying to achieve?" rows="5" style="resize:vertical;" required></textarea>
           </div>
 
           <button type="submit" class="btn-primary" style="width:100%;">
