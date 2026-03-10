@@ -1,0 +1,14 @@
+Index,Event,form_name,form_id,subject,budget,message_word_count,message_char_count,message_filled,email_sha256,dataLayer Push Example,Page / Context,Notes
+1,generate_lead,contact_form,contactForm,Project enquiry,5000-10000,42,215,true,a665a45920422f9d417e4867efdc4fb8a31862b785c5fb0e1e1c53e6fd4fd0e5,"{""event"":""generate_lead"",""form_name"":""contact_form"",""form_id"":""contactForm"",""subject"":""Project enquiry"",""budget"":""5000-10000"",""message_word_count"":42,""message_char_count"":215,""message_filled"":true,""email_sha256"":""a665a45...""}",/contact.html — contact form submit,"SHA-256 is resolved async via crypto.subtle; event pushed after promise resolves"
+,,,,,,,,,,,
+FIELD COLLECTION RULES,,,,,,,,,,,,
+Field Type,Behaviour,,,,,,,,,,,,
+email (input[type=email]),Hashed with SHA-256 via crypto.subtle — stored as email_sha256 hex string,,,,,,,,,,,,
+textarea (message),Captured as message_word_count + message_char_count + message_filled — raw content never sent,,,,,,,,,,,,
+select (subject),Value sent as-is (non-PII categorical),,,,,,,,,,,,
+select (budget),Value sent as-is (non-PII categorical),,,,,,,,,,,,
+input[type=password],Skipped entirely,,,,,,,,,,,,
+input[type=tel],Skipped entirely,,,,,,,,,,,,
+input[type=hidden],Skipped entirely,,,,,,,,,,,,
+Fields matching name/firstname/lastname/surname/nombre/apellido/phone/address,Skipped entirely (PII pattern),,,,,,,,,,,,
+input[type=submit] / button,Skipped entirely,,,,,,,,,,,,

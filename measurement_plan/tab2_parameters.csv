@@ -1,0 +1,28 @@
+Parameter,Type,Events Used In,Example Value,Notes
+event,string,ALL,page_view,Standard GTM/GA4 event name trigger
+page_name,string,page_view,Home,Human-readable page title
+page_category,string,page_view,main,Top-level section (main · blog · projects · contact)
+page_type,string,page_view,home,Template type (home · listing · detail · contact)
+content_group,string,page_view,portfolio,GA4 content group — equals page_group or page_category
+page_author,string,page_view,Guillermo García,Fixed value on all pages
+content_type,string,select_content,nav_link,Interaction type (nav_link · cta · project_card · blog_card · filter_pill · social_link)
+content_id,string,select_content,blog,Stable machine-readable ID for the destination
+content_name,string,select_content,Blog,Human-readable label of the clicked element
+item_list_name,string,select_content,hero,List or section the item belongs to (hero · nav · featured · blog_listing · project_listing · footer)
+destination_url,string,select_content,/blog.html,Target href (where available)
+form_name,string,generate_lead,contact_form,Value of data-track-form attribute
+form_id,string,generate_lead,contactForm,HTML id of the form element
+subject,string,generate_lead,Project enquiry,Non-PII select field value
+budget,string,generate_lead,5000-10000,Non-PII select field value
+message_word_count,integer,generate_lead,42,Word count of textarea — never raw content
+message_char_count,integer,generate_lead,215,Character count of textarea
+message_filled,boolean,generate_lead,true,Whether the textarea had any content
+email_sha256,string,generate_lead,a665a45920422f9d417e4867efdc4fb8...,SHA-256 hex of lowercased trimmed email
+orbit_pause,boolean,orbit_interaction,true,true = user hovered orbit stage (animation paused)
+skill_hover,string,orbit_interaction,GA4,Tooltip text of the skill icon hovered
+search_term,string,search,ga4 custom dimensions,Raw search query entered by user
+search_results_count,integer,search,3,Number of posts visible after filtering
+search_has_results,boolean,search,true,Whether any results were returned
+search_term_length,integer,search,19,Character length of search term
+search_section,string,search,blog,Section where search occurred (always 'blog' currently)
+search_active_filter,string,search,Analytics,Active filter pill at time of search (or 'all')

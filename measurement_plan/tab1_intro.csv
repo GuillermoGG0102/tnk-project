@@ -1,0 +1,29 @@
+Field,Value
+Document Title,TNK Designs — Web Measurement Plan
+Author,Guillermo García
+Site URL,https://tnk-project.vercel.app/
+Last Updated,2026-03-10
+Stack,"Static HTML · Tailwind CSS · Vanilla JS"
+Analytics Layer,Google Tag Manager (GTM) + GA4
+Data Layer Library,analytics.js (shared · loaded on all pages)
+Privacy Notes,"PII filtered on generate_lead · email SHA-256 hashed · no raw textarea content"
+,
+SECTION,EVENTS IMPLEMENTED
+1,page_view — fires on every page load (DOMContentLoaded)
+2,select_content — fires on navigational clicks (nav · CTAs · cards · filters · social links)
+3,generate_lead — fires on contact form submit (non-PII fields + hashed email)
+4,orbit_interaction — fires on orbit hover/pause (skill section on home page)
+5,search — fires 500 ms after user stops typing in blog search bar (min 2 chars)
+,
+SECTION,PAGES INSTRUMENTED
+1,Home (index.html)
+2,Blog listing (blog.html)
+3,Contact (contact.html)
+4,Projects listing (projects.html)
+5,Project — TNK Designs (projects/tnk-designs.html)
+6,Project — TNK Portfolio Web (projects/tnk-portfolio-web.html)
+7,Blog — Getting Started with GA4
+8,Blog — GTM Best Practices
+9,Blog — Looker Studio Dashboards
+10,Blog — Power BI vs Looker Studio
+11,Blog — Custom Dimensions in GA4

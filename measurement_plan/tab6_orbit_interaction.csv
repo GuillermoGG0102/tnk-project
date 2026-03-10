@@ -1,0 +1,16 @@
+Index,Event,orbit_pause,skill_hover,dataLayer Push Example,Page / Context,Trigger
+1,orbit_interaction,true,(not set),"{""event"":""orbit_interaction"",""orbit_pause"":true}",/ (index.html) — orbiting skills section,User moves mouse into the orbit stage — animation pauses
+2,orbit_interaction,false,(not set),"{""event"":""orbit_interaction"",""orbit_pause"":false}",/ (index.html) — orbiting skills section,User moves mouse out of orbit stage — animation resumes
+3,orbit_interaction,(not set),GA4,"{""event"":""orbit_interaction"",""skill_hover"":""GA4""}",/ (index.html) — orbiting skills section,User hovers a skill icon (tooltip text captured)
+4,orbit_interaction,(not set),GTM,"{""event"":""orbit_interaction"",""skill_hover"":""GTM""}",/ (index.html) — orbiting skills section,User hovers a skill icon
+5,orbit_interaction,(not set),Looker Studio,"{""event"":""orbit_interaction"",""skill_hover"":""Looker Studio""}",/ (index.html) — orbiting skills section,User hovers a skill icon
+6,orbit_interaction,(not set),Power BI,"{""event"":""orbit_interaction"",""skill_hover"":""Power BI""}",/ (index.html) — orbiting skills section,User hovers a skill icon
+7,orbit_interaction,(not set),Figma,"{""event"":""orbit_interaction"",""skill_hover"":""Figma""}",/ (index.html) — orbiting skills section,User hovers a skill icon
+8,orbit_interaction,(not set),Python,"{""event"":""orbit_interaction"",""skill_hover"":""Python""}",/ (index.html) — orbiting skills section,User hovers a skill icon
+9,orbit_interaction,(not set),BigQuery,"{""event"":""orbit_interaction"",""skill_hover"":""BigQuery""}",/ (index.html) — orbiting skills section,User hovers a skill icon
+,,,,,
+IMPLEMENTATION NOTES,,,,,,
+Parameter,Type,Values,,,,
+orbit_pause,boolean,"true (mouse enter) · false (mouse leave) · absent on skill_hover rows",,,,
+skill_hover,string,"Tooltip text of the hovered skill icon · absent on orbit_pause rows",,,,
+Source,javascript,mouseenter/mouseleave on orbit stage element + mouseenter per skill icon,,,,

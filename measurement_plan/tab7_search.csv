@@ -1,0 +1,15 @@
+Index,Event,search_term,search_results_count,search_has_results,search_term_length,search_section,search_active_filter,dataLayer Push Example,Page / Context,Notes
+1,search,ga4 custom dimensions,3,true,19,blog,all,"{""event"":""search"",""search_term"":""ga4 custom dimensions"",""search_results_count"":3,""search_has_results"":true,""search_term_length"":19,""search_section"":""blog"",""search_active_filter"":""all""}",/blog.html — search bar,Fires 500 ms after user stops typing (debounced) · minimum 2 chars
+2,search,gtm,2,true,3,blog,GTM,"{""event"":""search"",""search_term"":""gtm"",""search_results_count"":2,""search_has_results"":true,""search_term_length"":3,""search_section"":""blog"",""search_active_filter"":""GTM""}",/blog.html — search bar with active filter,search_active_filter reflects the currently selected filter pill
+3,search,xyz no results,0,false,14,blog,all,"{""event"":""search"",""search_term"":""xyz no results"",""search_results_count"":0,""search_has_results"":false,""search_term_length"":14,""search_section"":""blog"",""search_active_filter"":""all""}",/blog.html — search bar,search_has_results = false triggers no-results message in UI
+,,,,,,,,,
+IMPLEMENTATION NOTES,,,,,,,,,
+Parameter,Type,Description,,,,,,,,
+search_term,string,Raw query string typed by user (not lowercased in event),,,,,,,,
+search_results_count,integer,Count of visible post cards after combined filter+search,,,,,,,,
+search_has_results,boolean,true if search_results_count > 0,,,,,,,,
+search_term_length,integer,Character length of search_term,,,,,,,,
+search_section,string,Always 'blog' — reserved for future search areas,,,,,,,,
+search_active_filter,string,"Currently active filter pill label ('all' if none selected)",,,,,,,,
+Debounce,500 ms,Event fires 500 ms after last keystroke · min 2 chars required,,,,,,,,
+Suggestions,DOM-indexed,Suggestions built from h2 (featured) + h3 (grid) post titles on page load,,,,,,,,
