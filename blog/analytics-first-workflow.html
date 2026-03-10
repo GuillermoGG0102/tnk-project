@@ -243,6 +243,25 @@
 
     <p>Each event row includes a plain-English description, typed parameter tags, a copyable JSON dataLayer push example, and a Puppeteer-captured screenshot of the real site with the tracked element highlighted in red.</p>
 
+    <!-- Measurement plan CTA -->
+    <a href="../measurement_plan/measurement_plan.html"
+       target="_blank"
+       rel="noopener"
+       data-track='{"content_type":"cta","content_id":"measurement_plan","content_text":"View the live measurement plan","location":"blog_article"}'
+       style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 28px;background:linear-gradient(135deg,rgba(0,207,255,0.07),rgba(0,255,179,0.05));border:1px solid rgba(0,207,255,0.25);border-radius:14px;text-decoration:none;margin:2em 0;cursor:pointer;"
+       onmouseover="this.style.borderColor='rgba(0,207,255,0.5)';this.style.transform='translateY(-2px)'"
+       onmouseout="this.style.borderColor='rgba(0,207,255,0.25)';this.style.transform='translateY(0)'"
+       style="transition:border-color 0.2s,transform 0.2s;">
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00CFFF;margin-bottom:6px;">Live document</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:#F0F4FF;margin-bottom:4px;">View the Measurement Plan →</div>
+        <div style="font-size:13px;color:#8A9CC8;">5 events · 21 parameters · 70+ screenshots · versioned changelog</div>
+      </div>
+      <div style="flex-shrink:0;width:48px;height:48px;border-radius:12px;background:rgba(0,207,255,0.1);border:1px solid rgba(0,207,255,0.2);display:flex;align-items:center;justify-content:center;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </div>
+    </a>
+
     <h3>The dataLayer Schema</h3>
 
     <p>All events push to <code>window.dataLayer</code> and are picked up by GTM. The schema uses a consistent set of shared parameters across all events:</p>
