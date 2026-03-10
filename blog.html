@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>Blog | TNK – Design & Analytics</title>
+<script>window.TNK_PAGE = { name: 'Blog', category: 'blog', type: 'listing', group: 'content' };</script>
+<script src="/analytics.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
@@ -61,7 +63,7 @@
   </div>
 
   <!-- Featured post -->
-  <div class="card post-card" id="featured" onclick="location.href='blog/datalayer-medicion-robusta.html'" data-category="analytics" style="display:grid;grid-template-columns:1fr 1fr;margin-bottom:32px;overflow:hidden;border-color:rgba(0,207,255,0.15);">
+  <div class="card post-card" id="featured" onclick="tnkNavigate('blog/datalayer-medicion-robusta.html',{content_type:'blog_card',content_id:'datalayer-medicion-robusta',content_name:'DataLayer: Medición Robusta',item_list_name:'featured_post'})" data-category="analytics" style="display:grid;grid-template-columns:1fr 1fr;margin-bottom:32px;overflow:hidden;border-color:rgba(0,207,255,0.15);">
     <div style="position:relative;overflow:hidden;min-height:260px;background:#0d1528;display:flex;align-items:center;justify-content:center;">
       <!-- dataLayer visual diagram -->
       <div style="padding:28px;width:100%;">
@@ -106,7 +108,7 @@
   <!-- Grid -->
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" id="posts-grid">
 
-    <article class="card post-card" onclick="location.href='blog/getting-started-with-ga4.html'" data-category="analytics" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/getting-started-with-ga4.html',{content_type:'blog_card',content_id:'getting-started-with-ga4',content_name:'Getting Started with GA4',item_list_name:'blog_listing'})" data-category="analytics" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;">
         <img src="https://placehold.co/800x450/0F1629/00CFFF?text=GA4+Guide" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'" />
         <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);"></div>
@@ -125,7 +127,7 @@
       </div>
     </article>
 
-    <article class="card post-card" onclick="location.href='blog/design-principles-for-data-products.html'" data-category="design" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/design-principles-for-data-products.html',{content_type:'blog_card',content_id:'design-principles-for-data-products',content_name:'Design Principles for Data Products',item_list_name:'blog_listing'})" data-category="design" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;">
         <img src="https://placehold.co/800x450/0F1629/00FFB3?text=Data+Design" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'" />
         <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);"></div>
@@ -144,7 +146,7 @@
       </div>
     </article>
 
-    <article class="card post-card" onclick="location.href='blog/building-with-claude-code.html'" data-category="dev" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/building-with-claude-code.html',{content_type:'blog_card',content_id:'building-with-claude-code',content_name:'Building with Claude Code',item_list_name:'blog_listing'})" data-category="dev" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:#0d1528;display:flex;align-items:center;justify-content:center;">
         <div style="padding:20px;width:100%;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.9;">
           <div><span style="color:#4D5E87;">$ </span><span style="color:#00CFFF;">claude</span></div>
@@ -169,7 +171,7 @@
       </div>
     </article>
 
-    <article class="card post-card" onclick="location.href='blog/beautiful-dashboards.html'" data-category="design" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/beautiful-dashboards.html',{content_type:'blog_card',content_id:'beautiful-dashboards',content_name:'Smart Solutions to Build Beautiful Dashboards',item_list_name:'blog_listing'})" data-category="design" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#0A0F1E,#0d1528);display:flex;align-items:center;justify-content:center;padding:16px;">
         <div style="width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6px;">
           <div style="background:rgba(0,207,255,0.07);border:1px solid rgba(0,207,255,0.2);border-radius:7px;padding:8px;">
@@ -258,6 +260,8 @@
 function filterPosts(cat, btn) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'))
   btn.classList.add('active')
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: 'select_content', content_type: 'filter', content_id: cat, content_name: btn.textContent.trim(), item_list_name: 'blog_filters' });
   const featured = document.getElementById('featured')
   const posts = document.querySelectorAll('#posts-grid article')
   if (cat === 'all') {

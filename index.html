@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script>window.TNK_PAGE = { name: 'Home', category: 'main', type: 'home', group: 'portfolio' };</script>
+<script src="/analytics.js"></script>
 <script>
 tailwind.config = {
   darkMode: 'class',
@@ -254,13 +256,13 @@ tailwind.config = {
       <!-- Desktop links -->
       <div style="display:flex;align-items:center;gap:4px;" class="hidden md:flex">
         <a href="index.html" style="padding:8px 16px;border-radius:9px;font-size:14px;font-weight:500;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;" class="nav-active">Home</a>
-        <a href="projects.html" style="padding:8px 16px;border-radius:9px;font-size:14px;font-weight:500;color:#8A9CC8;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
-        <a href="blog.html" style="padding:8px 16px;border-radius:9px;font-size:14px;font-weight:500;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Blog</a>
-        <a href="contact.html" style="padding:8px 16px;border-radius:9px;font-size:14px;font-weight:500;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Contact</a>
+        <a href="projects.html" data-track='{"content_type":"nav_link","content_id":"projects","content_name":"Projects","item_list_name":"main_nav"}' style="padding:8px 16px;border-radius:9px;font-size:14px;font-weight:500;color:#8A9CC8;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="blog.html" data-track='{"content_type":"nav_link","content_id":"blog","content_name":"Blog","item_list_name":"main_nav"}' style="padding:8px 16px;border-radius:9px;font-size:14px;font-weight:500;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Blog</a>
+        <a href="contact.html" data-track='{"content_type":"nav_link","content_id":"contact","content_name":"Contact","item_list_name":"main_nav"}' style="padding:8px 16px;border-radius:9px;font-size:14px;font-weight:500;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Contact</a>
       </div>
       <!-- Right -->
       <div style="display:flex;align-items:center;gap:8px;">
-        <a href="contact.html" style="padding:8px 16px;border-radius:9px;font-size:13px;font-weight:500;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(0,207,255,0.15)'" onmouseout="this.style.background='rgba(0,207,255,0.08)'">Get in touch</a>
+        <a href="contact.html" data-track='{"content_type":"cta","content_id":"contact","content_name":"Get in touch","item_list_name":"main_nav"}' style="padding:8px 16px;border-radius:9px;font-size:13px;font-weight:500;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(0,207,255,0.15)'" onmouseout="this.style.background='rgba(0,207,255,0.08)'">Get in touch</a>
       </div>
     </nav>
   </div>
@@ -300,11 +302,11 @@ tailwind.config = {
 
     <!-- CTAs -->
     <div class="animate-fade-up delay-4" style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:72px;">
-      <a href="#projects" class="btn-primary">
+      <a href="#projects" data-track='{"content_type":"cta","content_id":"projects-section","content_name":"View Projects","item_list_name":"hero"}' class="btn-primary">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         View Projects
       </a>
-      <a href="#blog" class="btn-secondary" style="color:#00CFFF;border-color:rgba(0,207,255,0.25);background:rgba(0,207,255,0.06);" onmouseover="this.style.background='rgba(0,207,255,0.12)';this.style.borderColor='rgba(0,207,255,0.4)'" onmouseout="this.style.background='rgba(0,207,255,0.06)';this.style.borderColor='rgba(0,207,255,0.25)'">Read the Blog</a>
+      <a href="#blog" data-track='{"content_type":"cta","content_id":"blog-section","content_name":"Read the Blog","item_list_name":"hero"}' class="btn-secondary" style="color:#00CFFF;border-color:rgba(0,207,255,0.25);background:rgba(0,207,255,0.06);" onmouseover="this.style.background='rgba(0,207,255,0.12)';this.style.borderColor='rgba(0,207,255,0.4)'" onmouseout="this.style.background='rgba(0,207,255,0.06)';this.style.borderColor='rgba(0,207,255,0.25)'">Read the Blog</a>
     </div>
 
     <!-- Stats -->
@@ -516,13 +518,13 @@ tailwind.config = {
         <h2 style="font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;margin:0 0 12px 0;" class="text-gradient">Selected projects</h2>
         <p style="color:#8A9CC8;font-size:16px;max-width:500px;margin:0;">A curated selection across analytics and digital art.</p>
       </div>
-      <a href="projects.html" style="font-size:14px;color:#00CFFF;text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.2s;" onmouseover="this.style.color='#1AD5FF'" onmouseout="this.style.color='#00CFFF'">All projects →</a>
+      <a href="projects.html" data-track='{"content_type":"cta","content_id":"projects-all","content_name":"All projects","item_list_name":"featured_projects"}' style="font-size:14px;color:#00CFFF;text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.2s;" onmouseover="this.style.color='#1AD5FF'" onmouseout="this.style.color='#00CFFF'">All projects →</a>
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" class="projects-grid">
 
       <!-- TNK Designs -->
-      <article class="card" style="overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.3s;" onclick="location.href='projects/tnk-designs.html'" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+      <article class="card" style="overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.3s;" onclick="tnkNavigate('projects/tnk-designs.html',{content_type:'project_card',content_id:'tnk-designs',content_name:'TNK Designs',item_list_name:'featured_projects'})" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
         <div style="position:relative;aspect-ratio:16/10;overflow:hidden;">
           <img src="fotossss/SKRINTRO.png" style="width:100%;height:100%;object-fit:cover;" />
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.8),transparent);"></div>
@@ -542,7 +544,7 @@ tailwind.config = {
       </article>
 
       <!-- TNK Portfolio Web -->
-      <article class="card" style="overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.3s;" onclick="location.href='projects/tnk-portfolio-web.html'" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+      <article class="card" style="overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.3s;" onclick="tnkNavigate('projects/tnk-portfolio-web.html',{content_type:'project_card',content_id:'tnk-portfolio-web',content_name:'TNK Portfolio Web',item_list_name:'featured_projects'})" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
         <div style="position:relative;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#0A0F1E,#0F1629,#0A1830);">
           <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
             <img src="fotossss/TNK LOGOPNG.png" alt="TNK Logo" style="height:38px;width:auto;opacity:0.9;" />
@@ -882,12 +884,12 @@ tailwind.config = {
         <h2 style="font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;margin:0 0 12px 0;" class="text-gradient">Latest posts</h2>
         <p style="color:#8A9CC8;font-size:16px;max-width:500px;margin:0;">Thoughts on analytics, design, gaming and life on the padel court.</p>
       </div>
-      <a href="blog.html" style="font-size:14px;color:#00CFFF;text-decoration:none;display:flex;align-items:center;gap:6px;" onmouseover="this.style.color='#1AD5FF'" onmouseout="this.style.color='#00CFFF'">All posts →</a>
+      <a href="blog.html" data-track='{"content_type":"cta","content_id":"blog-all","content_name":"All posts","item_list_name":"featured_posts"}' style="font-size:14px;color:#00CFFF;text-decoration:none;display:flex;align-items:center;gap:6px;" onmouseover="this.style.color='#1AD5FF'" onmouseout="this.style.color='#00CFFF'">All posts →</a>
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" class="blog-grid">
       <!-- Post 1 -->
-      <article class="card" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.3s;" onclick="location.href='blog/getting-started-with-ga4.html'" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+      <article class="card" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.3s;" onclick="tnkNavigate('blog/getting-started-with-ga4.html',{content_type:'blog_card',content_id:'getting-started-with-ga4',content_name:'Getting Started with GA4',item_list_name:'featured_posts'})" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
         <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;">
           <img src="https://placehold.co/800x450/0F1629/00CFFF?text=GA4+Guide" style="width:100%;height:100%;object-fit:cover;" />
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);"></div>
@@ -909,7 +911,7 @@ tailwind.config = {
       </article>
 
       <!-- Post 2 -->
-      <article class="card" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform 0.2s;" onclick="location.href='blog/design-principles-for-data-products.html'" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+      <article class="card" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform 0.2s;" onclick="tnkNavigate('blog/design-principles-for-data-products.html',{content_type:'blog_card',content_id:'design-principles-for-data-products',content_name:'Design Principles for Data Products',item_list_name:'featured_posts'})" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
         <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;">
           <img src="https://placehold.co/800x450/0F1629/00FFB3?text=Data+Design" style="width:100%;height:100%;object-fit:cover;" />
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);"></div>
@@ -957,11 +959,11 @@ tailwind.config = {
         <h2 style="font-size:clamp(36px,5vw,64px);font-weight:700;letter-spacing:-0.04em;margin:0 0 20px 0;line-height:1.05;" class="text-gradient">Ready to level up<br>your analytics?</h2>
         <p style="color:#8A9CC8;font-size:18px;max-width:520px;margin:0 auto 44px auto;line-height:1.7;">Whether you need a robust tracking implementation, a data strategy overhaul, or a beautiful interface — let's talk.</p>
         <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:14px;">
-          <a href="mailto:hello@tnk.design" class="btn-primary">
+          <a href="mailto:guillermogg0102@gmail.com" data-track='{"content_type":"cta","content_id":"email","content_name":"Get in touch","item_list_name":"cta_section"}' class="btn-primary">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
             Get in touch
           </a>
-          <a href="projects.html" class="btn-secondary">View projects →</a>
+          <a href="projects.html" data-track='{"content_type":"cta","content_id":"projects","content_name":"View projects","item_list_name":"cta_section"}' class="btn-secondary">View projects →</a>
         </div>
       </div>
     </div>
@@ -979,13 +981,13 @@ tailwind.config = {
         </a>
         <p style="font-size:14px;color:#8A9CC8;line-height:1.7;max-width:280px;margin:0 0 24px 0;">Design & Analytics. Turning data into decisions and pixels into stories. Based in Spain.</p>
         <div style="display:flex;gap:10px;">
-          <a href="https://www.linkedin.com/in/guillermo-garc%C3%ADa-gonz%C3%A1lez-l%C3%B3pez/" target="_blank" style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:#4D5E87;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.color='#00CFFF';this.style.background='rgba(0,207,255,0.1)'" onmouseout="this.style.color='#4D5E87';this.style.background='rgba(255,255,255,0.05)'">
+          <a href="https://www.linkedin.com/in/guillermo-garc%C3%ADa-gonz%C3%A1lez-l%C3%B3pez/" target="_blank" data-track='{"content_type":"social_link","content_id":"linkedin","content_name":"LinkedIn","item_list_name":"footer"}' style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:#4D5E87;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.color='#00CFFF';this.style.background='rgba(0,207,255,0.1)'" onmouseout="this.style.color='#4D5E87';this.style.background='rgba(255,255,255,0.05)'">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
           </a>
-          <a href="https://www.instagram.com/tnkdesigns_/" target="_blank" style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:#4D5E87;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.color='#00CFFF';this.style.background='rgba(0,207,255,0.1)'" onmouseout="this.style.color='#4D5E87';this.style.background='rgba(255,255,255,0.05)'">
+          <a href="https://www.instagram.com/tnkdesigns_/" target="_blank" data-track='{"content_type":"social_link","content_id":"instagram","content_name":"Instagram","item_list_name":"footer"}' style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:#4D5E87;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.color='#00CFFF';this.style.background='rgba(0,207,255,0.1)'" onmouseout="this.style.color='#4D5E87';this.style.background='rgba(255,255,255,0.05)'">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </a>
-          <a href="mailto:hello@tnk.design" style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:#4D5E87;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.color='#00CFFF';this.style.background='rgba(0,207,255,0.1)'" onmouseout="this.style.color='#4D5E87';this.style.background='rgba(255,255,255,0.05)'">
+          <a href="mailto:guillermogg0102@gmail.com" data-track='{"content_type":"contact_link","content_id":"email","content_name":"Email footer","item_list_name":"footer"}' style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:#4D5E87;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.color='#00CFFF';this.style.background='rgba(0,207,255,0.1)'" onmouseout="this.style.color='#4D5E87';this.style.background='rgba(255,255,255,0.05)'">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           </a>
         </div>

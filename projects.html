@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>Projects | TNK – Design & Analytics</title>
+<script>window.TNK_PAGE = { name: 'Projects', category: 'projects', type: 'listing', group: 'portfolio' };</script>
+<script src="/analytics.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
@@ -46,7 +48,7 @@
   <!-- Grid -->
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;" id="projects-grid">
 
-    <article class="card" data-category="digital-art" onclick="location.href='projects/tnk-designs.html'" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;">
+    <article class="card" data-category="digital-art" onclick="tnkNavigate('projects/tnk-designs.html',{content_type:'project_card',content_id:'tnk-designs',content_name:'TNK Designs',item_list_name:'projects_listing'})" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;">
         <img src="fotossss/SKRINTRO.png" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" />
         <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.75),transparent);"></div>
@@ -65,7 +67,7 @@
       </div>
     </article>
 
-    <article class="card" data-category="web" onclick="location.href='projects/tnk-portfolio-web.html'" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;">
+    <article class="card" data-category="web" onclick="tnkNavigate('projects/tnk-portfolio-web.html',{content_type:'project_card',content_id:'tnk-portfolio-web',content_name:'TNK Portfolio Web',item_list_name:'projects_listing'})" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#0A0F1E,#0F1629,#0A1830);">
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;">
           <img src="fotossss/TNK LOGOPNG.png" alt="TNK Logo" style="height:44px;width:auto;opacity:0.9;" />
