@@ -858,8 +858,23 @@ tailwind.config = {
       const stage = document.getElementById('orbit-stage');
       const icons = stage.querySelectorAll('.o-icon');
       let t = 0, paused = false, last = null;
-      stage.addEventListener('mouseenter', () => paused = true);
-      stage.addEventListener('mouseleave', () => paused = false);
+      stage.addEventListener('mouseenter', () => {
+        paused = true;
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'orbit_interaction', orbit_pause: true });
+      });
+      stage.addEventListener('mouseleave', () => {
+        paused = false;
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'orbit_interaction', orbit_pause: false });
+      });
+      icons.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          const tooltip = el.querySelector('.o-tooltip');
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: 'orbit_interaction', skill_hover: tooltip ? tooltip.textContent.trim() : 'unknown' });
+        });
+      });
       function tick(ts) {
         if (last !== null && !paused) t += (ts - last) / 1000;
         last = ts;
