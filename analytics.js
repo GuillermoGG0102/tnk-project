@@ -55,11 +55,21 @@
   });
 
   // ─── Contact form ──────────────────────────────────────────────────────────
-  // Dynamically collects all non-PII form fields on submit.
-  // Skips: email, password, tel, hidden types + fields whose name matches PII keywords.
+  // Dynamically collects non-PII fields + SHA-256 hashed email (for GA4 enhanced conversions).
+  // Skips: password, tel, hidden types + fields matching PII name patterns (except email, which is hashed).
   // Textareas: captured as word_count + char_count, never raw content.
-  var PII_TYPES   = ['email', 'password', 'tel', 'hidden'];
-  var PII_PATTERN = /^(name|firstname|lastname|surname|nombre|apellido|email|phone|tel|address|direccion)$/i;
+  var PII_TYPES   = ['password', 'tel', 'hidden'];
+  var PII_PATTERN = /^(name|firstname|lastname|surname|nombre|apellido|phone|tel|address|direccion)$/i;
+
+  // SHA-256 via Web Crypto API — returns hex string promise
+  function sha256(str) {
+    var bytes = new TextEncoder().encode(str);
+    return crypto.subtle.digest('SHA-256', bytes).then(function (buf) {
+      return Array.from(new Uint8Array(buf))
+        .map(function (b) { return b.toString(16).padStart(2, '0'); })
+        .join('');
+    });
+  }
 
   document.addEventListener('submit', function (e) {
     var form = e.target.closest('form[data-track-form]');
@@ -71,11 +81,16 @@
       form_id:   form.id || 'unknown',
     };
 
+    // Find email field to hash separately
+    var emailEl = form.querySelector('input[type="email"], input[name="email"]');
+    var emailRaw = emailEl ? emailEl.value.trim().toLowerCase() : '';
+
     Array.from(form.elements).forEach(function (el) {
       var key = el.name || el.id;
-      if (!key) return;                                        // skip unnamed
-      if (PII_TYPES.indexOf(el.type) !== -1) return;          // skip PII types
-      if (PII_PATTERN.test(key)) return;                       // skip PII names
+      if (!key) return;
+      if (PII_TYPES.indexOf(el.type) !== -1) return;           // skip password/tel/hidden
+      if (el.type === 'email') return;                          // handled separately via hash
+      if (PII_PATTERN.test(key)) return;                        // skip name/phone/address
       if (el.type === 'submit' || el.tagName === 'BUTTON') return;
 
       if (el.tagName === 'TEXTAREA') {
@@ -88,12 +103,22 @@
       } else if (el.type === 'radio') {
         if (el.checked) payload[key] = el.value;
       } else {
-        // select or text-like (non-PII)
         payload[key] = el.value || '(not set)';
       }
     });
 
-    window.dataLayer.push(payload);
+    if (emailRaw) {
+      // Hash email then push — crypto.subtle is always available in modern browsers
+      sha256(emailRaw).then(function (hash) {
+        payload.email_sha256 = hash;
+        window.dataLayer.push(payload);
+      }).catch(function () {
+        // Crypto unavailable (e.g. non-HTTPS dev env) — push without hash
+        window.dataLayer.push(payload);
+      });
+    } else {
+      window.dataLayer.push(payload);
+    }
   });
 
 })();
