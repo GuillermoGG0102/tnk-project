@@ -99,6 +99,7 @@ async function shoot(page, { url, file, label, selector, scrollY, scrollToBottom
     { url: '/blog/building-with-claude-code.html',      file: 'pv_blog_claude.png',      label: 'page_view — Building with Claude Code' },
     { url: '/blog/beautiful-dashboards.html',           file: 'pv_blog_dashboards.png',  label: 'page_view — Beautiful Dashboards' },
     { url: '/blog/datalayer-medicion-robusta.html',     file: 'pv_blog_datalayer.png',   label: 'page_view — DataLayer Medición Robusta' },
+    { url: '/blog/analytics-first-workflow.html',       file: 'pv_blog_analytics_wf.png', label: 'page_view — Analytics-First Workflow' },
   ];
   console.log('\n── page_view ──────────────────────────────────────────────────');
   for (const s of PV) await shoot(page, s);
@@ -158,6 +159,8 @@ async function shoot(page, { url, file, label, selector, scrollY, scrollToBottom
       selector: 'article.card[onclick*="building-with-claude"]' },
     { url: '/blog.html', file: 'sc_blog_card_dash.png',       label: 'select_content — Blog listing: Beautiful Dashboards',
       selector: 'article.card[onclick*="beautiful-dashboards"]' },
+    { url: '/blog.html', file: 'sc_blog_card_analytics_wf.png', label: 'select_content — Blog listing: Analytics-First Workflow',
+      selector: 'article.card[onclick*="analytics-first-workflow"]' },
 
     // Filter pills
     { url: '/blog.html', file: 'sc_filter_all.png',       label: 'select_content — Filter: All',

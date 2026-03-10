@@ -46,6 +46,23 @@
 - **Spacing:** Use intentional, consistent spacing tokens — not random Tailwind steps.
 - **Depth:** Surfaces should have a layering system (base → elevated → floating), not all sit at the same z-plane.
 
+## Measurement-First Rule
+- **Every time any change is made to the website** (new page, new section, new interaction, new form, new button, content update), you MUST:
+  1. Ask the user how the change should be measured (or propose a measurement approach)
+  2. Implement the appropriate `dataLayer` push(es) in the affected HTML/JS files
+  3. Update `measurement_plan/measurement_plan.html` and the relevant CSV in `measurement_plan/` to reflect the new event or parameter
+  4. Re-run `node capture_measurement.mjs` if screenshots are affected
+- Do NOT ship any frontend change without confirming the analytics coverage first.
+
+## Measurement Plan Versioning
+- The measurement plan uses semantic versioning: **v1, v2, v3…**
+- **Before any significant update** to `measurement_plan/measurement_plan.html`:
+  1. Copy the current file to `measurement_plan/archive/measurement_plan_vN.html` (where N is the current version number)
+  2. Increment the version badge in the header of `measurement_plan.html`
+  3. Add a changelog entry to the **Version History** tab inside `measurement_plan.html` (date, version, summary of changes)
+- Minor fixes (typos, broken links, screenshot refreshes) do NOT require a version bump
+- Major changes that require a bump: new event added, existing event removed or renamed, new parameter added/removed, tracking approach changed
+
 ## Hard Rules
 - Do not add sections, features, or content not in the reference
 - Do not "improve" a reference design — match it

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>How I Built an Analytics-First Workflow Using CLAUDE.md | TNK – Design & Analytics</title>
+<meta name="description" content="Every website change on my portfolio triggers a fixed analytics ritual: propose measurement, implement dataLayer pushes, update the measurement plan, version it. Here's how I wired that into CLAUDE.md." />
+<meta name="keywords" content="measurement plan, analytics workflow, CLAUDE.md, dataLayer, GA4, GTM, analytics-first development, web analytics documentation, tracking plan" />
+<meta property="og:title" content="How I Built an Analytics-First Workflow Using CLAUDE.md" />
+<meta property="og:description" content="Every website change on my portfolio triggers a fixed analytics ritual: propose measurement, implement dataLayer pushes, update the measurement plan, version it. Here's how I wired that into CLAUDE.md." />
+<meta property="og:type" content="article" />
+<meta name="author" content="Guillermo García" />
+<script>window.TNK_PAGE = { name: 'Analytics-First Workflow with CLAUDE.md', category: 'blog', type: 'article', group: 'content' };</script>
+<script src="/analytics.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { background:#0A0F1E; color:#F0F4FF; font-family:'Inter',sans-serif; margin:0; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; }
+  .navbar { position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06); }
+  .card { background:#0F1629; border:1px solid rgba(255,255,255,0.07); border-radius:14px; }
+  .tag-accent { background:rgba(0,255,179,0.1);color:#00FFB3;border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-primary { background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-neutral { background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .text-gradient { background:linear-gradient(135deg,#00CFFF,#00FFB3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+  /* Prose */
+  .prose { color:#8A9CC8; line-height:1.8; font-size:17px; }
+  .prose h2 { font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#F0F4FF;letter-spacing:-0.03em;margin:2.5em 0 0.75em; }
+  .prose h3 { font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#F0F4FF;letter-spacing:-0.02em;margin:2em 0 0.6em; }
+  .prose p { margin:0 0 1.4em; }
+  .prose strong { color:#F0F4FF;font-weight:600; }
+  .prose em { color:#F0F4FF;font-style:italic; }
+  .prose a { color:#00CFFF;text-decoration:underline;text-decoration-color:rgba(0,207,255,0.3); }
+  .prose ul,.prose ol { padding-left:1.5rem;margin-bottom:1.5em; }
+  .prose li { margin-bottom:0.5em; }
+  .prose hr { border:none;border-top:1px solid rgba(255,255,255,0.08);margin:3em 0; }
+  .prose pre { background:#162038;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px 24px;overflow-x:auto;margin:1.5em 0;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.6;color:#F0F4FF; }
+  .prose code { font-family:'JetBrains Mono',monospace;font-size:13px;padding:2px 6px;background:#162038;border-radius:4px;color:#00FFB3; }
+  .prose pre code { background:transparent;padding:0;color:#F0F4FF; }
+  .prose blockquote { border-left:3px solid #00CFFF;padding-left:1.5rem;margin:2em 0;font-style:italic;color:#F0F4FF; }
+  .prose table { width:100%;border-collapse:collapse;margin:2em 0; }
+  .prose th { background:#162038;color:#F0F4FF;font-weight:600;font-size:13px;padding:10px 14px;text-align:left;border:1px solid rgba(255,255,255,0.08); }
+  .prose td { padding:10px 14px;border:1px solid rgba(255,255,255,0.06);font-size:14px; }
+  .prose tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+  .fade-up { animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+  /* Callout boxes */
+  .callout { border-radius:12px;padding:20px 24px;margin:2em 0;font-size:15px;line-height:1.7; }
+  .callout-cyan { background:rgba(0,207,255,0.07);border:1px solid rgba(0,207,255,0.2);color:#F0F4FF; }
+  .callout-green { background:rgba(0,255,179,0.07);border:1px solid rgba(0,255,179,0.2);color:#F0F4FF; }
+  .callout-label { font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px; }
+  /* Step list */
+  .step-list { list-style:none;padding:0;margin:0 0 1.5em;counter-reset:steps; }
+  .step-list li { counter-increment:steps;display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.05); }
+  .step-list li:last-child { border-bottom:none; }
+  .step-num { flex-shrink:0;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,rgba(0,207,255,0.15),rgba(0,255,179,0.15));border:1px solid rgba(0,207,255,0.25);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:#00CFFF; }
+  .step-text { padding-top:6px;font-size:15px;color:#8A9CC8;line-height:1.7; }
+  .step-text strong { color:#F0F4FF; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <nav style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="../fotossss/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
+      </a>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <a href="../index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
+        <a href="../projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="../blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
+        <a href="../contact.html"
+           data-track='{"content_type":"cta","content_id":"contact","location":"nav","page":"blog_post"}'
+           style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<div style="max-width:780px;margin:0 auto;padding:110px 24px 80px;">
+
+  <!-- Back -->
+  <a href="../blog.html"
+     data-track='{"content_type":"nav_link","content_id":"back_to_blog","location":"article_top"}'
+     style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#8A9CC8;text-decoration:none;margin-bottom:40px;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">
+    ← Back to Blog
+  </a>
+
+  <!-- Header -->
+  <div class="fade-up">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:20px;">
+      <span class="tag-accent">Analytics</span>
+      <span class="tag-neutral">Workflow</span>
+      <span style="font-size:12px;color:#4D5E87;display:flex;align-items:center;gap:4px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>10 min read
+      </span>
+      <span style="font-size:12px;color:#4D5E87;">Mar 10, 2026</span>
+    </div>
+    <h1 style="font-size:clamp(28px,4.5vw,46px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:#F0F4FF;margin:0 0 20px 0;">My Analytics-First Workflow: How CLAUDE.md Keeps My Measurement Plan Permanently Up to Date</h1>
+    <p style="font-size:19px;color:#8A9CC8;line-height:1.7;margin:0 0 36px 0;">Most analytics implementations are an afterthought — added to a site once, then quietly drifting out of sync with reality. I built a system where that's structurally impossible. Here's how it works.</p>
+  </div>
+
+  <!-- Cover -->
+  <div style="border-radius:18px;overflow:hidden;margin-bottom:44px;border:1px solid rgba(255,255,255,0.07);background:#0F1629;padding:48px 40px;display:flex;flex-direction:column;gap:20px;">
+    <div style="display:flex;gap:12px;align-items:center;">
+      <div style="width:10px;height:10px;border-radius:50%;background:#FF5F57;"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:#FEBC2E;"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:#28C840;"></div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#4D5E87;margin-left:8px;">CLAUDE.md — Measurement-First Rule</span>
+    </div>
+    <div style="background:#162038;border-radius:10px;padding:24px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.8;color:#8A9CC8;">
+      <div><span style="color:#4D5E87">## </span><span style="color:#00CFFF">Measurement-First Rule</span></div>
+      <div style="margin-top:8px;"><span style="color:#4D5E87">Every time any change is made to the website, you MUST:</span></div>
+      <div style="margin-top:12px;padding-left:16px;display:flex;flex-direction:column;gap:6px;">
+        <div><span style="color:#00FFB3">1.</span> <span style="color:#F0F4FF">Ask how the change should be measured</span></div>
+        <div><span style="color:#00FFB3">2.</span> <span style="color:#F0F4FF">Implement the dataLayer push(es)</span></div>
+        <div><span style="color:#00FFB3">3.</span> <span style="color:#F0F4FF">Update measurement_plan.html + CSV</span></div>
+        <div><span style="color:#00FFB3">4.</span> <span style="color:#F0F4FF">Re-run capture_measurement.mjs</span></div>
+      </div>
+      <div style="margin-top:12px;"><span style="color:#FF6B6B">Do NOT ship any frontend change without confirming analytics coverage first.</span></div>
+    </div>
+  </div>
+
+  <!-- Author -->
+  <div class="card" style="display:flex;align-items:center;gap:14px;padding:16px 20px;margin-bottom:52px;">
+    <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00CFFF,#00FFB3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#0A0F1E;font-size:16px;">G</span></div>
+    <div>
+      <div style="font-weight:600;font-size:14px;color:#F0F4FF;">Guillermo García</div>
+      <div style="font-size:12px;color:#8A9CC8;">Digital Analytics Specialist & Designer</div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:10px;">
+      <a href="https://www.linkedin.com/in/guillermo-garc%C3%ADa-gonz%C3%A1lez-l%C3%B3pez/"
+         data-track='{"content_type":"social_link","content_id":"linkedin","location":"author_block"}'
+         target="_blank" style="color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#00CFFF'" onmouseout="this.style.color='#4D5E87'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    </div>
+  </div>
+
+  <!-- Article body -->
+  <div class="prose">
+
+    <p>There is a pattern I've seen at every company I've consulted for. The development team ships a new feature. Then, weeks later, someone in analytics asks: "Wait, are we tracking this?" The answer is usually "sort of." The dataLayer push was added in a hurry, the parameter names don't match the documented schema, and the measurement plan — if one exists — hasn't been updated since Q2.</p>
+
+    <p>I decided I wanted none of that on my own portfolio. Not because the site is large — it isn't — but because this site is literally my public proof of how I work. Every analytic gap here is a contradiction I'd be sending to every potential client.</p>
+
+    <p>So I built a system. This article explains exactly what it is, how it works, and what the underlying file that enforces it — <code>CLAUDE.md</code> — actually does.</p>
+
+    <hr />
+
+    <h2>What Is CLAUDE.md?</h2>
+
+    <p><strong>CLAUDE.md is a plain-text instruction file that governs how Claude Code behaves</strong> in a given project. It sits in the project root alongside your code, gets read automatically at the start of every session, and stays in effect for the entire conversation.</p>
+
+    <p>Think of it as a rulebook. Not documentation for humans — documentation <em>for the AI</em>. Everything in it is an instruction that Claude will follow as if you'd said it yourself in every single prompt:</p>
+
+    <ul>
+      <li>Design rules ("never use default Tailwind blue as primary")</li>
+      <li>Workflow requirements ("always screenshot from localhost, never from <code>file://</code>")</li>
+      <li>Hard constraints ("do not add sections not in the reference")</li>
+      <li>Project-specific processes — like, for example, an analytics-first rule</li>
+    </ul>
+
+    <p>The file uses standard Markdown. Section headers become logical groupings of rules. Numbered lists become ordered procedures. The clearer and more specific your instructions, the more reliably they're enforced.</p>
+
+    <div class="callout callout-cyan">
+      <div class="callout-label" style="color:#00CFFF;">Key distinction</div>
+      CLAUDE.md is not a README. It is not for human readers. It is a behavioral contract between you and your AI assistant, written once and silently respected in every session that follows.
+    </div>
+
+    <h3>What Mine Covers</h3>
+
+    <p>My <code>CLAUDE.md</code> is organized into these sections:</p>
+
+    <table>
+      <tr><th>Section</th><th>What it enforces</th></tr>
+      <tr><td>Always Do First</td><td>Invoke the <code>frontend-design</code> skill before writing any frontend code</td></tr>
+      <tr><td>Local Server</td><td>Always serve on <code>localhost:3000</code> via <code>node serve.mjs</code>, never screenshot <code>file://</code></td></tr>
+      <tr><td>Screenshot Workflow</td><td>Puppeteer path, screenshot naming convention, comparison rounds</td></tr>
+      <tr><td>Brand Assets</td><td>Check <code>brand_assets/</code> before designing, use real assets not placeholders</td></tr>
+      <tr><td>Anti-Generic Guardrails</td><td>Typography, shadows, gradients, animation, interactive states</td></tr>
+      <tr><td><strong>Measurement-First Rule</strong></td><td><strong>The analytics workflow described in this article</strong></td></tr>
+      <tr><td>Measurement Plan Versioning</td><td>When and how to version the measurement plan</td></tr>
+      <tr><td>Hard Rules</td><td>Absolute constraints — no <code>transition-all</code>, no default Tailwind palette</td></tr>
+    </table>
+
+    <p>The last three sections are the ones that directly enforce analytics discipline. Let's go through them.</p>
+
+    <hr />
+
+    <h2>The Measurement-First Rule</h2>
+
+    <p>This is the core constraint. The rule is simple but absolute:</p>
+
+    <blockquote>Every time any change is made to the website — new page, new section, new interaction, new form, new button, content update — you MUST ask how the change should be measured, implement the dataLayer pushes, update the measurement plan, and re-run the screenshot capture. Do NOT ship any frontend change without confirming analytics coverage first.</blockquote>
+
+    <p>What this means in practice: before writing a single line of frontend code for any feature, Claude stops and asks me how I want the new interaction measured. I either approve a proposed approach or specify my own. Only after that confirmation does the implementation proceed — and it proceeds for both the feature <em>and</em> the tracking, simultaneously.</p>
+
+    <p>This makes analytics coverage a <strong>pre-condition for shipping</strong>, not a post-ship cleanup task.</p>
+
+    <h3>The Four-Step Ritual</h3>
+
+    <p>Every website change that touches user-facing behaviour triggers this sequence:</p>
+
+    <ol class="step-list">
+      <li>
+        <div class="step-num">01</div>
+        <div class="step-text"><strong>Confirm measurement approach</strong> — What event fires? What parameters does it carry? Does it map to an existing event in the schema or does it require a new one? This question is asked before any code is written.</div>
+      </li>
+      <li>
+        <div class="step-num">02</div>
+        <div class="step-text"><strong>Implement the dataLayer push</strong> — The appropriate <code>window.dataLayer.push()</code> call is added to the affected HTML or JavaScript file, using the agreed parameter names and values, consistent with the existing schema.</div>
+      </li>
+      <li>
+        <div class="step-num">03</div>
+        <div class="step-text"><strong>Update the measurement plan</strong> — The <code>measurement_plan/measurement_plan.html</code> viewer and the relevant CSV export are updated to document the new or modified event. The change is visible and searchable immediately.</div>
+      </li>
+      <li>
+        <div class="step-num">04</div>
+        <div class="step-text"><strong>Re-run the screenshot capture</strong> — <code>node capture_measurement.mjs</code> re-generates all Puppeteer screenshots so the measurement plan always shows the live site, not a stale state from months ago.</div>
+      </li>
+    </ol>
+
+    <hr />
+
+    <h2>The Measurement Plan Itself</h2>
+
+    <p>The measurement plan is a self-contained HTML file at <code>measurement_plan/measurement_plan.html</code>. No Google Sheets. No Confluence. No external dependency. It opens in any browser, it loads instantly, it lives in the same git repo as the code it documents, and it is always in sync with the site because the rule in CLAUDE.md makes it structurally impossible for it to fall behind.</p>
+
+    <p>It is organized into eight tabs:</p>
+
+    <table>
+      <tr><th>Tab</th><th>Contents</th></tr>
+      <tr><td>01 — Intro</td><td>Business context, objectives, 5-event overview</td></tr>
+      <tr><td>02 — Parameters</td><td>Full parameter registry — 21 parameters across all events</td></tr>
+      <tr><td>03 — page_view</td><td>One example per unique page_category + page_type combination</td></tr>
+      <tr><td>04 — select_content</td><td>29 interactions: nav links, hero CTAs, project cards, blog cards, filters, footer socials</td></tr>
+      <tr><td>05 — generate_lead</td><td>Contact form submission with SHA-256 hashed email</td></tr>
+      <tr><td>06 — orbit_interaction</td><td>Skills orbit section: pause detection + individual skill icon hover</td></tr>
+      <tr><td>07 — search</td><td>Blog search: debounced query, results count, no-results state</td></tr>
+      <tr><td>08 — Version History</td><td>Versioned changelog of every major update to the plan</td></tr>
+    </table>
+
+    <p>Each event row includes a plain-English description, typed parameter tags, a copyable JSON dataLayer push example, and a Puppeteer-captured screenshot of the real site with the tracked element highlighted in red.</p>
+
+    <h3>The dataLayer Schema</h3>
+
+    <p>All events push to <code>window.dataLayer</code> and are picked up by GTM. The schema uses a consistent set of shared parameters across all events:</p>
+
+    <pre><code>// Every event carries page context
+window.dataLayer.push({
+  event: 'select_content',
+  content_type: 'cta',
+  content_id: 'view_projects',
+  content_text: 'View Projects',
+  location: 'hero',
+  // Shared page parameters (set once on page load)
+  page_path: '/index.html',
+  page_title: 'Home',
+  page_category: 'home',
+  page_type: 'landing'
+})</code></pre>
+
+    <p>The shared page parameters — <code>page_path</code>, <code>page_title</code>, <code>page_category</code>, <code>page_type</code>, <code>page_group</code> — are set once via a <code>window.TNK_PAGE</code> object at the top of each HTML file, then picked up by the shared <code>analytics.js</code> loaded on every page. This means I never duplicate page context in individual event calls.</p>
+
+    <div class="callout callout-green">
+      <div class="callout-label" style="color:#00FFB3;">Why this matters for GA4</div>
+      Consistent parameter naming across all events is what makes GA4 exploration useful. When every <code>select_content</code> event carries <code>location</code> with the same set of allowed values, you can pivot by location in Looker Studio and trust the result. Ad-hoc parameter names that vary by developer and by day make that impossible.
+    </div>
+
+    <hr />
+
+    <h2>Versioning the Measurement Plan</h2>
+
+    <p>The measurement plan is versioned. Not in git only — explicitly, visibly, within the document itself.</p>
+
+    <p>The versioning rule in CLAUDE.md defines exactly when a version bump is required:</p>
+
+    <ul>
+      <li><strong>Requires a version bump:</strong> new event added, existing event removed or renamed, new parameter added or removed, tracking approach fundamentally changed</li>
+      <li><strong>Does NOT require a bump:</strong> typo fixes, broken link corrections, screenshot refreshes after visual changes</li>
+    </ul>
+
+    <p>When a major change happens:</p>
+
+    <ol>
+      <li>The current <code>measurement_plan.html</code> is copied to <code>measurement_plan/archive/measurement_plan_vN.html</code></li>
+      <li>The version badge in the header is incremented</li>
+      <li>A changelog entry is added to the Version History tab: date, version number, summary of what changed</li>
+    </ol>
+
+    <p>This means you can always open <code>archive/measurement_plan_v1.html</code> and see exactly what the tracking looked like before a particular change. The archive is just static HTML — no database, no server-side rendering, no dependency to install. It opens forever.</p>
+
+    <hr />
+
+    <h2>The Screenshot Pipeline</h2>
+
+    <p>One of the things I'm most proud of in this setup is the screenshot automation. Each row in the measurement plan has a real screenshot of the live site with the tracked element highlighted — not a mockup, not a placeholder.</p>
+
+    <p><code>capture_measurement.mjs</code> is a Puppeteer script that runs against the local server. For each interaction in the plan, it:</p>
+
+    <ol>
+      <li>Navigates to the page</li>
+      <li>Scrolls the target element into the centre of the viewport (<code>scrollIntoView</code> with <code>block: 'center'</code>)</li>
+      <li>Injects a <code>position:fixed</code> red-border overlay div positioned using <code>getBoundingClientRect()</code></li>
+      <li>Takes a 1440×900 screenshot</li>
+      <li>Removes the overlay</li>
+    </ol>
+
+    <pre><code>// The highlight injection — position:fixed so it
+// stays in view regardless of scroll position
+const r = el.getBoundingClientRect();
+const div = document.createElement('div');
+div.style.cssText = [
+  'position:fixed',
+  `top:${r.top - 6}px`,
+  `left:${r.left - 6}px`,
+  `width:${r.width + 12}px`,
+  `height:${r.height + 12}px`,
+  'border:3px solid #FF3B3B',
+  'border-radius:6px',
+  'pointer-events:none',
+  'z-index:2147483647',
+].join(';');
+document.body.appendChild(div);</code></pre>
+
+    <p>The script covers all 70+ interactions across all 5 event types. Re-running it after any visual change refreshes every screenshot in under two minutes. The measurement plan always shows the site as it actually is.</p>
+
+    <hr />
+
+    <h2>Why This Works — and Why Most Plans Don't</h2>
+
+    <p>Most measurement plans fail for one of two reasons: they were never properly maintained, or they were never connected to the development process in the first place.</p>
+
+    <p>The typical flow looks like this: A business analyst writes a tracking plan in a spreadsheet. A developer implements some of it. The site ships. The spreadsheet is never updated again. Six months later, the spreadsheet describes events that no longer exist, and the site fires events that were never documented.</p>
+
+    <p>The problem is that the measurement plan and the code live in different systems with different owners and different update cadences. There is no structural reason for them to stay in sync — so they don't.</p>
+
+    <p>My setup removes that gap by three mechanisms:</p>
+
+    <ul>
+      <li><strong>Collocation:</strong> The measurement plan lives in the same git repository as the code. A single commit can update both. There is no "other system" to keep in sync.</li>
+      <li><strong>Enforcement via instruction:</strong> CLAUDE.md makes analytics coverage a pre-condition for shipping, not a nice-to-have. The AI assistant will not write frontend code for a new interaction without first confirming how it will be tracked.</li>
+      <li><strong>Automation:</strong> Screenshot capture is a one-command re-run. The highest-friction part of keeping documentation up to date — updating the visual examples — is fully automated.</li>
+    </ul>
+
+    <div class="callout callout-cyan">
+      <div class="callout-label" style="color:#00CFFF;">The insight</div>
+      You don't need willpower to maintain documentation. You need a system where the cost of <em>not</em> maintaining it is higher than the cost of updating it. CLAUDE.md creates exactly that asymmetry: the AI won't let you skip the step.
+    </div>
+
+    <hr />
+
+    <h2>What You Can Take From This</h2>
+
+    <p>You don't need to use Claude Code or have an AI assistant to apply the underlying principles here. The patterns that actually matter are:</p>
+
+    <ul>
+      <li><strong>Make analytics a gate, not a ticket.</strong> A feature isn't done until its tracking is implemented and documented. Put this in your definition of done, your PR checklist, your code review criteria — wherever your team already has structure.</li>
+      <li><strong>Keep the measurement plan in the repo.</strong> A Google Sheet that lives outside the codebase will always drift. A file in the repo that gets updated in the same commit as the feature will always stay current.</li>
+      <li><strong>Use a consistent parameter schema.</strong> The value of analytics data compounds with consistency. <code>location: "hero"</code> and <code>section: "hero"</code> and <code>placement: "above-fold"</code> are all the same concept, expressed three different ways, that will haunt your Looker Studio reports for years. Agree on names once, encode them in a shared file, enforce them in review.</li>
+      <li><strong>Version explicitly.</strong> A versioned changelog answers the question "what changed and when?" for free. It takes ten minutes to write a changelog entry and saves hours of archaeology when something breaks in production data.</li>
+    </ul>
+
+    <p>If you're using Claude Code or another AI coding assistant, CLAUDE.md (or whatever the equivalent instruction file is for your tool) is the right place to encode this. Write the rule once, in plain English, with enough specificity that a sufficiently literal reader would know exactly what to do. The AI will follow it. Your future self will thank you.</p>
+
+    <hr />
+
+    <h2>Wrapping Up</h2>
+
+    <p>The measurement plan for this site documents five events, 21 parameters, 29 select_content interactions, and 70+ automated screenshots — all of it generated, maintained, and kept in sync through a workflow that takes me near zero ongoing effort, because the effort is baked into the rule that governs how every single frontend change is made.</p>
+
+    <p>That's the real value of CLAUDE.md: not any individual instruction, but the compounding effect of having consistent rules applied reliably across every session, every feature, every change. It turns one-time decisions into permanent process.</p>
+
+    <p>Analytics quality isn't about having the right tools. It's about having the right habits — or better yet, making the right habits unavoidable.</p>
+
+  </div>
+
+  <!-- Related posts -->
+  <div style="margin-top:64px;padding-top:48px;border-top:1px solid rgba(255,255,255,0.07);">
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:#F0F4FF;margin:0 0 24px 0;">Related posts</h2>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div onclick="location.href='getting-started-with-ga4.html'"
+           data-track='{"content_type":"blog_card","content_id":"getting-started-with-ga4","location":"related_posts"}'
+           class="card" style="padding:24px;cursor:pointer;display:flex;gap:16px;align-items:center;" onmouseover="this.style.borderColor='rgba(255,255,255,0.14)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+        <img src="https://placehold.co/100x70/0F1629/00FFB3?text=GA4" style="width:100px;height:70px;object-fit:cover;border-radius:8px;flex-shrink:0;" />
+        <div>
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#00FFB3;">Analytics</span>
+          <h4 style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F0F4FF;margin:6px 0 4px;line-height:1.35;">Getting Started with GA4: What Every Digital Marketer Needs to Know</h4>
+          <span style="font-size:12px;color:#4D5E87;">Mar 1, 2024 · 8 min read</span>
+        </div>
+      </div>
+      <div onclick="location.href='datalayer-medicion-robusta.html'"
+           data-track='{"content_type":"blog_card","content_id":"datalayer-medicion-robusta","location":"related_posts"}'
+           class="card" style="padding:24px;cursor:pointer;display:flex;gap:16px;align-items:center;" onmouseover="this.style.borderColor='rgba(255,255,255,0.14)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+        <img src="https://placehold.co/100x70/0F1629/00CFFF?text=DataLayer" style="width:100px;height:70px;object-fit:cover;border-radius:8px;flex-shrink:0;" />
+        <div>
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#00CFFF;">Analytics</span>
+          <h4 style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F0F4FF;margin:6px 0 4px;line-height:1.35;">DataLayer y Medición Robusta: La Base de una Analítica de Calidad</h4>
+          <span style="font-size:12px;color:#4D5E87;">Feb 10, 2026 · 9 min read</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid rgba(255,255,255,0.06);padding:40px 0;margin-top:40px;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <p style="font-size:13px;color:#4D5E87;margin:0;">© 2026 Guillermo García — TNK Design & Analytics</p>
+    <div style="display:flex;gap:20px;">
+      <a href="../index.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Home</a>
+      <a href="../blog.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Blog</a>
+      <a href="../contact.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Contact</a>
+    </div>
+  </div>
+</footer>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</body>
+</html>
