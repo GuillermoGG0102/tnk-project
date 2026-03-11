@@ -231,6 +231,45 @@ async function shoot(page, { url, file, label, selector, scrollY, scrollToBottom
   await page.screenshot({ path: path.join(OUT, 'se_no_results.png') });
   console.log('✓  search — No results state');
 
+  // ── POST ENGAGEMENT ───────────────────────────────────────────────────────
+  console.log('\n── post_engagement ────────────────────────────────────────────');
+
+  // pe_like.png — heart button in default (unliked) state
+  await shoot(page, {
+    url: '/blog/beautiful-dashboards.html',
+    file: 'pe_like.png',
+    label: 'post_engagement — Like button (unliked state)',
+    selector: '#like-btn',
+  });
+
+  // pe_unlike.png — heart button in active (liked) state
+  await page.goto(BASE + '/blog/beautiful-dashboards.html', { waitUntil: 'networkidle0', timeout: 20000 });
+  await delay(500);
+  await page.evaluate(() => {
+    const btn  = document.getElementById('like-btn');
+    const icon = document.getElementById('heart-icon');
+    const count = document.getElementById('like-count');
+    if (btn)  { btn.style.borderColor = 'rgba(255,77,109,0.6)'; btn.style.color = '#FF4D6D'; }
+    if (icon) { icon.style.fill = '#FF4D6D'; icon.style.stroke = '#FF4D6D'; }
+    if (count && (count.textContent === '···' || count.textContent === '0')) count.textContent = '1';
+  });
+  await delay(200);
+  await shoot(page, {
+    url: '/blog/beautiful-dashboards.html',
+    file: 'pe_unlike.png',
+    label: 'post_engagement — Like button (liked/active state, ready to unlike)',
+    selector: '#like-btn',
+  });
+
+  // pe_comment.png — comment form on analytics-first-workflow post
+  await shoot(page, {
+    url: '/blog/analytics-first-workflow.html',
+    file: 'pe_comment.png',
+    label: 'post_engagement — Comment form',
+    selector: '#comment-form',
+    scrollToBottom: true,
+  });
+
   await browser.close();
   console.log('\n✅  All screenshots saved to', OUT);
 })();

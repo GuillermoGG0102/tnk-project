@@ -52,7 +52,13 @@
   2. Implement the appropriate `dataLayer` push(es) in the affected HTML/JS files
   3. Update `measurement_plan/measurement_plan.html` and the relevant CSV in `measurement_plan/` to reflect the new event or parameter
   4. Re-run `node capture_measurement.mjs` if screenshots are affected
+  5. **Always regenerate the standalone file** by running `node build_standalone_measurement.mjs` — this must happen after every change to `measurement_plan.html` or its screenshots, no exceptions
 - Do NOT ship any frontend change without confirming the analytics coverage first.
+
+## Standalone Measurement Plan
+- `measurement_plan/measurement_plan_standalone.html` is the **canonical go-to reference** for reviewing the current measurement setup — it is fully self-contained (screenshots embedded as base64) and can be opened as a file or shared without any server or assets folder.
+- It is generated from `measurement_plan.html` + the `screenshots/` folder by running: `node build_standalone_measurement.mjs`
+- **Both files must always be in sync.** Any time `measurement_plan.html` is edited OR new screenshots are captured, immediately regenerate the standalone. Never leave them out of sync.
 
 ## Measurement Plan Versioning
 - The measurement plan uses semantic versioning: **v1, v2, v3…**
