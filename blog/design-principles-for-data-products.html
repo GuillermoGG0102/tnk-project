@@ -177,12 +177,18 @@ Neutral:           #8A9CC8  (muted blue-grey)</code></pre>
     <div>
       <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#4D5E87;margin:0 0 28px 0;">Comments</p>
       <div id="comments-list" style="display:flex;flex-direction:column;gap:20px;margin-bottom:36px;min-height:20px;"></div>
-      <form id="comment-form" onsubmit="submitComment(event)" style="background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px;">
-        <p style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#F0F4FF;margin:0;">Leave a comment</p>
-        <input id="comment-name" type="text" required placeholder="Your name" maxlength="80" autocomplete="name" style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);color:#F0F4FF;font-size:14px;font-family:'Inter',sans-serif;outline:none;" onfocus="this.style.borderColor='rgba(0,207,255,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.09)'" />
-        <textarea id="comment-text" required placeholder="Share your thoughts..." maxlength="1000" rows="4" style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);color:#F0F4FF;font-size:14px;font-family:'Inter',sans-serif;outline:none;resize:vertical;line-height:1.6;" onfocus="this.style.borderColor='rgba(0,207,255,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.09)'"></textarea>
-        <button type="submit" id="comment-submit-btn" style="align-self:flex-start;padding:10px 24px;background:#00CFFF;color:#0A0F1E;font-weight:600;font-size:14px;border:none;border-radius:10px;cursor:pointer;font-family:'Inter',sans-serif;" onmouseover="this.style.background='#00b8e6'" onmouseout="this.style.background='#00CFFF'">Post comment</button>
-      </form>
+      <div id="comment-form-wrapper">
+        <form id="comment-form" onsubmit="submitComment(event)" style="background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px;">
+          <p style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#F0F4FF;margin:0;">Leave a comment</p>
+          <input id="comment-name" type="text" required placeholder="Your name" maxlength="80" autocomplete="name" style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);color:#F0F4FF;font-size:14px;font-family:'Inter',sans-serif;outline:none;" onfocus="this.style.borderColor='rgba(0,207,255,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.09)'" />
+          <textarea id="comment-text" required placeholder="Share your thoughts..." maxlength="1000" rows="4" style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);color:#F0F4FF;font-size:14px;font-family:'Inter',sans-serif;outline:none;resize:vertical;line-height:1.6;" onfocus="this.style.borderColor='rgba(0,207,255,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.09)'"></textarea>
+          <button type="submit" id="comment-submit-btn" style="align-self:flex-start;padding:10px 24px;background:#00CFFF;color:#0A0F1E;font-weight:600;font-size:14px;border:none;border-radius:10px;cursor:pointer;font-family:'Inter',sans-serif;" onmouseover="this.style.background='#00b8e6'" onmouseout="this.style.background='#00CFFF'">Post comment</button>
+        </form>
+      </div>
+      <div id="comment-auth-gate" style="display:none;background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:32px 24px;text-align:center;">
+        <p style="font-size:15px;color:#8A9CC8;margin:0 0 16px 0;">Inicia sesión para dejar un comentario</p>
+        <a href="#" onclick="goToAuth();return false;" style="display:inline-block;padding:10px 24px;background:#00CFFF;color:#0A0F1E;font-weight:600;font-size:14px;border-radius:10px;text-decoration:none;cursor:pointer;" onmouseover="this.style.background='#00b8e6'" onmouseout="this.style.background='#00CFFF'">Iniciar sesión / Registrarse</a>
+      </div>
     </div>
   </div>
   <!-- ===== END LIKES & COMMENTS ===== -->
@@ -278,7 +284,10 @@ Neutral:           #8A9CC8  (muted blue-grey)</code></pre>
       btn.disabled=false;btn.textContent='Post comment';
     });
   };
-  loadLikes();loadComments();
+  window._authUser=null;
+  function initAuthGate(){sb.auth.getUser().then(function(res){var user=res.data&&res.data.user;window._authUser=user||null;var w=document.getElementById('comment-form-wrapper'),g=document.getElementById('comment-auth-gate');if(user){if(w)w.style.display='block';if(g)g.style.display='none';var ni=document.getElementById('comment-name');if(ni&&user.user_metadata&&user.user_metadata.full_name&&!ni.value){ni.value=user.user_metadata.full_name;}}else{if(w)w.style.display='none';if(g)g.style.display='block';}});}
+  window.goToAuth=function(){window.location.href='/auth.html?redirect='+encodeURIComponent(window.location.href);};
+  loadLikes();loadComments();initAuthGate();
 })();
 </script>
 <script defer src="/_vercel/insights/script.js"></script>

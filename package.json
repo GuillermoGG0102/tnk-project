@@ -8,6 +8,8 @@
     "lib": "lib"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.49.4",
     "abbrev": "^2.0.0",
     "acorn": "^8.16.0",
     "acorn-jsx": "^5.3.2",

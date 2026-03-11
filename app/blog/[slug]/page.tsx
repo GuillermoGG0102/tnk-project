@@ -4,6 +4,7 @@ import Link                from 'next/link'
 import { ArrowLeft, Clock, Calendar, Tag, Linkedin, Instagram } from 'lucide-react'
 import { getBlogPostBySlug, getAllBlogPosts } from '@/lib/mdx'
 import { NewsletterForm } from '@/components/blog/NewsletterForm'
+import { Comments } from '@/components/blog/Comments'
 import { Badge }          from '@/components/ui/Badge'
 import { BlogCard }       from '@/components/blog/BlogCard'
 import { formatDate }     from '@/lib/utils'
@@ -142,6 +143,9 @@ export default async function BlogPostPage({ params }: PageProps) {
             ))}
           </div>
         )}
+
+        {/* Comments */}
+        <Comments postSlug={params.slug} postTitle={fm.title} />
 
         {/* Newsletter */}
         <div className="mb-16">

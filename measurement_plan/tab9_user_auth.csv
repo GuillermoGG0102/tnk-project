@@ -1,0 +1,10 @@
+Index,Event,method,Description,Page / Context,dataLayer Push Example
+1,user_login,email,User successfully logs in with email + password. Fired after supabase.auth.signInWithPassword resolves without error.,/auth.html — login form submit,"{""event"":""user_login"",""method"":""email""}"
+2,user_register,email,User successfully creates a new account. Fired after supabase.auth.signUp resolves with a session (email confirmation may be required first).,/auth.html — register form submit,"{""event"":""user_register"",""method"":""email""}"
+
+FIELD COLLECTION RULES
+Field Type,Behaviour
+email (input[type=email]),Never sent — only method label is captured
+password (input[type=password]),Skipped entirely
+name (input[type=text]),Skipped entirely (PII)
+method,Categorical label only — currently always "email". Could extend to "google" / "github" if OAuth is added.

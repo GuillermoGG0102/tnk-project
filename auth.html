@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar sesión — TNK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0A0F1E;
+      color: #F0F4FF;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #0F1629;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 40px 36px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #00CFFF, #00FFB3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: #0A0F1E;
+    }
+    .logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: #F0F4FF;
+    }
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 28px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 12px;
+      padding: 4px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 9px 16px;
+      border: none;
+      border-radius: 9px;
+      background: transparent;
+      color: #4D5E87;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .tab-btn.active {
+      background: rgba(0,207,255,0.12);
+      color: #00CFFF;
+    }
+    .form-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #F0F4FF;
+      margin-bottom: 6px;
+    }
+    .form-subtitle {
+      font-size: 14px;
+      color: #4D5E87;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .field label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #8A9CC8;
+    }
+    .field input {
+      padding: 11px 14px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      color: #F0F4FF;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .field input:focus {
+      border-color: rgba(0,207,255,0.4);
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: #00CFFF;
+      color: #0A0F1E;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.15s;
+    }
+    .submit-btn:hover { background: #00b8e6; }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .msg {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+      display: none;
+    }
+    .msg.success { background: rgba(0,255,179,0.08); border: 1px solid rgba(0,255,179,0.2); color: #00FFB3; }
+    .msg.error   { background: rgba(255,77,109,0.08); border: 1px solid rgba(255,77,109,0.2); color: #FF4D6D; }
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .divider hr { flex: 1; border: none; border-top: 1px solid rgba(255,255,255,0.07); }
+    .divider span { font-size: 12px; color: #4D5E87; }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 24px;
+      font-size: 13px;
+      color: #4D5E87;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: #8A9CC8; }
+    .user-logged {
+      text-align: center;
+      display: none;
+    }
+    .user-logged p { color: #8A9CC8; font-size: 14px; margin-bottom: 4px; }
+    .user-logged strong { color: #F0F4FF; }
+    .user-logged .signout-btn {
+      margin-top: 16px;
+      padding: 10px 24px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: #8A9CC8;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .user-logged .signout-btn:hover { border-color: rgba(255,255,255,0.2); color: #F0F4FF; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <a href="index.html" class="logo">
+    <div class="logo-mark">T</div>
+    <span class="logo-text">TNK</span>
+  </a>
+
+  <!-- Already logged in state -->
+  <div class="user-logged" id="user-logged-section">
+    <p>Sesión iniciada como</p>
+    <strong id="user-email-display"></strong>
+    <br />
+    <button class="signout-btn" onclick="doSignOut()">Cerrar sesión</button>
+  </div>
+
+  <!-- Auth forms -->
+  <div id="auth-forms-section">
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Iniciar sesión</button>
+      <button class="tab-btn" id="tab-register" onclick="switchTab('register')">Registrarse</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="form-login">
+      <p class="form-title">Bienvenido de vuelta</p>
+      <p class="form-subtitle">Inicia sesión para comentar en los posts.</p>
+      <form onsubmit="doLogin(event)">
+        <div class="field">
+          <label for="login-email">Email</label>
+          <input id="login-email" type="email" required placeholder="tu@email.com" autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="login-password">Contraseña</label>
+          <input id="login-password" type="password" required placeholder="••••••••" autocomplete="current-password" />
+        </div>
+        <button type="submit" class="submit-btn" id="login-btn">Iniciar sesión</button>
+        <div class="msg" id="login-msg"></div>
+      </form>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div id="form-register" style="display:none;">
+      <p class="form-title">Crear cuenta</p>
+      <p class="form-subtitle">Regístrate para participar en la conversación.</p>
+      <form onsubmit="doRegister(event)">
+        <div class="field">
+          <label for="register-name">Nombre</label>
+          <input id="register-name" type="text" required placeholder="Tu nombre" maxlength="80" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="register-email">Email</label>
+          <input id="register-email" type="email" required placeholder="tu@email.com" autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="register-password">Contraseña</label>
+          <input id="register-password" type="password" required placeholder="Mínimo 6 caracteres" minlength="6" autocomplete="new-password" />
+        </div>
+        <button type="submit" class="submit-btn" id="register-btn">Crear cuenta</button>
+        <div class="msg" id="register-msg"></div>
+      </form>
+    </div>
+  </div>
+
+  <a href="blog.html" class="back-link">← Volver al blog</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  var sb = supabase.createClient(
+    'https://hdfyjbyoodfpjopvxddv.supabase.co',
+    'sb_publishable_ggCplDNSkhR5prqES5ULfw_y9GKjovU'
+  );
+
+  // Get redirect URL from query param (set by blog pages)
+  var params = new URLSearchParams(window.location.search);
+  var redirectTo = params.get('redirect') || 'blog.html';
+
+  // Handle magic link / email confirmation callback
+  var hash = window.location.hash;
+  if (hash && (hash.includes('access_token') || hash.includes('type=recovery'))) {
+    sb.auth.getSession().then(function(res) {
+      if (res.data && res.data.session) {
+        window.location.href = redirectTo;
+      }
+    });
+  }
+
+  // Check if already logged in
+  sb.auth.getUser().then(function(res) {
+    var user = res.data && res.data.user;
+    if (user) {
+      showLoggedIn(user);
+    }
+  });
+
+  function showLoggedIn(user) {
+    document.getElementById('auth-forms-section').style.display = 'none';
+    var loggedSection = document.getElementById('user-logged-section');
+    loggedSection.style.display = 'block';
+    document.getElementById('user-email-display').textContent = user.email;
+    // Auto-redirect after 1.5s if came from a post
+    if (params.get('redirect')) {
+      setTimeout(function() { window.location.href = redirectTo; }, 1500);
+    }
+  }
+
+  window.switchTab = function(tab) {
+    var isLogin = tab === 'login';
+    document.getElementById('form-login').style.display = isLogin ? 'block' : 'none';
+    document.getElementById('form-register').style.display = isLogin ? 'none' : 'block';
+    document.getElementById('tab-login').className = 'tab-btn' + (isLogin ? ' active' : '');
+    document.getElementById('tab-register').className = 'tab-btn' + (!isLogin ? ' active' : '');
+  };
+
+  window.doLogin = function(e) {
+    e.preventDefault();
+    var email = document.getElementById('login-email').value.trim();
+    var password = document.getElementById('login-password').value;
+    var btn = document.getElementById('login-btn');
+    var msg = document.getElementById('login-msg');
+    btn.disabled = true;
+    btn.textContent = 'Iniciando sesión...';
+    msg.style.display = 'none';
+
+    sb.auth.signInWithPassword({ email: email, password: password }).then(function(res) {
+      if (res.error) {
+        showMsg('login-msg', 'error', res.error.message === 'Invalid login credentials'
+          ? 'Email o contraseña incorrectos.'
+          : res.error.message);
+        btn.disabled = false;
+        btn.textContent = 'Iniciar sesión';
+      } else {
+        (window.dataLayer = window.dataLayer || []).push({ event: 'user_login', method: 'email' });
+        showMsg('login-msg', 'success', '¡Sesión iniciada! Redirigiendo...');
+        setTimeout(function() { window.location.href = redirectTo; }, 800);
+      }
+    });
+  };
+
+  window.doRegister = function(e) {
+    e.preventDefault();
+    var name = document.getElementById('register-name').value.trim();
+    var email = document.getElementById('register-email').value.trim();
+    var password = document.getElementById('register-password').value;
+    var btn = document.getElementById('register-btn');
+    var msg = document.getElementById('register-msg');
+    btn.disabled = true;
+    btn.textContent = 'Creando cuenta...';
+    msg.style.display = 'none';
+
+    sb.auth.signUp({
+      email: email,
+      password: password,
+      options: { data: { full_name: name } }
+    }).then(function(res) {
+      if (res.error) {
+        showMsg('register-msg', 'error', res.error.message);
+        btn.disabled = false;
+        btn.textContent = 'Crear cuenta';
+      } else if (res.data && res.data.user && !res.data.session) {
+        // Email confirmation required
+        showMsg('register-msg', 'success', 'Revisa tu email para confirmar tu cuenta. Después podrás iniciar sesión.');
+        btn.disabled = false;
+        btn.textContent = 'Crear cuenta';
+      } else {
+        (window.dataLayer = window.dataLayer || []).push({ event: 'user_register', method: 'email' });
+        showMsg('register-msg', 'success', '¡Cuenta creada! Redirigiendo...');
+        setTimeout(function() { window.location.href = redirectTo; }, 800);
+      }
+    });
+  };
+
+  window.doSignOut = function() {
+    sb.auth.signOut().then(function() {
+      document.getElementById('user-logged-section').style.display = 'none';
+      document.getElementById('auth-forms-section').style.display = 'block';
+    });
+  };
+
+  function showMsg(id, type, text) {
+    var el = document.getElementById(id);
+    el.className = 'msg ' + type;
+    el.textContent = text;
+    el.style.display = 'block';
+  }
+})();
+</script>
+</body>
+</html>
