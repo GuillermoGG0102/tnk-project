@@ -15,17 +15,29 @@ for (const file of readdirSync(screensDir)) {
 
 let html = readFileSync(htmlPath, 'utf8');
 
-// Inject screenshots map before </head>
+// 1. Inject screenshots map before </head>
 html = html.replace('</head>', `<script>window.SCREENSHOTS=${JSON.stringify(map)};</script>\n</head>`);
 
-// Patch shot() to use embedded map
-html = html.replace(
-  /function shot\(file,\s*alt\)\s*\{[\s\S]*?\}/,
-  `function shot(file, alt) {
+// 2. Replace shot() using exact string match — NOT regex.
+//    The original uses a template literal with ${file} inside, so any regex with [\s\S]*?
+//    would stop at the first '}' inside ${file} and produce broken JS.
+const originalShot = `function shot(file, alt) {
+  return \`<div class="shot-wrap"><img src="screenshots/\${file}" alt="\${alt}" onerror="showZipBanner();this.parentElement.innerHTML='<div class=shot-missing>screenshot/\${file}</div>'"></div>\`;
+}`;
+
+const standaloneShot = `function shot(file, alt) {
   const src = (window.SCREENSHOTS && window.SCREENSHOTS[file]) || ('screenshots/' + file);
   return '<div class="shot-wrap"><img src="' + src + '" alt="' + alt + '"></div>';
-}`
-);
+}`;
+
+if (!html.includes(originalShot)) {
+  console.warn('WARNING: could not find shot() function — screenshot patch skipped. Check for changes in measurement_plan.html.');
+} else {
+  html = html.replace(originalShot, standaloneShot);
+}
+
+// 3. Hide the banner — screenshots are embedded, no download needed
+html = html.replace('id="zip-banner"', 'id="zip-banner" style="display:none"');
 
 writeFileSync(outPath, html, 'utf8');
 const mb = (Buffer.byteLength(html, 'utf8') / 1024 / 1024).toFixed(1);
