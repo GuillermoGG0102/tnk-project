@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>La Seguridad de mi Portfolio con IA: Lo Que Descubrí | TNK</title>
+<title>Security Audit of My AI-Built Portfolio: What I Found | TNK</title>
 <script>window.TNK_PAGE = { name: 'Portfolio Security Audit', category: 'blog', type: 'article', group: 'content' };</script>
 <script src="/analytics.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
@@ -28,38 +28,29 @@
   .tag-primary{background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
   .tag-neutral{background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
   .tag-accent{background:rgba(0,255,179,0.1);color:#00FFB3;border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
-  .tag-warn{background:rgba(255,190,106,0.1);color:#FFBE6A;border:1px solid rgba(255,190,106,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
-  /* Audit table */
   .audit-table{width:100%;border-collapse:collapse;margin:2em 0;font-size:14px;}
   .audit-table th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#4D5E87;border-bottom:1px solid rgba(255,255,255,0.08);}
   .audit-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.05);color:#8A9CC8;vertical-align:top;}
   .audit-table tr:last-child td{border-bottom:none;}
   .audit-table tr:hover td{background:rgba(255,255,255,0.02);}
   .status-ok{display:inline-flex;align-items:center;gap:5px;color:#00FFB3;font-size:13px;font-weight:600;}
-  .status-ok::before{content:'✓';font-size:12px;}
-  /* Callout boxes */
+  .status-ok::before{content:'checkmark';font-size:12px;content:'\2713';}
   .callout-green{background:rgba(0,255,179,0.06);border-left:3px solid #00FFB3;border-radius:0 10px 10px 0;padding:16px 20px;margin:1.5em 0;}
   .callout-green p{margin:0;color:#8A9CC8;font-size:15px;}
   .callout-green strong{color:#00FFB3;}
-  .callout-yellow{background:rgba(255,190,106,0.06);border-left:3px solid #FFBE6A;border-radius:0 10px 10px 0;padding:16px 20px;margin:1.5em 0;}
-  .callout-yellow p{margin:0;color:#8A9CC8;font-size:15px;}
-  .callout-yellow strong{color:#FFBE6A;}
   .callout-blue{background:rgba(0,207,255,0.04);border-left:3px solid #00CFFF;border-radius:0 10px 10px 0;padding:16px 20px;margin:1.5em 0;}
   .callout-blue p{margin:0;color:#C0CBE8;font-size:16px;font-style:italic;}
-  /* Hero shield visual */
   .hero-shield{background:#0d1528;border:1px solid rgba(0,207,255,0.15);border-radius:16px;overflow:hidden;margin-bottom:48px;}
   .shield-bar{background:#162038;padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.06);}
   .shield-dot{width:10px;height:10px;border-radius:50%;}
-  .shield-body{padding:32px 28px;display:flex;flex-direction:column;gap:14px;}
+  .shield-body{padding:32px 28px;display:flex;flex-direction:column;gap:10px;}
   .audit-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 14px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:12px;}
   .audit-row-label{color:#8A9CC8;flex:1;}
   .audit-row-ok{color:#00FFB3;font-weight:600;flex-shrink:0;}
-  /* Summary stats */
   .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:2em 0;}
   .stat-box{background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:20px 18px;text-align:center;}
   .stat-box .num{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;letter-spacing:-0.03em;margin-bottom:4px;}
   .stat-box .label{font-size:12px;color:#4D5E87;}
-  /* Improvement list */
   .improve-item{display:flex;gap:12px;padding:14px 16px;background:#0F1629;border:1px solid rgba(255,190,106,0.1);border-radius:10px;margin-bottom:10px;align-items:flex-start;}
   .improve-icon{color:#FFBE6A;font-size:16px;flex-shrink:0;margin-top:2px;}
   .improve-text{font-size:14px;color:#8A9CC8;line-height:1.6;}
@@ -93,9 +84,8 @@
 
   <a href="../blog.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#8A9CC8;text-decoration:none;margin-bottom:40px;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">← Back to Blog</a>
 
-  <!-- Meta -->
   <div class="fade-up fade-up-1" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:20px;">
-    <span class="tag-primary">Seguridad</span>
+    <span class="tag-primary">Security</span>
     <span class="tag-neutral">AI</span>
     <span class="tag-neutral">Claude Code</span>
     <span style="font-size:12px;color:#4D5E87;font-family:'JetBrains Mono',monospace;">6 min read</span>
@@ -104,11 +94,10 @@
   </div>
 
   <div class="fade-up fade-up-1">
-    <h1 style="font-size:clamp(28px,4vw,46px);font-weight:700;letter-spacing:-0.04em;color:#F0F4FF;margin:0 0 18px 0;line-height:1.15;">La seguridad de mi portfolio web hecho con IA.<br/><span style="background:linear-gradient(90deg,#00CFFF,#00FFB3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Mi mayor preocupación — y lo que descubrí.</span></h1>
-    <p style="font-size:19px;color:#8A9CC8;line-height:1.75;margin:0 0 40px 0;">Construí mi portfolio prácticamente entero con Claude Code. Y desde el principio tuve la misma duda: ¿y si la IA comete alguna mala práctica de seguridad sin que yo me dé cuenta?</p>
+    <h1 style="font-size:clamp(28px,4vw,46px);font-weight:700;letter-spacing:-0.04em;color:#F0F4FF;margin:0 0 18px 0;line-height:1.15;">Security Audit of My AI-Built Portfolio.<br/><span style="background:linear-gradient(90deg,#00CFFF,#00FFB3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Zero Critical Findings. Here's What I Learned.</span></h1>
+    <p style="font-size:19px;color:#8A9CC8;line-height:1.75;margin:0 0 40px 0;">I built this portfolio almost entirely with Claude Code. My biggest concern wasn't the design or the features — it was security. So I ran a full audit. Here's the unfiltered result.</p>
   </div>
 
-  <!-- Hero: security audit terminal -->
   <div class="hero-shield fade-up fade-up-2">
     <div class="shield-bar">
       <div class="shield-dot" style="background:#FF5F57;"></div>
@@ -117,175 +106,108 @@
       <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#4D5E87;margin-left:8px;">security-audit — tnk-portfolio</span>
     </div>
     <div class="shield-body">
-      <div class="audit-row">
-        <span class="audit-row-label">Secretos hardcodeados (API keys, tokens)</span>
-        <span class="audit-row-ok">✓ Ninguno encontrado</span>
-      </div>
-      <div class="audit-row">
-        <span class="audit-row-label">Archivos .env con credenciales reales</span>
-        <span class="audit-row-ok">✓ No existen en el repo</span>
-      </div>
-      <div class="audit-row">
-        <span class="audit-row-label">.gitignore cubre archivos sensibles</span>
-        <span class="audit-row-ok">✓ Correctamente configurado</span>
-      </div>
-      <div class="audit-row">
-        <span class="audit-row-label">Rutas API (/api/subscribe, /api/contact)</span>
-        <span class="audit-row-ok">✓ Validación de inputs correcta</span>
-      </div>
-      <div class="audit-row">
-        <span class="audit-row-label">Vulnerabilidades en dependencias</span>
-        <span class="audit-row-ok">✓ npm audit → 0 vulnerabilidades</span>
-      </div>
-      <div class="audit-row">
-        <span class="audit-row-label">XSS / Inyección SQL</span>
-        <span class="audit-row-ok">✓ No encontrado</span>
-      </div>
-      <div class="audit-row">
-        <span class="audit-row-label">Patrones peligrosos (eval, exec)</span>
-        <span class="audit-row-ok">✓ No encontrado</span>
-      </div>
+      <div class="audit-row"><span class="audit-row-label">Hardcoded secrets (API keys, tokens)</span><span class="audit-row-ok">✓ None found</span></div>
+      <div class="audit-row"><span class="audit-row-label">.env files with real credentials in repo</span><span class="audit-row-ok">✓ Not present</span></div>
+      <div class="audit-row"><span class="audit-row-label">.gitignore covers sensitive files</span><span class="audit-row-ok">✓ Correctly configured</span></div>
+      <div class="audit-row"><span class="audit-row-label">API routes (/api/subscribe, /api/contact)</span><span class="audit-row-ok">✓ Input validation correct</span></div>
+      <div class="audit-row"><span class="audit-row-label">Dependency vulnerabilities</span><span class="audit-row-ok">✓ npm audit → 0 found</span></div>
+      <div class="audit-row"><span class="audit-row-label">XSS / SQL injection</span><span class="audit-row-ok">✓ Not found</span></div>
+      <div class="audit-row"><span class="audit-row-label">Dangerous patterns (eval, exec)</span><span class="audit-row-ok">✓ Not found</span></div>
     </div>
   </div>
 
-  <!-- Stats -->
   <div class="stat-grid fade-up fade-up-2">
-    <div class="stat-box">
-      <div class="num" style="color:#00FFB3;">0</div>
-      <div class="label">Vulnerabilidades críticas</div>
-    </div>
-    <div class="stat-box">
-      <div class="num" style="color:#00CFFF;">0</div>
-      <div class="label">Secretos expuestos</div>
-    </div>
-    <div class="stat-box">
-      <div class="num" style="color:#FFBE6A;">3</div>
-      <div class="label">Mejoras opcionales</div>
-    </div>
+    <div class="stat-box"><div class="num" style="color:#00FFB3;">0</div><div class="label">Critical vulnerabilities</div></div>
+    <div class="stat-box"><div class="num" style="color:#00CFFF;">0</div><div class="label">Exposed secrets</div></div>
+    <div class="stat-box"><div class="num" style="color:#FFBE6A;">3</div><div class="label">Optional improvements</div></div>
   </div>
 
-  <!-- Body -->
   <div class="prose">
 
-    <h2>La duda que no me dejaba tranquilo</h2>
-    <p>Cuando decidí crear mi portfolio web, había algo que me preocupaba más que el diseño o las funcionalidades: la seguridad.</p>
-    <p>No soy desarrollador profesional, aunque tengo conocimientos técnicos básicos. Pero este proyecto tenía algo diferente — lo construí prácticamente entero usando IA, concretamente con <strong>Claude Code</strong>.</p>
-    <p>Y ahí empezó mi duda constante:</p>
+    <h2>The concern that wouldn't leave me alone</h2>
+    <p>When I decided to build my portfolio, there was something that worried me more than the design or the feature set: <strong>security</strong>.</p>
+    <p>I'm not a professional developer — I have solid technical fundamentals, but this project was different. I built it almost entirely using AI, specifically with Claude Code.</p>
+    <p>And from day one, I had the same nagging doubt:</p>
 
-    <div class="callout-blue">
-      <p>"¿Y si la IA comete alguna mala práctica de seguridad sin que yo me dé cuenta?"</p>
-    </div>
+    <div class="callout-blue"><p>"What if the AI introduces a bad security practice without me noticing?"</p></div>
 
-    <p>Aunque fui muy insistente con buenas prácticas, validaciones y protección de datos, seguía teniendo esa espina. Al final, cuando no eres especialista en ciberseguridad, siempre queda la incertidumbre.</p>
-    <p>Así que decidí hacer lo lógico: pedí una <strong>auditoría completa de seguridad del proyecto y del repositorio en GitHub</strong> mientras estaba en funcionamiento.</p>
+    <p>I was diligent about asking for proper input validation, environment variable handling, and data protection throughout the build. But when you're not a security specialist, there's always a gap between "I followed best practices" and "I actually know this is safe."</p>
+    <p>So I did the logical thing: I requested a <strong>full security audit of the project and the GitHub repository</strong> while it was live in production.</p>
 
     <hr />
 
-    <h2>Resultado del audit de seguridad</h2>
-    <p>Buenas noticias: <strong>no se encontró nada peligroso</strong>. El repositorio sigue buenas prácticas de seguridad en todas las áreas revisadas.</p>
+    <h2>Audit results</h2>
+    <p>Good news: <strong>nothing dangerous was found</strong>. The repository follows solid security practices across every area reviewed.</p>
 
     <table class="audit-table">
-      <thead>
-        <tr>
-          <th>Área revisada</th>
-          <th>Estado</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Area</th><th>Status</th></tr></thead>
       <tbody>
-        <tr>
-          <td>Secretos hardcodeados (API keys, tokens)</td>
-          <td><span class="status-ok">Ninguno encontrado</span></td>
-        </tr>
-        <tr>
-          <td>Archivos .env con credenciales reales</td>
-          <td><span class="status-ok">No existen en el repo</span></td>
-        </tr>
-        <tr>
-          <td>.gitignore cubre archivos sensibles</td>
-          <td><span class="status-ok">Correctamente configurado</span></td>
-        </tr>
-        <tr>
-          <td>Rutas API (<code>/api/subscribe</code>, <code>/api/contact</code>)</td>
-          <td><span class="status-ok">Validación de inputs correcta</span></td>
-        </tr>
-        <tr>
-          <td>Vulnerabilidades en dependencias</td>
-          <td><span class="status-ok">npm audit → 0 vulnerabilidades</span></td>
-        </tr>
-        <tr>
-          <td>XSS / Inyección SQL</td>
-          <td><span class="status-ok">No encontrado</span></td>
-        </tr>
-        <tr>
-          <td>Patrones peligrosos (eval, exec)</td>
-          <td><span class="status-ok">No encontrado</span></td>
-        </tr>
+        <tr><td>Hardcoded secrets (API keys, tokens)</td><td><span class="status-ok">None found</span></td></tr>
+        <tr><td>.env files with real credentials in repo</td><td><span class="status-ok">Not present</span></td></tr>
+        <tr><td>.gitignore covers sensitive files</td><td><span class="status-ok">Correctly configured</span></td></tr>
+        <tr><td>API routes (<code>/api/subscribe</code>, <code>/api/contact</code>)</td><td><span class="status-ok">Input validation correct</span></td></tr>
+        <tr><td>Dependency vulnerabilities</td><td><span class="status-ok">npm audit → 0 found</span></td></tr>
+        <tr><td>XSS / SQL injection</td><td><span class="status-ok">Not found</span></td></tr>
+        <tr><td>Dangerous patterns (eval, exec)</td><td><span class="status-ok">Not found</span></td></tr>
       </tbody>
     </table>
 
-    <h2>Puntos especialmente positivos</h2>
-    <p>Más allá de "no hay problemas", hay prácticas que el audit destacó como especialmente correctas:</p>
+    <h2>What held up particularly well</h2>
+    <p>Beyond "no issues found", the audit highlighted several practices worth calling out explicitly:</p>
     <ul>
-      <li>El <code>.env</code> real <strong>nunca se sube a Git</strong> — está correctamente excluido vía <code>.gitignore</code></li>
-      <li>Las API keys se cargan mediante <code>process.env</code>, no están hardcodeadas en el código</li>
-      <li>Los emails se <strong>hashean con SHA-256</strong> antes de enviarse a analytics</li>
-      <li>Las consultas a Supabase usan ORM — no SQL directo, lo que elimina el riesgo de inyección</li>
-      <li>El formulario de contacto valida inputs antes de procesarlos</li>
+      <li>The real <code>.env</code> file is <strong>never committed to Git</strong> — correctly excluded via <code>.gitignore</code></li>
+      <li>API keys are loaded via <code>process.env</code>, not hardcoded anywhere in the source</li>
+      <li>Emails are <strong>hashed with SHA-256</strong> before being sent to analytics — user data is protected at the point of collection</li>
+      <li>Supabase queries use the ORM layer — no raw SQL, which eliminates injection risk entirely</li>
+      <li>The contact form validates and sanitises inputs before any processing</li>
     </ul>
 
-    <div class="callout-green">
-      <p><strong>Conclusión directa:</strong> el repositorio y el dispositivo no están en riesgo por este proyecto. Las prácticas de seguridad implementadas son correctas.</p>
-    </div>
+    <div class="callout-green"><p><strong>Bottom line:</strong> the repository and the deployment are not at risk from this project. The security practices in place are correct.</p></div>
 
-    <h2>Mejoras opcionales (no urgentes)</h2>
-    <p>El audit también identificó tres ajustes recomendados para reforzar aún más la seguridad a futuro. Ninguno es crítico hoy, pero son buenas prácticas para tener en cuenta:</p>
+    <h2>Optional improvements (non-urgent)</h2>
+    <p>The audit also flagged three hardening suggestions — none of them critical today, but good practice to layer in over time:</p>
 
     <div class="improve-item">
-      <span class="improve-icon">⚠</span>
-      <div class="improve-text"><strong>Rate limiting</strong> en <code>/api/subscribe</code> y <code>/api/contact</code> para evitar spam o abuso automatizado de los formularios.</div>
+      <span class="improve-icon">&#9888;</span>
+      <div class="improve-text"><strong>Rate limiting</strong> on <code>/api/subscribe</code> and <code>/api/contact</code> to prevent automated spam or abuse of the form endpoints.</div>
     </div>
     <div class="improve-item">
-      <span class="improve-icon">⚠</span>
-      <div class="improve-text"><strong>Tokens CSRF</strong> en los formularios para protección adicional contra solicitudes falsificadas entre sitios.</div>
+      <span class="improve-icon">&#9888;</span>
+      <div class="improve-text"><strong>CSRF tokens</strong> on forms for additional protection against cross-site request forgery attacks.</div>
     </div>
     <div class="improve-item">
-      <span class="improve-icon">⚠</span>
-      <div class="improve-text">Ejecutar <strong><code>npm audit</code> periódicamente</strong> para detectar nuevas vulnerabilidades en dependencias a medida que se publican.</div>
+      <span class="improve-icon">&#9888;</span>
+      <div class="improve-text">Running <strong><code>npm audit</code> periodically</strong> to catch new dependency vulnerabilities as they're disclosed — not just at build time.</div>
     </div>
 
     <hr />
 
-    <h2>Lo que aprendí de todo esto</h2>
-    <p>La conclusión más importante no es técnica — es de mentalidad:</p>
+    <h2>The most important conclusion</h2>
+    <p>The real takeaway from this exercise isn't technical — it's about mindset:</p>
 
-    <div class="callout-blue">
-      <p>Usar IA para desarrollar no significa descuidar la seguridad. Pero sí implica algo clave: <strong>la IA acelera el desarrollo. La responsabilidad sigue siendo humana.</strong></p>
-    </div>
+    <div class="callout-blue"><p>Building with AI doesn't mean neglecting security. But it does mean one thing: <strong>AI accelerates development. Responsibility stays with the human.</strong></p></div>
 
-    <p>Este proceso me enseñó que, incluso sin ser desarrollador profesional, puedes crear proyectos sólidos si te apoyas en buenas herramientas, sigues buenas prácticas, y verificas con auditorías independientes.</p>
+    <p>This process showed me that even without being a professional developer, you can ship solid, secure projects — if you rely on good tooling, apply best practices consistently, and verify with independent audits.</p>
 
-    <h2>¿Qué garantiza realmente la seguridad en un proyecto con IA?</h2>
-    <p>Reflexionando sobre el proceso, identifiqué tres factores que marcaron la diferencia:</p>
-    <p><strong>1. Ser muy explícito con las instrucciones.</strong> Fui insistente con buenas prácticas desde el primer prompt: variables de entorno, validación de inputs, no hardcodear credenciales. La IA cumplió porque lo pedí con claridad.</p>
-    <p><strong>2. Entender el código que genera.</strong> No necesitas ser experto, pero sí entender a grandes rasgos qué hace cada parte. Si algo no te cuadra, pregunta. Esa revisión humana es lo que convierte un borrador de IA en código producción-ready.</p>
-    <p><strong>3. Auditar independientemente.</strong> La validación externa — aunque sea interna al proyecto — es lo que cierra el ciclo. No asumas que todo está bien; compruébalo.</p>
+    <h2>What actually made the difference</h2>
+    <p>Looking back, three things separated "probably fine" from "demonstrably safe":</p>
+    <p><strong>1. Being explicit in every prompt.</strong> I was specific about security requirements from the first session: environment variables for secrets, input validation on every endpoint, no hardcoded credentials. The AI delivered because I was clear about what I needed.</p>
+    <p><strong>2. Reviewing what was generated.</strong> You don't need to be an expert, but you do need to understand what the code is doing at a high level. That human review layer is what turns AI output into production-ready code.</p>
+    <p><strong>3. Auditing independently.</strong> The external validation closed the loop. Don't assume it's correct — verify it. That's what gave me actual confidence rather than a vague feeling of safety.</p>
 
-    <blockquote>
-      <p>La seguridad no es un estado final. Es un proceso continuo de revisión, auditoría y mejora.</p>
-    </blockquote>
+    <blockquote><p>Security isn't a final state. It's a continuous process of review, auditing, and incremental improvement.</p></blockquote>
 
-    <h2>Si también estás construyendo con IA</h2>
-    <p>Si alguien está pensando en crear proyectos con IA pero le preocupa la seguridad, mi experiencia es clara:</p>
+    <h2>If you're also building with AI</h2>
+    <p>If you're thinking about building projects with AI but worried about the security implications, here's my honest take:</p>
     <ul>
-      <li>Es una preocupación <strong>válida</strong> — y lo será cada vez más a medida que los proyectos crezcan</li>
-      <li>Pero se puede <strong>gestionar</strong> con las prácticas adecuadas desde el inicio</li>
-      <li>Y auditar te da <strong>tranquilidad real</strong>, no una sensación falsa de seguridad</li>
+      <li>The concern is <strong>valid</strong> — and it becomes more important as projects grow in complexity</li>
+      <li>But it's entirely <strong>manageable</strong> with the right practices in place from the start</li>
+      <li>And running an audit gives you <strong>real confidence</strong>, not a false sense of security</li>
     </ul>
-    <p>El stack que usé — Next.js + Supabase + Vercel + Claude Code — tiene buenas defensas por defecto si lo configuras bien. La clave es no delegar esa configuración por completo a la IA sin revisarla.</p>
+    <p>The stack I used — Next.js + Supabase + Vercel + Claude Code — has solid defaults if configured correctly. The key is not outsourcing that configuration entirely to the AI without reviewing it.</p>
 
   </div>
 
-  <!-- Author -->
   <div style="margin-top:52px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
     <div style="display:flex;align-items:center;gap:14px;">
       <img src="../ME/MOA__RETRATOS_183.jpg" alt="Guillermo García" style="width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(0,207,255,0.25);" />
@@ -297,7 +219,6 @@
     <a href="../blog.html" style="font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">← All posts</a>
   </div>
 
-  <!-- Related -->
   <div style="margin-top:48px;">
     <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#4D5E87;margin:0 0 16px 0;">You might also like</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;" id="related-grid">
@@ -324,22 +245,10 @@
 </footer>
 
 <script>
-function setGrid(){
-  const w = window.innerWidth;
-  const r = document.getElementById('related-grid');
-  if(r) r.style.gridTemplateColumns = w < 560 ? '1fr' : '1fr 1fr';
-}
-setGrid(); window.addEventListener('resize', setGrid);
-
-// Track article view
-window.dataLayer = window.dataLayer || [];
-window.dataLayer.push({
-  event: 'page_view',
-  page_title: 'La Seguridad de mi Portfolio con IA',
-  page_category: 'blog',
-  content_type: 'article',
-  content_id: 'portfolio-security-audit'
-});
+function setGrid(){var w=window.innerWidth,r=document.getElementById('related-grid');if(r)r.style.gridTemplateColumns=w<560?'1fr':'1fr 1fr';}
+setGrid();window.addEventListener('resize',setGrid);
+window.dataLayer=window.dataLayer||[];
+window.dataLayer.push({event:'page_view',page_title:'Security Audit of My AI-Built Portfolio',page_category:'blog',content_type:'article',content_id:'portfolio-security-audit'});
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
