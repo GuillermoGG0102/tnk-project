@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>La Seguridad de mi Portfolio con IA: Lo Que Descubrí | TNK</title>
+<script>window.TNK_PAGE = { name: 'Portfolio Security Audit', category: 'blog', type: 'article', group: 'content' };</script>
+<script src="/analytics.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body{background:#0A0F1E;color:#F0F4FF;font-family:'Inter',sans-serif;margin:0;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;}
+  .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);}
+  .prose{color:#8A9CC8;line-height:1.85;font-size:17px;}
+  .prose h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:#F0F4FF;letter-spacing:-0.03em;margin:2.5em 0 0.75em;}
+  .prose h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:#F0F4FF;margin:2em 0 0.6em;}
+  .prose p{margin:0 0 1.4em;}
+  .prose strong{color:#F0F4FF;font-weight:600;}
+  .prose em{color:#C0CBE8;font-style:italic;}
+  .prose ul,.prose ol{padding-left:1.5rem;margin-bottom:1.5em;}
+  .prose li{margin-bottom:0.7em;}
+  .prose hr{border:none;border-top:1px solid rgba(255,255,255,0.08);margin:3em 0;}
+  .prose pre{background:#0d1528;border:1px solid rgba(0,207,255,0.15);border-radius:12px;padding:20px 24px;overflow-x:auto;margin:1.5em 0;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.8;color:#F0F4FF;}
+  .prose code{font-family:'JetBrains Mono',monospace;font-size:13px;padding:2px 7px;background:#162038;border-radius:4px;color:#00FFB3;}
+  .prose pre code{background:transparent;padding:0;}
+  .prose blockquote{border-left:3px solid #00CFFF;margin:1.5em 0;padding:14px 20px 14px 22px;background:rgba(0,207,255,0.04);border-radius:0 10px 10px 0;}
+  .prose blockquote p{margin:0;color:#C0CBE8;font-size:16px;font-style:italic;}
+  .tag-primary{background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
+  .tag-neutral{background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
+  .tag-accent{background:rgba(0,255,179,0.1);color:#00FFB3;border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
+  .tag-warn{background:rgba(255,190,106,0.1);color:#FFBE6A;border:1px solid rgba(255,190,106,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-block;}
+  /* Audit table */
+  .audit-table{width:100%;border-collapse:collapse;margin:2em 0;font-size:14px;}
+  .audit-table th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#4D5E87;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .audit-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.05);color:#8A9CC8;vertical-align:top;}
+  .audit-table tr:last-child td{border-bottom:none;}
+  .audit-table tr:hover td{background:rgba(255,255,255,0.02);}
+  .status-ok{display:inline-flex;align-items:center;gap:5px;color:#00FFB3;font-size:13px;font-weight:600;}
+  .status-ok::before{content:'✓';font-size:12px;}
+  /* Callout boxes */
+  .callout-green{background:rgba(0,255,179,0.06);border-left:3px solid #00FFB3;border-radius:0 10px 10px 0;padding:16px 20px;margin:1.5em 0;}
+  .callout-green p{margin:0;color:#8A9CC8;font-size:15px;}
+  .callout-green strong{color:#00FFB3;}
+  .callout-yellow{background:rgba(255,190,106,0.06);border-left:3px solid #FFBE6A;border-radius:0 10px 10px 0;padding:16px 20px;margin:1.5em 0;}
+  .callout-yellow p{margin:0;color:#8A9CC8;font-size:15px;}
+  .callout-yellow strong{color:#FFBE6A;}
+  .callout-blue{background:rgba(0,207,255,0.04);border-left:3px solid #00CFFF;border-radius:0 10px 10px 0;padding:16px 20px;margin:1.5em 0;}
+  .callout-blue p{margin:0;color:#C0CBE8;font-size:16px;font-style:italic;}
+  /* Hero shield visual */
+  .hero-shield{background:#0d1528;border:1px solid rgba(0,207,255,0.15);border-radius:16px;overflow:hidden;margin-bottom:48px;}
+  .shield-bar{background:#162038;padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.06);}
+  .shield-dot{width:10px;height:10px;border-radius:50%;}
+  .shield-body{padding:32px 28px;display:flex;flex-direction:column;gap:14px;}
+  .audit-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 14px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:12px;}
+  .audit-row-label{color:#8A9CC8;flex:1;}
+  .audit-row-ok{color:#00FFB3;font-weight:600;flex-shrink:0;}
+  /* Summary stats */
+  .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:2em 0;}
+  .stat-box{background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:20px 18px;text-align:center;}
+  .stat-box .num{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;letter-spacing:-0.03em;margin-bottom:4px;}
+  .stat-box .label{font-size:12px;color:#4D5E87;}
+  /* Improvement list */
+  .improve-item{display:flex;gap:12px;padding:14px 16px;background:#0F1629;border:1px solid rgba(255,190,106,0.1);border-radius:10px;margin-bottom:10px;align-items:flex-start;}
+  .improve-icon{color:#FFBE6A;font-size:16px;flex-shrink:0;margin-top:2px;}
+  .improve-text{font-size:14px;color:#8A9CC8;line-height:1.6;}
+  .improve-text strong{color:#F0F4FF;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  .fade-up{animation:fadeUp 0.55s ease forwards;}
+  .fade-up-1{animation-delay:0.05s;opacity:0;}
+  .fade-up-2{animation-delay:0.15s;opacity:0;}
+  @media(max-width:640px){.stat-grid{grid-template-columns:1fr 1fr;}.audit-table{font-size:12px;}}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <nav style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="../fotossss/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
+      </a>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <a href="../index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
+        <a href="../projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="../blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
+        <a href="../contact.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div style="max-width:780px;margin:0 auto;padding:110px 24px 80px;">
+
+  <a href="../blog.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#8A9CC8;text-decoration:none;margin-bottom:40px;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">← Back to Blog</a>
+
+  <!-- Meta -->
+  <div class="fade-up fade-up-1" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:20px;">
+    <span class="tag-primary">Seguridad</span>
+    <span class="tag-neutral">AI</span>
+    <span class="tag-neutral">Claude Code</span>
+    <span style="font-size:12px;color:#4D5E87;font-family:'JetBrains Mono',monospace;">6 min read</span>
+    <span style="font-size:12px;color:#4D5E87;">·</span>
+    <time style="font-size:12px;color:#4D5E87;">Mar 11, 2026</time>
+  </div>
+
+  <div class="fade-up fade-up-1">
+    <h1 style="font-size:clamp(28px,4vw,46px);font-weight:700;letter-spacing:-0.04em;color:#F0F4FF;margin:0 0 18px 0;line-height:1.15;">La seguridad de mi portfolio web hecho con IA.<br/><span style="background:linear-gradient(90deg,#00CFFF,#00FFB3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Mi mayor preocupación — y lo que descubrí.</span></h1>
+    <p style="font-size:19px;color:#8A9CC8;line-height:1.75;margin:0 0 40px 0;">Construí mi portfolio prácticamente entero con Claude Code. Y desde el principio tuve la misma duda: ¿y si la IA comete alguna mala práctica de seguridad sin que yo me dé cuenta?</p>
+  </div>
+
+  <!-- Hero: security audit terminal -->
+  <div class="hero-shield fade-up fade-up-2">
+    <div class="shield-bar">
+      <div class="shield-dot" style="background:#FF5F57;"></div>
+      <div class="shield-dot" style="background:#FFBD2E;"></div>
+      <div class="shield-dot" style="background:#28C840;"></div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#4D5E87;margin-left:8px;">security-audit — tnk-portfolio</span>
+    </div>
+    <div class="shield-body">
+      <div class="audit-row">
+        <span class="audit-row-label">Secretos hardcodeados (API keys, tokens)</span>
+        <span class="audit-row-ok">✓ Ninguno encontrado</span>
+      </div>
+      <div class="audit-row">
+        <span class="audit-row-label">Archivos .env con credenciales reales</span>
+        <span class="audit-row-ok">✓ No existen en el repo</span>
+      </div>
+      <div class="audit-row">
+        <span class="audit-row-label">.gitignore cubre archivos sensibles</span>
+        <span class="audit-row-ok">✓ Correctamente configurado</span>
+      </div>
+      <div class="audit-row">
+        <span class="audit-row-label">Rutas API (/api/subscribe, /api/contact)</span>
+        <span class="audit-row-ok">✓ Validación de inputs correcta</span>
+      </div>
+      <div class="audit-row">
+        <span class="audit-row-label">Vulnerabilidades en dependencias</span>
+        <span class="audit-row-ok">✓ npm audit → 0 vulnerabilidades</span>
+      </div>
+      <div class="audit-row">
+        <span class="audit-row-label">XSS / Inyección SQL</span>
+        <span class="audit-row-ok">✓ No encontrado</span>
+      </div>
+      <div class="audit-row">
+        <span class="audit-row-label">Patrones peligrosos (eval, exec)</span>
+        <span class="audit-row-ok">✓ No encontrado</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stat-grid fade-up fade-up-2">
+    <div class="stat-box">
+      <div class="num" style="color:#00FFB3;">0</div>
+      <div class="label">Vulnerabilidades críticas</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" style="color:#00CFFF;">0</div>
+      <div class="label">Secretos expuestos</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" style="color:#FFBE6A;">3</div>
+      <div class="label">Mejoras opcionales</div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="prose">
+
+    <h2>La duda que no me dejaba tranquilo</h2>
+    <p>Cuando decidí crear mi portfolio web, había algo que me preocupaba más que el diseño o las funcionalidades: la seguridad.</p>
+    <p>No soy desarrollador profesional, aunque tengo conocimientos técnicos básicos. Pero este proyecto tenía algo diferente — lo construí prácticamente entero usando IA, concretamente con <strong>Claude Code</strong>.</p>
+    <p>Y ahí empezó mi duda constante:</p>
+
+    <div class="callout-blue">
+      <p>"¿Y si la IA comete alguna mala práctica de seguridad sin que yo me dé cuenta?"</p>
+    </div>
+
+    <p>Aunque fui muy insistente con buenas prácticas, validaciones y protección de datos, seguía teniendo esa espina. Al final, cuando no eres especialista en ciberseguridad, siempre queda la incertidumbre.</p>
+    <p>Así que decidí hacer lo lógico: pedí una <strong>auditoría completa de seguridad del proyecto y del repositorio en GitHub</strong> mientras estaba en funcionamiento.</p>
+
+    <hr />
+
+    <h2>Resultado del audit de seguridad</h2>
+    <p>Buenas noticias: <strong>no se encontró nada peligroso</strong>. El repositorio sigue buenas prácticas de seguridad en todas las áreas revisadas.</p>
+
+    <table class="audit-table">
+      <thead>
+        <tr>
+          <th>Área revisada</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Secretos hardcodeados (API keys, tokens)</td>
+          <td><span class="status-ok">Ninguno encontrado</span></td>
+        </tr>
+        <tr>
+          <td>Archivos .env con credenciales reales</td>
+          <td><span class="status-ok">No existen en el repo</span></td>
+        </tr>
+        <tr>
+          <td>.gitignore cubre archivos sensibles</td>
+          <td><span class="status-ok">Correctamente configurado</span></td>
+        </tr>
+        <tr>
+          <td>Rutas API (<code>/api/subscribe</code>, <code>/api/contact</code>)</td>
+          <td><span class="status-ok">Validación de inputs correcta</span></td>
+        </tr>
+        <tr>
+          <td>Vulnerabilidades en dependencias</td>
+          <td><span class="status-ok">npm audit → 0 vulnerabilidades</span></td>
+        </tr>
+        <tr>
+          <td>XSS / Inyección SQL</td>
+          <td><span class="status-ok">No encontrado</span></td>
+        </tr>
+        <tr>
+          <td>Patrones peligrosos (eval, exec)</td>
+          <td><span class="status-ok">No encontrado</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Puntos especialmente positivos</h2>
+    <p>Más allá de "no hay problemas", hay prácticas que el audit destacó como especialmente correctas:</p>
+    <ul>
+      <li>El <code>.env</code> real <strong>nunca se sube a Git</strong> — está correctamente excluido vía <code>.gitignore</code></li>
+      <li>Las API keys se cargan mediante <code>process.env</code>, no están hardcodeadas en el código</li>
+      <li>Los emails se <strong>hashean con SHA-256</strong> antes de enviarse a analytics</li>
+      <li>Las consultas a Supabase usan ORM — no SQL directo, lo que elimina el riesgo de inyección</li>
+      <li>El formulario de contacto valida inputs antes de procesarlos</li>
+    </ul>
+
+    <div class="callout-green">
+      <p><strong>Conclusión directa:</strong> el repositorio y el dispositivo no están en riesgo por este proyecto. Las prácticas de seguridad implementadas son correctas.</p>
+    </div>
+
+    <h2>Mejoras opcionales (no urgentes)</h2>
+    <p>El audit también identificó tres ajustes recomendados para reforzar aún más la seguridad a futuro. Ninguno es crítico hoy, pero son buenas prácticas para tener en cuenta:</p>
+
+    <div class="improve-item">
+      <span class="improve-icon">⚠</span>
+      <div class="improve-text"><strong>Rate limiting</strong> en <code>/api/subscribe</code> y <code>/api/contact</code> para evitar spam o abuso automatizado de los formularios.</div>
+    </div>
+    <div class="improve-item">
+      <span class="improve-icon">⚠</span>
+      <div class="improve-text"><strong>Tokens CSRF</strong> en los formularios para protección adicional contra solicitudes falsificadas entre sitios.</div>
+    </div>
+    <div class="improve-item">
+      <span class="improve-icon">⚠</span>
+      <div class="improve-text">Ejecutar <strong><code>npm audit</code> periódicamente</strong> para detectar nuevas vulnerabilidades en dependencias a medida que se publican.</div>
+    </div>
+
+    <hr />
+
+    <h2>Lo que aprendí de todo esto</h2>
+    <p>La conclusión más importante no es técnica — es de mentalidad:</p>
+
+    <div class="callout-blue">
+      <p>Usar IA para desarrollar no significa descuidar la seguridad. Pero sí implica algo clave: <strong>la IA acelera el desarrollo. La responsabilidad sigue siendo humana.</strong></p>
+    </div>
+
+    <p>Este proceso me enseñó que, incluso sin ser desarrollador profesional, puedes crear proyectos sólidos si te apoyas en buenas herramientas, sigues buenas prácticas, y verificas con auditorías independientes.</p>
+
+    <h2>¿Qué garantiza realmente la seguridad en un proyecto con IA?</h2>
+    <p>Reflexionando sobre el proceso, identifiqué tres factores que marcaron la diferencia:</p>
+    <p><strong>1. Ser muy explícito con las instrucciones.</strong> Fui insistente con buenas prácticas desde el primer prompt: variables de entorno, validación de inputs, no hardcodear credenciales. La IA cumplió porque lo pedí con claridad.</p>
+    <p><strong>2. Entender el código que genera.</strong> No necesitas ser experto, pero sí entender a grandes rasgos qué hace cada parte. Si algo no te cuadra, pregunta. Esa revisión humana es lo que convierte un borrador de IA en código producción-ready.</p>
+    <p><strong>3. Auditar independientemente.</strong> La validación externa — aunque sea interna al proyecto — es lo que cierra el ciclo. No asumas que todo está bien; compruébalo.</p>
+
+    <blockquote>
+      <p>La seguridad no es un estado final. Es un proceso continuo de revisión, auditoría y mejora.</p>
+    </blockquote>
+
+    <h2>Si también estás construyendo con IA</h2>
+    <p>Si alguien está pensando en crear proyectos con IA pero le preocupa la seguridad, mi experiencia es clara:</p>
+    <ul>
+      <li>Es una preocupación <strong>válida</strong> — y lo será cada vez más a medida que los proyectos crezcan</li>
+      <li>Pero se puede <strong>gestionar</strong> con las prácticas adecuadas desde el inicio</li>
+      <li>Y auditar te da <strong>tranquilidad real</strong>, no una sensación falsa de seguridad</li>
+    </ul>
+    <p>El stack que usé — Next.js + Supabase + Vercel + Claude Code — tiene buenas defensas por defecto si lo configuras bien. La clave es no delegar esa configuración por completo a la IA sin revisarla.</p>
+
+  </div>
+
+  <!-- Author -->
+  <div style="margin-top:52px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <img src="../ME/MOA__RETRATOS_183.jpg" alt="Guillermo García" style="width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(0,207,255,0.25);" />
+      <div>
+        <p style="font-size:14px;font-weight:600;color:#F0F4FF;margin:0 0 2px 0;">Guillermo García</p>
+        <p style="font-size:12px;color:#4D5E87;margin:0;">Digital Analytics Engineer · TNK</p>
+      </div>
+    </div>
+    <a href="../blog.html" style="font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">← All posts</a>
+  </div>
+
+  <!-- Related -->
+  <div style="margin-top:48px;">
+    <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#4D5E87;margin:0 0 16px 0;">You might also like</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;" id="related-grid">
+      <a href="building-with-claude-code.html" style="display:block;background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:18px;text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+        <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00FFB3;">Dev</span>
+        <p style="font-size:14px;font-weight:600;color:#F0F4FF;margin:8px 0 4px 0;line-height:1.4;">I Built This Entire Site with Claude Code</p>
+        <span style="font-size:12px;color:#4D5E87;">Read →</span>
+      </a>
+      <a href="analytics-first-workflow.html" style="display:block;background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:18px;text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+        <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00CFFF;">Analytics</span>
+        <p style="font-size:14px;font-weight:600;color:#F0F4FF;margin:8px 0 4px 0;line-height:1.4;">My Analytics-First Workflow with CLAUDE.md</p>
+        <span style="font-size:12px;color:#4D5E87;">Read →</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer style="border-top:1px solid rgba(255,255,255,0.06);padding:40px 0;margin-top:40px;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <p style="font-size:13px;color:#4D5E87;margin:0;">© 2026 Guillermo García — TNK Design & Analytics</p>
+    <div style="display:flex;gap:20px;"><a href="../index.html" style="font-size:13px;color:#4D5E87;text-decoration:none;">Home</a><a href="../blog.html" style="font-size:13px;color:#4D5E87;text-decoration:none;">Blog</a><a href="../contact.html" style="font-size:13px;color:#4D5E87;text-decoration:none;">Contact</a></div>
+  </div>
+</footer>
+
+<script>
+function setGrid(){
+  const w = window.innerWidth;
+  const r = document.getElementById('related-grid');
+  if(r) r.style.gridTemplateColumns = w < 560 ? '1fr' : '1fr 1fr';
+}
+setGrid(); window.addEventListener('resize', setGrid);
+
+// Track article view
+window.dataLayer = window.dataLayer || [];
+window.dataLayer.push({
+  event: 'page_view',
+  page_title: 'La Seguridad de mi Portfolio con IA',
+  page_category: 'blog',
+  content_type: 'article',
+  content_id: 'portfolio-security-audit'
+});
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</body>
+</html>
