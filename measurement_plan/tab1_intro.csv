@@ -2,7 +2,7 @@ Field,Value
 Document Title,TNK Designs — Web Measurement Plan
 Author,Guillermo García
 Site URL,https://tnk-project.vercel.app/
-Last Updated,2026-03-10
+Last Updated,2026-03-11
 Stack,"Static HTML · Tailwind CSS · Vanilla JS"
 Analytics Layer,Google Tag Manager (GTM) + GA4
 Data Layer Library,analytics.js (shared · loaded on all pages)
@@ -14,6 +14,8 @@ SECTION,EVENTS IMPLEMENTED
 3,generate_lead — fires on contact form submit (non-PII fields + hashed email)
 4,orbit_interaction — fires on orbit hover/pause (skill section on home page)
 5,search — fires 500 ms after user stops typing in blog search bar (min 2 chars)
+6,blog_like — fires on heart button click on any blog post (action: like | unlike · Supabase backend)
+7,blog_comment — fires on successful comment submit on any blog post (comment_length sent · no raw text)
 ,
 SECTION,PAGES INSTRUMENTED
 1,Home (index.html)

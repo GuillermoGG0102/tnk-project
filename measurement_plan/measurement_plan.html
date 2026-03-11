@@ -333,7 +333,7 @@
 <header class="site-header">
   <h1>TNK Designs</h1>
   <span>Web Measurement Plan</span>
-  <div class="badge">v1.0 · 2026-03-10</div>
+  <div class="badge">v2.0 · 2026-03-11</div>
 </header>
 
 <nav class="tabs">
@@ -344,7 +344,8 @@
   <button class="tab" data-tab="generate_lead">05 — generate_lead</button>
   <button class="tab" data-tab="orbit_interaction">06 — orbit_interaction</button>
   <button class="tab" data-tab="search">07 — search</button>
-  <button class="tab" data-tab="history">08 — Version History</button>
+  <button class="tab" data-tab="post_engagement">08 — post_engagement</button>
+  <button class="tab" data-tab="history">09 — Version History</button>
 </nav>
 
 <!-- ════════════════════════════════════════════════════════ TAB 01 — INTRO -->
@@ -359,8 +360,8 @@
     <div class="intro-card"><div class="ic-label">Analytics layer</div><div class="ic-value">Google Tag Manager + GA4</div></div>
     <div class="intro-card"><div class="ic-label">Data layer library</div><div class="ic-value">analytics.js (shared, all pages)</div></div>
     <div class="intro-card"><div class="ic-label">Privacy</div><div class="ic-value">PII filtered · email SHA-256 hashed · no raw textarea</div></div>
-    <div class="intro-card"><div class="ic-label">Pages instrumented</div><div class="ic-value">11 pages</div></div>
-    <div class="intro-card"><div class="ic-label">Last updated</div><div class="ic-value">2026-03-10</div></div>
+    <div class="intro-card"><div class="ic-label">Pages instrumented</div><div class="ic-value">11 pages (7 with engagement)</div></div>
+    <div class="intro-card"><div class="ic-label">Last updated</div><div class="ic-value">2026-03-11</div></div>
   </div>
 
   <hr class="section-divider">
@@ -386,6 +387,14 @@
     <li>
       <div class="ev-num">05</div>
       <div><div class="ev-name">search</div><div class="ev-desc">Fires 500 ms after user stops typing in the Blog search bar (min 2 chars). Sends search term, results count, has-results flag, term length, section, and active filter pill.</div></div>
+    </li>
+    <li>
+      <div class="ev-num">06</div>
+      <div><div class="ev-name">blog_like</div><div class="ev-desc">Fires when a visitor clicks the heart button on a blog post. Sends content_id (post slug), content_name (post title), and action ("like" or "unlike"). Like state is persisted per browser via localStorage UUID + Supabase.</div></div>
+    </li>
+    <li>
+      <div class="ev-num">07</div>
+      <div><div class="ev-name">blog_comment</div><div class="ev-desc">Fires when a visitor successfully submits a comment on a blog post. Sends content_id (post slug), content_name (post title), and comment_length (character count of the comment). Comment body is never sent to the dataLayer.</div></div>
     </li>
   </ul>
 </div>
@@ -502,6 +511,8 @@ const PARAMS = [
   ['search_term_length','integer','search','19','Character length of search_term'],
   ['search_section','string','search','blog','Section where search occurred (always blog currently)'],
   ['search_active_filter','string','search','Analytics','Active filter pill at time of search (or all)'],
+  ['action','string','blog_like','"like" | "unlike"','Direction of the like toggle — "like" on first click, "unlike" on second'],
+  ['comment_length','integer','blog_comment','142','Character count of the submitted comment text — never the raw content'],
 ];
 
 const tbody = document.getElementById('params-tbody');
@@ -749,14 +760,94 @@ SE_DATA.forEach((d, i) => {
       </div>
     </div>`;
 });
+
+// ── post_engagement ──────────────────────────────────────────────────────────
+const PE_DATA = [
+  {
+    event:'blog_like', action:'like',
+    slug:'beautiful-dashboards', title:'Smart Solutions to Build Beautiful Dashboards',
+    label:'User likes a post (first click)', file:'pe_like.png',
+    desc:'Fires when the visitor clicks the heart button for the first time on a post. action is "like". Like count increments optimistically in the UI, then the row is inserted into Supabase post_likes. Browser identity is tracked via UUID stored in localStorage (tnk_browser_id).'
+  },
+  {
+    event:'blog_like', action:'unlike',
+    slug:'beautiful-dashboards', title:'Smart Solutions to Build Beautiful Dashboards',
+    label:'User unlikes a post (second click)', file:'pe_unlike.png',
+    desc:'Fires when a visitor clicks the heart button on a post they already liked. action is "unlike". The row is deleted from Supabase post_likes. Heart returns to outline state.'
+  },
+  {
+    event:'blog_comment', action:null,
+    slug:'analytics-first-workflow', title:'How I Built an Analytics-First Workflow Using CLAUDE.md',
+    label:'User submits a comment', file:'pe_comment.png',
+    desc:'Fires after a successful comment insert into Supabase post_comments. Sends comment_length (character count only — raw text is never pushed to the dataLayer). Comment appears immediately in the list above the form.'
+  },
+];
+
+const peContainer = document.getElementById('pe-rows');
+PE_DATA.forEach((d, i) => {
+  const obj = {event: d.event, content_id: d.slug, content_name: d.title};
+  if (d.action) obj.action = d.action;
+  if (d.event === 'blog_comment') obj.comment_length = 142;
+  const push = JSON.stringify(obj, null, 2);
+  peContainer.innerHTML += `
+    <div class="event-block">
+      <div class="event-block-header">
+        <span class="muted" style="font-family:var(--font-m);font-size:12px">#${String(i+1).padStart(2,'0')}</span>
+        <span class="event-chip">${d.event}</span>
+        <span class="event-context">${d.label}</span>
+      </div>
+      <div class="row-layout">
+        <div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6">${d.desc}</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+            <span class="param-tag highlight">event: <strong>${d.event}</strong></span>
+            <span class="param-tag">content_id: <strong>${d.slug}</strong></span>
+            <span class="param-tag">content_name: <strong>${d.title.substring(0,40)}…</strong></span>
+            ${d.action ? '<span class="param-tag highlight">action: <strong>' + d.action + '</strong></span>' : ''}
+            ${d.event === 'blog_comment' ? '<span class="param-tag">comment_length: <strong>142</strong></span>' : ''}
+          </div>
+          <div class="code-block" onclick="copyCode(this)" title="Click to copy">${push}</div>
+          <div style="margin-top:16px;background:var(--elevated);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:12px;color:var(--muted);line-height:1.7">
+            <strong style="color:var(--primary);font-family:var(--font-m)">Backend:</strong> Supabase · Tables: <code style="font-family:var(--font-m);color:var(--accent)">post_likes</code>, <code style="font-family:var(--font-m);color:var(--accent)">post_comments</code> · Browser ID: <code style="font-family:var(--font-m);color:var(--accent)">localStorage["tnk_browser_id"]</code>
+          </div>
+        </div>
+        ${shot(d.file, d.label)}
+      </div>
+    </div>`;
+});
 </script>
 
-<!-- ═══════════════════════════════════════════════ TAB 08 — VERSION HISTORY -->
+<!-- ════════════════════════════════════════════ TAB 08 — POST_ENGAGEMENT -->
+<div class="panel" id="tab-post_engagement">
+  <h2>post engagement</h2>
+  <h3>blog_like + blog_comment — fires on blog post pages via Supabase backend</h3>
+  <div id="pe-rows"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ TAB 09 — VERSION HISTORY -->
 <div class="panel" id="tab-history">
   <h2>Version History</h2>
   <h3>Changelog — every major update to this measurement plan</h3>
 
   <div style="display:flex;flex-direction:column;gap:24px;margin-top:8px">
+
+    <!-- v2.0 -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:24px 28px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <span style="font-family:var(--font-m);font-size:13px;font-weight:600;color:var(--accent)">v2.0</span>
+        <span style="font-size:12px;color:var(--muted)">2026-03-11</span>
+        <span style="margin-left:auto;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary);background:rgba(0,207,255,0.1);border:1px solid rgba(0,207,255,0.25);padding:2px 8px;border-radius:20px">Post engagement</span>
+      </div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px">Added post-level engagement features to all 7 blog post pages: likes (heart button with toggle) and comments (form + listing). Backed by Supabase with Row-Level Security. Two new GA4 events, two new parameters.</p>
+      <ul style="font-size:13px;color:var(--text);line-height:2;padding-left:20px">
+        <li>2 new events: <code style="font-family:var(--font-m);color:var(--primary)">blog_like</code>, <code style="font-family:var(--font-m);color:var(--primary)">blog_comment</code></li>
+        <li>2 new parameters: <code style="font-family:var(--font-m);color:var(--accent)">action</code> (like|unlike), <code style="font-family:var(--font-m);color:var(--accent)">comment_length</code></li>
+        <li>Supabase backend: tables <code style="font-family:var(--font-m);color:var(--accent)">post_likes</code> and <code style="font-family:var(--font-m);color:var(--accent)">post_comments</code></li>
+        <li>Per-browser like deduplication via <code style="font-family:var(--font-m);color:var(--accent)">localStorage["tnk_browser_id"]</code> (UUID)</li>
+        <li>New tab 08 — post_engagement added to this document</li>
+        <li>Archive: <a href="archive/measurement_plan_v1.html" style="color:var(--primary);text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">measurement_plan_v1.html</a></li>
+      </ul>
+    </div>
 
     <!-- v1.0 -->
     <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">

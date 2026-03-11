@@ -236,6 +236,28 @@
     </a>
   </div>
 
+  <!-- ===== LIKES & COMMENTS ===== -->
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.07);">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:48px;">
+      <button id="like-btn" onclick="toggleLike()" style="display:flex;align-items:center;gap:10px;padding:10px 20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:50px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#8A9CC8;outline:none;" onmouseover="if(!window._liked)this.style.borderColor='rgba(255,77,109,0.4)'" onmouseout="if(!window._liked)this.style.borderColor='rgba(255,255,255,0.1)'">
+        <svg id="heart-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.15s;flex-shrink:0;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span id="like-count" style="white-space:nowrap;">···</span>
+      </button>
+      <span style="font-size:13px;color:#4D5E87;">Like this post</span>
+    </div>
+    <div>
+      <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#4D5E87;margin:0 0 28px 0;">Comments</p>
+      <div id="comments-list" style="display:flex;flex-direction:column;gap:20px;margin-bottom:36px;min-height:20px;"></div>
+      <form id="comment-form" onsubmit="submitComment(event)" style="background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px;">
+        <p style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#F0F4FF;margin:0;">Leave a comment</p>
+        <input id="comment-name" type="text" required placeholder="Your name" maxlength="80" autocomplete="name" style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);color:#F0F4FF;font-size:14px;font-family:'Inter',sans-serif;outline:none;" onfocus="this.style.borderColor='rgba(0,207,255,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.09)'" />
+        <textarea id="comment-text" required placeholder="Share your thoughts..." maxlength="1000" rows="4" style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);color:#F0F4FF;font-size:14px;font-family:'Inter',sans-serif;outline:none;resize:vertical;line-height:1.6;" onfocus="this.style.borderColor='rgba(0,207,255,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.09)'"></textarea>
+        <button type="submit" id="comment-submit-btn" style="align-self:flex-start;padding:10px 24px;background:#00CFFF;color:#0A0F1E;font-weight:600;font-size:14px;border:none;border-radius:10px;cursor:pointer;font-family:'Inter',sans-serif;" onmouseover="this.style.background='#00b8e6'" onmouseout="this.style.background='#00CFFF'">Post comment</button>
+      </form>
+    </div>
+  </div>
+  <!-- ===== END LIKES & COMMENTS ===== -->
+
   <!-- Author -->
   <div style="margin-top:52px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
     <div style="display:flex;align-items:center;gap:14px;">
@@ -281,6 +303,61 @@ function setGrid(){
   if(r) r.style.gridTemplateColumns = w < 560 ? '1fr' : '1fr 1fr';
 }
 setGrid(); window.addEventListener('resize', setGrid);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  var sb=supabase.createClient('https://hdfyjbyoodfpjopvxddv.supabase.co','sb_publishable_ggCplDNSkhR5prqES5ULfw_y9GKjovU');
+  var POST_SLUG='building-with-claude-code';
+  var POST_TITLE='I Built My Entire Portfolio with Claude Code — Here\'s What Happened';
+  function getBid(){var id=localStorage.getItem('tnk_browser_id');if(!id){id=crypto.randomUUID();localStorage.setItem('tnk_browser_id',id);}return id;}
+  window._liked=false;
+  function setLikeUI(n,liked){
+    var btn=document.getElementById('like-btn'),icon=document.getElementById('heart-icon'),el=document.getElementById('like-count');
+    if(!btn||!icon||!el)return;
+    el.textContent=n===1?'1 like':n+' likes';
+    if(liked){icon.setAttribute('fill','#FF4D6D');icon.setAttribute('stroke','#FF4D6D');btn.style.background='rgba(255,77,109,0.1)';btn.style.borderColor='rgba(255,77,109,0.35)';btn.style.color='#FF4D6D';}
+    else{icon.setAttribute('fill','none');icon.setAttribute('stroke','currentColor');btn.style.background='rgba(255,255,255,0.04)';btn.style.borderColor='rgba(255,255,255,0.1)';btn.style.color='#8A9CC8';}
+  }
+  function loadLikes(){
+    sb.from('post_likes').select('id',{count:'exact',head:true}).eq('post_slug',POST_SLUG).then(function(r1){
+      var n=r1.count||0;
+      sb.from('post_likes').select('id').eq('post_slug',POST_SLUG).eq('browser_id',getBid()).maybeSingle().then(function(r2){window._liked=!!(r2.data);setLikeUI(n,window._liked);});
+    });
+  }
+  window.toggleLike=function(){
+    var bid=getBid(),el=document.getElementById('like-count'),cur=parseInt(el.textContent)||0;
+    if(window._liked){window._liked=false;setLikeUI(Math.max(0,cur-1),false);sb.from('post_likes').delete().eq('post_slug',POST_SLUG).eq('browser_id',bid).then(function(){});(window.dataLayer=window.dataLayer||[]).push({event:'blog_like',content_id:POST_SLUG,content_name:POST_TITLE,action:'unlike'});}
+    else{window._liked=true;setLikeUI(cur+1,true);sb.from('post_likes').insert({post_slug:POST_SLUG,browser_id:bid}).then(function(){});(window.dataLayer=window.dataLayer||[]).push({event:'blog_like',content_id:POST_SLUG,content_name:POST_TITLE,action:'like'});}
+  };
+  function renderComment(c){
+    var d=document.createElement('div');d.style.cssText='background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:18px 20px;';
+    var h=document.createElement('div');h.style.cssText='display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;';
+    var nm=document.createElement('span');nm.style.cssText="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:#F0F4FF;";nm.textContent=c.author_name;
+    var dt=document.createElement('span');dt.style.cssText="font-size:12px;color:#4D5E87;font-family:'JetBrains Mono',monospace;";dt.textContent=new Date(c.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+    h.appendChild(nm);h.appendChild(dt);
+    var p=document.createElement('p');p.style.cssText='font-size:15px;color:#8A9CC8;margin:0;line-height:1.7;';p.textContent=c.content;
+    d.appendChild(h);d.appendChild(p);return d;
+  }
+  function loadComments(){
+    sb.from('post_comments').select('id,author_name,content,created_at').eq('post_slug',POST_SLUG).order('created_at',{ascending:true}).then(function(r){
+      var list=document.getElementById('comments-list');if(!list)return;
+      if(!r.data||r.data.length===0){list.innerHTML='<p style="font-size:14px;color:#4D5E87;margin:0;">No comments yet. Be the first!</p>';}
+      else{list.innerHTML='';r.data.forEach(function(c){list.appendChild(renderComment(c));});}
+    });
+  }
+  window.submitComment=function(e){
+    e.preventDefault();
+    var name=document.getElementById('comment-name').value.trim(),text=document.getElementById('comment-text').value.trim();
+    if(!name||!text)return;
+    var btn=document.getElementById('comment-submit-btn');btn.disabled=true;btn.textContent='Posting...';
+    sb.from('post_comments').insert({post_slug:POST_SLUG,author_name:name,content:text}).select().single().then(function(r){
+      if(!r.error&&r.data){var list=document.getElementById('comments-list'),ep=list.querySelector('p');if(ep)list.innerHTML='';list.appendChild(renderComment(r.data));document.getElementById('comment-name').value='';document.getElementById('comment-text').value='';(window.dataLayer=window.dataLayer||[]).push({event:'blog_comment',content_id:POST_SLUG,content_name:POST_TITLE,comment_length:text.length});}
+      btn.disabled=false;btn.textContent='Post comment';
+    });
+  };
+  loadLikes();loadComments();
+})();
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
