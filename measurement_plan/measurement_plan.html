@@ -255,6 +255,39 @@
     font-family: var(--font-m);
   }
 
+  /* ── ZIP banner ── */
+  #zip-banner {
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: #162038;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 24px;
+    font-size: 13px;
+    color: var(--text);
+    text-align: center;
+  }
+  #zip-banner a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  #zip-banner code {
+    font-family: var(--font-m);
+    color: var(--accent);
+    font-size: 12px;
+  }
+  #zip-banner button {
+    float: right;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+  }
+
   /* ── Event section cards ── */
   .event-block {
     background: var(--surface);
@@ -329,6 +362,11 @@
 </style>
 </head>
 <body>
+
+<div id="zip-banner">
+  📂 Some screenshots are not visible. To view them, <a href="https://github.com/GuillermoGG0102/tnk-project/archive/refs/heads/main.zip">download the full repository ZIP</a>, extract it, and open <code>measurement_plan/measurement_plan.html</code> from the extracted folder.
+  <button onclick="document.getElementById('zip-banner').style.display='none'" title="Dismiss">✕</button>
+</div>
 
 <header class="site-header">
   <h1>TNK Designs</h1>
@@ -474,8 +512,11 @@ function copyCode(el) {
 }
 
 // ── Shot helper ─────────────────────────────────────────────────────────────
+function showZipBanner() {
+  document.getElementById('zip-banner').style.display = 'block';
+}
 function shot(file, alt) {
-  return `<div class="shot-wrap"><img src="screenshots/${file}" alt="${alt}" onerror="this.parentElement.innerHTML='<div class=shot-missing>screenshot/${file}</div>'"></div>`;
+  return `<div class="shot-wrap"><img src="screenshots/${file}" alt="${alt}" onerror="showZipBanner();this.parentElement.innerHTML='<div class=shot-missing>screenshot/${file}</div>'"></div>`;
 }
 
 // ── Parameters tab ──────────────────────────────────────────────────────────
