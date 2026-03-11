@@ -371,6 +371,7 @@
     "property-information": "^7.1.0",
     "proto-list": "^1.2.4",
     "punycode": "^2.3.1",
+    "puppeteer-core": "^24.39.0",
     "queue-microtask": "^1.2.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
