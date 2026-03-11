@@ -287,7 +287,7 @@ gtag('event', 'cta_click', {
 <script>
 (function(){
   var sb=supabase.createClient('https://hdfyjbyoodfpjopvxddv.supabase.co','sb_publishable_ggCplDNSkhR5prqES5ULfw_y9GKjovU');
-  var POST_SLUG='getting-started-with-ga4';
+  var POST_SLUG='getting_started_with_ga4';
   var POST_TITLE='Getting Started with GA4: What Every Digital Marketer Needs to Know';
   function getBid(){var id=localStorage.getItem('tnk_browser_id');if(!id){id=crypto.randomUUID();localStorage.setItem('tnk_browser_id',id);}return id;}
   window._liked=false;
@@ -306,8 +306,8 @@ gtag('event', 'cta_click', {
   }
   window.toggleLike=function(){
     var bid=getBid(),el=document.getElementById('like-count'),cur=parseInt(el.textContent)||0;
-    if(window._liked){window._liked=false;setLikeUI(Math.max(0,cur-1),false);sb.from('post_likes').delete().eq('post_slug',POST_SLUG).eq('browser_id',bid).then(function(){});(window.dataLayer=window.dataLayer||[]).push({event:'blog_like',content_id:POST_SLUG,content_name:POST_TITLE,action:'unlike'});}
-    else{window._liked=true;setLikeUI(cur+1,true);sb.from('post_likes').insert({post_slug:POST_SLUG,browser_id:bid}).then(function(){});(window.dataLayer=window.dataLayer||[]).push({event:'blog_like',content_id:POST_SLUG,content_name:POST_TITLE,action:'like'});}
+    if(window._liked){window._liked=false;setLikeUI(Math.max(0,cur-1),false);sb.from('post_likes').delete().eq('post_slug',POST_SLUG).eq('browser_id',bid).then(function(){});(window.dataLayer=window.dataLayer||[]).push({event:'post_engagement',content_id:POST_SLUG,content_name:POST_TITLE,action:'unlike'});}
+    else{window._liked=true;setLikeUI(cur+1,true);sb.from('post_likes').insert({post_slug:POST_SLUG,browser_id:bid}).then(function(){});(window.dataLayer=window.dataLayer||[]).push({event:'post_engagement',content_id:POST_SLUG,content_name:POST_TITLE,action:'like'});}
   };
   function renderComment(c){
     var d=document.createElement('div');d.style.cssText='background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:18px 20px;';
@@ -331,7 +331,7 @@ gtag('event', 'cta_click', {
     if(!name||!text)return;
     var btn=document.getElementById('comment-submit-btn');btn.disabled=true;btn.textContent='Posting...';
     sb.from('post_comments').insert({post_slug:POST_SLUG,author_name:name,content:text}).select().single().then(function(r){
-      if(!r.error&&r.data){var list=document.getElementById('comments-list'),ep=list.querySelector('p');if(ep)list.innerHTML='';list.appendChild(renderComment(r.data));document.getElementById('comment-name').value='';document.getElementById('comment-text').value='';(window.dataLayer=window.dataLayer||[]).push({event:'blog_comment',content_id:POST_SLUG,content_name:POST_TITLE,comment_length:text.length});}
+      if(!r.error&&r.data){var list=document.getElementById('comments-list'),ep=list.querySelector('p');if(ep)list.innerHTML='';list.appendChild(renderComment(r.data));document.getElementById('comment-name').value='';document.getElementById('comment-text').value='';(window.dataLayer=window.dataLayer||[]).push({event:'post_engagement',content_id:POST_SLUG,content_name:POST_TITLE,action:'comment'});}
       btn.disabled=false;btn.textContent='Post comment';
     });
   };

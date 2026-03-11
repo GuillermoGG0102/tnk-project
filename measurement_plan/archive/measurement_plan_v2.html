@@ -333,7 +333,7 @@
 <header class="site-header">
   <h1>TNK Designs</h1>
   <span>Web Measurement Plan</span>
-  <div class="badge">v3.0 · 2026-03-11</div>
+  <div class="badge">v2.0 · 2026-03-11</div>
 </header>
 
 <nav class="tabs">
@@ -390,7 +390,11 @@
     </li>
     <li>
       <div class="ev-num">06</div>
-      <div><div class="ev-name">post_engagement</div><div class="ev-desc">Fires on blog post pages when a visitor likes, unlikes, or submits a comment. Sends content_id (post slug), content_name (post title), and action ("like" | "unlike" | "comment"). Like state is persisted per browser via localStorage UUID + Supabase.</div></div>
+      <div><div class="ev-name">blog_like</div><div class="ev-desc">Fires when a visitor clicks the heart button on a blog post. Sends content_id (post slug), content_name (post title), and action ("like" or "unlike"). Like state is persisted per browser via localStorage UUID + Supabase.</div></div>
+    </li>
+    <li>
+      <div class="ev-num">07</div>
+      <div><div class="ev-name">blog_comment</div><div class="ev-desc">Fires when a visitor successfully submits a comment on a blog post. Sends content_id (post slug), content_name (post title), and comment_length (character count of the comment). Comment body is never sent to the dataLayer.</div></div>
     </li>
   </ul>
 </div>
@@ -487,7 +491,7 @@ const PARAMS = [
   ['content_group','string','page_view','portfolio','GA4 content group — equals page_group or page_category'],
   ['page_author','string','page_view','Guillermo García','Fixed string on all pages'],
   ['content_type','string','select_content','nav_link','Interaction class: nav_link · cta · project_card · blog_card · filter_pill · social_link'],
-  ['content_id','string','select_content · post_engagement','beautiful_dashboards','Stable machine ID for the destination — always underscore-separated'],
+  ['content_id','string','select_content','blog','Stable machine ID for the destination'],
   ['content_name','string','select_content','Blog','Human-readable label of the clicked element'],
   ['item_list_name','string','select_content','hero','Section/list the item belongs to: hero · nav · featured · blog_listing · footer…'],
   ['destination_url','string','select_content','/blog.html','Target href where available'],
@@ -507,7 +511,8 @@ const PARAMS = [
   ['search_term_length','integer','search','19','Character length of search_term'],
   ['search_section','string','search','blog','Section where search occurred (always blog currently)'],
   ['search_active_filter','string','search','Analytics','Active filter pill at time of search (or all)'],
-  ['action','string','post_engagement','"like" | "unlike" | "comment"','Interaction type — "like" on first click, "unlike" on second click, "comment" on form submit'],
+  ['action','string','blog_like','"like" | "unlike"','Direction of the like toggle — "like" on first click, "unlike" on second'],
+  ['comment_length','integer','blog_comment','142','Character count of the submitted comment text — never the raw content'],
 ];
 
 const tbody = document.getElementById('params-tbody');
@@ -569,36 +574,36 @@ const SC_DATA = [
   {ct:'nav_link',    id:'contact',     name:'Contact',                         list:'main_nav',          file:'sc_nav_contact.png',       ctx:'All pages — top navigation',       desc:'Top navigation bar — "Contact" link. Highlighted in red. Routes to contact.html.'},
   {ct:'cta',         id:'contact',     name:'Get in touch',                    list:'main_nav',          file:'sc_nav_cta.png',           ctx:'All pages — top navigation',       desc:'Primary CTA button in the top-right of the nav bar — "Get in touch". Routes to contact.html.'},
   // HERO
-  {ct:'cta',         id:'projects_section', name:'View Projects',             list:'hero',              file:'sc_hero_projects.png',     ctx:'Home — hero section',              desc:'Primary CTA in the hero section — "View Projects". Scrolls to the projects section on the same page.'},
-  {ct:'cta',         id:'blog_section',     name:'Read the Blog',             list:'hero',              file:'sc_hero_blog.png',         ctx:'Home — hero section',              desc:'Secondary CTA in the hero section — "Read the Blog". Scrolls to the blog section on the same page.'},
+  {ct:'cta',         id:'projects-section', name:'View Projects',             list:'hero',              file:'sc_hero_projects.png',     ctx:'Home — hero section',              desc:'Primary CTA in the hero section — "View Projects". Scrolls to the projects section on the same page.'},
+  {ct:'cta',         id:'blog-section',     name:'Read the Blog',             list:'hero',              file:'sc_hero_blog.png',         ctx:'Home — hero section',              desc:'Secondary CTA in the hero section — "Read the Blog". Scrolls to the blog section on the same page.'},
   // FEATURED PROJECTS (home)
-  {ct:'cta',         id:'projects_all',name:'All projects',                   list:'featured_projects', file:'sc_all_projects.png',      ctx:'Home — featured projects section', desc:'"All projects →" link at the top-right of the featured projects section. Routes to projects.html.'},
-  {ct:'project_card',id:'tnk_designs', name:'TNK Designs',                    list:'featured_projects', file:'sc_card_tnk.png',          ctx:'Home — featured projects section', desc:'Project card for TNK Designs — the full card is clickable. Fires tnkNavigate() to projects/tnk-designs.html.'},
-  {ct:'project_card',id:'tnk_portfolio_web',name:'TNK Portfolio Web',         list:'featured_projects', file:'sc_card_port.png',         ctx:'Home — featured projects section', desc:'Project card for TNK Portfolio Web — full card clickable. Routes to projects/tnk-portfolio-web.html.'},
+  {ct:'cta',         id:'projects-all',name:'All projects',                   list:'featured_projects', file:'sc_all_projects.png',      ctx:'Home — featured projects section', desc:'"All projects →" link at the top-right of the featured projects section. Routes to projects.html.'},
+  {ct:'project_card',id:'tnk-designs', name:'TNK Designs',                    list:'featured_projects', file:'sc_card_tnk.png',          ctx:'Home — featured projects section', desc:'Project card for TNK Designs — the full card is clickable. Fires tnkNavigate() to projects/tnk-designs.html.'},
+  {ct:'project_card',id:'tnk-portfolio-web',name:'TNK Portfolio Web',         list:'featured_projects', file:'sc_card_port.png',         ctx:'Home — featured projects section', desc:'Project card for TNK Portfolio Web — full card clickable. Routes to projects/tnk-portfolio-web.html.'},
   // FEATURED POSTS (home)
-  {ct:'cta',         id:'blog_all',    name:'All posts',                      list:'featured_posts',    file:'sc_all_posts.png',         ctx:'Home — featured posts section',    desc:'"All posts →" link at the top-right of the featured blog section. Routes to blog.html.'},
-  {ct:'blog_card',   id:'getting_started_with_ga4',name:'Getting Started with GA4',list:'featured_posts',file:'sc_blog_card_ga4.png',  ctx:'Home — featured posts section',    desc:'Blog card for "Getting Started with GA4". Full card clickable. Routes to blog/getting-started-with-ga4.html.'},
-  {ct:'blog_card',   id:'design_principles_for_data_products',name:'Design Principles for Data Products',list:'featured_posts',file:'sc_blog_card_design.png',ctx:'Home — featured posts section','desc':'Blog card for "Design Principles for Data Products". Routes to blog/design-principles-for-data-products.html.'},
+  {ct:'cta',         id:'blog-all',    name:'All posts',                      list:'featured_posts',    file:'sc_all_posts.png',         ctx:'Home — featured posts section',    desc:'"All posts →" link at the top-right of the featured blog section. Routes to blog.html.'},
+  {ct:'blog_card',   id:'getting-started-with-ga4',name:'Getting Started with GA4',list:'featured_posts',file:'sc_blog_card_ga4.png',  ctx:'Home — featured posts section',    desc:'Blog card for "Getting Started with GA4". Full card clickable. Routes to blog/getting-started-with-ga4.html.'},
+  {ct:'blog_card',   id:'design-principles-for-data-products',name:'Design Principles for Data Products',list:'featured_posts',file:'sc_blog_card_design.png',ctx:'Home — featured posts section','desc':'Blog card for "Design Principles for Data Products". Routes to blog/design-principles-for-data-products.html.'},
   // FOOTER
   {ct:'social_link', id:'linkedin',    name:'LinkedIn',                       list:'footer',            file:'sc_footer_linkedin.png',   ctx:'All pages — footer',               desc:'LinkedIn icon in the footer social row. Opens linkedin.com profile in a new tab.'},
   {ct:'social_link', id:'instagram',   name:'Instagram',                      list:'footer',            file:'sc_footer_instagram.png',  ctx:'All pages — footer',               desc:'Instagram icon in the footer social row. Opens instagram.com/tnkdesigns_ in a new tab.'},
   {ct:'social_link', id:'email',       name:'Email footer',                   list:'footer',            file:'sc_footer_email.png',      ctx:'All pages — footer',               desc:'Email icon in the footer social row. Opens mailto: link.'},
   // BLOG LISTING — featured card
-  {ct:'blog_card',   id:'datalayer_medicion_robusta',name:'DataLayer: Medición Robusta',list:'featured_post',file:'sc_blog_featured.png',ctx:'Blog listing — featured post card','desc':'Large featured post card at the top of the blog listing. Full card area is clickable. Routes to blog/datalayer-medicion-robusta.html.'},
+  {ct:'blog_card',   id:'datalayer-medicion-robusta',name:'DataLayer: Medición Robusta',list:'featured_post',file:'sc_blog_featured.png',ctx:'Blog listing — featured post card','desc':'Large featured post card at the top of the blog listing. Full card area is clickable. Routes to blog/datalayer-medicion-robusta.html.'},
   // BLOG LISTING — grid cards
-  {ct:'blog_card',   id:'getting_started_with_ga4', name:'Getting Started with GA4',       list:'blog_listing',file:'sc_blog_card_ga4_list.png',  ctx:'Blog listing — grid card',         desc:'Grid card in the blog listing for "Getting Started with GA4". Routes to blog/getting-started-with-ga4.html.'},
-  {ct:'blog_card',   id:'design_principles_for_data_products',name:'Design Principles for Data Products',list:'blog_listing',file:'sc_blog_card_design_list.png',ctx:'Blog listing — grid card','desc':'Grid card for "Design Principles for Data Products". Routes to blog/design-principles-for-data-products.html.'},
-  {ct:'blog_card',   id:'building_with_claude_code', name:'Building with Claude Code',      list:'blog_listing',file:'sc_blog_card_claude.png',    ctx:'Blog listing — grid card',         desc:'Grid card for "Building with Claude Code". Routes to blog/building-with-claude-code.html.'},
-  {ct:'blog_card',   id:'beautiful_dashboards',      name:'Smart Solutions to Build Beautiful Dashboards',list:'blog_listing',file:'sc_blog_card_dash.png',ctx:'Blog listing — grid card','desc':'Grid card for the dashboards post. Routes to blog/beautiful-dashboards.html.'},
+  {ct:'blog_card',   id:'getting-started-with-ga4', name:'Getting Started with GA4',       list:'blog_listing',file:'sc_blog_card_ga4_list.png',  ctx:'Blog listing — grid card',         desc:'Grid card in the blog listing for "Getting Started with GA4". Routes to blog/getting-started-with-ga4.html.'},
+  {ct:'blog_card',   id:'design-principles-for-data-products',name:'Design Principles for Data Products',list:'blog_listing',file:'sc_blog_card_design_list.png',ctx:'Blog listing — grid card','desc':'Grid card for "Design Principles for Data Products". Routes to blog/design-principles-for-data-products.html.'},
+  {ct:'blog_card',   id:'building-with-claude-code', name:'Building with Claude Code',      list:'blog_listing',file:'sc_blog_card_claude.png',    ctx:'Blog listing — grid card',         desc:'Grid card for "Building with Claude Code". Routes to blog/building-with-claude-code.html.'},
+  {ct:'blog_card',   id:'beautiful-dashboards',      name:'Smart Solutions to Build Beautiful Dashboards',list:'blog_listing',file:'sc_blog_card_dash.png',ctx:'Blog listing — grid card','desc':'Grid card for the dashboards post. Routes to blog/beautiful-dashboards.html.'},
   // FILTER PILLS
   {ct:'filter',      id:'all',         name:'All',                            list:'blog_filters',      file:'sc_filter_all.png',        ctx:'Blog listing — filter pills',      desc:'"All" filter pill — resets active category filter and shows all posts.'},
   {ct:'filter',      id:'analytics',   name:'Analytics',                      list:'blog_filters',      file:'sc_filter_analytics.png',  ctx:'Blog listing — filter pills',      desc:'"Analytics" filter pill — shows only posts tagged with the analytics category.'},
   {ct:'filter',      id:'design',      name:'Design',                         list:'blog_filters',      file:'sc_filter_design.png',     ctx:'Blog listing — filter pills',      desc:'"Design" filter pill — shows only posts tagged with the design category.'},
-  {ct:'filter',      id:'league_of_legends','name':'League of Legends',       list:'blog_filters',      file:'sc_filter_lol.png',        ctx:'Blog listing — filter pills',      desc:'"League of Legends" filter pill — shows only LoL-tagged posts.'},
+  {ct:'filter',      id:'league-of-legends','name':'League of Legends',       list:'blog_filters',      file:'sc_filter_lol.png',        ctx:'Blog listing — filter pills',      desc:'"League of Legends" filter pill — shows only LoL-tagged posts.'},
   {ct:'filter',      id:'padel',       name:'Padel',                          list:'blog_filters',      file:'sc_filter_padel.png',      ctx:'Blog listing — filter pills',      desc:'"Padel" filter pill — shows only Padel-tagged posts.'},
   // PROJECTS LISTING
-  {ct:'project_card',id:'tnk_designs', name:'TNK Designs',                    list:'projects_listing',  file:'sc_proj_tnk.png',          ctx:'Projects listing page',            desc:'Project card for TNK Designs on the projects listing page. Routes to projects/tnk-designs.html.'},
-  {ct:'project_card',id:'tnk_portfolio_web',name:'TNK Portfolio Web',         list:'projects_listing',  file:'sc_proj_port.png',         ctx:'Projects listing page',            desc:'Project card for TNK Portfolio Web on the projects listing page. Routes to projects/tnk-portfolio-web.html.'},
+  {ct:'project_card',id:'tnk-designs', name:'TNK Designs',                    list:'projects_listing',  file:'sc_proj_tnk.png',          ctx:'Projects listing page',            desc:'Project card for TNK Designs on the projects listing page. Routes to projects/tnk-designs.html.'},
+  {ct:'project_card',id:'tnk-portfolio-web',name:'TNK Portfolio Web',         list:'projects_listing',  file:'sc_proj_port.png',         ctx:'Projects listing page',            desc:'Project card for TNK Portfolio Web on the projects listing page. Routes to projects/tnk-portfolio-web.html.'},
   // CONTACT SOCIALS
   {ct:'social_link', id:'linkedin',    name:'LinkedIn',                       list:'contact_socials',   file:'sc_contact_linkedin.png',  ctx:'Contact page — social links',      desc:'LinkedIn link in the contact page sidebar. Opens linkedin.com profile in a new tab.'},
   {ct:'social_link', id:'instagram',   name:'Instagram',                      list:'contact_socials',   file:'sc_contact_instagram.png', ctx:'Contact page — social links',      desc:'Instagram link in the contact page sidebar. Opens instagram.com/tnkdesigns_ in a new tab.'},
@@ -759,46 +764,52 @@ SE_DATA.forEach((d, i) => {
 // ── post_engagement ──────────────────────────────────────────────────────────
 const PE_DATA = [
   {
-    action:'like',
-    slug:'beautiful_dashboards', title:'Smart Solutions to Build Beautiful Dashboards',
-    label:'User likes a post', file:'pe_like.png',
-    desc:'Fires when the visitor clicks the heart button for the first time on a post. Like count increments optimistically in the UI, then the row is inserted into Supabase post_likes. Browser identity is tracked via UUID stored in localStorage (tnk_browser_id).'
+    event:'blog_like', action:'like',
+    slug:'beautiful-dashboards', title:'Smart Solutions to Build Beautiful Dashboards',
+    label:'User likes a post (first click)', file:'pe_like.png',
+    desc:'Fires when the visitor clicks the heart button for the first time on a post. action is "like". Like count increments optimistically in the UI, then the row is inserted into Supabase post_likes. Browser identity is tracked via UUID stored in localStorage (tnk_browser_id).'
   },
   {
-    action:'unlike',
-    slug:'beautiful_dashboards', title:'Smart Solutions to Build Beautiful Dashboards',
-    label:'User unlikes a post', file:'pe_unlike.png',
-    desc:'Fires when a visitor clicks the heart button on a post they already liked. The row is deleted from Supabase post_likes and the heart returns to its outline state.'
+    event:'blog_like', action:'unlike',
+    slug:'beautiful-dashboards', title:'Smart Solutions to Build Beautiful Dashboards',
+    label:'User unlikes a post (second click)', file:'pe_unlike.png',
+    desc:'Fires when a visitor clicks the heart button on a post they already liked. action is "unlike". The row is deleted from Supabase post_likes. Heart returns to outline state.'
   },
   {
-    action:'comment',
-    slug:'analytics_first_workflow', title:'How I Built an Analytics-First Workflow Using CLAUDE.md',
+    event:'blog_comment', action:null,
+    slug:'analytics-first-workflow', title:'How I Built an Analytics-First Workflow Using CLAUDE.md',
     label:'User submits a comment', file:'pe_comment.png',
-    desc:'Fires after a successful comment insert into Supabase post_comments. No raw comment text is ever pushed to the dataLayer — only the action value. Comment appears immediately above the form.'
+    desc:'Fires after a successful comment insert into Supabase post_comments. Sends comment_length (character count only — raw text is never pushed to the dataLayer). Comment appears immediately in the list above the form.'
   },
 ];
 
 const peContainer = document.getElementById('pe-rows');
 PE_DATA.forEach((d, i) => {
-  const obj = {event:'post_engagement', content_id: d.slug, content_name: d.title, action: d.action};
+  const obj = {event: d.event, content_id: d.slug, content_name: d.title};
+  if (d.action) obj.action = d.action;
+  if (d.event === 'blog_comment') obj.comment_length = 142;
   const push = JSON.stringify(obj, null, 2);
   peContainer.innerHTML += `
     <div class="event-block">
       <div class="event-block-header">
         <span class="muted" style="font-family:var(--font-m);font-size:12px">#${String(i+1).padStart(2,'0')}</span>
-        <span class="event-chip">post_engagement</span>
+        <span class="event-chip">${d.event}</span>
         <span class="event-context">${d.label}</span>
       </div>
       <div class="row-layout">
         <div>
           <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6">${d.desc}</p>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
-            <span class="param-tag highlight">event: <strong>post_engagement</strong></span>
+            <span class="param-tag highlight">event: <strong>${d.event}</strong></span>
             <span class="param-tag">content_id: <strong>${d.slug}</strong></span>
             <span class="param-tag">content_name: <strong>${d.title.substring(0,40)}…</strong></span>
-            <span class="param-tag highlight">action: <strong>${d.action}</strong></span>
+            ${d.action ? '<span class="param-tag highlight">action: <strong>' + d.action + '</strong></span>' : ''}
+            ${d.event === 'blog_comment' ? '<span class="param-tag">comment_length: <strong>142</strong></span>' : ''}
           </div>
           <div class="code-block" onclick="copyCode(this)" title="Click to copy">${push}</div>
+          <div style="margin-top:16px;background:var(--elevated);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:12px;color:var(--muted);line-height:1.7">
+            <strong style="color:var(--primary);font-family:var(--font-m)">Backend:</strong> Supabase · Tables: <code style="font-family:var(--font-m);color:var(--accent)">post_likes</code>, <code style="font-family:var(--font-m);color:var(--accent)">post_comments</code> · Browser ID: <code style="font-family:var(--font-m);color:var(--accent)">localStorage["tnk_browser_id"]</code>
+          </div>
         </div>
         ${shot(d.file, d.label)}
       </div>
@@ -808,8 +819,8 @@ PE_DATA.forEach((d, i) => {
 
 <!-- ════════════════════════════════════════════ TAB 08 — POST_ENGAGEMENT -->
 <div class="panel" id="tab-post_engagement">
-  <h2>post_engagement</h2>
-  <h3>Single event — fires on blog post pages for likes and comments. action distinguishes the interaction type.</h3>
+  <h2>post engagement</h2>
+  <h3>blog_like + blog_comment — fires on blog post pages via Supabase backend</h3>
   <div id="pe-rows"></div>
 </div>
 
@@ -819,25 +830,6 @@ PE_DATA.forEach((d, i) => {
   <h3>Changelog — every major update to this measurement plan</h3>
 
   <div style="display:flex;flex-direction:column;gap:24px;margin-top:8px">
-
-    <!-- v3.0 -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-        <span style="font-family:var(--font-m);font-size:13px;font-weight:600;color:var(--primary)">v3.0</span>
-        <span style="font-size:12px;color:var(--muted)">2026-03-11</span>
-        <span style="margin-left:auto;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:rgba(0,255,179,0.1);border:1px solid rgba(0,255,179,0.25);padding:2px 8px;border-radius:20px">Schema refactor</span>
-      </div>
-      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px">Unified post engagement tracking into a single <code style="font-family:var(--font-m);color:var(--primary)">post_engagement</code> event. Standardised all <code style="font-family:var(--font-m);color:var(--accent)">content_id</code> values across events to use underscores instead of hyphens.</p>
-      <ul style="font-size:13px;color:var(--text);line-height:2;padding-left:20px">
-        <li>Replaced <code style="font-family:var(--font-m);color:var(--primary)">blog_like</code> + <code style="font-family:var(--font-m);color:var(--primary)">blog_comment</code> with single <code style="font-family:var(--font-m);color:var(--primary)">post_engagement</code> event</li>
-        <li><code style="font-family:var(--font-m);color:var(--accent)">action</code> parameter now carries <code style="font-family:var(--font-m)">like | unlike | comment</code></li>
-        <li>Removed <code style="font-family:var(--font-m);color:var(--subtle)">comment_length</code> parameter — no longer sent</li>
-        <li>All <code style="font-family:var(--font-m);color:var(--accent)">content_id</code> values across select_content and post_engagement now use <code style="font-family:var(--font-m)">_</code> separators (e.g. <code style="font-family:var(--font-m)">beautiful_dashboards</code>)</li>
-        <li>post_engagement tab rebuilt to match standard event-block structure with #NN index, param-tags, code-block, screenshots</li>
-        <li>Updated all 7 blog HTML files to push <code style="font-family:var(--font-m);color:var(--primary)">post_engagement</code> with underscore slugs</li>
-        <li>Archive: <a href="archive/measurement_plan_v2.html" style="color:var(--primary);text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">measurement_plan_v2.html</a></li>
-      </ul>
-    </div>
 
     <!-- v2.0 -->
     <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:24px 28px">
