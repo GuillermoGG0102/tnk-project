@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync, readdirSync } from 'fs';
 import { join, extname } from 'path';
+import sharp from 'sharp';
 
 const htmlPath   = 'measurement_plan/measurement_plan.html';
 const screensDir = 'measurement_plan/screenshots';
@@ -7,10 +8,13 @@ const outPath    = 'measurement_plan/measurement_plan_standalone.html';
 
 const map = {};
 for (const file of readdirSync(screensDir)) {
-  const ext  = extname(file).toLowerCase();
+  const ext = extname(file).toLowerCase();
   if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') continue;
-  const mime = ext === '.png' ? 'image/png' : 'image/jpeg';
-  map[file] = `data:${mime};base64,` + readFileSync(join(screensDir, file)).toString('base64');
+  const compressed = await sharp(join(screensDir, file))
+    .resize({ width: 1400, withoutEnlargement: true })
+    .jpeg({ quality: 72 })
+    .toBuffer();
+  map[file] = 'data:image/jpeg;base64,' + compressed.toString('base64');
 }
 
 let html = readFileSync(htmlPath, 'utf8');
