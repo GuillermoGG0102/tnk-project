@@ -366,7 +366,7 @@
 <header class="site-header">
   <h1>TNK Designs</h1>
   <span>Web Measurement Plan</span>
-  <div class="badge">v3.0 · 2026-03-11</div>
+  <div class="badge">v4.0 · 2026-03-12</div>
 </header>
 
 <nav class="tabs">
@@ -378,7 +378,8 @@
   <button class="tab" data-tab="orbit_interaction">06 — orbit_interaction</button>
   <button class="tab" data-tab="search">07 — search</button>
   <button class="tab" data-tab="post_engagement">08 — post_engagement</button>
-  <button class="tab" data-tab="history">09 — Version History</button>
+  <button class="tab" data-tab="gtm_setup">09 — GTM &amp; GA4 Setup</button>
+  <button class="tab" data-tab="history">10 — Version History</button>
 </nav>
 
 <!-- ════════════════════════════════════════════════════════ TAB 01 — INTRO -->
@@ -852,12 +853,285 @@ PE_DATA.forEach((d, i) => {
 });
 </script>
 
-<!-- ═══════════════════════════════════════════════ TAB 09 — VERSION HISTORY -->
+<!-- ════════════════════════════════════════════════════ TAB 09 — GTM & GA4 SETUP -->
+<div class="panel" id="tab-gtm_setup">
+  <h2>GTM &amp; GA4 Setup</h2>
+  <h3>Naming conventions and configuration reference for GTM-KW97DTMV · G-25V933JKJD</h3>
+
+  <!-- ── GTM IDs card row ── -->
+  <div class="intro-grid" style="margin-bottom:40px">
+    <div class="intro-card"><div class="ic-label">GTM Container</div><div class="ic-value" style="font-family:var(--font-m);color:var(--primary)">GTM-KW97DTMV</div></div>
+    <div class="intro-card"><div class="ic-label">GTM Account</div><div class="ic-value">tnk-project · <span style="font-family:var(--font-m);color:var(--muted)">6343762712</span></div></div>
+    <div class="intro-card"><div class="ic-label">GA4 Measurement ID</div><div class="ic-value" style="font-family:var(--font-m);color:var(--accent)">G-25V933JKJD</div></div>
+    <div class="intro-card"><div class="ic-label">GA4 Stream</div><div class="ic-value">tnk-analytics-design-website · <span style="font-family:var(--font-m);color:var(--muted)">13893341764</span></div></div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════ GTM SECTION -->
+  <h2 style="margin-bottom:6px">Google Tag Manager</h2>
+  <h3 style="margin-bottom:28px">Variables, Triggers &amp; Tags — exact names as configured in the container</h3>
+
+  <!-- GTM Variables -->
+  <h3 style="margin-bottom:12px;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Variables <span style="font-family:var(--font-m);font-size:11px;color:var(--subtle);text-transform:none;letter-spacing:0">(27 Data Layer Variables)</span></h3>
+  <div class="table-wrap" style="margin-bottom:40px">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Variable Name</th>
+          <th>Data Layer Variable Name</th>
+          <th>Used In Event(s)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:var(--elevated)"><td colspan="4" style="font-family:var(--font-m);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;padding:8px 14px">page_view</td></tr>
+        <tr><td class="mono">01</td><td class="mono" style="color:var(--primary)">dlv - page_name</td><td class="mono" style="color:var(--accent)">page_name</td><td style="color:var(--muted)">page_view</td></tr>
+        <tr><td class="mono">02</td><td class="mono" style="color:var(--primary)">dlv - page_category</td><td class="mono" style="color:var(--accent)">page_category</td><td style="color:var(--muted)">page_view</td></tr>
+        <tr><td class="mono">03</td><td class="mono" style="color:var(--primary)">dlv - page_type</td><td class="mono" style="color:var(--accent)">page_type</td><td style="color:var(--muted)">page_view</td></tr>
+        <tr><td class="mono">04</td><td class="mono" style="color:var(--primary)">dlv - content_group</td><td class="mono" style="color:var(--accent)">content_group</td><td style="color:var(--muted)">page_view</td></tr>
+        <tr><td class="mono">05</td><td class="mono" style="color:var(--primary)">dlv - page_author</td><td class="mono" style="color:var(--accent)">page_author</td><td style="color:var(--muted)">page_view</td></tr>
+        <tr style="background:var(--elevated)"><td colspan="4" style="font-family:var(--font-m);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;padding:8px 14px">select_content</td></tr>
+        <tr><td class="mono">06</td><td class="mono" style="color:var(--primary)">dlv - content_type</td><td class="mono" style="color:var(--accent)">content_type</td><td style="color:var(--muted)">select_content</td></tr>
+        <tr><td class="mono">07</td><td class="mono" style="color:var(--primary)">dlv - content_id</td><td class="mono" style="color:var(--accent)">content_id</td><td style="color:var(--muted)">select_content · post_engagement</td></tr>
+        <tr><td class="mono">08</td><td class="mono" style="color:var(--primary)">dlv - content_name</td><td class="mono" style="color:var(--accent)">content_name</td><td style="color:var(--muted)">select_content · post_engagement</td></tr>
+        <tr><td class="mono">09</td><td class="mono" style="color:var(--primary)">dlv - item_list_name</td><td class="mono" style="color:var(--accent)">item_list_name</td><td style="color:var(--muted)">select_content</td></tr>
+        <tr><td class="mono">10</td><td class="mono" style="color:var(--primary)">dlv - destination_url</td><td class="mono" style="color:var(--accent)">destination_url</td><td style="color:var(--muted)">select_content</td></tr>
+        <tr style="background:var(--elevated)"><td colspan="4" style="font-family:var(--font-m);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;padding:8px 14px">generate_lead</td></tr>
+        <tr><td class="mono">11</td><td class="mono" style="color:var(--primary)">dlv - form_name</td><td class="mono" style="color:var(--accent)">form_name</td><td style="color:var(--muted)">generate_lead</td></tr>
+        <tr><td class="mono">12</td><td class="mono" style="color:var(--primary)">dlv - form_id</td><td class="mono" style="color:var(--accent)">form_id</td><td style="color:var(--muted)">generate_lead</td></tr>
+        <tr><td class="mono">13</td><td class="mono" style="color:var(--primary)">dlv - subject</td><td class="mono" style="color:var(--accent)">subject</td><td style="color:var(--muted)">generate_lead</td></tr>
+        <tr><td class="mono">14</td><td class="mono" style="color:var(--primary)">dlv - budget</td><td class="mono" style="color:var(--accent)">budget</td><td style="color:var(--muted)">generate_lead</td></tr>
+        <tr><td class="mono">15</td><td class="mono" style="color:var(--primary)">dlv - message_word_count</td><td class="mono" style="color:var(--accent)">message_word_count</td><td style="color:var(--muted)">generate_lead</td></tr>
+        <tr><td class="mono">16</td><td class="mono" style="color:var(--primary)">dlv - message_char_count</td><td class="mono" style="color:var(--accent)">message_char_count</td><td style="color:var(--muted)">generate_lead</td></tr>
+        <tr><td class="mono">17</td><td class="mono" style="color:var(--primary)">dlv - message_filled</td><td class="mono" style="color:var(--accent)">message_filled</td><td style="color:var(--muted)">generate_lead</td></tr>
+        <tr><td class="mono">18</td><td class="mono" style="color:var(--primary)">dlv - email_sha256</td><td class="mono" style="color:var(--accent)">email_sha256</td><td style="color:var(--muted)">generate_lead</td></tr>
+        <tr style="background:var(--elevated)"><td colspan="4" style="font-family:var(--font-m);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;padding:8px 14px">orbit_interaction</td></tr>
+        <tr><td class="mono">19</td><td class="mono" style="color:var(--primary)">dlv - orbit_pause</td><td class="mono" style="color:var(--accent)">orbit_pause</td><td style="color:var(--muted)">orbit_interaction</td></tr>
+        <tr><td class="mono">20</td><td class="mono" style="color:var(--primary)">dlv - skill_hover</td><td class="mono" style="color:var(--accent)">skill_hover</td><td style="color:var(--muted)">orbit_interaction</td></tr>
+        <tr style="background:var(--elevated)"><td colspan="4" style="font-family:var(--font-m);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;padding:8px 14px">search</td></tr>
+        <tr><td class="mono">21</td><td class="mono" style="color:var(--primary)">dlv - search_term</td><td class="mono" style="color:var(--accent)">search_term</td><td style="color:var(--muted)">search</td></tr>
+        <tr><td class="mono">22</td><td class="mono" style="color:var(--primary)">dlv - search_results_count</td><td class="mono" style="color:var(--accent)">search_results_count</td><td style="color:var(--muted)">search</td></tr>
+        <tr><td class="mono">23</td><td class="mono" style="color:var(--primary)">dlv - search_has_results</td><td class="mono" style="color:var(--accent)">search_has_results</td><td style="color:var(--muted)">search</td></tr>
+        <tr><td class="mono">24</td><td class="mono" style="color:var(--primary)">dlv - search_term_length</td><td class="mono" style="color:var(--accent)">search_term_length</td><td style="color:var(--muted)">search</td></tr>
+        <tr><td class="mono">25</td><td class="mono" style="color:var(--primary)">dlv - search_section</td><td class="mono" style="color:var(--accent)">search_section</td><td style="color:var(--muted)">search</td></tr>
+        <tr><td class="mono">26</td><td class="mono" style="color:var(--primary)">dlv - search_active_filter</td><td class="mono" style="color:var(--accent)">search_active_filter</td><td style="color:var(--muted)">search</td></tr>
+        <tr style="background:var(--elevated)"><td colspan="4" style="font-family:var(--font-m);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;padding:8px 14px">post_engagement</td></tr>
+        <tr><td class="mono">27</td><td class="mono" style="color:var(--primary)">dlv - action</td><td class="mono" style="color:var(--accent)">action</td><td style="color:var(--muted)">post_engagement</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GTM Triggers -->
+  <h3 style="margin-bottom:12px;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Triggers <span style="font-family:var(--font-m);font-size:11px;color:var(--subtle);text-transform:none;letter-spacing:0">(7 triggers)</span></h3>
+  <div class="table-wrap" style="margin-bottom:40px">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Trigger Name</th>
+          <th>Type</th>
+          <th>Event Name / Fires On</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono">01</td><td class="mono" style="color:var(--primary)">All Pages</td><td style="color:var(--muted)">Page View – Window Loaded</td><td style="color:var(--muted)">All Pages</td></tr>
+        <tr><td class="mono">02</td><td class="mono" style="color:var(--primary)">CE - page_view</td><td style="color:var(--muted)">Custom Event</td><td class="mono" style="color:var(--accent)">page_view</td></tr>
+        <tr><td class="mono">03</td><td class="mono" style="color:var(--primary)">CE - select_content</td><td style="color:var(--muted)">Custom Event</td><td class="mono" style="color:var(--accent)">select_content</td></tr>
+        <tr><td class="mono">04</td><td class="mono" style="color:var(--primary)">CE - generate_lead</td><td style="color:var(--muted)">Custom Event</td><td class="mono" style="color:var(--accent)">generate_lead</td></tr>
+        <tr><td class="mono">05</td><td class="mono" style="color:var(--primary)">CE - orbit_interaction</td><td style="color:var(--muted)">Custom Event</td><td class="mono" style="color:var(--accent)">orbit_interaction</td></tr>
+        <tr><td class="mono">06</td><td class="mono" style="color:var(--primary)">CE - search</td><td style="color:var(--muted)">Custom Event</td><td class="mono" style="color:var(--accent)">search</td></tr>
+        <tr><td class="mono">07</td><td class="mono" style="color:var(--primary)">CE - post_engagement</td><td style="color:var(--muted)">Custom Event</td><td class="mono" style="color:var(--accent)">post_engagement</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GTM Tags -->
+  <h3 style="margin-bottom:12px;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Tags <span style="font-family:var(--font-m);font-size:11px;color:var(--subtle);text-transform:none;letter-spacing:0">(7 tags)</span></h3>
+  <div class="table-wrap" style="margin-bottom:48px">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Tag Name</th>
+          <th>Tag Type</th>
+          <th>GA4 Event Name</th>
+          <th>Trigger</th>
+          <th>Key Parameters / Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono">01</td>
+          <td class="mono" style="color:var(--primary)">GA4 - Configuration</td>
+          <td style="color:var(--muted)">Google Tag</td>
+          <td style="color:var(--subtle)">—</td>
+          <td class="mono" style="color:var(--accent)">All Pages</td>
+          <td style="color:var(--muted)"><code style="font-family:var(--font-m);color:var(--primary)">send_page_view: false</code> · Tag ID: <code style="font-family:var(--font-m);color:var(--accent)">G-25V933JKJD</code></td>
+        </tr>
+        <tr>
+          <td class="mono">02</td>
+          <td class="mono" style="color:var(--primary)">GA4 - page_view</td>
+          <td style="color:var(--muted)">GA4 Event</td>
+          <td class="mono" style="color:var(--accent)">page_view</td>
+          <td class="mono" style="color:var(--primary)">CE - page_view</td>
+          <td style="color:var(--muted)">page_name · page_category · page_type · content_group · page_author</td>
+        </tr>
+        <tr>
+          <td class="mono">03</td>
+          <td class="mono" style="color:var(--primary)">GA4 - select_content</td>
+          <td style="color:var(--muted)">GA4 Event</td>
+          <td class="mono" style="color:var(--accent)">select_content</td>
+          <td class="mono" style="color:var(--primary)">CE - select_content</td>
+          <td style="color:var(--muted)">content_type · content_id · content_name · item_list_name · destination_url</td>
+        </tr>
+        <tr>
+          <td class="mono">04</td>
+          <td class="mono" style="color:var(--primary)">GA4 - generate_lead</td>
+          <td style="color:var(--muted)">GA4 Event</td>
+          <td class="mono" style="color:var(--accent)">generate_lead</td>
+          <td class="mono" style="color:var(--primary)">CE - generate_lead</td>
+          <td style="color:var(--muted)">form_name · form_id · subject · budget · message_word_count · message_char_count · message_filled · email_sha256</td>
+        </tr>
+        <tr>
+          <td class="mono">05</td>
+          <td class="mono" style="color:var(--primary)">GA4 - orbit_interaction</td>
+          <td style="color:var(--muted)">GA4 Event</td>
+          <td class="mono" style="color:var(--accent)">orbit_interaction</td>
+          <td class="mono" style="color:var(--primary)">CE - orbit_interaction</td>
+          <td style="color:var(--muted)">orbit_pause · skill_hover</td>
+        </tr>
+        <tr>
+          <td class="mono">06</td>
+          <td class="mono" style="color:var(--primary)">GA4 - search</td>
+          <td style="color:var(--muted)">GA4 Event</td>
+          <td class="mono" style="color:var(--accent)">search</td>
+          <td class="mono" style="color:var(--primary)">CE - search</td>
+          <td style="color:var(--muted)">search_term · search_results_count · search_has_results · search_term_length · search_section · search_active_filter</td>
+        </tr>
+        <tr>
+          <td class="mono">07</td>
+          <td class="mono" style="color:var(--primary)">GA4 - post_engagement</td>
+          <td style="color:var(--muted)">GA4 Event</td>
+          <td class="mono" style="color:var(--accent)">post_engagement</td>
+          <td class="mono" style="color:var(--primary)">CE - post_engagement</td>
+          <td style="color:var(--muted)">content_id · content_name · action</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════ GA4 SECTION -->
+  <h2 style="margin-bottom:6px">Google Analytics 4</h2>
+  <h3 style="margin-bottom:28px">Custom Dimensions, Metrics &amp; Conversions — Admin → Data Display</h3>
+
+  <!-- GA4 Custom Dimensions -->
+  <h3 style="margin-bottom:12px;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Custom Dimensions <span style="font-family:var(--font-m);font-size:11px;color:var(--subtle);text-transform:none;letter-spacing:0">(22 event-scoped)</span></h3>
+  <div class="table-wrap" style="margin-bottom:40px">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Display Name</th>
+          <th>Event Parameter</th>
+          <th>Scope</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:var(--elevated)"><td colspan="4" style="font-family:var(--font-m);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;padding:8px 14px">Page</td></tr>
+        <tr><td class="mono">01</td><td>Page Name</td><td class="mono" style="color:var(--accent)">page_name</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">02</td><td>Page Category</td><td class="mono" style="color:var(--accent)">page_category</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">03</td><td>Page Type</td><td class="mono" style="color:var(--accent)">page_type</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">04</td><td>Content Group</td><td class="mono" style="color:var(--accent)">content_group</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">05</td><td>Page Author</td><td class="mono" style="color:var(--accent)">page_author</td><td style="color:var(--muted)">Event</td></tr>
+        <tr style="background:var(--elevated)"><td colspan="4" style="font-family:var(--font-m);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;padding:8px 14px">Navigation / Clicks</td></tr>
+        <tr><td class="mono">06</td><td>Content Type</td><td class="mono" style="color:var(--accent)">content_type</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">07</td><td>Content ID</td><td class="mono" style="color:var(--accent)">content_id</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">08</td><td>Content Name</td><td class="mono" style="color:var(--accent)">content_name</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">09</td><td>Item List Name</td><td class="mono" style="color:var(--accent)">item_list_name</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">10</td><td>Destination URL</td><td class="mono" style="color:var(--accent)">destination_url</td><td style="color:var(--muted)">Event</td></tr>
+        <tr style="background:var(--elevated)"><td colspan="4" style="font-family:var(--font-m);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;padding:8px 14px">Lead Form</td></tr>
+        <tr><td class="mono">11</td><td>Form Name</td><td class="mono" style="color:var(--accent)">form_name</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">12</td><td>Form ID</td><td class="mono" style="color:var(--accent)">form_id</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">13</td><td>Subject</td><td class="mono" style="color:var(--accent)">subject</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">14</td><td>Budget</td><td class="mono" style="color:var(--accent)">budget</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">15</td><td>Message Filled</td><td class="mono" style="color:var(--accent)">message_filled</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">16</td><td>Email SHA-256</td><td class="mono" style="color:var(--accent)">email_sha256</td><td style="color:var(--muted)">Event</td></tr>
+        <tr style="background:var(--elevated)"><td colspan="4" style="font-family:var(--font-m);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;padding:8px 14px">Skills / Orbit</td></tr>
+        <tr><td class="mono">17</td><td>Orbit Pause</td><td class="mono" style="color:var(--accent)">orbit_pause</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">18</td><td>Skill Hover</td><td class="mono" style="color:var(--accent)">skill_hover</td><td style="color:var(--muted)">Event</td></tr>
+        <tr style="background:var(--elevated)"><td colspan="4" style="font-family:var(--font-m);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;padding:8px 14px">Search</td></tr>
+        <tr><td class="mono">19</td><td>Search Has Results</td><td class="mono" style="color:var(--accent)">search_has_results</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">20</td><td>Search Section</td><td class="mono" style="color:var(--accent)">search_section</td><td style="color:var(--muted)">Event</td></tr>
+        <tr><td class="mono">21</td><td>Search Active Filter</td><td class="mono" style="color:var(--accent)">search_active_filter</td><td style="color:var(--muted)">Event</td></tr>
+        <tr style="background:var(--elevated)"><td colspan="4" style="font-family:var(--font-m);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;padding:8px 14px">Post Engagement</td></tr>
+        <tr><td class="mono">22</td><td>Engagement Action</td><td class="mono" style="color:var(--accent)">action</td><td style="color:var(--muted)">Event</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GA4 Custom Metrics -->
+  <h3 style="margin-bottom:12px;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Custom Metrics <span style="font-family:var(--font-m);font-size:11px;color:var(--subtle);text-transform:none;letter-spacing:0">(4 event-scoped)</span></h3>
+  <div class="table-wrap" style="margin-bottom:40px">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Display Name</th>
+          <th>Event Parameter</th>
+          <th>Unit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono">01</td><td>Message Word Count</td><td class="mono" style="color:var(--accent)">message_word_count</td><td style="color:var(--muted)">Standard (integer)</td></tr>
+        <tr><td class="mono">02</td><td>Message Char Count</td><td class="mono" style="color:var(--accent)">message_char_count</td><td style="color:var(--muted)">Standard (integer)</td></tr>
+        <tr><td class="mono">03</td><td>Search Results Count</td><td class="mono" style="color:var(--accent)">search_results_count</td><td style="color:var(--muted)">Standard (integer)</td></tr>
+        <tr><td class="mono">04</td><td>Search Term Length</td><td class="mono" style="color:var(--accent)">search_term_length</td><td style="color:var(--muted)">Standard (integer)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GA4 Conversions -->
+  <h3 style="margin-bottom:12px;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Conversions</h3>
+  <div class="intro-grid" style="margin-bottom:8px">
+    <div class="intro-card" style="border-color:rgba(0,207,255,0.25);background:rgba(0,207,255,0.04)">
+      <div class="ic-label">Conversion Event</div>
+      <div class="ic-value"><code style="font-family:var(--font-m);color:var(--primary);font-size:15px">generate_lead</code></div>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted)">Admin → Data Display → Events → toggle <strong>Mark as conversion</strong><br>Or: Admin → Conversions → New Conversion Event → type <code style="font-family:var(--font-m)">generate_lead</code></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════ TAB 10 — VERSION HISTORY -->
 <div class="panel" id="tab-history">
   <h2>Version History</h2>
   <h3>Changelog — every major update to this measurement plan</h3>
 
   <div style="display:flex;flex-direction:column;gap:24px;margin-top:8px">
+
+    <!-- v4.0 -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <span style="font-family:var(--font-m);font-size:13px;font-weight:600;color:var(--primary)">v4.0</span>
+        <span style="font-size:12px;color:var(--muted)">2026-03-12</span>
+        <span style="margin-left:auto;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:rgba(0,255,179,0.1);border:1px solid rgba(0,255,179,0.25);padding:2px 8px;border-radius:20px">GTM &amp; GA4 setup</span>
+      </div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px">Added GTM &amp; GA4 Setup reference tab documenting the exact naming conventions for all GTM objects and GA4 configuration items. GTM container <code style="font-family:var(--font-m);color:var(--primary)">GTM-KW97DTMV</code> deployed to all 13 site pages. GA4 property <code style="font-family:var(--font-m);color:var(--accent)">G-25V933JKJD</code> connected.</p>
+      <ul style="font-size:13px;color:var(--text);line-height:2;padding-left:20px">
+        <li>New tab 09 — GTM &amp; GA4 Setup added with full naming convention tables</li>
+        <li>27 GTM Data Layer Variables documented (<code style="font-family:var(--font-m);color:var(--primary)">dlv - *</code> naming pattern)</li>
+        <li>7 GTM Triggers documented (<code style="font-family:var(--font-m);color:var(--primary)">CE - *</code> naming pattern for custom events)</li>
+        <li>7 GTM Tags documented (<code style="font-family:var(--font-m);color:var(--primary)">GA4 - *</code> naming pattern)</li>
+        <li>22 GA4 Custom Dimensions + 4 Custom Metrics registered</li>
+        <li><code style="font-family:var(--font-m);color:var(--accent)">generate_lead</code> marked as GA4 conversion</li>
+        <li>GTM snippets added to all 13 HTML pages (head + noscript body)</li>
+        <li>Intro tab updated with real GTM/GA4 IDs and stream details</li>
+        <li>Archive: <a href="archive/measurement_plan_v3.html" style="color:var(--primary);text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">measurement_plan_v3.html</a></li>
+      </ul>
+    </div>
 
     <!-- v3.0 -->
     <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">
