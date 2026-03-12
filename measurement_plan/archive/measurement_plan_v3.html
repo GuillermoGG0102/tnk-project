@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TNK Designs — Measurement Plan</title>
+<style>
+  :root {
+    --bg:      #0A0F1E;
+    --surface: #0F1629;
+    --elevated:#162038;
+    --border:  #1e2d4a;
+    --primary: #00CFFF;
+    --accent:  #00FFB3;
+    --text:    #F0F4FF;
+    --muted:   #8A9CC8;
+    --subtle:  #4D5E87;
+    --font-h:  'Space Grotesk', system-ui, sans-serif;
+    --font-b:  'Inter', system-ui, sans-serif;
+    --font-m:  'JetBrains Mono', monospace;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-b);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .site-header h1 {
+    font-family: var(--font-h);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: -0.03em;
+  }
+  .site-header span {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .badge {
+    margin-left: auto;
+    background: linear-gradient(135deg, var(--primary)22, var(--accent)22);
+    border: 1px solid var(--primary)44;
+    color: var(--primary);
+    font-size: 11px;
+    font-family: var(--font-m);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── Nav tabs ── */
+  .tabs {
+    display: flex;
+    gap: 2px;
+    padding: 0 40px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 12px 20px;
+    font-size: 12px;
+    font-family: var(--font-m);
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+  /* ── Content panels ── */
+  .panel { display: none; padding: 40px; }
+  .panel.active { display: block; }
+
+  /* ── Section headings ── */
+  h2 {
+    font-family: var(--font-h);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+  }
+  h3 {
+    font-family: var(--font-h);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  /* ── Intro cards ── */
+  .intro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .intro-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .intro-card .ic-label {
+    font-size: 11px;
+    font-family: var(--font-m);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .intro-card .ic-value {
+    font-size: 14px;
+    color: var(--text);
+  }
+  .events-list { list-style: none; margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+  .events-list li {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--primary);
+    border-radius: 8px;
+    padding: 14px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .ev-num {
+    font-family: var(--font-m);
+    font-size: 11px;
+    color: var(--primary);
+    min-width: 20px;
+    padding-top: 1px;
+  }
+  .ev-name {
+    font-family: var(--font-m);
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .ev-desc { font-size: 13px; color: var(--muted); }
+
+  /* ── Data table ── */
+  .table-wrap { overflow-x: auto; margin-top: 24px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    background: var(--elevated);
+    color: var(--muted);
+    font-family: var(--font-m);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+  }
+  tbody tr:hover td { background: var(--elevated); }
+  tbody td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border)88;
+    vertical-align: top;
+    color: var(--text);
+  }
+  td.mono {
+    font-family: var(--font-m);
+    font-size: 12px;
+    color: var(--accent);
+  }
+  td.event-name {
+    font-family: var(--font-m);
+    font-size: 12px;
+    color: var(--primary);
+    white-space: nowrap;
+  }
+  td.muted { color: var(--muted); }
+  td.code {
+    font-family: var(--font-m);
+    font-size: 11px;
+    color: var(--muted);
+    max-width: 360px;
+  }
+  .code-block {
+    background: var(--elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: var(--font-m);
+    font-size: 11px;
+    color: var(--accent);
+    white-space: pre-wrap;
+    word-break: break-all;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+  .code-block:hover { border-color: var(--primary)66; }
+
+  /* ── Screenshot ── */
+  .shot-wrap {
+    width: 240px;
+    min-width: 180px;
+  }
+  .shot-wrap img {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    display: block;
+  }
+  .shot-missing {
+    width: 240px;
+    height: 135px;
+    border-radius: 8px;
+    border: 1px dashed var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--subtle);
+    font-family: var(--font-m);
+  }
+
+  /* ── ZIP banner ── */
+  #zip-banner {
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: #162038;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 24px;
+    font-size: 13px;
+    color: var(--text);
+    text-align: center;
+  }
+  #zip-banner a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  #zip-banner button {
+    float: right;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  /* ── Event section cards ── */
+  .event-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  .event-block-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .event-chip {
+    font-family: var(--font-m);
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--primary)55;
+    background: var(--primary)11;
+    color: var(--primary);
+  }
+  .event-context {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ── Param tag ── */
+  .param-tag {
+    display: inline-block;
+    background: var(--elevated);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: var(--font-m);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin: 2px;
+  }
+  .param-tag.highlight { border-color: var(--accent)55; color: var(--accent); }
+
+  /* ── Two-column layout for event row ── */
+  .row-layout {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .row-layout { grid-template-columns: 1fr; }
+    .shot-wrap { width: 100%; }
+  }
+
+  /* ── Copy feedback ── */
+  .copied-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--font-m);
+    font-size: 12px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    z-index: 9999;
+  }
+  .copied-toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div id="zip-banner">
+  📂 Screenshots not visible? Download the <a href="https://github.com/GuillermoGG0102/tnk-project/raw/main/measurement_plan/measurement_plan_standalone.html">standalone version</a> — single file, all screenshots embedded, works offline.
+  <button onclick="document.getElementById('zip-banner').style.display='none'" title="Dismiss">✕</button>
+</div>
+
+<header class="site-header">
+  <h1>TNK Designs</h1>
+  <span>Web Measurement Plan</span>
+  <div class="badge">v3.0 · 2026-03-11</div>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="intro">01 — Intro</button>
+  <button class="tab" data-tab="params">02 — Parameters</button>
+  <button class="tab" data-tab="page_view">03 — page_view</button>
+  <button class="tab" data-tab="select_content">04 — select_content</button>
+  <button class="tab" data-tab="generate_lead">05 — generate_lead</button>
+  <button class="tab" data-tab="orbit_interaction">06 — orbit_interaction</button>
+  <button class="tab" data-tab="search">07 — search</button>
+  <button class="tab" data-tab="post_engagement">08 — post_engagement</button>
+  <button class="tab" data-tab="history">09 — Version History</button>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════ TAB 01 — INTRO -->
+<div class="panel active" id="tab-intro">
+  <h2>Measurement Plan</h2>
+  <h3>TNK Designs — Analytics implementation overview</h3>
+
+  <div class="intro-grid">
+    <div class="intro-card"><div class="ic-label">Author</div><div class="ic-value">Guillermo García</div></div>
+    <div class="intro-card"><div class="ic-label">Site URL</div><div class="ic-value">https://tnk-project.vercel.app/</div></div>
+    <div class="intro-card"><div class="ic-label">Stack</div><div class="ic-value">Static HTML · Tailwind CSS · Vanilla JS</div></div>
+    <div class="intro-card"><div class="ic-label">Analytics layer</div><div class="ic-value">Google Tag Manager + GA4</div></div>
+    <div class="intro-card"><div class="ic-label">GTM Container</div><div class="ic-value">GTM-KW97DTMV · Account: tnk-project (6343762712)</div></div>
+    <div class="intro-card"><div class="ic-label">GA4 Measurement ID</div><div class="ic-value">G-25V933JKJD</div></div>
+    <div class="intro-card"><div class="ic-label">GA4 Stream</div><div class="ic-value">tnk-analytics-design-website · Stream ID: 13893341764 · https://tnk-project.vercel.app</div></div>
+    <div class="intro-card"><div class="ic-label">Data layer library</div><div class="ic-value">analytics.js (shared, all pages)</div></div>
+    <div class="intro-card"><div class="ic-label">Privacy</div><div class="ic-value">PII filtered · email SHA-256 hashed · no raw textarea</div></div>
+    <div class="intro-card"><div class="ic-label">Pages instrumented</div><div class="ic-value">11 pages (7 with engagement)</div></div>
+    <div class="intro-card"><div class="ic-label">Last updated</div><div class="ic-value">2026-03-12</div></div>
+  </div>
+
+  <hr class="section-divider">
+
+  <h2 style="margin-bottom:16px">Events implemented</h2>
+  <ul class="events-list">
+    <li>
+      <div class="ev-num">01</div>
+      <div><div class="ev-name">page_view</div><div class="ev-desc">Fires on every page load (DOMContentLoaded). Reads window.TNK_PAGE defined per page. Sends page name, category, type, content group, and author.</div></div>
+    </li>
+    <li>
+      <div class="ev-num">02</div>
+      <div><div class="ev-name">select_content</div><div class="ev-desc">Fires on all navigational clicks — nav links, hero CTAs, project/blog cards, filter pills, social links. Uses delegated click listener on a[data-track] and tnkNavigate() helper.</div></div>
+    </li>
+    <li>
+      <div class="ev-num">03</div>
+      <div><div class="ev-name">generate_lead</div><div class="ev-desc">Fires on contact form submit. Dynamically collects non-PII fields. Skips password/tel/hidden and PII name patterns. Textarea → word_count + char_count. Email hashed via SHA-256 (crypto.subtle).</div></div>
+    </li>
+    <li>
+      <div class="ev-num">04</div>
+      <div><div class="ev-name">orbit_interaction</div><div class="ev-desc">Fires on hover of the orbiting skills section on the Home page. Sends orbit_pause (boolean, animation state) when entering/leaving the stage, and skill_hover (tooltip text) per icon hover.</div></div>
+    </li>
+    <li>
+      <div class="ev-num">05</div>
+      <div><div class="ev-name">search</div><div class="ev-desc">Fires 500 ms after user stops typing in the Blog search bar (min 2 chars). Sends search term, results count, has-results flag, term length, section, and active filter pill.</div></div>
+    </li>
+    <li>
+      <div class="ev-num">06</div>
+      <div><div class="ev-name">post_engagement</div><div class="ev-desc">Fires on blog post pages when a visitor likes, unlikes, or submits a comment. Sends content_id (post slug), content_name (post title), and action ("like" | "unlike" | "comment"). Like state is persisted per browser via localStorage UUID + Supabase.</div></div>
+    </li>
+  </ul>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ TAB 02 — PARAMETERS -->
+<div class="panel" id="tab-params">
+  <h2>All Parameters</h2>
+  <h3>Full parameter registry across all events</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Parameter</th>
+          <th>Type</th>
+          <th>Events</th>
+          <th>Example value</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="params-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ TAB 03 — PAGE_VIEW -->
+<div class="panel" id="tab-page_view">
+  <h2>page_view</h2>
+  <h3>Fires on DOMContentLoaded on every page — reads window.TNK_PAGE · one row per unique page_category + page_type combination (6 of 11 pages shown)</h3>
+  <div id="pv-rows"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ TAB 04 — SELECT_CONTENT -->
+<div class="panel" id="tab-select_content">
+  <h2>select_content</h2>
+  <h3>Fires on all navigational clicks across the site</h3>
+  <div id="sc-rows"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ TAB 05 — GENERATE_LEAD -->
+<div class="panel" id="tab-generate_lead">
+  <h2>generate_lead</h2>
+  <h3>Fires on contact form submit — non-PII fields + SHA-256 hashed email</h3>
+  <div id="gl-rows"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ TAB 06 — ORBIT_INTERACTION -->
+<div class="panel" id="tab-orbit_interaction">
+  <h2>orbit_interaction</h2>
+  <h3>Fires on hover of the orbiting skills section on the Home page</h3>
+  <div id="oi-rows"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ TAB 07 — SEARCH -->
+<div class="panel" id="tab-search">
+  <h2>search</h2>
+  <h3>Fires 500 ms after user stops typing in blog search (min 2 chars)</h3>
+  <div id="se-rows"></div>
+</div>
+
+<!-- ════════════════════════════════════════════ TAB 08 — POST_ENGAGEMENT -->
+<div class="panel" id="tab-post_engagement">
+  <h2>post_engagement</h2>
+  <h3>Single event — fires on blog post pages for likes and comments. action distinguishes the interaction type.</h3>
+  <div id="pe-rows"></div>
+</div>
+
+<div class="copied-toast" id="toast">Copied!</div>
+
+<script>
+// ── Tab switching ───────────────────────────────────────────────────────────
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ── Copy on click ───────────────────────────────────────────────────────────
+function copyCode(el) {
+  navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1500);
+  });
+}
+
+// ── Shot helper ─────────────────────────────────────────────────────────────
+function showZipBanner() {
+  document.getElementById('zip-banner').style.display = 'block';
+}
+function shot(file, alt) {
+  return `<div class="shot-wrap"><img src="screenshots/${file}" alt="${alt}" onerror="showZipBanner();this.parentElement.innerHTML='<div class=shot-missing>screenshot/${file}</div>'"></div>`;
+}
+
+// ── Parameters tab ──────────────────────────────────────────────────────────
+const PARAMS = [
+  ['event','string','ALL','page_view','Standard GTM/GA4 event name trigger'],
+  ['page_name','string','page_view','Home','Human-readable page title from TNK_PAGE.name'],
+  ['page_category','string','page_view','main','Top-level section: main · blog · projects · contact'],
+  ['page_type','string','page_view','home','Template type: home · listing · detail · article · contact'],
+  ['content_group','string','page_view','portfolio','GA4 content group — equals page_group or page_category'],
+  ['page_author','string','page_view','Guillermo García','Fixed string on all pages'],
+  ['content_type','string','select_content','nav_link','Interaction class: nav_link · cta · project_card · blog_card · filter_pill · social_link'],
+  ['content_id','string','select_content · post_engagement','beautiful_dashboards','Stable machine ID for the destination — always underscore-separated'],
+  ['content_name','string','select_content','Blog','Human-readable label of the clicked element'],
+  ['item_list_name','string','select_content','hero','Section/list the item belongs to: hero · nav · featured · blog_listing · footer…'],
+  ['destination_url','string','select_content','/blog.html','Target href where available'],
+  ['form_name','string','generate_lead','contact_form','Value of data-track-form attribute on the form'],
+  ['form_id','string','generate_lead','contactForm','HTML id of the form element'],
+  ['subject','string','generate_lead','Project enquiry','Non-PII select field value'],
+  ['budget','string','generate_lead','5000-10000','Non-PII select field value'],
+  ['message_word_count','integer','generate_lead','42','Word count of textarea — never raw content'],
+  ['message_char_count','integer','generate_lead','215','Character count of textarea'],
+  ['message_filled','boolean','generate_lead','true','Whether the textarea had any content'],
+  ['email_sha256','string','generate_lead','a665a459…','SHA-256 hex of lowercased trimmed email'],
+  ['orbit_pause','boolean','orbit_interaction','true','true = user hovered stage (anim paused); false = left stage'],
+  ['skill_hover','string','orbit_interaction','GA4','Tooltip text of the skill icon hovered'],
+  ['search_term','string','search','ga4 custom dimensions','Raw search query entered by user'],
+  ['search_results_count','integer','search','3','Number of posts visible after filter+search'],
+  ['search_has_results','boolean','search','true','true if search_results_count > 0'],
+  ['search_term_length','integer','search','19','Character length of search_term'],
+  ['search_section','string','search','blog','Section where search occurred (always blog currently)'],
+  ['search_active_filter','string','search','Analytics','Active filter pill at time of search (or all)'],
+  ['action','string','post_engagement','"like" | "unlike" | "comment"','Interaction type — "like" on first click, "unlike" on second click, "comment" on form submit'],
+];
+
+const tbody = document.getElementById('params-tbody');
+PARAMS.forEach(([name, type, events, example, notes], i) => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td class="muted">${i+1}</td>
+    <td class="mono">${name}</td>
+    <td class="muted">${type}</td>
+    <td><span class="param-tag highlight">${events}</span></td>
+    <td class="mono">${example}</td>
+    <td class="muted">${notes}</td>
+  `;
+  tbody.appendChild(tr);
+});
+
+// ── page_view rows ──────────────────────────────────────────────────────────
+// One row per unique page_category + page_type combination
+const PV_DATA = [
+  {page:'Home',                     cat:'main',     type:'home',    group:'portfolio', file:'pv_home.png'},
+  {page:'Blog',                     cat:'blog',     type:'listing', group:'content',   file:'pv_blog.png'},
+  {page:'Contact',                  cat:'contact',  type:'contact', group:'contact',   file:'pv_contact.png'},
+  {page:'Projects',                 cat:'projects', type:'listing', group:'portfolio', file:'pv_projects.png'},
+  {page:'TNK Designs',              cat:'projects', type:'detail',  group:'portfolio', file:'pv_proj_tnk.png'},
+  {page:'Getting Started with GA4', cat:'blog',     type:'article', group:'content',   file:'pv_blog_ga4.png'},
+];
+
+const pvContainer = document.getElementById('pv-rows');
+PV_DATA.forEach((d, i) => {
+  const push = JSON.stringify({event:'page_view',page_name:d.page,page_category:d.cat,page_type:d.type,content_group:d.group,page_author:'Guillermo García'}, null, 2);
+  pvContainer.innerHTML += `
+    <div class="event-block">
+      <div class="event-block-header">
+        <span class="muted" style="font-family:var(--font-m);font-size:12px">#${String(i+1).padStart(2,'0')}</span>
+        <span class="event-chip">page_view</span>
+        <span class="event-context">${d.page}</span>
+      </div>
+      <div class="row-layout">
+        <div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+            <span class="param-tag">page_name: <strong>${d.page}</strong></span>
+            <span class="param-tag">page_category: <strong>${d.cat}</strong></span>
+            <span class="param-tag">page_type: <strong>${d.type}</strong></span>
+            <span class="param-tag">content_group: <strong>${d.group}</strong></span>
+            <span class="param-tag">page_author: <strong>Guillermo García</strong></span>
+          </div>
+          <div class="code-block" onclick="copyCode(this)" title="Click to copy">${push}</div>
+        </div>
+        ${shot(d.file, d.page)}
+      </div>
+    </div>`;
+});
+
+// ── select_content rows ─────────────────────────────────────────────────────
+const SC_DATA = [
+  // NAV
+  {ct:'nav_link',    id:'projects',    name:'Projects',                        list:'main_nav',          file:'sc_nav_projects.png',      ctx:'All pages — top navigation',       desc:'Top navigation bar — "Projects" link. Highlighted in red. Fires on click, routes to projects.html.'},
+  {ct:'nav_link',    id:'blog',        name:'Blog',                            list:'main_nav',          file:'sc_nav_blog.png',          ctx:'All pages — top navigation',       desc:'Top navigation bar — "Blog" link. Highlighted in red. Fires on click, routes to blog.html.'},
+  {ct:'nav_link',    id:'contact',     name:'Contact',                         list:'main_nav',          file:'sc_nav_contact.png',       ctx:'All pages — top navigation',       desc:'Top navigation bar — "Contact" link. Highlighted in red. Routes to contact.html.'},
+  {ct:'cta',         id:'contact',     name:'Get in touch',                    list:'main_nav',          file:'sc_nav_cta.png',           ctx:'All pages — top navigation',       desc:'Primary CTA button in the top-right of the nav bar — "Get in touch". Routes to contact.html.'},
+  // HERO
+  {ct:'cta',         id:'projects_section', name:'View Projects',             list:'hero',              file:'sc_hero_projects.png',     ctx:'Home — hero section',              desc:'Primary CTA in the hero section — "View Projects". Scrolls to the projects section on the same page.'},
+  {ct:'cta',         id:'blog_section',     name:'Read the Blog',             list:'hero',              file:'sc_hero_blog.png',         ctx:'Home — hero section',              desc:'Secondary CTA in the hero section — "Read the Blog". Scrolls to the blog section on the same page.'},
+  // FEATURED PROJECTS (home)
+  {ct:'cta',         id:'projects_all',name:'All projects',                   list:'featured_projects', file:'sc_all_projects.png',      ctx:'Home — featured projects section', desc:'"All projects →" link at the top-right of the featured projects section. Routes to projects.html.'},
+  {ct:'project_card',id:'tnk_designs', name:'TNK Designs',                    list:'featured_projects', file:'sc_card_tnk.png',          ctx:'Home — featured projects section', desc:'Project card for TNK Designs — the full card is clickable. Fires tnkNavigate() to projects/tnk-designs.html.'},
+  {ct:'project_card',id:'tnk_portfolio_web',name:'TNK Portfolio Web',         list:'featured_projects', file:'sc_card_port.png',         ctx:'Home — featured projects section', desc:'Project card for TNK Portfolio Web — full card clickable. Routes to projects/tnk-portfolio-web.html.'},
+  // FEATURED POSTS (home)
+  {ct:'cta',         id:'blog_all',    name:'All posts',                      list:'featured_posts',    file:'sc_all_posts.png',         ctx:'Home — featured posts section',    desc:'"All posts →" link at the top-right of the featured blog section. Routes to blog.html.'},
+  {ct:'blog_card',   id:'getting_started_with_ga4',name:'Getting Started with GA4',list:'featured_posts',file:'sc_blog_card_ga4.png',  ctx:'Home — featured posts section',    desc:'Blog card for "Getting Started with GA4". Full card clickable. Routes to blog/getting-started-with-ga4.html.'},
+  {ct:'blog_card',   id:'design_principles_for_data_products',name:'Design Principles for Data Products',list:'featured_posts',file:'sc_blog_card_design.png',ctx:'Home — featured posts section','desc':'Blog card for "Design Principles for Data Products". Routes to blog/design-principles-for-data-products.html.'},
+  // FOOTER
+  {ct:'social_link', id:'linkedin',    name:'LinkedIn',                       list:'footer',            file:'sc_footer_linkedin.png',   ctx:'All pages — footer',               desc:'LinkedIn icon in the footer social row. Opens linkedin.com profile in a new tab.'},
+  {ct:'social_link', id:'instagram',   name:'Instagram',                      list:'footer',            file:'sc_footer_instagram.png',  ctx:'All pages — footer',               desc:'Instagram icon in the footer social row. Opens instagram.com/tnkdesigns_ in a new tab.'},
+  {ct:'social_link', id:'email',       name:'Email footer',                   list:'footer',            file:'sc_footer_email.png',      ctx:'All pages — footer',               desc:'Email icon in the footer social row. Opens mailto: link.'},
+  // BLOG LISTING — featured card
+  {ct:'blog_card',   id:'datalayer_medicion_robusta',name:'DataLayer: Medición Robusta',list:'featured_post',file:'sc_blog_featured.png',ctx:'Blog listing — featured post card','desc':'Large featured post card at the top of the blog listing. Full card area is clickable. Routes to blog/datalayer-medicion-robusta.html.'},
+  // BLOG LISTING — grid cards
+  {ct:'blog_card',   id:'getting_started_with_ga4', name:'Getting Started with GA4',       list:'blog_listing',file:'sc_blog_card_ga4_list.png',  ctx:'Blog listing — grid card',         desc:'Grid card in the blog listing for "Getting Started with GA4". Routes to blog/getting-started-with-ga4.html.'},
+  {ct:'blog_card',   id:'design_principles_for_data_products',name:'Design Principles for Data Products',list:'blog_listing',file:'sc_blog_card_design_list.png',ctx:'Blog listing — grid card','desc':'Grid card for "Design Principles for Data Products". Routes to blog/design-principles-for-data-products.html.'},
+  {ct:'blog_card',   id:'building_with_claude_code', name:'Building with Claude Code',      list:'blog_listing',file:'sc_blog_card_claude.png',    ctx:'Blog listing — grid card',         desc:'Grid card for "Building with Claude Code". Routes to blog/building-with-claude-code.html.'},
+  {ct:'blog_card',   id:'beautiful_dashboards',      name:'Smart Solutions to Build Beautiful Dashboards',list:'blog_listing',file:'sc_blog_card_dash.png',ctx:'Blog listing — grid card','desc':'Grid card for the dashboards post. Routes to blog/beautiful-dashboards.html.'},
+  // FILTER PILLS
+  {ct:'filter',      id:'all',         name:'All',                            list:'blog_filters',      file:'sc_filter_all.png',        ctx:'Blog listing — filter pills',      desc:'"All" filter pill — resets active category filter and shows all posts.'},
+  {ct:'filter',      id:'analytics',   name:'Analytics',                      list:'blog_filters',      file:'sc_filter_analytics.png',  ctx:'Blog listing — filter pills',      desc:'"Analytics" filter pill — shows only posts tagged with the analytics category.'},
+  {ct:'filter',      id:'design',      name:'Design',                         list:'blog_filters',      file:'sc_filter_design.png',     ctx:'Blog listing — filter pills',      desc:'"Design" filter pill — shows only posts tagged with the design category.'},
+  {ct:'filter',      id:'league_of_legends','name':'League of Legends',       list:'blog_filters',      file:'sc_filter_lol.png',        ctx:'Blog listing — filter pills',      desc:'"League of Legends" filter pill — shows only LoL-tagged posts.'},
+  {ct:'filter',      id:'padel',       name:'Padel',                          list:'blog_filters',      file:'sc_filter_padel.png',      ctx:'Blog listing — filter pills',      desc:'"Padel" filter pill — shows only Padel-tagged posts.'},
+  // PROJECTS LISTING
+  {ct:'project_card',id:'tnk_designs', name:'TNK Designs',                    list:'projects_listing',  file:'sc_proj_tnk.png',          ctx:'Projects listing page',            desc:'Project card for TNK Designs on the projects listing page. Routes to projects/tnk-designs.html.'},
+  {ct:'project_card',id:'tnk_portfolio_web',name:'TNK Portfolio Web',         list:'projects_listing',  file:'sc_proj_port.png',         ctx:'Projects listing page',            desc:'Project card for TNK Portfolio Web on the projects listing page. Routes to projects/tnk-portfolio-web.html.'},
+  // CONTACT SOCIALS
+  {ct:'social_link', id:'linkedin',    name:'LinkedIn',                       list:'contact_socials',   file:'sc_contact_linkedin.png',  ctx:'Contact page — social links',      desc:'LinkedIn link in the contact page sidebar. Opens linkedin.com profile in a new tab.'},
+  {ct:'social_link', id:'instagram',   name:'Instagram',                      list:'contact_socials',   file:'sc_contact_instagram.png', ctx:'Contact page — social links',      desc:'Instagram link in the contact page sidebar. Opens instagram.com/tnkdesigns_ in a new tab.'},
+];
+
+const scContainer = document.getElementById('sc-rows');
+SC_DATA.forEach((d, i) => {
+  const push = JSON.stringify({event:'select_content',content_type:d.ct,content_id:d.id,content_name:d.name,item_list_name:d.list}, null, 2);
+  scContainer.innerHTML += `
+    <div class="event-block">
+      <div class="event-block-header">
+        <span class="muted" style="font-family:var(--font-m);font-size:12px">#${String(i+1).padStart(2,'0')}</span>
+        <span class="event-chip">select_content</span>
+        <span class="event-context">${d.ctx}</span>
+      </div>
+      <div class="row-layout">
+        <div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6">${d.desc}</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+            <span class="param-tag">content_type: <strong>${d.ct}</strong></span>
+            <span class="param-tag">content_id: <strong>${d.id}</strong></span>
+            <span class="param-tag">content_name: <strong>${d.name}</strong></span>
+            <span class="param-tag">item_list_name: <strong>${d.list}</strong></span>
+          </div>
+          <div class="code-block" onclick="copyCode(this)" title="Click to copy">${push}</div>
+        </div>
+        ${shot(d.file, d.name)}
+      </div>
+    </div>`;
+});
+
+// ── generate_lead ───────────────────────────────────────────────────────────
+const glContainer = document.getElementById('gl-rows');
+const glPush = JSON.stringify({
+  event:'generate_lead',
+  form_name:'contact_form',
+  form_id:'contactForm',
+  subject:'Project enquiry',
+  budget:'5000-10000',
+  message_word_count:42,
+  message_char_count:215,
+  message_filled:true,
+  email_sha256:'a665a45920422f9d417e4867efdc4fb8a31862b785c5fb0e1e1c53e6fd4fd0e5'
+}, null, 2);
+
+glContainer.innerHTML = `
+  <div class="event-block">
+    <div class="event-block-header">
+      <span class="muted" style="font-family:var(--font-m);font-size:12px">#01</span>
+      <span class="event-chip">generate_lead</span>
+      <span class="event-context">Contact page — form submit</span>
+    </div>
+    <div class="row-layout">
+      <div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+          <span class="param-tag">form_name: <strong>contact_form</strong></span>
+          <span class="param-tag">form_id: <strong>contactForm</strong></span>
+          <span class="param-tag">subject: <strong>Project enquiry</strong></span>
+          <span class="param-tag">budget: <strong>5000-10000</strong></span>
+          <span class="param-tag">message_word_count: <strong>42</strong></span>
+          <span class="param-tag">message_char_count: <strong>215</strong></span>
+          <span class="param-tag">message_filled: <strong>true</strong></span>
+          <span class="param-tag highlight">email_sha256: <strong>SHA-256 hex</strong></span>
+        </div>
+        <div class="code-block" onclick="copyCode(this)" title="Click to copy">${glPush}</div>
+        <div style="margin-top:20px;background:var(--elevated);border:1px solid var(--border);border-radius:10px;padding:16px">
+          <div style="font-family:var(--font-m);font-size:11px;color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.06em">Field collection rules</div>
+          <div style="display:grid;grid-template-columns:180px 1fr;gap:6px 12px;font-size:12px">
+            <span style="color:var(--accent);font-family:var(--font-m)">email</span><span style="color:var(--muted)">SHA-256 hashed via crypto.subtle — stored as email_sha256</span>
+            <span style="color:var(--accent);font-family:var(--font-m)">textarea</span><span style="color:var(--muted)">→ _word_count + _char_count + _filled (never raw content)</span>
+            <span style="color:var(--accent);font-family:var(--font-m)">select</span><span style="color:var(--muted)">Value sent as-is (non-PII categorical)</span>
+            <span style="color:var(--subtle);font-family:var(--font-m)">password / tel / hidden</span><span style="color:var(--subtle)">Skipped entirely</span>
+            <span style="color:var(--subtle);font-family:var(--font-m)">name / phone / address…</span><span style="color:var(--subtle)">Skipped (PII pattern match)</span>
+            <span style="color:var(--subtle);font-family:var(--font-m)">submit / button</span><span style="color:var(--subtle)">Skipped entirely</span>
+          </div>
+        </div>
+      </div>
+      ${shot('gl_form.png', 'Contact form')}
+    </div>
+  </div>`;
+
+// ── orbit_interaction ───────────────────────────────────────────────────────
+const OI_DATA = [
+  {orbit_pause:true,  skill_hover:null,            file:'oi_orbit_pause.png',  label:'Mouse enters orbit stage — animation pauses',   desc:'User moves the cursor inside the orbit stage area. The rotating animation pauses. orbit_pause is pushed as true. The red box highlights the entire orbit-stage element.'},
+  {orbit_pause:false, skill_hover:null,             file:'oi_orbit_full.png',   label:'Mouse leaves orbit stage — animation resumes',   desc:'User moves the cursor out of the orbit stage area. The animation restarts. orbit_pause is pushed as false.'},
+  {orbit_pause:null,  skill_hover:'GA4',            file:'oi_skill_hover.png',  label:'Skill icon hover — any skill icon',              desc:'User hovers over any skill icon in the orbit. The tooltip text is read and pushed as skill_hover. The red box shows a highlighted icon example. All 18 skill icons trigger this event.'},
+];
+
+const oiContainer = document.getElementById('oi-rows');
+OI_DATA.forEach((d, i) => {
+  const obj = {event:'orbit_interaction'};
+  if (d.orbit_pause !== null) obj.orbit_pause = d.orbit_pause;
+  if (d.skill_hover !== null) obj.skill_hover = d.skill_hover;
+  const push = JSON.stringify(obj, null, 2);
+  oiContainer.innerHTML += `
+    <div class="event-block">
+      <div class="event-block-header">
+        <span class="muted" style="font-family:var(--font-m);font-size:12px">#${String(i+1).padStart(2,'0')}</span>
+        <span class="event-chip">orbit_interaction</span>
+        <span class="event-context">${d.label}</span>
+      </div>
+      <div class="row-layout">
+        <div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6">${d.desc}</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+            ${d.orbit_pause !== null ? `<span class="param-tag">orbit_pause: <strong>${d.orbit_pause}</strong></span>` : ''}
+            ${d.skill_hover !== null ? `<span class="param-tag highlight">skill_hover: <strong>${d.skill_hover}</strong></span>` : ''}
+          </div>
+          <div class="code-block" onclick="copyCode(this)" title="Click to copy">${push}</div>
+        </div>
+        ${shot(d.file, d.label)}
+      </div>
+    </div>`;
+});
+
+// ── search ──────────────────────────────────────────────────────────────────
+const SE_DATA = [
+  {term:'ga4',             count:2,has:true,  filter:'all', file:'se_search_typing.png', label:'User typing — suggestions visible',   desc:'User types "ga4" in the search bar. Live suggestions appear below the input after 300ms. The search event fires 500ms after the user stops typing (debounced). The red box highlights the search input field.'},
+  {term:'xyznotfound',     count:0,has:false, filter:'all', file:'se_no_results.png',    label:'Zero results — no-results state shown',desc:'User types a query that matches no post titles. The results count drops to 0, search_has_results is false, and the no-results message is displayed in the UI.'},
+];
+
+const seContainer = document.getElementById('se-rows');
+SE_DATA.forEach((d, i) => {
+  const push = JSON.stringify({
+    event:'search',
+    search_term:d.term,
+    search_results_count:d.count,
+    search_has_results:d.has,
+    search_term_length:d.term.length,
+    search_section:'blog',
+    search_active_filter:d.filter
+  }, null, 2);
+  seContainer.innerHTML += `
+    <div class="event-block">
+      <div class="event-block-header">
+        <span class="muted" style="font-family:var(--font-m);font-size:12px">#${String(i+1).padStart(2,'0')}</span>
+        <span class="event-chip">search</span>
+        <span class="event-context">${d.label}</span>
+      </div>
+      <div class="row-layout">
+        <div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6">${d.desc}</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+            <span class="param-tag">search_term: <strong>"${d.term}"</strong></span>
+            <span class="param-tag">search_results_count: <strong>${d.count}</strong></span>
+            <span class="param-tag highlight">search_has_results: <strong>${d.has}</strong></span>
+            <span class="param-tag">search_term_length: <strong>${d.term.length}</strong></span>
+            <span class="param-tag">search_section: <strong>blog</strong></span>
+            <span class="param-tag">search_active_filter: <strong>${d.filter}</strong></span>
+          </div>
+          <div class="code-block" onclick="copyCode(this)" title="Click to copy">${push}</div>
+        </div>
+        ${shot(d.file, d.label)}
+      </div>
+    </div>`;
+});
+
+// ── post_engagement ──────────────────────────────────────────────────────────
+const PE_DATA = [
+  {
+    action:'like',
+    slug:'beautiful_dashboards', title:'Smart Solutions to Build Beautiful Dashboards',
+    label:'User likes a post', file:'pe_like.png',
+    desc:'Fires when the visitor clicks the heart button for the first time on a post. Like count increments optimistically in the UI, then the row is inserted into Supabase post_likes. Browser identity is tracked via UUID stored in localStorage (tnk_browser_id).'
+  },
+  {
+    action:'unlike',
+    slug:'beautiful_dashboards', title:'Smart Solutions to Build Beautiful Dashboards',
+    label:'User unlikes a post', file:'pe_unlike.png',
+    desc:'Fires when a visitor clicks the heart button on a post they already liked. The row is deleted from Supabase post_likes and the heart returns to its outline state.'
+  },
+  {
+    action:'comment',
+    slug:'analytics_first_workflow', title:'How I Built an Analytics-First Workflow Using CLAUDE.md',
+    label:'User submits a comment', file:'pe_comment.png',
+    desc:'Fires after a successful comment insert into Supabase post_comments. No raw comment text is ever pushed to the dataLayer — only the action value. Comment appears immediately above the form.'
+  },
+];
+
+const peContainer = document.getElementById('pe-rows');
+PE_DATA.forEach((d, i) => {
+  const obj = {event:'post_engagement', content_id: d.slug, content_name: d.title, action: d.action};
+  const push = JSON.stringify(obj, null, 2);
+  peContainer.innerHTML += `
+    <div class="event-block">
+      <div class="event-block-header">
+        <span class="muted" style="font-family:var(--font-m);font-size:12px">#${String(i+1).padStart(2,'0')}</span>
+        <span class="event-chip">post_engagement</span>
+        <span class="event-context">${d.label}</span>
+      </div>
+      <div class="row-layout">
+        <div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6">${d.desc}</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+            <span class="param-tag highlight">event: <strong>post_engagement</strong></span>
+            <span class="param-tag">content_id: <strong>${d.slug}</strong></span>
+            <span class="param-tag">content_name: <strong>${d.title.substring(0,40)}…</strong></span>
+            <span class="param-tag highlight">action: <strong>${d.action}</strong></span>
+          </div>
+          <div class="code-block" onclick="copyCode(this)" title="Click to copy">${push}</div>
+        </div>
+        ${shot(d.file, d.label)}
+      </div>
+    </div>`;
+});
+</script>
+
+<!-- ═══════════════════════════════════════════════ TAB 09 — VERSION HISTORY -->
+<div class="panel" id="tab-history">
+  <h2>Version History</h2>
+  <h3>Changelog — every major update to this measurement plan</h3>
+
+  <div style="display:flex;flex-direction:column;gap:24px;margin-top:8px">
+
+    <!-- v3.0 -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <span style="font-family:var(--font-m);font-size:13px;font-weight:600;color:var(--primary)">v3.0</span>
+        <span style="font-size:12px;color:var(--muted)">2026-03-11</span>
+        <span style="margin-left:auto;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:rgba(0,255,179,0.1);border:1px solid rgba(0,255,179,0.25);padding:2px 8px;border-radius:20px">Schema refactor</span>
+      </div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px">Unified post engagement tracking into a single <code style="font-family:var(--font-m);color:var(--primary)">post_engagement</code> event. Standardised all <code style="font-family:var(--font-m);color:var(--accent)">content_id</code> values across events to use underscores instead of hyphens.</p>
+      <ul style="font-size:13px;color:var(--text);line-height:2;padding-left:20px">
+        <li>Replaced <code style="font-family:var(--font-m);color:var(--primary)">blog_like</code> + <code style="font-family:var(--font-m);color:var(--primary)">blog_comment</code> with single <code style="font-family:var(--font-m);color:var(--primary)">post_engagement</code> event</li>
+        <li><code style="font-family:var(--font-m);color:var(--accent)">action</code> parameter now carries <code style="font-family:var(--font-m)">like | unlike | comment</code></li>
+        <li>Removed <code style="font-family:var(--font-m);color:var(--subtle)">comment_length</code> parameter — no longer sent</li>
+        <li>All <code style="font-family:var(--font-m);color:var(--accent)">content_id</code> values across select_content and post_engagement now use <code style="font-family:var(--font-m)">_</code> separators (e.g. <code style="font-family:var(--font-m)">beautiful_dashboards</code>)</li>
+        <li>post_engagement tab rebuilt to match standard event-block structure with #NN index, param-tags, code-block, screenshots</li>
+        <li>Updated all 7 blog HTML files to push <code style="font-family:var(--font-m);color:var(--primary)">post_engagement</code> with underscore slugs</li>
+        <li>Archive: <a href="archive/measurement_plan_v2.html" style="color:var(--primary);text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">measurement_plan_v2.html</a></li>
+      </ul>
+    </div>
+
+    <!-- v2.0 -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:24px 28px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <span style="font-family:var(--font-m);font-size:13px;font-weight:600;color:var(--accent)">v2.0</span>
+        <span style="font-size:12px;color:var(--muted)">2026-03-11</span>
+        <span style="margin-left:auto;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary);background:rgba(0,207,255,0.1);border:1px solid rgba(0,207,255,0.25);padding:2px 8px;border-radius:20px">Post engagement</span>
+      </div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px">Added post-level engagement features to all 7 blog post pages: likes (heart button with toggle) and comments (form + listing). Backed by Supabase with Row-Level Security. Two new GA4 events, two new parameters.</p>
+      <ul style="font-size:13px;color:var(--text);line-height:2;padding-left:20px">
+        <li>2 new events: <code style="font-family:var(--font-m);color:var(--primary)">blog_like</code>, <code style="font-family:var(--font-m);color:var(--primary)">blog_comment</code></li>
+        <li>2 new parameters: <code style="font-family:var(--font-m);color:var(--accent)">action</code> (like|unlike), <code style="font-family:var(--font-m);color:var(--accent)">comment_length</code></li>
+        <li>Supabase backend: tables <code style="font-family:var(--font-m);color:var(--accent)">post_likes</code> and <code style="font-family:var(--font-m);color:var(--accent)">post_comments</code></li>
+        <li>Per-browser like deduplication via <code style="font-family:var(--font-m);color:var(--accent)">localStorage["tnk_browser_id"]</code> (UUID)</li>
+        <li>New tab 08 — post_engagement added to this document</li>
+        <li>Archive: <a href="archive/measurement_plan_v1.html" style="color:var(--primary);text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">measurement_plan_v1.html</a></li>
+      </ul>
+    </div>
+
+    <!-- v1.0 -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <span style="font-family:var(--font-m);font-size:13px;font-weight:600;color:var(--primary)">v1.0</span>
+        <span style="font-size:12px;color:var(--muted)">2026-03-10</span>
+        <span style="margin-left:auto;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:rgba(0,255,179,0.1);border:1px solid rgba(0,255,179,0.25);padding:2px 8px;border-radius:20px">Initial release</span>
+      </div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px">First complete measurement plan for the TNK Designs portfolio. Covers all 5 events with full parameter documentation, dataLayer push examples, and per-row screenshots with element highlights.</p>
+      <ul style="font-size:13px;color:var(--text);line-height:2;padding-left:20px">
+        <li>5 events documented: <code style="font-family:var(--font-m);color:var(--primary)">page_view</code>, <code style="font-family:var(--font-m);color:var(--primary)">select_content</code>, <code style="font-family:var(--font-m);color:var(--primary)">generate_lead</code>, <code style="font-family:var(--font-m);color:var(--primary)">orbit_interaction</code>, <code style="font-family:var(--font-m);color:var(--primary)">search</code></li>
+        <li>21 shared parameters across events</li>
+        <li>29 select_content interactions documented (nav, hero, cards, footer, blog listing, filters, projects, contact)</li>
+        <li>6 page_view rows (one per unique page_category + page_type combination)</li>
+        <li>70+ automated screenshots via Puppeteer with red-box element highlights</li>
+        <li>7 CSV exports for Google Sheets import</li>
+        <li>Archive: <a href="archive/measurement_plan_v1.html" style="color:var(--primary);text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">measurement_plan_v1.html</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div style="margin-top:48px;padding:20px 24px;background:var(--elevated);border:1px solid var(--border);border-radius:10px">
+    <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--subtle);margin-bottom:8px">Versioning rules</p>
+    <p style="font-size:13px;color:var(--muted);line-height:1.7">A new version is created for every major update: new event added, existing event removed or renamed, new parameter added/removed, tracking approach changed. Minor fixes (typos, broken links, screenshot refreshes) do <em>not</em> increment the version. Before each version bump, the current file is archived to <code style="font-family:var(--font-m);color:var(--primary)">archive/measurement_plan_vN.html</code>.</p>
+  </div>
+</div>
+
+</body>
+</html>
