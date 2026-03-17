@@ -66,6 +66,12 @@ export const analytics = {
 
   searchQuery: (query: string, resultsCount: number) =>
     pushEvent('search_query', { search_term: query, results_count: resultsCount }),
+
+  blogLike: (postSlug: string, action: 'like' | 'unlike') =>
+    pushEvent('blog_like', { post_slug: postSlug, like_action: action }),
+
+  blogComment: (postSlug: string, commentLength: number) =>
+    pushEvent('blog_comment', { post_slug: postSlug, comment_length: commentLength }),
 }
 
 // ─── DataLayer type augmentation ──────────────────────────────────

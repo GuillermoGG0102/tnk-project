@@ -3,8 +3,10 @@ import { notFound }        from 'next/navigation'
 import Link                from 'next/link'
 import { ArrowLeft, Clock, Calendar, Tag, Linkedin, Instagram } from 'lucide-react'
 import { getBlogPostBySlug, getAllBlogPosts } from '@/lib/mdx'
-import { NewsletterForm } from '@/components/blog/NewsletterForm'
-import { Badge }          from '@/components/ui/Badge'
+import { NewsletterForm }  from '@/components/blog/NewsletterForm'
+import { LikeButton }      from '@/components/blog/LikeButton'
+import { CommentSection }  from '@/components/blog/CommentSection'
+import { Badge }           from '@/components/ui/Badge'
 import { BlogCard }       from '@/components/blog/BlogCard'
 import { formatDate }     from '@/lib/utils'
 import { BLOG_CATEGORIES } from '@/types'
@@ -143,10 +145,18 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
         )}
 
+        {/* Likes */}
+        <div className="mb-10">
+          <LikeButton slug={params.slug} />
+        </div>
+
         {/* Newsletter */}
         <div className="mb-16">
           <NewsletterForm source={`blog-post-${params.slug}`} />
         </div>
+
+        {/* Comments */}
+        <CommentSection slug={params.slug} />
 
         {/* Related posts */}
         {related.length > 0 && (
