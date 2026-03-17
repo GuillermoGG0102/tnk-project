@@ -100,3 +100,5 @@ export type TrackingEventName =
   | 'social_click'
   | 'filter_change'
   | 'search_query'
+  | 'blog_like'
+  | 'blog_comment'
