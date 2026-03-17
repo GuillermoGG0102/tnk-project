@@ -1,4 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
+
+function getSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  if (!url || !key) return null
+  return createClient(url, key)
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,16 +21,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 400 })
     }
 
-    const resendKey   = process.env.RESEND_API_KEY
-    const contactEmail = process.env.CONTACT_EMAIL ?? 'hello@tnk.design'
+    // ── 1. Store in Supabase (always runs — never lose a submission) ──
+    const supabase = getSupabase()
+    if (supabase) {
+      const { error: dbError } = await supabase
+        .from('contact_submissions')
+        .insert({ name, email, subject, message })
+
+      if (dbError) {
+        console.error('[contact] Supabase insert error:', dbError)
+      }
+    }
+
+    // ── 2. Email notification via Resend (runs when key is set) ──
+    const resendKey    = process.env.RESEND_API_KEY
+    const contactEmail = process.env.CONTACT_EMAIL ?? 'guillermogg0102@gmail.com'
 
     if (resendKey) {
       const { Resend } = await import('resend')
       const resend     = new Resend(resendKey)
 
-      // Notify Guillermo
       await resend.emails.send({
-        from:    'TNK Contact <noreply@tnk.design>',
+        from:    'onboarding@resend.dev',
         to:      contactEmail,
         replyTo: email,
         subject: `[TNK Contact] ${subject} — from ${name}`,
@@ -33,22 +53,8 @@ export async function POST(req: NextRequest) {
           <p>${message.replace(/\n/g, '<br>')}</p>
         `,
       })
-
-      // Auto-reply to sender
-      await resend.emails.send({
-        from:    'Guillermo @ TNK <hello@tnk.design>',
-        to:      email,
-        subject: 'Got your message — talk soon',
-        html: `
-          <p>Hi ${name},</p>
-          <p>Thanks for reaching out! I've received your message about
-          <em>"${subject}"</em> and will get back to you within 24 hours.</p>
-          <p>— Guillermo</p>
-        `,
-      })
     } else {
-      // Dev fallback: log to console
-      console.log('[contact]', { name, email, subject, message })
+      console.log('[contact] No RESEND_API_KEY — saved to Supabase only:', { name, email, subject })
     }
 
     return NextResponse.json({ success: true })
