@@ -243,14 +243,32 @@ function setGrid() {
 setGrid();
 window.addEventListener('resize', setGrid);
 
-function handleSubmit(e) {
+async function handleSubmit(e) {
   e.preventDefault();
   const btn = document.getElementById('btn-text');
   btn.textContent = 'Sending…';
-  setTimeout(() => {
-    document.getElementById('contact-form').style.display = 'none';
+
+  const form = e.target;
+  const data = {
+    name:    form.name.value,
+    email:   form.email.value,
+    subject: form.subject.value,
+    message: form.message.value,
+  };
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Server error');
+    form.style.display = 'none';
     document.getElementById('success-msg').style.display = 'block';
-  }, 900);
+  } catch (err) {
+    btn.textContent = 'Send message →';
+    alert('Something went wrong. Please email directly at guillermogg0102@gmail.com');
+  }
 }
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
