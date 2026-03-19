@@ -35,7 +35,10 @@ export default async function handler(req, res) {
   }
 
   // 2. Send email notification via Resend
+  let emailResult = { sent: false, skipped: true };
+
   if (RESEND_KEY) {
+    emailResult = { sent: false, skipped: false };
     const emailRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -58,14 +61,16 @@ export default async function handler(req, res) {
       }),
     });
 
-    if (!emailRes.ok) {
+    if (emailRes.ok) {
+      emailResult = { sent: true };
+    } else {
       const detail = await emailRes.text();
       console.error('[contact] Resend failed:', detail);
-      // Don't fail the request — submission is already saved in Supabase
+      emailResult = { sent: false, error: detail };
     }
   } else {
-    console.log('[contact] RESEND_API_KEY not set — skipping email notification');
+    console.log('[contact] RESEND_API_KEY not set — skipping email');
   }
 
-  return res.status(200).json({ ok: true });
+  return res.status(200).json({ ok: true, email: emailResult });
 }
