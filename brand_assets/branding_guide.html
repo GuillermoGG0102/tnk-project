@@ -162,19 +162,9 @@
     }
 
     .brand-logo-mark {
-      width: 32px;
-      height: 32px;
-      background: var(--bg);
-      border: 1.5px solid rgba(0,207,255,0.4);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      color: var(--cyan);
-      letter-spacing: 0.05em;
+      height: 38px;
+      width: auto;
+      display: block;
     }
 
     .brand-name {
@@ -560,6 +550,15 @@
     <!-- 2. Logo -->
     <div class="section">
       <div class="section-title"><span class="section-num">2</span>Logotipo</div>
+      <!-- Logo preview row -->
+      <div style="display:flex;gap:10px;margin-bottom:12px;align-items:center;">
+        <div style="background:#0A0F1E;border-radius:8px;padding:10px 16px;display:flex;align-items:center;justify-content:center;flex:1;border:1px solid #e0e2e8;">
+          <img src="tnk-logo.png" alt="TNK Logo" style="height:40px;width:auto;" />
+        </div>
+        <div style="background:#f5f6f8;border-radius:8px;padding:10px 16px;display:flex;align-items:center;justify-content:center;flex:1;border:1px solid #e0e2e8;">
+          <img src="tnk-logo.png" alt="TNK Logo" style="height:40px;width:auto;" />
+        </div>
+      </div>
       <ul>
         <li><span class="label">Concepto:</span> Forma de ojo estilizado — símbolo de <span class="cl">visión analítica</span> y perspectiva.</li>
         <li><span class="label">Uso Correcto:</span> Mantener siempre un área de seguridad igual a la altura de la T.</li>
@@ -630,7 +629,7 @@
 
       <!-- Header -->
       <div class="brand-header">
-        <div class="brand-logo-mark">TNK</div>
+        <img src="tnk-logo.png" alt="TNK Logo" class="brand-logo-mark" />
         <span class="brand-name">TNK <span style="font-weight:400;color:var(--text-secondary);">· Design System</span></span>
       </div>
 
