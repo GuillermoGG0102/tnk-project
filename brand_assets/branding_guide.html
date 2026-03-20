@@ -17,510 +17,461 @@
       --surface: #0F1629;
       --elevated:#162038;
       --border:  rgba(255,255,255,0.07);
-      --text-primary: #F0F4FF;
-      --text-secondary: #8A9CC8;
-      --text-tertiary: #4D5E87;
+      --tp: #F0F4FF;
+      --ts: #8A9CC8;
+      --tt: #4D5E87;
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      background: #e8e9ec;
+      background: #dde0e8;
       min-height: 100vh;
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding: 40px 20px;
+      padding: 32px 20px;
     }
 
     .guide-wrapper {
       display: grid;
-      grid-template-columns: 340px 1fr;
+      grid-template-columns: 320px 1fr;
       width: 100%;
-      max-width: 1200px;
-      min-height: 860px;
-      border-radius: 16px;
+      max-width: 1160px;
+      border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 20px 80px rgba(0,0,0,0.25), 0 4px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.28), 0 4px 16px rgba(0,0,0,0.12);
     }
 
-    /* ─── LEFT PANEL ─── */
-    .left-panel {
-      background: #ffffff;
-      padding: 36px 32px;
-      overflow-y: auto;
-      border-right: 1px solid #e0e2e8;
+    /* ── LEFT PANEL ── */
+    .lp {
+      background: #fff;
+      padding: 28px 26px;
+      border-right: 1px solid #e2e4eb;
     }
 
-    .left-panel h1 {
+    .lp-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 700;
       color: #0A0F1E;
-      margin-bottom: 28px;
       letter-spacing: -0.02em;
+      margin-bottom: 20px;
     }
 
-    .section {
-      margin-bottom: 28px;
+    /* Logo hero in left panel */
+    .logo-hero {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
     }
 
-    .section-title {
+    .logo-box {
+      flex: 1;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e2e4eb;
+    }
+
+    .logo-box.dark { background: #0A0F1E; }
+    .logo-box.light { background: #f4f5f8; }
+
+    .logo-box img { height: 36px; width: auto; display: block; }
+
+    .s { margin-bottom: 18px; }
+
+    .st {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 700;
       color: #0A0F1E;
-      margin-bottom: 10px;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .section-num {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
+    .sn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 17px;
+      height: 17px;
       background: #0A0F1E;
       color: #fff;
-      border-radius: 4px;
-      font-size: 10px;
+      border-radius: 3px;
+      font-size: 9px;
       font-weight: 700;
-      text-align: center;
-      line-height: 20px;
-      margin-right: 8px;
-      vertical-align: middle;
+      flex-shrink: 0;
     }
 
-    .section p, .section li {
-      font-size: 12.5px;
-      line-height: 1.75;
-      color: #3a3f52;
+    .s p, .s li {
+      font-size: 11.5px;
+      line-height: 1.65;
+      color: #3e4459;
     }
 
-    .section ul {
-      list-style: none;
-      padding-left: 0;
-    }
+    .s ul { list-style: none; }
 
-    .section ul li {
-      padding-left: 12px;
+    .s li {
+      padding-left: 10px;
       position: relative;
+      margin-bottom: 1px;
     }
 
-    .section ul li::before {
-      content: '•';
+    .s li::before {
+      content: '·';
       position: absolute;
-      left: 0;
+      left: 1px;
       color: #00CFFF;
-      font-size: 11px;
+      font-weight: 700;
     }
 
-    .label {
-      font-weight: 600;
-      color: #0A0F1E;
-    }
+    .lb { font-weight: 600; color: #0A0F1E; }
+    .cl { color: #0099cc; }
+    .cg { color: #009966; }
+    .cp { color: #7a4ec4; }
+    .cpk { color: #c4307a; }
 
-    .cl { color: #00CFFF; }
-    .cg { color: #00b37a; }
-    .cp { color: #8a5fd4; }
-    .cpk { color: #d63e8a; }
+    hr { border: none; border-top: 1px solid #eceef4; margin: 14px 0; }
 
-    .divider {
-      border: none;
-      border-top: 1px solid #e8eaf0;
-      margin: 20px 0;
-    }
-
-    /* ─── RIGHT PANEL ─── */
-    .right-panel {
+    /* ── RIGHT PANEL ── */
+    .rp {
       background: var(--bg);
-      padding: 36px 32px;
+      padding: 26px 26px 22px;
       position: relative;
       overflow: hidden;
     }
 
-    /* grid texture */
-    .right-panel::before {
+    .rp::before {
       content: '';
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 60px 60px;
+        linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+      background-size: 52px 52px;
       pointer-events: none;
     }
 
-    .right-panel-inner {
-      position: relative;
-      z-index: 1;
-    }
+    .rp-inner { position: relative; z-index: 1; }
 
-    .brand-header {
+    /* Logo hero right panel */
+    .rp-logo-hero {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 28px;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding: 14px 18px;
+      background: var(--surface);
+      border: 1px solid rgba(0,207,255,0.15);
+      border-radius: 10px;
+      box-shadow: 0 0 32px rgba(0,207,255,0.06);
     }
 
-    .brand-logo-mark {
-      height: 38px;
+    .rp-logo-hero img {
+      height: 44px;
       width: auto;
       display: block;
     }
 
-    .brand-name {
+    .rp-logo-text {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 18px;
       font-weight: 700;
-      color: var(--text-primary);
-      letter-spacing: -0.03em;
+      font-size: 20px;
+      color: var(--tp);
+      letter-spacing: -0.04em;
+      line-height: 1.1;
     }
 
-    .kit-grid {
+    .rp-logo-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      color: var(--tt);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .rp-logo-badge {
+      margin-left: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.5px;
+      letter-spacing: 0.08em;
+      color: var(--cyan);
+      background: rgba(0,207,255,0.08);
+      border: 1px solid rgba(0,207,255,0.2);
+      border-radius: 5px;
+      padding: 3px 8px;
+    }
+
+    /* Kit grid */
+    .kg {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
+      gap: 10px;
+      align-items: start;
     }
 
-    /* Color swatch cards */
-    .swatch-card {
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid var(--border);
+    .sl {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--tt);
+      margin-bottom: 6px;
     }
 
-    .swatch-block {
-      height: 72px;
-      position: relative;
+    /* Swatches */
+    .sw { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+
+    .sw-block {
+      height: 58px;
       display: flex;
       align-items: flex-end;
-      padding: 8px;
+      padding: 6px 8px;
     }
 
-    .swatch-block.primary   { background: linear-gradient(135deg, #004d6b 0%, #00CFFF 100%); }
-    .swatch-block.secondary { background: linear-gradient(135deg, #005c3f 0%, #00FFB3 100%); }
-    .swatch-block.tertiary  { background: linear-gradient(135deg, #3d1f80 0%, #B77FFF 100%); }
-    .swatch-block.neutral   { background: linear-gradient(135deg, #0A0F1E 0%, #162038 100%); }
+    .sw-block.p1 { background: linear-gradient(135deg, #003d56 0%, #00CFFF 100%); }
+    .sw-block.p2 { background: linear-gradient(135deg, #004d35 0%, #00FFB3 100%); }
+    .sw-block.p3 { background: linear-gradient(135deg, #2e1566 0%, #B77FFF 100%); }
 
-    .swatch-hex {
+    .sw-hex {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 500;
-      color: rgba(255,255,255,0.8);
-      background: rgba(0,0,0,0.35);
-      padding: 2px 6px;
-      border-radius: 4px;
-      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.85);
+      background: rgba(0,0,0,0.4);
+      padding: 1px 5px;
+      border-radius: 3px;
     }
 
-    .swatch-info {
-      background: var(--surface);
-      padding: 8px 10px;
-    }
+    .sw-info { background: var(--surface); padding: 6px 8px; }
 
-    .swatch-name {
+    .sw-name {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 2px;
+      color: var(--tp);
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
-    .swatch-role {
-      font-size: 10px;
-      color: var(--text-tertiary);
+    .sw-role { font-size: 9.5px; color: var(--tt); margin-top: 1px; }
+
+    .gd {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
     }
 
-    /* Typography card */
-    .typo-card {
+    .gd-c { background: var(--cyan);   box-shadow: 0 0 6px var(--cyan); }
+    .gd-g { background: var(--green);  box-shadow: 0 0 6px var(--green); }
+    .gd-p { background: var(--purple); box-shadow: 0 0 6px var(--purple); }
+    .gd-pk{ background: var(--pink);   box-shadow: 0 0 6px var(--pink); }
+
+    /* Typo cards */
+    .tc {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      border-radius: 8px;
+      padding: 11px 12px;
     }
 
-    .typo-display {
+    .td {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
       line-height: 1;
       letter-spacing: -0.04em;
-      color: var(--text-primary);
+      color: var(--tp);
     }
 
-    .typo-display.xl { font-size: 52px; }
-    .typo-display.lg { font-size: 36px; }
-    .typo-display.md { font-size: 22px; }
+    .td.xl { font-size: 46px; }
+    .td.lg { font-size: 32px; font-family: 'Inter', sans-serif; font-weight: 400; letter-spacing: -0.01em; color: var(--ts); }
+    .td.md { font-size: 20px; font-family: 'JetBrains Mono', monospace; font-weight: 400; letter-spacing: 0.02em; color: var(--cyan); }
 
-    .typo-body-sample {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      line-height: 1.7;
-      color: var(--text-secondary);
-    }
-
-    .typo-label {
-      font-size: 9.5px;
-      color: var(--text-tertiary);
-      font-family: 'JetBrains Mono', monospace;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-top: 8px;
-    }
-
-    /* Gradient text demo */
-    .gradient-text {
+    .gt {
       background: linear-gradient(135deg, #00CFFF 0%, #00FFB3 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    /* Buttons card */
-    .buttons-card {
+    .ts-body { font-family: 'Inter', sans-serif; font-size: 10px; line-height: 1.6; color: var(--ts); margin-top: 5px; }
+    .tl { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: var(--tt); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; }
+
+    /* Buttons */
+    .bc {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 7px 14px;
       border-radius: 8px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 11.5px;
-      font-weight: 600;
-      cursor: default;
-      border: none;
-      transition: none;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: var(--cyan);
-      color: var(--bg);
-      box-shadow: 0 0 16px rgba(0,207,255,0.3);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.06);
-      color: var(--text-primary);
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--cyan);
-      border: 1px solid rgba(0,207,255,0.35);
-    }
-
-    .btn-accent {
-      background: linear-gradient(135deg, rgba(0,207,255,0.15) 0%, rgba(0,255,179,0.15) 100%);
-      color: var(--green);
-      border: 1px solid rgba(0,255,179,0.2);
-    }
-
-    /* Tags row */
-    .tags-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 12px;
+      padding: 10px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      justify-content: center;
-    }
-
-    .tags-row {
-      display: flex;
-      flex-wrap: wrap;
       gap: 6px;
     }
 
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      border-radius: 7px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10.5px;
+      font-weight: 600;
+      border: none;
+      cursor: default;
+    }
+
+    .bp { background: var(--cyan); color: var(--bg); box-shadow: 0 0 12px rgba(0,207,255,0.28); }
+    .bs { background: rgba(255,255,255,0.06); color: var(--tp); border: 1px solid rgba(255,255,255,0.11); }
+    .bg { background: transparent; color: var(--cyan); border: 1px solid rgba(0,207,255,0.32); }
+    .ba { background: linear-gradient(135deg, rgba(0,207,255,0.12) 0%, rgba(0,255,179,0.12) 100%); color: var(--green); border: 1px solid rgba(0,255,179,0.18); }
+
+    /* Tags */
+    .tagc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .tr { display: flex; flex-wrap: wrap; gap: 5px; }
+
     .tag {
       font-family: 'Inter', sans-serif;
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 500;
-      padding: 3px 10px;
+      padding: 2px 8px;
       border-radius: 20px;
     }
 
-    .tag-cyan   { background: rgba(0,207,255,0.1);  color: var(--cyan); }
-    .tag-green  { background: rgba(0,255,179,0.1);  color: var(--green); }
-    .tag-purple { background: rgba(183,127,255,0.1);color: var(--purple); }
-    .tag-pink   { background: rgba(255,82,185,0.1); color: var(--pink); }
-    .tag-neutral{ background: rgba(255,255,255,0.06); color: var(--text-secondary); }
+    .tc1 { background: rgba(0,207,255,0.1);   color: var(--cyan); }
+    .tg1 { background: rgba(0,255,179,0.1);   color: var(--green); }
+    .tp1 { background: rgba(183,127,255,0.1); color: var(--purple); }
+    .tpk { background: rgba(255,82,185,0.1);  color: var(--pink); }
+    .tn  { background: rgba(255,255,255,0.06); color: var(--ts); }
 
-    /* Input card */
-    .input-card {
+    /* Inputs */
+    .ic {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 12px;
+      border-radius: 8px;
+      padding: 10px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      justify-content: center;
+      gap: 6px;
     }
 
-    .fake-input {
+    .fi {
       background: var(--elevated);
       border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 7px;
-      padding: 8px 12px;
+      border-radius: 6px;
+      padding: 6px 10px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      font-size: 10.5px;
     }
 
-    .fake-input.focused {
-      border-color: rgba(0,207,255,0.4);
-      box-shadow: 0 0 0 3px rgba(0,207,255,0.08);
-    }
+    .fi.foc { border-color: rgba(0,207,255,0.4); box-shadow: 0 0 0 2px rgba(0,207,255,0.07); }
+    .fi .ph { color: var(--tt); font-family: 'Inter', sans-serif; }
+    .fi .vl { color: var(--tp); font-family: 'Inter', sans-serif; }
 
-    .fake-input span.placeholder {
-      font-family: 'Inter', sans-serif;
-      font-size: 11.5px;
-      color: var(--text-tertiary);
-    }
-
-    .fake-input span.value {
-      font-family: 'Inter', sans-serif;
-      font-size: 11.5px;
-      color: var(--text-primary);
-    }
-
-    .input-icon {
-      color: var(--text-tertiary);
-      font-size: 11px;
-    }
-
-    /* Card example */
-    .mini-card {
+    /* Mini cards */
+    .mc {
       background: var(--elevated);
       border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 10px;
-      padding: 12px;
+      border-radius: 8px;
+      padding: 10px;
     }
 
-    .mini-card-badge {
-      font-size: 9px;
+    .mc-badge {
+      font-size: 8px;
       font-family: 'JetBrains Mono', monospace;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--cyan);
-      margin-bottom: 6px;
-    }
-
-    .mini-card-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
       margin-bottom: 4px;
     }
 
-    .mini-card-body {
-      font-size: 10.5px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    /* Glow accent */
-    .glow-dot {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      margin-right: 6px;
-    }
-
-    .glow-cyan   { background: var(--cyan);   box-shadow: 0 0 8px var(--cyan); }
-    .glow-green  { background: var(--green);  box-shadow: 0 0 8px var(--green); }
-    .glow-purple { background: var(--purple); box-shadow: 0 0 8px var(--purple); }
-    .glow-pink   { background: var(--pink);   box-shadow: 0 0 8px var(--pink); }
-
-    /* shadow demo */
-    .shadow-demo {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 12px;
-    }
-
-    .shadow-sample {
-      background: var(--elevated);
-      border-radius: 8px;
-      padding: 10px 12px;
+    .mc-title {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 11px;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--tp);
+      letter-spacing: -0.02em;
+      margin-bottom: 3px;
     }
 
-    .shadow-sample.s1 {
-      box-shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
-    }
+    .mc-body { font-size: 9.5px; color: var(--ts); line-height: 1.55; }
 
-    .shadow-sample.s2 {
-      box-shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,207,255,0.12), 0 8px 32px rgba(0,207,255,0.08);
-    }
+    /* Surfaces row */
+    .surf-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; }
 
-    .shadow-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      color: var(--text-tertiary);
-      letter-spacing: 0.06em;
-    }
-
-    /* Icons row */
-    .icon-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .icon-box {
-      width: 28px;
-      height: 28px;
-      border-radius: 7px;
-      background: var(--elevated);
+    .surf-item {
+      border-radius: 6px;
+      padding: 8px 6px;
+      text-align: center;
       border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .surf-hex { font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--tt); }
+    .surf-name { font-size: 9px; font-family: 'Space Grotesk', sans-serif; color: var(--ts); margin-top: 3px; }
+
+    /* Shadow demo */
+    .sd {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ss {
+      background: var(--elevated);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .ss.s1 { box-shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 14px rgba(0,0,0,0.3); color: var(--ts); }
+    .ss.s2 { box-shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 14px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,207,255,0.12), 0 6px 24px rgba(0,207,255,0.08); color: var(--cyan); }
+
+    .sl2 { font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--tt); letter-spacing: 0.05em; margin-top: 1px; }
+
+    .c2 { grid-column: span 2; }
+    .c3 { grid-column: span 3; }
+
+    /* Footer */
+    .rp-foot {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.05);
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 13px;
+      justify-content: space-between;
     }
 
-    /* Span multiple cols */
-    .col-span-2 { grid-column: span 2; }
-    .col-span-3 { grid-column: span 3; }
-
-    .section-label {
+    .rp-foot span {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-tertiary);
-      margin-bottom: 8px;
-    }
-
-    @media (max-width: 800px) {
-      .guide-wrapper {
-        grid-template-columns: 1fr;
-      }
-      .kit-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+      font-size: 8.5px;
+      color: var(--tt);
+      letter-spacing: 0.08em;
     }
   </style>
 </head>
@@ -528,313 +479,288 @@
 
 <div class="guide-wrapper">
 
-  <!-- ═══ LEFT PANEL: Documentation ═══ -->
-  <div class="left-panel">
-    <h1>Branding Guide: TNK Project</h1>
+  <!-- ══ LEFT PANEL ══ -->
+  <div class="lp">
+    <div class="lp-title">Branding Guide: TNK Project</div>
 
-    <!-- 1. Brand Identity -->
-    <div class="section">
-      <div class="section-title"><span class="section-num">1</span>Identidad de Marca</div>
-      <p style="margin-bottom:8px;"><span class="label">Misión:</span> Impulsar el análisis digital y el diseño estratégico a través de soluciones centradas en el usuario, combinando <span class="cl">datos</span>, <span class="cg">tecnología</span> y <span class="cp">estética moderna</span>.</p>
-      <p style="margin-bottom:6px;"><span class="label">Valores:</span></p>
+    <!-- Logo -->
+    <div class="s">
+      <div class="st"><span class="sn">1</span>Identidad de Marca</div>
+      <p style="margin-bottom:6px;"><span class="lb">Misión:</span> Impulsar el análisis digital y el diseño estratégico combinando <span class="cl">datos</span>, <span class="cg">tecnología</span> y <span class="cp">estética moderna</span>.</p>
       <ul>
-        <li><span class="label">Innovación:</span> <span class="cl">Siempre a la vanguardia de la analítica y el diseño web.</span></li>
-        <li><span class="label">Precisión:</span> <span class="cg">Atención al detalle en cada métrica y píxel.</span></li>
-        <li><span class="label">Claridad:</span> <span class="cp">Comunicar lo complejo de forma accesible.</span></li>
-        <li><span class="label">Elegancia:</span> Estética limpia, oscura y funcional.</li>
+        <li><span class="lb">Innovación:</span> <span class="cl">Vanguardia en analítica y diseño web.</span></li>
+        <li><span class="lb">Precisión:</span> <span class="cg">Atención al detalle en cada métrica y píxel.</span></li>
+        <li><span class="lb">Claridad:</span> <span class="cp">Comunicar lo complejo de forma accesible.</span></li>
+        <li><span class="lb">Elegancia:</span> Estética limpia, oscura y funcional.</li>
       </ul>
     </div>
 
-    <hr class="divider" />
+    <hr />
 
-    <!-- 2. Logo -->
-    <div class="section">
-      <div class="section-title"><span class="section-num">2</span>Logotipo</div>
-      <!-- Logo preview row -->
-      <div style="display:flex;gap:10px;margin-bottom:12px;align-items:center;">
-        <div style="background:#0A0F1E;border-radius:8px;padding:10px 16px;display:flex;align-items:center;justify-content:center;flex:1;border:1px solid #e0e2e8;">
-          <img src="tnk-logo.png" alt="TNK Logo" style="height:40px;width:auto;" />
+    <div class="s">
+      <div class="st"><span class="sn">2</span>Logotipo</div>
+      <div class="logo-hero">
+        <div class="logo-box dark">
+          <img src="tnk-logo.png" alt="TNK Logo dark bg" />
         </div>
-        <div style="background:#f5f6f8;border-radius:8px;padding:10px 16px;display:flex;align-items:center;justify-content:center;flex:1;border:1px solid #e0e2e8;">
-          <img src="tnk-logo.png" alt="TNK Logo" style="height:40px;width:auto;" />
+        <div class="logo-box light">
+          <img src="tnk-logo.png" alt="TNK Logo light bg" />
         </div>
       </div>
       <ul>
-        <li><span class="label">Concepto:</span> Forma de ojo estilizado — símbolo de <span class="cl">visión analítica</span> y perspectiva.</li>
-        <li><span class="label">Uso Correcto:</span> Mantener siempre un área de seguridad igual a la altura de la T.</li>
-        <li><span class="label">Fondo oscuro:</span> Versión primaria (logo blanco sobre <span class="cl">#0A0F1E</span>).</li>
-        <li><span class="label">Fondo claro:</span> Versión invertida con contorno <span class="cl">cian</span>.</li>
-        <li><span class="label">No distorsionar,</span> recortar ni aplicar efectos no aprobados.</li>
+        <li><span class="lb">Concepto:</span> Ojo estilizado — símbolo de <span class="cl">visión analítica</span>.</li>
+        <li><span class="lb">Seguridad:</span> Área mínima = altura de la T.</li>
+        <li><span class="lb">Oscuro:</span> Logo sobre <span class="cl">#0A0F1E</span> (uso primario).</li>
+        <li><span class="lb">Claro:</span> Versión invertida con contorno <span class="cl">cian</span>.</li>
+        <li><span class="lb">Prohibido:</span> Distorsionar, recortar o recolorear.</li>
       </ul>
     </div>
 
-    <hr class="divider" />
+    <hr />
 
-    <!-- 3. Color Palette -->
-    <div class="section">
-      <div class="section-title"><span class="section-num">3</span>Paleta de Colores</div>
+    <div class="s">
+      <div class="st"><span class="sn">3</span>Paleta de Colores</div>
       <ul>
-        <li><span class="label">Primario — <span class="cl">#00CFFF</span></span> (Cian Eléctrico) — Tecnología y energía.</li>
-        <li><span class="label">Secundario — <span class="cg">#00FFB3</span></span> (Verde Neón) — Crecimiento y datos positivos.</li>
-        <li><span class="label">Terciario — <span class="cp">#B77FFF</span></span> (Violeta Suave) — Profundidad y creatividad.</li>
-        <li><span class="label">Fondo — #0A0F1E</span> (Negro Espacial) — Base principal oscura.</li>
-        <li><span class="label">Acento — <span class="cpk">#FF52B9</span></span> (Rosa Neón) — CTAs y alertas críticas.</li>
+        <li><span class="lb">Primario <span class="cl">#00CFFF</span></span> — Cian Eléctrico · Tecnología.</li>
+        <li><span class="lb">Secundario <span class="cg">#00FFB3</span></span> — Verde Neón · Crecimiento.</li>
+        <li><span class="lb">Terciario <span class="cp">#B77FFF</span></span> — Violeta · Creatividad.</li>
+        <li><span class="lb">Fondo #0A0F1E</span> — Negro Espacial · Base.</li>
+        <li><span class="lb">Acento <span class="cpk">#FF52B9</span></span> — Rosa Neón · CTAs críticos.</li>
       </ul>
     </div>
 
-    <hr class="divider" />
+    <hr />
 
-    <!-- 4. Typography -->
-    <div class="section">
-      <div class="section-title"><span class="section-num">4</span>Tipografía</div>
+    <div class="s">
+      <div class="st"><span class="sn">4</span>Tipografía</div>
       <ul>
-        <li><span class="label">Display / Títulos:</span> <span class="cl">Space Grotesk</span> — Geométrica, moderna. Tracking −0.04em en tamaños grandes.</li>
-        <li><span class="label">Cuerpo / UI:</span> <span class="cg">Inter</span> — Legibilidad óptima en pantalla. Line-height 1.7.</li>
-        <li><span class="label">Código / Mono:</span> <span class="cp">JetBrains Mono</span> — Para datos, timestamps y etiquetas técnicas.</li>
+        <li><span class="lb">Títulos:</span> <span class="cl">Space Grotesk</span> — Geométrica, tracking −0.04em.</li>
+        <li><span class="lb">Cuerpo:</span> <span class="cg">Inter</span> — Legibilidad óptima, line-height 1.7.</li>
+        <li><span class="lb">Código:</span> <span class="cp">JetBrains Mono</span> — Datos, timestamps, labels.</li>
       </ul>
     </div>
 
-    <hr class="divider" />
+    <hr />
 
-    <!-- 5. Visual Style -->
-    <div class="section">
-      <div class="section-title"><span class="section-num">5</span>Estilo Visual</div>
+    <div class="s">
+      <div class="st"><span class="sn">5</span>Estilo Visual</div>
       <ul>
-        <li><span class="label">Bordes:</span> Redondeados (8–14px). Tarjetas 14px, botones 12px, píldoras 20px+.</li>
-        <li><span class="label">Sombras:</span> En capas, con tinte de color de marca y baja opacidad. Efecto <span class="cl">glow</span> cian en elementos primarios.</li>
-        <li><span class="label">Gradientes:</span> Radiales superpuestos. Cian → Verde en texto destacado.</li>
-        <li><span class="label">Fondo:</span> Cuadrícula sutil (<span class="cp">grid pattern</span>) + ruido SVG fractal (opacidad 0.035).</li>
-        <li><span class="label">Capas:</span> Base → Superficie → Elevado → Flotante (sistema z-plane).</li>
-        <li><span class="label">Imágenes:</span> Alta tecnología, tonos azules/oscuros o ilustraciones abstractas.</li>
+        <li><span class="lb">Bordes:</span> 8–14px. Cards 14px · Buttons 12px · Pills 20px+.</li>
+        <li><span class="lb">Sombras:</span> En capas, tinte cian. <span class="cl">Glow</span> en elementos primarios.</li>
+        <li><span class="lb">Gradientes:</span> Radiales · Cian→Verde en texto destacado.</li>
+        <li><span class="lb">Fondo:</span> Grid sutil + ruido SVG fractal (opacidad 0.035).</li>
+        <li><span class="lb">Capas:</span> Base → Superficie → Elevado → Flotante.</li>
       </ul>
     </div>
 
-    <hr class="divider" />
+    <hr />
 
-    <!-- 6. Tone of Voice -->
-    <div class="section">
-      <div class="section-title"><span class="section-num">6</span>Tono de Voz</div>
+    <div class="s" style="margin-bottom:0;">
+      <div class="st"><span class="sn">6</span>Tono de Voz</div>
       <ul>
-        <li><span class="label">Profesional pero accesible:</span> <span class="cl">Autoridad técnica sin jerga innecesaria.</span></li>
-        <li><span class="label">Orientado a resultados:</span> <span class="cg">Métricas, impacto y valor tangible.</span></li>
-        <li><span class="label">Inspirador:</span> <span class="cp">Motivar al usuario a imaginar el potencial de sus datos.</span></li>
-        <li><span class="label">Conciso:</span> Frases cortas, directo al punto.</li>
+        <li><span class="lb">Profesional:</span> <span class="cl">Autoridad técnica sin jerga innecesaria.</span></li>
+        <li><span class="lb">Resultados:</span> <span class="cg">Métricas, impacto y valor tangible.</span></li>
+        <li><span class="lb">Inspirador:</span> <span class="cp">Imaginar el potencial de sus datos.</span></li>
+        <li><span class="lb">Conciso:</span> Frases cortas, directo al punto.</li>
       </ul>
     </div>
   </div>
 
-  <!-- ═══ RIGHT PANEL: Visual Kit ═══ -->
-  <div class="right-panel">
-    <div class="right-panel-inner">
+  <!-- ══ RIGHT PANEL ══ -->
+  <div class="rp">
+    <div class="rp-inner">
 
-      <!-- Header -->
-      <div class="brand-header">
-        <img src="tnk-logo.png" alt="TNK Logo" class="brand-logo-mark" />
-        <span class="brand-name">TNK <span style="font-weight:400;color:var(--text-secondary);">· Design System</span></span>
+      <!-- Logo hero -->
+      <div class="rp-logo-hero">
+        <img src="tnk-logo.png" alt="TNK Logo" />
+        <div>
+          <div class="rp-logo-text">TNK Project</div>
+          <div class="rp-logo-sub">Design System · Brand Identity</div>
+        </div>
+        <div class="rp-logo-badge">v1.0 · 2026</div>
       </div>
 
-      <div class="kit-grid">
+      <!-- Kit grid -->
+      <div class="kg">
 
-        <!-- ── ROW 1: Color Swatches ── -->
+        <!-- Colors -->
         <div>
-          <div class="section-label">Primary</div>
-          <div class="swatch-card">
-            <div class="swatch-block primary">
-              <span class="swatch-hex">#00CFFF</span>
-            </div>
-            <div class="swatch-info">
-              <div class="swatch-name"><span class="glow-dot glow-cyan"></span>Cian Eléctrico</div>
-              <div class="swatch-role">Buttons · Links · Highlights</div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="section-label">Secondary</div>
-          <div class="swatch-card">
-            <div class="swatch-block secondary">
-              <span class="swatch-hex">#00FFB3</span>
-            </div>
-            <div class="swatch-info">
-              <div class="swatch-name"><span class="glow-dot glow-green"></span>Verde Neón</div>
-              <div class="swatch-role">Accents · Success · Tags</div>
+          <div class="sl">Primary</div>
+          <div class="sw">
+            <div class="sw-block p1"><span class="sw-hex">#00CFFF</span></div>
+            <div class="sw-info">
+              <div class="sw-name"><span class="gd gd-c"></span>Cian Eléctrico</div>
+              <div class="sw-role">Buttons · Links · CTAs</div>
             </div>
           </div>
         </div>
 
         <div>
-          <div class="section-label">Tertiary</div>
-          <div class="swatch-card">
-            <div class="swatch-block tertiary">
-              <span class="swatch-hex">#B77FFF</span>
-            </div>
-            <div class="swatch-info">
-              <div class="swatch-name"><span class="glow-dot glow-purple"></span>Violeta</div>
-              <div class="swatch-role">Tags · Decorative · Depth</div>
+          <div class="sl">Secondary</div>
+          <div class="sw">
+            <div class="sw-block p2"><span class="sw-hex">#00FFB3</span></div>
+            <div class="sw-info">
+              <div class="sw-name"><span class="gd gd-g"></span>Verde Neón</div>
+              <div class="sw-role">Accents · Tags · Success</div>
             </div>
           </div>
         </div>
 
-        <!-- ── ROW 2: Typography (Headline large) ── -->
         <div>
-          <div class="section-label">Headline</div>
-          <div class="typo-card" style="min-height:120px;">
-            <div class="typo-display xl gradient-text">Aa</div>
-            <div class="typo-label">Space Grotesk · 700 · −0.04em</div>
-          </div>
-        </div>
-
-        <!-- Typography (Body) -->
-        <div>
-          <div class="section-label">Body</div>
-          <div class="typo-card" style="min-height:120px;">
-            <div class="typo-display lg" style="color:var(--text-secondary);font-family:'Inter',sans-serif;font-weight:400;letter-spacing:-0.01em;">Aa</div>
-            <div class="typo-body-sample">Diseño centrado en el usuario y datos precisos.</div>
-            <div class="typo-label">Inter · 400 · line-height 1.7</div>
-          </div>
-        </div>
-
-        <!-- Typography (Label/Mono) -->
-        <div>
-          <div class="section-label">Label / Mono</div>
-          <div class="typo-card" style="min-height:120px; justify-content:space-between;">
-            <div class="typo-display md" style="color:var(--cyan);font-family:'JetBrains Mono',monospace;font-weight:400;letter-spacing:0.02em;">Aa</div>
-            <div class="typo-body-sample" style="font-family:'JetBrains Mono',monospace;font-size:10.5px;">
-              GTM · GA4 · 0x1F2A<br/>
-              analytics.js:42
+          <div class="sl">Tertiary</div>
+          <div class="sw">
+            <div class="sw-block p3"><span class="sw-hex">#B77FFF</span></div>
+            <div class="sw-info">
+              <div class="sw-name"><span class="gd gd-p"></span>Violeta</div>
+              <div class="sw-role">Tags · Depth · Deco</div>
             </div>
-            <div class="typo-label">JetBrains Mono · Code / Data</div>
           </div>
         </div>
 
-        <!-- ── ROW 3: Buttons ── -->
+        <!-- Typography -->
         <div>
-          <div class="section-label">Buttons</div>
-          <div class="buttons-card" style="min-height:120px;">
-            <button class="btn btn-primary">Primary</button>
-            <button class="btn btn-secondary">Secondary</button>
-            <button class="btn btn-ghost">Outlined</button>
-            <button class="btn btn-accent">Gradient</button>
+          <div class="sl">Headline</div>
+          <div class="tc">
+            <div class="td xl gt">Aa</div>
+            <div class="tl">Space Grotesk · 700</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="sl">Body</div>
+          <div class="tc">
+            <div class="td lg">Aa</div>
+            <div class="ts-body">Datos precisos y diseño centrado en el usuario.</div>
+            <div class="tl">Inter · 400 · lh 1.7</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="sl">Mono / Code</div>
+          <div class="tc">
+            <div class="td md">Aa</div>
+            <div class="ts-body" style="font-family:'JetBrains Mono',monospace;font-size:9.5px;">GTM · GA4 · 0x1F2A<br/>analytics.js:42</div>
+            <div class="tl">JetBrains Mono</div>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div>
+          <div class="sl">Buttons</div>
+          <div class="bc">
+            <button class="btn bp">Primary</button>
+            <button class="btn bs">Secondary</button>
+            <button class="btn bg">Outlined</button>
+            <button class="btn ba">Gradient</button>
           </div>
         </div>
 
         <!-- Tags -->
         <div>
-          <div class="section-label">Tags / Badges</div>
-          <div class="tags-card" style="min-height:120px;">
-            <div class="tags-row">
-              <span class="tag tag-cyan">Analytics</span>
-              <span class="tag tag-green">GTM</span>
-              <span class="tag tag-purple">Design</span>
-              <span class="tag tag-pink">Featured</span>
+          <div class="sl">Tags / Badges</div>
+          <div class="tagc">
+            <div class="tr">
+              <span class="tag tc1">Analytics</span>
+              <span class="tag tg1">GTM</span>
+              <span class="tag tp1">Design</span>
+              <span class="tag tpk">Featured</span>
             </div>
-            <div class="tags-row">
-              <span class="tag tag-neutral">GA4</span>
-              <span class="tag tag-neutral">Python</span>
-              <span class="tag tag-neutral">Figma</span>
+            <div class="tr">
+              <span class="tag tn">GA4</span>
+              <span class="tag tn">Python</span>
+              <span class="tag tn">Figma</span>
             </div>
-            <div class="tags-row" style="margin-top:2px;">
-              <span class="glow-dot glow-cyan" style="margin-top:4px;"></span>
-              <span class="glow-dot glow-green" style="margin-top:4px;"></span>
-              <span class="glow-dot glow-purple" style="margin-top:4px;"></span>
-              <span class="glow-dot glow-pink" style="margin-top:4px;"></span>
+            <div class="tr" style="margin-top:2px;align-items:center;gap:7px;">
+              <span class="gd gd-c"></span><span class="gd gd-g"></span><span class="gd gd-p"></span><span class="gd gd-pk"></span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--tt);">glow dots</span>
             </div>
           </div>
         </div>
 
         <!-- Inputs -->
         <div>
-          <div class="section-label">Inputs</div>
-          <div class="input-card" style="min-height:120px;">
-            <div class="fake-input">
-              <span class="input-icon">🔍</span>
-              <span class="placeholder">Buscar proyectos…</span>
+          <div class="sl">Inputs</div>
+          <div class="ic">
+            <div class="fi">
+              <span style="font-size:10px;">🔍</span>
+              <span class="ph">Buscar proyectos…</span>
             </div>
-            <div class="fake-input focused">
-              <span class="input-icon">✉</span>
-              <span class="value">guillermo@tnk.dev</span>
+            <div class="fi foc">
+              <span style="font-size:10px;">✉</span>
+              <span class="vl">guillermo@tnk.dev</span>
             </div>
-            <div style="display:flex;gap:6px;margin-top:2px;">
-              <span class="tag tag-cyan" style="font-family:'JetBrains Mono',monospace;font-size:9.5px;">focus: cian glow</span>
+            <span class="tag tc1" style="font-family:'JetBrains Mono',monospace;font-size:8px;align-self:flex-start;">focus: cian glow</span>
+          </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="c2">
+          <div class="sl">Card Components</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div class="mc">
+              <div class="mc-badge">✦ Analytics</div>
+              <div class="mc-title">Dashboard GA4 Avanzado</div>
+              <div class="mc-body">Cohortes y embudo con BigQuery + Looker Studio.</div>
+              <div class="tr" style="margin-top:6px;"><span class="tag tc1">GA4</span><span class="tag tn">BigQuery</span></div>
+            </div>
+            <div class="mc" style="border-color:rgba(0,207,255,0.18);box-shadow:0 0 0 1px rgba(0,207,255,0.1),0 6px 20px rgba(0,207,255,0.06);">
+              <div class="mc-badge" style="color:var(--green);">✦ Design</div>
+              <div class="mc-title">Rediseño UX E-commerce</div>
+              <div class="mc-body">Optimización de funnel. +34% CVR post-launch.</div>
+              <div class="tr" style="margin-top:6px;"><span class="tag tg1">Figma</span><span class="tag tp1">UX</span></div>
             </div>
           </div>
         </div>
 
-        <!-- ── ROW 4: Card component ── -->
-        <div class="col-span-2">
-          <div class="section-label">Card Component</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <div class="mini-card">
-              <div class="mini-card-badge">✦ Analytics Project</div>
-              <div class="mini-card-title">Dashboard GA4 Avanzado</div>
-              <div class="mini-card-body">Segmentación por cohortes y análisis de embudo con BigQuery + Looker Studio.</div>
-              <div class="tags-row" style="margin-top:8px;">
-                <span class="tag tag-cyan">GA4</span>
-                <span class="tag tag-neutral">BigQuery</span>
-              </div>
-            </div>
-            <div class="mini-card" style="border-color:rgba(0,207,255,0.18);box-shadow:0 0 0 1px rgba(0,207,255,0.1),0 8px 24px rgba(0,207,255,0.06);">
-              <div class="mini-card-badge" style="color:var(--green);">✦ Design Project</div>
-              <div class="mini-card-title">Rediseño UX E-commerce</div>
-              <div class="mini-card-body">Optimización del funnel de conversión. +34% CVR medido post-lanzamiento.</div>
-              <div class="tags-row" style="margin-top:8px;">
-                <span class="tag tag-green">Figma</span>
-                <span class="tag tag-purple">UX</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Shadow system -->
+        <!-- Shadows -->
         <div>
-          <div class="section-label">Shadows / Elevation</div>
-          <div class="shadow-demo">
-            <div class="shadow-sample s1">
-              <div style="font-size:10px;font-family:'Space Grotesk',sans-serif;color:var(--text-primary);font-weight:600;">Card Base</div>
-              <div class="shadow-label">4px 16px black/30%</div>
+          <div class="sl">Elevation</div>
+          <div class="sd">
+            <div class="ss s1">
+              Card Base
+              <div class="sl2">4px 16px black/30%</div>
             </div>
-            <div class="shadow-sample s2">
-              <div style="font-size:10px;font-family:'Space Grotesk',sans-serif;color:var(--cyan);font-weight:600;">Card Hover</div>
-              <div class="shadow-label">+ cian glow 0.08</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Neutral swatch (backgrounds) -->
-        <div class="col-span-2">
-          <div class="section-label">Backgrounds / Surfaces</div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
-            <div style="background:#0A0F1E;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 8px;text-align:center;">
-              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-tertiary);">#0A0F1E</div>
-              <div style="font-size:10px;font-family:'Space Grotesk',sans-serif;color:var(--text-secondary);margin-top:4px;">Base</div>
-            </div>
-            <div style="background:#0F1629;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 8px;text-align:center;">
-              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-tertiary);">#0F1629</div>
-              <div style="font-size:10px;font-family:'Space Grotesk',sans-serif;color:var(--text-secondary);margin-top:4px;">Surface</div>
-            </div>
-            <div style="background:#162038;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 8px;text-align:center;">
-              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-tertiary);">#162038</div>
-              <div style="font-size:10px;font-family:'Space Grotesk',sans-serif;color:var(--text-secondary);margin-top:4px;">Elevated</div>
-            </div>
-            <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 8px;text-align:center;">
-              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-tertiary);">rgba white</div>
-              <div style="font-size:10px;font-family:'Space Grotesk',sans-serif;color:var(--text-secondary);margin-top:4px;">Floating</div>
+            <div class="ss s2">
+              Card Hover
+              <div class="sl2">+ cian glow 0.08</div>
             </div>
           </div>
         </div>
 
-      </div><!-- /kit-grid -->
+        <!-- Surfaces -->
+        <div class="c2">
+          <div class="sl">Backgrounds / Surfaces</div>
+          <div class="surf-row">
+            <div class="surf-item" style="background:#0A0F1E;">
+              <div class="surf-hex">#0A0F1E</div>
+              <div class="surf-name">Base</div>
+            </div>
+            <div class="surf-item" style="background:#0F1629;">
+              <div class="surf-hex">#0F1629</div>
+              <div class="surf-name">Surface</div>
+            </div>
+            <div class="surf-item" style="background:#162038;">
+              <div class="surf-hex">#162038</div>
+              <div class="surf-name">Elevated</div>
+            </div>
+            <div class="surf-item" style="background:rgba(255,255,255,0.05);">
+              <div class="surf-hex">rgba/5%</div>
+              <div class="surf-name">Floating</div>
+            </div>
+          </div>
+        </div>
 
-      <!-- Footer -->
-      <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--text-tertiary);letter-spacing:0.08em;">TNK PROJECT · BRAND IDENTITY v1.0</span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--text-tertiary);">2026 · Guillermo García</span>
+      </div><!-- /kg -->
+
+      <div class="rp-foot">
+        <span>TNK PROJECT · BRAND IDENTITY v1.0</span>
+        <span>2026 · Guillermo García</span>
       </div>
 
-    </div><!-- /right-panel-inner -->
-  </div><!-- /right-panel -->
+    </div>
+  </div>
 
-</div><!-- /guide-wrapper -->
+</div>
 
 </body>
 </html>
