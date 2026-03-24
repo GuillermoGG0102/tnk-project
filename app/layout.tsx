@@ -6,7 +6,7 @@ import { Footer } from '@/components/layout/Footer'
 import { ScrollDepthTracker } from '@/components/analytics/ScrollDepthTracker'
 import '@/app/globals.css'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://tnk.design'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://tnkproject.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

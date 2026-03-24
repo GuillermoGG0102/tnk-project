@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { getAllBlogPosts, getAllProjects } from '@/lib/mdx'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://tnk.design'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://tnkproject.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts    = getAllBlogPosts()
