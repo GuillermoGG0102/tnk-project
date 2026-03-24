@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1600">
+<title>TNK — GA4 Dashboard Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0A0F1E;
+    --surface:   #0F1629;
+    --elevated:  #162038;
+    --border:    #1E2D4A;
+    --cyan:      #00CFFF;
+    --green:     #00FFB3;
+    --violet:    #B77FFF;
+    --pink:      #FF52B9;
+    --text:      #E8EDF5;
+    --muted:     #6B7FA3;
+    --faint:     #2A3A5C;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    width: 1600px;
+    min-height: 900px;
+    overflow-x: hidden;
+  }
+
+  /* noise texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* subtle grid lines */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,207,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,207,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .dashboard {
+    position: relative;
+    z-index: 1;
+    padding: 20px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 0 0 1px rgba(0,207,255,0.08), 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--cyan) 0%, var(--violet) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--bg);
+    letter-spacing: -0.04em;
+    box-shadow: 0 0 16px rgba(0,207,255,0.35);
+  }
+
+  .header-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+
+  .header-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan);
+    margin-top: 1px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .date-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    background: var(--elevated);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .date-range span { color: var(--text); }
+
+  .badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .badge-ga4 {
+    background: rgba(0,207,255,0.12);
+    border: 1px solid rgba(0,207,255,0.3);
+    color: var(--cyan);
+  }
+
+  .badge-live {
+    background: rgba(0,255,179,0.12);
+    border: 1px solid rgba(0,255,179,0.3);
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ── KPI ROW ── */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .kpi-card.cyan::before  { background: linear-gradient(90deg, var(--cyan), transparent); }
+  .kpi-card.green::before { background: linear-gradient(90deg, var(--green), transparent); }
+  .kpi-card.violet::before{ background: linear-gradient(90deg, var(--violet), transparent); }
+  .kpi-card.pink::before  { background: linear-gradient(90deg, var(--pink), transparent); }
+
+  .kpi-card::after {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .kpi-card.cyan::after  { background: radial-gradient(circle, rgba(0,207,255,0.08) 0%, transparent 70%); }
+  .kpi-card.green::after { background: radial-gradient(circle, rgba(0,255,179,0.08) 0%, transparent 70%); }
+  .kpi-card.violet::after{ background: radial-gradient(circle, rgba(183,127,255,0.08) 0%, transparent 70%); }
+  .kpi-card.pink::after  { background: radial-gradient(circle, rgba(255,82,185,0.08) 0%, transparent 70%); }
+
+  .kpi-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+
+  .kpi-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .kpi-card.cyan  .kpi-value { color: var(--cyan); }
+  .kpi-card.green .kpi-value { color: var(--green); }
+  .kpi-card.violet.kpi-value { color: var(--violet); }
+  .kpi-card.pink  .kpi-value { color: var(--pink); }
+  .kpi-card.violet .kpi-value { color: var(--violet); }
+  .kpi-card.pink   .kpi-value { color: var(--pink); }
+
+  .kpi-delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  .kpi-delta.up   { background: rgba(0,255,179,0.1); color: var(--green); }
+  .kpi-delta.down { background: rgba(255,82,185,0.1); color: var(--pink); }
+
+  .kpi-sublabel {
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* ── CHART GRID ── */
+  .chart-row {
+    display: grid;
+    gap: 16px;
+  }
+
+  .chart-row.three { grid-template-columns: 2fr 1.2fr 0.8fr; }
+  .chart-row.three-eq { grid-template-columns: 1fr 1fr 1fr; }
+
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .chart-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .chart-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .chart-meta {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .chart-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .tag-cyan   { background: rgba(0,207,255,0.1); color: var(--cyan); border: 1px solid rgba(0,207,255,0.2); }
+  .tag-green  { background: rgba(0,255,179,0.1); color: var(--green); border: 1px solid rgba(0,255,179,0.2); }
+  .tag-violet { background: rgba(183,127,255,0.1); color: var(--violet); border: 1px solid rgba(183,127,255,0.2); }
+  .tag-pink   { background: rgba(255,82,185,0.1); color: var(--pink); border: 1px solid rgba(255,82,185,0.2); }
+
+  .chart-body { flex: 1; }
+
+  /* ── LINE CHART ── */
+  .line-chart-wrap {
+    position: relative;
+    height: 160px;
+  }
+
+  .line-chart-yaxis {
+    position: absolute;
+    left: 0; top: 0; bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    width: 32px;
+  }
+
+  .line-chart-svg-wrap {
+    position: absolute;
+    left: 36px; right: 0; top: 0; bottom: 0;
+  }
+
+  /* ── BAR CHART ── */
+  .bar-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .bar-item { display: flex; flex-direction: column; gap: 4px; }
+
+  .bar-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+  }
+
+  .bar-name { color: var(--text); font-size: 11px; }
+  .bar-val  { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+
+  .bar-track {
+    height: 6px;
+    background: var(--elevated);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  /* ── DONUT CHART ── */
+  .donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .donut-svg { flex-shrink: 0; }
+
+  .donut-legend { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-label { color: var(--text); flex: 1; }
+  .legend-pct   { font-family: 'JetBrains Mono', monospace; color: var(--muted); }
+
+  /* ── TABLE ── */
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table th {
+    text-align: left;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(30,45,74,0.5);
+    font-size: 11px;
+    color: var(--text);
+  }
+  .data-table td.mono { font-family: 'JetBrains Mono', monospace; color: var(--muted); }
+  .data-table tr:last-child td { border-bottom: none; }
+
+  /* ── HORIZONTAL BAR ── */
+  .hbar-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .hbar-item { display: flex; align-items: center; gap: 10px; }
+
+  .hbar-label {
+    font-size: 11px;
+    color: var(--text);
+    width: 120px;
+    flex-shrink: 0;
+  }
+
+  .hbar-track {
+    flex: 1;
+    height: 10px;
+    background: var(--elevated);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .hbar-fill {
+    height: 100%;
+    border-radius: 5px;
+  }
+
+  .hbar-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .footer-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .footer-text strong { color: var(--cyan); }
+
+  .footer-tags { display: flex; gap: 8px; }
+</style>
+</head>
+<body>
+<div class="dashboard">
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo-mark">TNK</div>
+      <div>
+        <div class="header-title">GA4 Analytics Dashboard</div>
+        <div class="header-subtitle">guillermogg0102 · tnk-project</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="date-range">
+        📅 &nbsp;<span>01 Feb 2026</span>&nbsp;→&nbsp;<span>24 Mar 2026</span>
+      </div>
+      <div class="badge badge-ga4">GA4</div>
+      <div class="badge badge-live"><div class="live-dot"></div>Live</div>
+    </div>
+  </header>
+
+  <!-- ── KPI ROW ── -->
+  <div class="kpi-row">
+
+    <div class="kpi-card cyan">
+      <div class="kpi-label">Sessions</div>
+      <div class="kpi-value">4,832</div>
+      <div class="kpi-delta up">↑ 18.4% vs prev.</div>
+      <div class="kpi-sublabel">Métrica: sessions</div>
+    </div>
+
+    <div class="kpi-card green">
+      <div class="kpi-label">Engagement Rate</div>
+      <div class="kpi-value">68.2%</div>
+      <div class="kpi-delta up">↑ 5.1% vs prev.</div>
+      <div class="kpi-sublabel">Métrica: engagementRate</div>
+    </div>
+
+    <div class="kpi-card violet">
+      <div class="kpi-label">Lead Conversions</div>
+      <div class="kpi-value">23</div>
+      <div class="kpi-delta down">↓ 2.1% vs prev.</div>
+      <div class="kpi-sublabel">Evento: generate_lead</div>
+    </div>
+
+    <div class="kpi-card pink">
+      <div class="kpi-label">Avg. Session Time</div>
+      <div class="kpi-value">2m 41s</div>
+      <div class="kpi-delta up">↑ 9.7% vs prev.</div>
+      <div class="kpi-sublabel">Métrica: averageSessionDuration</div>
+    </div>
+
+  </div>
+
+  <!-- ── CHART ROW 1 ── -->
+  <div class="chart-row three">
+
+    <!-- Sessions over time -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Sesiones en el tiempo</div>
+          <div class="chart-meta">dim: date · métrica: sessions</div>
+        </div>
+        <span class="chart-tag tag-cyan">Línea</span>
+      </div>
+      <div class="chart-body">
+        <div class="line-chart-wrap">
+          <div class="line-chart-yaxis">
+            <span>400</span>
+            <span>300</span>
+            <span>200</span>
+            <span>100</span>
+            <span>0</span>
+          </div>
+          <div class="line-chart-svg-wrap">
+            <svg width="100%" height="100%" viewBox="0 0 520 160" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#00CFFF" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#00CFFF" stop-opacity="0"/>
+                </linearGradient>
+                <filter id="glow"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <!-- grid lines -->
+              <line x1="0" y1="32" x2="520" y2="32" stroke="#1E2D4A" stroke-width="1"/>
+              <line x1="0" y1="64" x2="520" y2="64" stroke="#1E2D4A" stroke-width="1"/>
+              <line x1="0" y1="96" x2="520" y2="96" stroke="#1E2D4A" stroke-width="1"/>
+              <line x1="0" y1="128" x2="520" y2="128" stroke="#1E2D4A" stroke-width="1"/>
+              <!-- area fill -->
+              <path d="M0,110 C30,105 50,90 80,85 C110,80 130,100 160,95 C190,90 210,70 240,60 C270,50 290,75 320,65 C350,55 370,40 400,38 C430,36 460,50 490,45 L490,136 L0,136 Z"
+                    fill="url(#lineGrad)"/>
+              <!-- line -->
+              <path d="M0,110 C30,105 50,90 80,85 C110,80 130,100 160,95 C190,90 210,70 240,60 C270,50 290,75 320,65 C350,55 370,40 400,38 C430,36 460,50 490,45"
+                    fill="none" stroke="#00CFFF" stroke-width="2" filter="url(#glow)"/>
+              <!-- dots -->
+              <circle cx="240" cy="60" r="4" fill="#00CFFF" filter="url(#glow)"/>
+              <circle cx="400" cy="38" r="4" fill="#00CFFF" filter="url(#glow)"/>
+              <!-- x labels -->
+              <text x="0"   y="152" fill="#6B7FA3" font-size="9" font-family="JetBrains Mono,monospace">Feb 1</text>
+              <text x="110" y="152" fill="#6B7FA3" font-size="9" font-family="JetBrains Mono,monospace">Feb 15</text>
+              <text x="230" y="152" fill="#6B7FA3" font-size="9" font-family="JetBrains Mono,monospace">Mar 1</text>
+              <text x="355" y="152" fill="#6B7FA3" font-size="9" font-family="JetBrains Mono,monospace">Mar 15</text>
+              <text x="462" y="152" fill="#6B7FA3" font-size="9" font-family="JetBrains Mono,monospace">Mar 24</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Pages -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Top Páginas</div>
+          <div class="chart-meta">dim: page_name · métrica: sessions</div>
+        </div>
+        <span class="chart-tag tag-green">Barras</span>
+      </div>
+      <div class="chart-body">
+        <div class="bar-list">
+          <div class="bar-item">
+            <div class="bar-label-row"><span class="bar-name">Home</span><span class="bar-val">1,840</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#00CFFF,#00FFB3)"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label-row"><span class="bar-name">Blog</span><span class="bar-val">1,240</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:67%;background:linear-gradient(90deg,#00CFFF,#00FFB3)"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label-row"><span class="bar-name">Projects</span><span class="bar-val">820</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:45%;background:linear-gradient(90deg,#00CFFF,#00FFB3)"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label-row"><span class="bar-name">TNK Designs</span><span class="bar-val">550</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:30%;background:linear-gradient(90deg,#00CFFF,#00FFB3)"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label-row"><span class="bar-name">Contact</span><span class="bar-val">382</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:21%;background:linear-gradient(90deg,#00CFFF,#00FFB3)"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label-row"><span class="bar-name">GA4 Article</span><span class="bar-val">210</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:11%;background:linear-gradient(90deg,#00CFFF,#00FFB3)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Traffic by Category -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Tráfico por Categoría</div>
+          <div class="chart-meta">dim: page_category · métrica: sessions</div>
+        </div>
+        <span class="chart-tag tag-violet">Donut</span>
+      </div>
+      <div class="chart-body">
+        <div class="donut-wrap">
+          <svg class="donut-svg" width="110" height="110" viewBox="0 0 110 110">
+            <circle cx="55" cy="55" r="42" fill="none" stroke="#162038" stroke-width="18"/>
+            <!-- main: 38% -->
+            <circle cx="55" cy="55" r="42" fill="none" stroke="#00CFFF" stroke-width="18"
+              stroke-dasharray="100.5 163.8" stroke-dashoffset="0" transform="rotate(-90 55 55)"/>
+            <!-- blog: 26% -->
+            <circle cx="55" cy="55" r="42" fill="none" stroke="#00FFB3" stroke-width="18"
+              stroke-dasharray="68.7 195.6" stroke-dashoffset="-100.5" transform="rotate(-90 55 55)"/>
+            <!-- projects: 20% -->
+            <circle cx="55" cy="55" r="42" fill="none" stroke="#B77FFF" stroke-width="18"
+              stroke-dasharray="52.8 211.5" stroke-dashoffset="-169.2" transform="rotate(-90 55 55)"/>
+            <!-- contact: 16% -->
+            <circle cx="55" cy="55" r="42" fill="none" stroke="#FF52B9" stroke-width="18"
+              stroke-dasharray="42.3 222" stroke-dashoffset="-222" transform="rotate(-90 55 55)"/>
+            <text x="55" y="50" text-anchor="middle" fill="#E8EDF5" font-size="14" font-family="Space Grotesk,sans-serif" font-weight="700">4,832</text>
+            <text x="55" y="64" text-anchor="middle" fill="#6B7FA3" font-size="9" font-family="JetBrains Mono,monospace">sesiones</text>
+          </svg>
+          <div class="donut-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#00CFFF;box-shadow:0 0 6px #00CFFF"></div><span class="legend-label">Main</span><span class="legend-pct">38%</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#00FFB3;box-shadow:0 0 6px #00FFB3"></div><span class="legend-label">Blog</span><span class="legend-pct">26%</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#B77FFF;box-shadow:0 0 6px #B77FFF"></div><span class="legend-label">Projects</span><span class="legend-pct">20%</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#FF52B9;box-shadow:0 0 6px #FF52B9"></div><span class="legend-label">Contact</span><span class="legend-pct">16%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── CHART ROW 2 ── -->
+  <div class="chart-row three-eq">
+
+    <!-- Content Clicks by Type -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Clics por Tipo de Contenido</div>
+          <div class="chart-meta">dim: content_type · métrica: eventCount (select_content)</div>
+        </div>
+        <span class="chart-tag tag-cyan">Barras</span>
+      </div>
+      <div class="chart-body">
+        <div class="hbar-list">
+          <div class="hbar-item">
+            <div class="hbar-label">project_card</div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:88%;background:#00CFFF"></div></div>
+            <div class="hbar-val">312</div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-label">blog_card</div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:75%;background:#00CFFF"></div></div>
+            <div class="hbar-val">265</div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-label">nav_link</div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:62%;background:#00FFB3"></div></div>
+            <div class="hbar-val">218</div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-label">cta</div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:48%;background:#00FFB3"></div></div>
+            <div class="hbar-val">169</div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-label">social_link</div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:30%;background:#B77FFF"></div></div>
+            <div class="hbar-val">105</div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-label">filter_pill</div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:18%;background:#B77FFF"></div></div>
+            <div class="hbar-val">63</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Terms -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Top Búsquedas en Blog</div>
+          <div class="chart-meta">dim: search_term · métrica: eventCount (search)</div>
+        </div>
+        <span class="chart-tag tag-green">Tabla</span>
+      </div>
+      <div class="chart-body">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Término</th>
+              <th style="text-align:right">Búsquedas</th>
+              <th style="text-align:right">Con resultado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ga4</td>
+              <td class="mono" style="text-align:right">48</td>
+              <td class="mono" style="text-align:right;color:#00FFB3">100%</td>
+            </tr>
+            <tr>
+              <td>gtm</td>
+              <td class="mono" style="text-align:right">35</td>
+              <td class="mono" style="text-align:right;color:#00FFB3">100%</td>
+            </tr>
+            <tr>
+              <td>looker studio</td>
+              <td class="mono" style="text-align:right">29</td>
+              <td class="mono" style="text-align:right;color:#00FFB3">100%</td>
+            </tr>
+            <tr>
+              <td>power bi</td>
+              <td class="mono" style="text-align:right">21</td>
+              <td class="mono" style="text-align:right;color:#00FFB3">100%</td>
+            </tr>
+            <tr>
+              <td>dimensiones custom</td>
+              <td class="mono" style="text-align:right">17</td>
+              <td class="mono" style="text-align:right;color:#00FFB3">100%</td>
+            </tr>
+            <tr>
+              <td>python analytics</td>
+              <td class="mono" style="text-align:right">9</td>
+              <td class="mono" style="text-align:right;color:#FF52B9">0%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Lead Funnel -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Leads por Asunto</div>
+          <div class="chart-meta">dim: subject · métrica: conversions (generate_lead)</div>
+        </div>
+        <span class="chart-tag tag-pink">Embudo</span>
+      </div>
+      <div class="chart-body">
+        <div class="hbar-list">
+          <div class="hbar-item">
+            <div class="hbar-label">Project enquiry</div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:100%;background:linear-gradient(90deg,#FF52B9,#B77FFF)"></div></div>
+            <div class="hbar-val">10</div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-label">Consulting</div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:65%;background:linear-gradient(90deg,#FF52B9,#B77FFF)"></div></div>
+            <div class="hbar-val">7</div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-label">Data audit</div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:40%;background:linear-gradient(90deg,#FF52B9,#B77FFF)"></div></div>
+            <div class="hbar-val">4</div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-label">Other</div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:20%;background:linear-gradient(90deg,#FF52B9,#B77FFF)"></div></div>
+            <div class="hbar-val">2</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Budget Breakdown</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(0,207,255,0.1);color:var(--cyan);border:1px solid rgba(0,207,255,0.2)">&lt;1k · 4</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(0,255,179,0.1);color:var(--green);border:1px solid rgba(0,255,179,0.2)">1–5k · 9</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(183,127,255,0.1);color:var(--violet);border:1px solid rgba(183,127,255,0.2)">5–10k · 7</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(255,82,185,0.1);color:var(--pink);border:1px solid rgba(255,82,185,0.2)">&gt;10k · 3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-text">
+      Powered by <strong>Google Analytics 4</strong> · Visualizado en <strong>Looker Studio</strong> · Proyecto <strong>TNK</strong>
+    </div>
+    <div class="footer-tags">
+      <span class="chart-tag tag-cyan">GTM</span>
+      <span class="chart-tag tag-green">GA4</span>
+      <span class="chart-tag tag-violet">Looker Studio</span>
+      <span class="chart-tag tag-pink">BigQuery</span>
+    </div>
+    <div class="footer-text">Última actualización: <span style="color:var(--text)">24 Mar 2026</span></div>
+  </footer>
+
+</div>
+</body>
+</html>
