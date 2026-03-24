@@ -366,7 +366,7 @@
 <header class="site-header">
   <h1>TNK Designs</h1>
   <span>Web Measurement Plan</span>
-  <div class="badge">v4.1 · 2026-03-17</div>
+  <div class="badge">v4.2 · 2026-03-17</div>
 </header>
 
 <nav class="tabs">
@@ -397,7 +397,7 @@
     <div class="intro-card"><div class="ic-label">GA4 Stream</div><div class="ic-value">tnk-analytics-design-website · Stream ID: 13893341764 · https://tnk-project.vercel.app</div></div>
     <div class="intro-card"><div class="ic-label">Data layer library</div><div class="ic-value">analytics.js (shared, all pages)</div></div>
     <div class="intro-card"><div class="ic-label">Privacy</div><div class="ic-value">PII filtered · email SHA-256 hashed · no raw textarea</div></div>
-    <div class="intro-card"><div class="ic-label">Pages instrumented</div><div class="ic-value">12 pages (8 with engagement)</div></div>
+    <div class="intro-card"><div class="ic-label">Pages instrumented</div><div class="ic-value">14 pages (8 with engagement)</div></div>
     <div class="intro-card"><div class="ic-label">Last updated</div><div class="ic-value">2026-03-12</div></div>
   </div>
 
@@ -574,13 +574,23 @@ PARAMS.forEach(([name, type, events, example, notes], i) => {
 // ── page_view rows ──────────────────────────────────────────────────────────
 // One row per unique page_category + page_type combination
 const PV_DATA = [
-  {page:'Home',                     cat:'main',     type:'home',    group:'portfolio', file:'pv_home.png'},
-  {page:'Blog',                     cat:'blog',     type:'listing', group:'content',   file:'pv_blog.png'},
-  {page:'Contact',                  cat:'contact',  type:'contact', group:'contact',   file:'pv_contact.png'},
-  {page:'Projects',                 cat:'projects', type:'listing', group:'portfolio', file:'pv_projects.png'},
-  {page:'TNK Designs',              cat:'projects', type:'detail',  group:'portfolio', file:'pv_proj_tnk.png'},
-  {page:'Getting Started with GA4',                  cat:'blog',     type:'article', group:'content',   file:'pv_blog_ga4.png'},
-  {page:'Analytics Documentation That Never Goes Stale', cat:'blog', type:'article', group:'content',   file:'pv_blog_doc_automation.png'},
+  // ── Main pages ──────────────────────────────────────────────────────────────
+  {page:'Home',                                         cat:'main',     type:'home',    group:'portfolio', file:'pv_home.png'},
+  {page:'Blog',                                         cat:'blog',     type:'listing', group:'content',   file:'pv_blog.png'},
+  {page:'Contact',                                      cat:'contact',  type:'form',    group:'portfolio', file:'pv_contact.png'},
+  {page:'Projects',                                     cat:'projects', type:'listing', group:'portfolio', file:'pv_projects.png'},
+  // ── Project detail pages ─────────────────────────────────────────────────────
+  {page:'TNK Designs',                                  cat:'projects', type:'detail',  group:'portfolio', file:'pv_proj_tnk.png'},
+  {page:'TNK Portfolio Web',                            cat:'projects', type:'detail',  group:'portfolio', file:'pv_proj_port.png'},
+  // ── Blog articles ────────────────────────────────────────────────────────────
+  {page:'Getting Started with GA4',                     cat:'blog',     type:'article', group:'content',   file:'pv_blog_ga4.png'},
+  {page:'Design Principles for Data Products',          cat:'blog',     type:'article', group:'content',   file:'pv_blog_design.png'},
+  {page:'Smart Solutions to Build Beautiful Dashboards',cat:'blog',     type:'article', group:'content',   file:'pv_blog_dashboards.png'},
+  {page:'Building with Claude Code',                    cat:'blog',     type:'article', group:'content',   file:'pv_blog_claude.png'},
+  {page:'DataLayer: Medición Robusta',                  cat:'blog',     type:'article', group:'content',   file:'pv_blog_datalayer.png'},
+  {page:'Analytics-First Workflow with CLAUDE.md',      cat:'blog',     type:'article', group:'content',   file:'pv_blog_analytics_wf.png'},
+  {page:'Portfolio Security Audit',                     cat:'blog',     type:'article', group:'content',   file:'pv_blog_security.png'},
+  {page:'Analytics Documentation That Never Goes Stale',cat:'blog',     type:'article', group:'content',   file:'pv_blog_doc_automation.png'},
 ];
 
 const pvContainer = document.getElementById('pv-rows');
@@ -1133,6 +1143,22 @@ PE_DATA.forEach((d, i) => {
         <li>New <code style="font-family:var(--font-m);color:var(--accent)">blog_card</code> select_content entry for the doc-automation post in the blog listing</li>
         <li>post_engagement (like/unlike/comment) instrumented with slug <code style="font-family:var(--font-m);color:var(--accent)">analytics_doc_automation</code></li>
         <li>Pages instrumented count updated: 11 → 12 pages (7 → 8 with engagement)</li>
+      </ul>
+    </div>
+
+    <!-- v4.2 -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <span style="font-family:var(--font-m);font-size:13px;font-weight:600;color:var(--primary)">v4.2</span>
+        <span style="font-size:12px;color:var(--muted)">2026-03-17</span>
+        <span style="margin-left:auto;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:rgba(0,255,179,0.1);border:1px solid rgba(0,255,179,0.25);padding:2px 8px;border-radius:20px">Complete page inventory</span>
+      </div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px">Completed the page_view tab to include all 14 pages currently live on the site. Previously only 5 pages were documented. Also fixed broken screenshot references from v4.1 (pv_blog_doc_automation, sc_blog_card_doc_auto) and added the missing page_view for Portfolio Security Audit.</p>
+      <ul style="font-size:13px;color:var(--text);line-height:2;padding-left:20px">
+        <li>Added 8 missing pages to page_view tab: TNK Portfolio Web, Design Principles for Data Products, Beautiful Dashboards, Building with Claude Code, DataLayer Medición Robusta, Analytics-First Workflow, Portfolio Security Audit, and fixed Analytics Doc Automation screenshot</li>
+        <li>Fixed broken image references from v4.1 (<code style="font-family:var(--font-m);color:var(--primary)">pv_blog_doc_automation.png</code>, <code style="font-family:var(--font-m);color:var(--primary)">sc_blog_card_doc_auto.png</code>)</li>
+        <li>Pages instrumented count updated: 12 → 14 pages</li>
+        <li>Capture script updated to include all new pages</li>
       </ul>
     </div>
 
