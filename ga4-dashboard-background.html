@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1600">
+<title>TNK — GA4 Dashboard Background (Looker Studio Export)</title>
+<!--
+  INSTRUCCIONES DE EXPORTACIÓN PARA LOOKER STUDIO
+  ─────────────────────────────────────────────────
+  1. Abre este archivo en Chrome
+  2. Ctrl+Shift+P → "Capture full size screenshot" (DevTools)
+     O bien: File → Print → Save as PDF → extrae la imagen
+  3. Sube el PNG/imagen en Looker Studio:
+     Insert → Image → Background
+  4. Fija el tamaño del informe a 1600 × 900 px
+  5. Superpón tus gráficos encima de cada rectángulo
+-->
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0A0F1E;
+    width: 1600px;
+    height: 900px;
+    overflow: hidden;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+
+  /* noise texture overlay */
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* subtle grid lines */
+  body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,207,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,207,255,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .bg-layout {
+    position: relative;
+    width: 1600px;
+    height: 900px;
+    padding: 20px 24px 20px;
+    display: grid;
+    grid-template-rows: 56px 96px 1fr 1fr 36px;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    z-index: 2;
+  }
+
+  /* ── HEADER SLOT ── */
+  .slot-header {
+    background: #0F1629;
+    border: 1px solid #1E2D4A;
+    border-radius: 12px;
+    border-top: 2px solid #00CFFF;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slot-header::after {
+    content: '';
+    position: absolute;
+    top: -30px; left: -30px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(0,207,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ── KPI ROW ── */
+  .slot-kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .slot-kpi {
+    background: #0F1629;
+    border: 1px solid #1E2D4A;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slot-kpi::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .slot-kpi:nth-child(1)::before { background: linear-gradient(90deg, #00CFFF, transparent); }
+  .slot-kpi:nth-child(2)::before { background: linear-gradient(90deg, #00FFB3, transparent); }
+  .slot-kpi:nth-child(3)::before { background: linear-gradient(90deg, #B77FFF, transparent); }
+  .slot-kpi:nth-child(4)::before { background: linear-gradient(90deg, #FF52B9, transparent); }
+
+  .slot-kpi::after {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .slot-kpi:nth-child(1)::after { background: radial-gradient(circle, rgba(0,207,255,0.07) 0%, transparent 70%); }
+  .slot-kpi:nth-child(2)::after { background: radial-gradient(circle, rgba(0,255,179,0.07) 0%, transparent 70%); }
+  .slot-kpi:nth-child(3)::after { background: radial-gradient(circle, rgba(183,127,255,0.07) 0%, transparent 70%); }
+  .slot-kpi:nth-child(4)::after { background: radial-gradient(circle, rgba(255,82,185,0.07) 0%, transparent 70%); }
+
+  /* ── CHART ROWS ── */
+  .slot-chart-row {
+    display: grid;
+    gap: 14px;
+  }
+
+  .slot-chart-row.r1 { grid-template-columns: 2fr 1.2fr 0.8fr; }
+  .slot-chart-row.r2 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .slot-chart {
+    background: #0F1629;
+    border: 1px solid #1E2D4A;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* top accent line per chart */
+  .slot-chart:nth-child(1) { border-top: 1px solid rgba(0,207,255,0.2); }
+  .slot-chart:nth-child(2) { border-top: 1px solid rgba(0,255,179,0.2); }
+  .slot-chart:nth-child(3) { border-top: 1px solid rgba(183,127,255,0.2); }
+
+  /* ── FOOTER SLOT ── */
+  .slot-footer {
+    background: #0F1629;
+    border: 1px solid #1E2D4A;
+    border-radius: 10px;
+  }
+
+  /* ── LABELS (visible at design time, hidden in export if needed) ── */
+  .slot-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+    pointer-events: none;
+  }
+
+  .label-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(107,127,163,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .label-dim {
+    font-size: 9px;
+    color: rgba(107,127,163,0.35);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* Header label is different — it's on the left */
+  .slot-header .slot-label {
+    align-items: flex-start;
+    padding: 0 20px;
+  }
+
+  .slot-header .label-title { color: rgba(0,207,255,0.3); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="bg-layout">
+
+  <!-- HEADER -->
+  <div class="slot-header">
+    <div class="slot-label">
+      <div class="label-title">Header · Logo · Título · Filtro de fechas · Badges</div>
+    </div>
+  </div>
+
+  <!-- KPI ROW -->
+  <div class="slot-kpi-row">
+    <div class="slot-kpi">
+      <div class="slot-label">
+        <div class="label-title">KPI 1</div>
+        <div class="label-dim">sessions</div>
+      </div>
+    </div>
+    <div class="slot-kpi">
+      <div class="slot-label">
+        <div class="label-title">KPI 2</div>
+        <div class="label-dim">engagementRate</div>
+      </div>
+    </div>
+    <div class="slot-kpi">
+      <div class="slot-label">
+        <div class="label-title">KPI 3</div>
+        <div class="label-dim">conversions · generate_lead</div>
+      </div>
+    </div>
+    <div class="slot-kpi">
+      <div class="slot-label">
+        <div class="label-title">KPI 4</div>
+        <div class="label-dim">averageSessionDuration</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHART ROW 1 -->
+  <div class="slot-chart-row r1">
+    <div class="slot-chart">
+      <div class="slot-label">
+        <div class="label-title">Gráfico A · Línea temporal</div>
+        <div class="label-dim">date × sessions</div>
+      </div>
+    </div>
+    <div class="slot-chart">
+      <div class="slot-label">
+        <div class="label-title">Gráfico B · Top páginas</div>
+        <div class="label-dim">page_name × sessions</div>
+      </div>
+    </div>
+    <div class="slot-chart">
+      <div class="slot-label">
+        <div class="label-title">Gráfico C · Donut categorías</div>
+        <div class="label-dim">page_category × sessions</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHART ROW 2 -->
+  <div class="slot-chart-row r2">
+    <div class="slot-chart">
+      <div class="slot-label">
+        <div class="label-title">Gráfico D · Clics por tipo</div>
+        <div class="label-dim">content_type × eventCount</div>
+      </div>
+    </div>
+    <div class="slot-chart">
+      <div class="slot-label">
+        <div class="label-title">Gráfico E · Búsquedas</div>
+        <div class="label-dim">search_term × eventCount</div>
+      </div>
+    </div>
+    <div class="slot-chart">
+      <div class="slot-label">
+        <div class="label-title">Gráfico F · Leads por asunto</div>
+        <div class="label-dim">subject × conversions</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="slot-footer">
+    <div class="slot-label">
+      <div class="label-title">Footer · Fuente de datos · Timestamp</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
