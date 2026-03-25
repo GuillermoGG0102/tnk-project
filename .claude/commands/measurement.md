@@ -7,6 +7,6 @@ Update the measurement plan for the change just made:
      - Increment the version badge in the header of `measurement_plan.html`
      - Add a changelog entry to the Version History tab (date, version, summary)
 
-2. Run `node capture_measurement.mjs` to refresh affected screenshots.
+2. Run `node scripts/capture_measurement.mjs` to refresh affected screenshots.
 
-3. Run `node build_standalone_measurement.mjs` to regenerate the standalone file.
+3. Run `node scripts/build_standalone_measurement.mjs` to regenerate the standalone file.

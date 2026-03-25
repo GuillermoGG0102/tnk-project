@@ -4,11 +4,11 @@
       "Bash(node --version)",
       "Bash(npm --version)",
       "Bash(node serve.mjs)",
-      "Bash(node screenshot.mjs*)",
-      "Bash(node capture_measurement.mjs)",
-      "Bash(node build_standalone_measurement.mjs)",
-      "Bash(node capture_missing.mjs)",
-      "Bash(node capture_pe_screenshots.mjs)",
+      "Bash(node scripts/screenshot.mjs*)",
+      "Bash(node scripts/capture_measurement.mjs)",
+      "Bash(node scripts/build_standalone_measurement.mjs)",
+      "Bash(node scripts/capture_missing.mjs)",
+      "Bash(node scripts/capture_pe_screenshots.mjs)",
       "Bash(lsof -i :3000*)",
       "Bash(npm run *)"
     ]

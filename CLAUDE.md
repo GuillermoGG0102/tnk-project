@@ -16,10 +16,10 @@
 - To check: `lsof -i :3000 | grep LISTEN` — if output is returned, server is already running.
 
 ## Screenshot Workflow
-- **Always screenshot from localhost:** `node screenshot.mjs http://localhost:3000`
+- **Always screenshot from localhost:** `node scripts/screenshot.mjs http://localhost:3000`
 - Screenshots are saved automatically to `./temporary screenshots/screenshot-N.png` (auto-incremented, never overwritten).
-- Optional label suffix: `node screenshot.mjs http://localhost:3000 label` → saves as `screenshot-N-label.png`
-- `screenshot.mjs` lives in the project root. Use it as-is.
+- Optional label suffix: `node scripts/screenshot.mjs http://localhost:3000 label` → saves as `screenshot-N-label.png`
+- `screenshot.mjs` lives in `scripts/`. Use it as-is.
 - After screenshotting, read the PNG from `temporary screenshots/` with the Read tool — Claude can see and analyze the image directly.
 - When comparing, be specific: "heading is 32px but reference shows ~24px", "card gap is 16px but should be 24px"
 - Check: spacing/padding, font size/weight/line-height, colors (exact hex), alignment, border-radius, shadows, image sizing
@@ -31,9 +31,10 @@
 - Mobile-first responsive
 
 ## Brand Assets
-- Always check the `brand_assets/` folder before designing. It may contain logos, color guides, style guides, or images.
+- Always check the `assets/brand/` folder before designing. It contains the logo, color guide, and style guide.
 - If assets exist there, use them. Do not use placeholders where real assets are available.
 - If a logo is present, use it. If a color palette is defined, use those exact values — do not invent brand colors.
+- Other assets: `assets/logos/` (company logos), `assets/profile/` (portrait photos), `assets/images/` (project images).
 
 ## Anti-Generic Guardrails
 - **Colors:** Never use default Tailwind palette (indigo-500, blue-600, etc.). Pick a custom brand color and derive from it.
@@ -51,8 +52,8 @@
   1. Ask the user how the change should be measured (or propose a measurement approach)
   2. Implement the appropriate `dataLayer` push(es) in the affected HTML/JS files
   3. Update `measurement_plan/measurement_plan.html` and the relevant CSV in `measurement_plan/` to reflect the new event or parameter (CSV map: page_view→tab3, select_content→tab4, generate_lead→tab5, orbit_interaction→tab6, search→tab7, post_engagement→tab8)
-  4. Re-run `node capture_measurement.mjs` if screenshots are affected
-  5. **Always regenerate the standalone file** by running `node build_standalone_measurement.mjs` — this is the canonical shareable reference (fully self-contained with embedded screenshots); must stay in sync with `measurement_plan.html`, no exceptions.
+  4. Re-run `node scripts/capture_measurement.mjs` if screenshots are affected
+  5. **Always regenerate the standalone file** by running `node scripts/build_standalone_measurement.mjs` — this is the canonical shareable reference (fully self-contained with embedded screenshots); must stay in sync with `measurement_plan.html`, no exceptions.
 - Do NOT ship any frontend change without confirming the analytics coverage first.
 
 ## Measurement Plan Versioning
