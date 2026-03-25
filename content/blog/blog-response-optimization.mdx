@@ -18,9 +18,9 @@ That moment hit me harder than I expected. Not because it interrupted my workflo
 
 ## The Wake-Up Call
 
-My personal project started from scratch — a proof of concept that grew gradually as I learned more about Claude Code and how to use it effectively. Early on, I was firing off prompts like messages in a WhatsApp group: long, unstructured, repeated, and redundant.
+My personal project — this very portfolio and blog you're reading — started from scratch. A proof of concept that grew gradually as I pushed further into what Claude Code could actually do. Early on, I was firing off prompts the way most people do: long, unstructured, and full of repeated context.
 
-Every conversation reinvented the wheel. Context was re-explained from scratch. Agents were doing overlapping work. And the token bill? Quietly stacking up.
+Every session I'd re-explain the project from the beginning. The measurement plan alone went through **four full iterations** (you can see the archived versions in my repo: v1, v2, v3, v4) — not because the requirements changed dramatically, but because early sessions lacked the scaffolding to carry context forward efficiently. Each revision required explaining the whole picture again.
 
 The result: I kept smashing into my PRO plan usage limit. And while I don't have pay-per-use activated (so no direct financial damage for me), I understood immediately that **if you do have it enabled, this kind of unstructured usage is a money leak you can't afford to ignore**.
 
@@ -34,82 +34,86 @@ This sounds obvious in retrospect, but it takes time to internalize. Claude work
 
 Think of it like hiring a brilliant contractor. If you brief them with a clear spec, defined deliverables, and a structured workflow — they're fast, accurate, and efficient. If you just say "figure it out" every morning, you're burning time and money.
 
-The key elements I optimized:
+The key elements I built into this project:
 
-- **`.md` files** — Project memory and context
-- **Skills** — Reusable, scoped task definitions
-- **Subagents** — Parallelized, specialized workloads
-- **Hooks** — Automated triggers around tool calls
-- **Global project structure** — Coherent architecture that scales
+- **`CLAUDE.md`** — Project memory and persistent context
+- **Skills** (`/measurement`, `/screenshot`, `/simplify`, `/update-config`) — Reusable, scoped task definitions
+- **Subagents** (Explore, Plan, general-purpose) — Parallelized, specialized workloads
+- **Hooks** (`session-start.sh`) — Automated triggers that run without any prompt
+- **Global project structure** — Coherent architecture that carries context between sessions
 
 ---
 
 ## What I Changed (and What It Saved)
 
-### 1. Defining Tight `.md` Context Files
+### 1. `session-start.sh` — The Hook That Changed Everything
 
-**Before:** Pasting context into every prompt. Same project background, same constraints, same preferences — repeated constantly.
+**Before:** Every new Claude session started cold. I'd paste project context, re-explain conventions, remind Claude of existing patterns. This consumed a significant chunk of tokens before any real work even began.
 
-**After:** Structured dedicated `.md` files (CLAUDE.md, skill definitions, project README) that Claude reads once and carries forward.
+**After:** I built a `session-start.sh` hook that runs automatically at session initialization. Claude arrives in the project already oriented — no manual briefing needed.
 
-**Result:** Eliminated an estimated **~30–40% of redundant context tokens per session**.
+**Result:** Eliminated the "context tax" on every single session. Early sessions with the measurement plan required 3–5 minutes of re-orientation before any productive work. Now: zero.
 
 ---
 
-### 2. Building Skills for Repeated Tasks
+### 2. `/measurement` and `/screenshot` as Built Skills
 
-**Before:** Each time I needed a recurring task (code review, commit, deploy check), I'd write the full prompt from scratch.
+**Before:** The analytics measurement plan required repeated, verbose prompts. Each iteration — and there were four of them — involved writing out what I needed from scratch, referencing the same structure, the same format, the same goals.
 
-**After:** Defined skills — scoped, reusable prompts with clear inputs and expected outputs.
+**After:** I defined `/measurement` and `/screenshot` as scoped skills — short commands with all the context baked in. What used to be a 300–400 token prompt became a single slash command.
 
-**Result:** Average task prompt went from ~400 tokens to ~80 tokens for common operations. That's an **~80% reduction** in prompt overhead for repeated tasks.
+**Result:** Recurring task prompts reduced by roughly **~80%** in token overhead. The fourth version of the measurement plan was produced in a fraction of the time of the first.
 
 ---
 
 ### 3. Parallelizing with Subagents
 
-**Before:** Long sequential chains. One big agent doing everything — reading files, analyzing code, writing output — one step at a time.
+**Before:** Complex tasks ran sequentially. One agent would read files, then analyze, then write — linearly, one step at a time. Blog posts like this one would have required a single long agent chain.
 
-**After:** Independent tasks split across parallel subagents. Exploration, planning, and execution happening simultaneously.
+**After:** I now split independent tasks across parallel subagents. Writing this very blog post used a parallel Explore agent (codebase research) and a Plan agent (structure design) running simultaneously.
 
-**Result:** Multi-step workflows that previously took **8–12 minutes** now complete in **3–5 minutes** thanks to parallelization.
-
----
-
-### 4. Hooks for Automation
-
-**Before:** Manual triggers, repeated confirmations, redundant approval steps.
-
-**After:** Hooks handle pre/post-tool-call automation — validation, logging, auto-formatting — without consuming conversational tokens.
-
-**Result:** Reduced unnecessary back-and-forth, cutting **~15–20% of total session messages** on complex workflows.
+**Result:** Tasks that previously required sequential chains of 8–12 minutes complete in 3–5 minutes. The Explore agent for this post returned in under 90 seconds while planning was already underway.
 
 ---
 
-## The Real Cost: Time and Tokens
+### 4. Structured Project Files Instead of Conversational Context
 
-Here's a rough snapshot of what the shift looked like across a typical session:
+**Before:** Instructions lived in the conversation. Every session I'd repeat: "the blog uses MDX", "posts go in /content/blog/", "frontmatter fields are title, date, author..."
 
-| Metric | Before Optimization | After Optimization | Improvement |
+**After:** That knowledge lives in `CLAUDE.md`, skill definitions, and the project structure itself. Claude reads the file tree and infers conventions — I don't have to explain them.
+
+**Result:** No more reinventing the wheel per session. The project architecture is self-documenting and Claude navigates it autonomously.
+
+---
+
+## The Real Impact: Time and Tokens
+
+Based on the actual evolution of this project:
+
+| Metric | Early Sessions (unstructured) | Current Sessions (optimized) | Improvement |
 |---|---|---|---|
-| Avg. tokens per session | ~18,000 | ~9,500 | ~47% reduction |
-| Avg. response wait time | ~10 min | ~4 min | ~60% faster |
-| PRO limit hits per week | 4–5 | 0–1 | Near eliminated |
-| Redundant context tokens | ~35% of total | ~8% of total | ~4x more efficient |
+| Session warm-up time | 3–5 min re-orientation | ~0 min (hook runs automatically) | ~100% eliminated |
+| Avg. prompt size for recurring tasks | ~350–400 tokens | ~50–80 tokens (skills) | ~80% reduction |
+| Measurement plan iterations needed | 4 versions with heavy back-and-forth | Single-pass with clear structure | ~4x more efficient |
+| Multi-step task duration (e.g. blog post) | 10–12 min sequential | 4–5 min parallel | ~60% faster |
+| PRO limit friction | Hit regularly mid-project | Rarely an issue post-optimization | Near eliminated |
 
 ---
 
 ## My Recommendation: Do This on Day One
 
-I learned this mid-project, after already burning through tokens and hitting walls. If you're starting a new Claude-based project, **set up your structure before writing a single production prompt**.
+I built this structure mid-project. The measurement plan v1 exists as a permanent reminder of what unstructured iteration looks like — four rounds of context re-establishment that could have been one.
 
-Here's a quick checklist:
+If you're starting a new Claude-based project, **set up your structure before writing a single production prompt**.
+
+Here's the checklist I wish I'd had:
 
 - [ ] Write a `CLAUDE.md` with project context, constraints, and conventions
-- [ ] Define your skills for recurring tasks upfront
-- [ ] Design your subagent architecture before scaling
+- [ ] Define a `session-start` hook to auto-load context at initialization
+- [ ] Create skills for any task you know you'll repeat (deploys, reviews, measurements)
+- [ ] Design your subagent architecture before scaling up complexity
 - [ ] Configure hooks to automate what doesn't need manual oversight
-- [ ] Review your prompt patterns weekly for redundancy
+- [ ] Keep your project structure self-documenting so Claude can navigate it autonomously
 
 If you're on a pay-per-use plan, this isn't optional — it's the difference between a manageable bill and an unpleasant surprise.
 
@@ -117,8 +121,8 @@ If you're on a pay-per-use plan, this isn't optional — it's the difference bet
 
 ## Final Thought
 
-This project started as a personal experiment. A way to learn, grow, and push my limits with AI tooling. But somewhere along the way it became a lesson in system design as much as in AI.
+This project started as a personal experiment. A way to learn, grow, and push my limits with AI tooling. The measurement plan archives, the four iterations, the session-start hook I eventually built — all of it is a record of that learning curve.
 
-Claude is capable of extraordinary things when you treat it like the engine it is — not a chat window. Define the structure, respect the architecture, and it will reward you with speed, reliability, and efficiency.
+But somewhere along the way it became a lesson in system design as much as in AI. Claude is capable of extraordinary things when you treat it like the engine it is — not a chat window. Define the structure, respect the architecture, and it will reward you with speed, reliability, and efficiency.
 
 The optimization came late for me. It doesn't have to for you.
