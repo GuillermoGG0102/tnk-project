@@ -13,9 +13,9 @@
 - Start the dev server: `node serve.mjs` (serves the project root at `http://localhost:3000`)
 - `serve.mjs` lives in the project root. Start it in the background before taking any screenshots.
 - If the server is already running, do not start a second instance.
+- To check: `lsof -i :3000 | grep LISTEN` — if output is returned, server is already running.
 
 ## Screenshot Workflow
-- Puppeteer is installed at `C:/Users/nateh/AppData/Local/Temp/puppeteer-test/`. Chrome cache is at `C:/Users/nateh/.cache/puppeteer/`.
 - **Always screenshot from localhost:** `node screenshot.mjs http://localhost:3000`
 - Screenshots are saved automatically to `./temporary screenshots/screenshot-N.png` (auto-incremented, never overwritten).
 - Optional label suffix: `node screenshot.mjs http://localhost:3000 label` → saves as `screenshot-N-label.png`
@@ -26,7 +26,7 @@
 
 ## Output Defaults
 - Single `index.html` file, all styles inline, unless user says otherwise
-- Tailwind CSS via CDN: `<script src="https://cdn.tailwindcss.com"></script>`
+- Tailwind CSS via CDN: `<script src="https://cdn.tailwindcss.com"></script>` — use an inline `tailwind.config = { theme: { extend: { colors: {...} } } }` block for custom brand colors. Never rely on the default palette.
 - Placeholder images: `https://placehold.co/WIDTHxHEIGHT`
 - Mobile-first responsive
 
@@ -50,15 +50,10 @@
 - **Every time any change is made to the website** (new page, new section, new interaction, new form, new button, content update), you MUST:
   1. Ask the user how the change should be measured (or propose a measurement approach)
   2. Implement the appropriate `dataLayer` push(es) in the affected HTML/JS files
-  3. Update `measurement_plan/measurement_plan.html` and the relevant CSV in `measurement_plan/` to reflect the new event or parameter
+  3. Update `measurement_plan/measurement_plan.html` and the relevant CSV in `measurement_plan/` to reflect the new event or parameter (CSV map: page_view→tab3, select_content→tab4, generate_lead→tab5, orbit_interaction→tab6, search→tab7, post_engagement→tab8)
   4. Re-run `node capture_measurement.mjs` if screenshots are affected
-  5. **Always regenerate the standalone file** by running `node build_standalone_measurement.mjs` — this must happen after every change to `measurement_plan.html` or its screenshots, no exceptions
+  5. **Always regenerate the standalone file** by running `node build_standalone_measurement.mjs` — this is the canonical shareable reference (fully self-contained with embedded screenshots); must stay in sync with `measurement_plan.html`, no exceptions.
 - Do NOT ship any frontend change without confirming the analytics coverage first.
-
-## Standalone Measurement Plan
-- `measurement_plan/measurement_plan_standalone.html` is the **canonical go-to reference** for reviewing the current measurement setup — it is fully self-contained (screenshots embedded as base64) and can be opened as a file or shared without any server or assets folder.
-- It is generated from `measurement_plan.html` + the `screenshots/` folder by running: `node build_standalone_measurement.mjs`
-- **Both files must always be in sync.** Any time `measurement_plan.html` is edited OR new screenshots are captured, immediately regenerate the standalone. Never leave them out of sync.
 
 ## Measurement Plan Versioning
 - The measurement plan uses semantic versioning: **v1, v2, v3…**
