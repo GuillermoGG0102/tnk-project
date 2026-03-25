@@ -3,9 +3,14 @@
     "allow": [
       "Bash(node --version)",
       "Bash(npm --version)",
-      "Bash(export PATH=\"$PATH:/c/Program Files/nodejs:/c/Users/trufa/AppData/Roaming/npm\")",
-      "Bash(cmd.exe /c \"node --version\")",
-      "Bash(cmd.exe /c \"node --version && echo NODE_OK\")"
+      "Bash(node serve.mjs)",
+      "Bash(node screenshot.mjs*)",
+      "Bash(node capture_measurement.mjs)",
+      "Bash(node build_standalone_measurement.mjs)",
+      "Bash(node capture_missing.mjs)",
+      "Bash(node capture_pe_screenshots.mjs)",
+      "Bash(lsof -i :3000*)",
+      "Bash(npm run *)"
     ]
   }
 }
