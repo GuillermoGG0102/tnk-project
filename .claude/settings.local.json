@@ -10,7 +10,8 @@
       "Bash(node scripts/capture_missing.mjs)",
       "Bash(node scripts/capture_pe_screenshots.mjs)",
       "Bash(lsof -i :3000*)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(jq *)"
     ]
   }
 }
