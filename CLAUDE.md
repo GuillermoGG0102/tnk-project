@@ -15,6 +15,10 @@
 - If the server is already running, do not start a second instance.
 - To check: `lsof -i :3000 | grep LISTEN` — if output is returned, server is already running.
 
+## Read Discipline
+- Before reading any file >30KB in full, use `Grep` to locate the specific section first, then read with `limit`/`offset`.
+- For searches spanning multiple unknown files, use the Explore subagent — large reads stay out of the main context.
+
 ## Screenshot Workflow
 - **Always screenshot from localhost:** `node scripts/screenshot.mjs http://localhost:3000`
 - Screenshots are saved automatically to `./temporary screenshots/screenshot-N.png` (auto-incremented, never overwritten).
