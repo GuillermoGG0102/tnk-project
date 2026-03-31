@@ -1,12 +1,9 @@
 # CLAUDE.md — Frontend Website Rules
 
-## Always Do First
-- **Invoke the `frontend-design` skill** before writing any frontend code, every session, no exceptions.
-
 ## Reference Images
 - If a reference image is provided: match layout, spacing, typography, and color exactly. Swap in placeholder content (images via `https://placehold.co/`, generic copy). Do not improve or add to the design.
 - If no reference image: design from scratch with high craft (see guardrails below).
-- Screenshot your output, compare against reference, fix mismatches, re-screenshot. Do at least 2 comparison rounds. Stop only when no visible differences remain or user says so.
+- Only take screenshots and do comparison rounds if the user explicitly asks for a visual review.
 
 ## Local Server
 - **Always serve on localhost** — never screenshot a `file:///` URL.
@@ -46,26 +43,13 @@
 - **Spacing:** Use intentional, consistent spacing tokens — not random Tailwind steps.
 - **Depth:** Surfaces should have a layering system (base → elevated → floating), not all sit at the same z-plane.
 
-## Measurement-First Rule
-- **Every time any change is made to the website** (new page, new section, new interaction, new form, new button, content update), you MUST:
-  1. Ask the user how the change should be measured (or propose a measurement approach)
-  2. Implement the appropriate `dataLayer` push(es) in the affected HTML/JS files
-  3. Update `measurement_plan/measurement_plan.html` and the relevant CSV in `measurement_plan/` to reflect the new event or parameter
-  4. Re-run `node capture_measurement.mjs` if screenshots are affected
-- Do NOT ship any frontend change without confirming the analytics coverage first.
-
-## Measurement Plan Versioning
-- The measurement plan uses semantic versioning: **v1, v2, v3…**
-- **Before any significant update** to `measurement_plan/measurement_plan.html`:
-  1. Copy the current file to `measurement_plan/archive/measurement_plan_vN.html` (where N is the current version number)
-  2. Increment the version badge in the header of `measurement_plan.html`
-  3. Add a changelog entry to the **Version History** tab inside `measurement_plan.html` (date, version, summary of changes)
-- Minor fixes (typos, broken links, screenshot refreshes) do NOT require a version bump
-- Major changes that require a bump: new event added, existing event removed or renamed, new parameter added/removed, tracking approach changed
+## Measurement (on request only)
+- Only update the measurement plan, CSVs, or run `capture_measurement.mjs` when the user explicitly asks for it.
+- When the user does ask: update `measurement_plan/measurement_plan.html` and the relevant CSV, implement any `dataLayer` push(es), and re-run `node capture_measurement.mjs` only if screenshots are affected.
+- Measurement plan versioning (archive + version bump + changelog) only when explicitly requested by the user.
 
 ## Hard Rules
 - Do not add sections, features, or content not in the reference
 - Do not "improve" a reference design — match it
-- Do not stop after one screenshot pass
 - Do not use `transition-all`
 - Do not use default Tailwind blue/indigo as primary color
