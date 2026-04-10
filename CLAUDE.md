@@ -1,5 +1,33 @@
 # CLAUDE.md — Frontend Website Rules
 
+## Auto-Invoked Skills
+
+Claude will automatically invoke custom skills based on your prompts **unless you explicitly ask to skip** (e.g., "just explain", "don't run skills", "analyze only").
+
+### Skill Auto-Invocation Rules
+
+| Your Message Contains | Auto-Invoked Skill | Purpose |
+|---|---|---|
+| "create post", "new blog", "write post", "blog post" | `/my-skills:blog-generator` | Generate MDX blog post with correct frontmatter |
+| "analytics", "event", "tracking", "dataLayer", "GA4", "measurement" | `/my-skills:analytics-event` | Integrate analytics with automated measurement updates |
+| "deploy", "lighthouse", "performance", "before push", "validate perf" | `/my-skills:lighthouse-check` | Pre-deployment Lighthouse validation |
+| "commit", "push", "ready to commit" (on frontend changes) | `/my-skills:commit-with-measurement` | Git workflow with screenshots and measurement |
+
+### How to Skip Auto-Invocation
+
+If you want analysis **without** running a skill, use phrases like:
+- "Just explain..."
+- "Analyze only..."
+- "Tell me about..." (without "do", "create", "commit", etc.)
+- "Don't run skills"
+- "Analysis only"
+
+**Example**: 
+- ❌ "Create a blog post about analytics" → runs `/my-skills:blog-generator`
+- ✅ "Explain how to structure a blog post" → explains only, no skill invoked
+
+---
+
 ## Always Do First
 - **Invoke the `frontend-design` skill** before writing any frontend code, every session, no exceptions.
 
