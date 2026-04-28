@@ -1,5 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+
+interface RouteParams {
+  params: {
+    slug: string
+  }
+}
 
 function getSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -8,15 +14,15 @@ function getSupabase() {
   return createClient(url, key)
 }
 
-export async function GET(_req: NextRequest, context: { params: { slug: string } }) {
-  const { params } = context
+export async function GET(request: Request, { params }: RouteParams) {
+  const { slug } = params
   const supabase = getSupabase()
   if (!supabase) return NextResponse.json([])
 
   const { data, error } = await supabase
     .from('post_comments')
     .select('id, author_name, content, created_at')
-    .eq('post_slug', params.slug)
+    .eq('post_slug', slug)
     .eq('approved', true)
     .order('created_at', { ascending: true })
 
@@ -28,8 +34,8 @@ export async function GET(_req: NextRequest, context: { params: { slug: string }
   return NextResponse.json(data ?? [])
 }
 
-export async function POST(req: NextRequest, context: { params: { slug: string } }) {
-  const { params } = context
+export async function POST(req: Request, { params }: RouteParams) {
+  const { slug } = params
   try {
     const { author_name, content } = await req.json()
 
