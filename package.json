@@ -8,6 +8,10 @@
     "lib": "lib"
   },
   "dependencies": {
+    "@mdx-js/loader": "^3.1.1",
+    "@mdx-js/react": "^3.1.1",
+    "@next/mdx": "^16.2.4",
+    "@supabase/supabase-js": "^2.105.0",
     "abbrev": "^2.0.0",
     "acorn": "^8.16.0",
     "acorn-jsx": "^5.3.2",
