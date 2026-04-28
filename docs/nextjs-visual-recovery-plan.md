@@ -103,3 +103,33 @@ git push -u origin <branch-name>
 ```
 
 If your base branch is `main`, use `main...<branch-name>` in the compare URL.
+
+
+## Can you commit directly to `main`?
+
+Yes, it is technically possible to execute this plan by committing directly to `main`.
+
+However, it is not recommended for this kind of visual recovery work because UI parity changes are iterative and easy to regress.
+
+If you still want direct-to-main, use this minimum safety flow:
+
+1. Create a backup tag before changes:
+
+```bash
+git checkout main
+git pull origin main
+git tag backup-before-visual-recovery-$(date +%Y%m%d-%H%M)
+git push origin --tags
+```
+
+2. Commit in small slices (globals, navbar/footer, home, projects/blog, mobile).
+3. Run `npm run build` after each slice.
+4. Validate `/sitemap.xml` and `/robots.txt` after each slice.
+5. If anything breaks, rollback the latest slice immediately:
+
+```bash
+git revert <bad-commit-sha>
+git push origin main
+```
+
+Recommended alternative: do the same slices in a branch and merge each slice quickly to `main` after validation.
