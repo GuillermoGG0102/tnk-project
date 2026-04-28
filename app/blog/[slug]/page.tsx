@@ -12,7 +12,7 @@ import { formatDate }     from '@/lib/utils'
 import { BLOG_CATEGORIES } from '@/types'
 
 interface PageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -21,7 +21,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const post = getBlogPostBySlug(params.slug)
+  const { slug } = await params
+  const post = getBlogPostBySlug(slug)
   if (!post) return {}
 
   const { frontmatter: fm } = post
@@ -40,13 +41,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
-  const postData = getBlogPostBySlug(params.slug)
+  const { slug } = await params
+  const postData = getBlogPostBySlug(slug)
   if (!postData) notFound()
 
   const { frontmatter: fm } = postData
   const allPosts             = getAllBlogPosts()
   const related              = allPosts
-    .filter(p => p.slug !== params.slug && p.category === fm.category)
+    .filter(p => p.slug !== slug && p.category === fm.category)
     .slice(0, 3)
 
   const cat          = BLOG_CATEGORIES[fm.category as keyof typeof BLOG_CATEGORIES]
@@ -56,7 +58,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     fm.category === 'league-of-legends' ? 'lol'     : 'padel'
 
   // Dynamic MDX import
-  const { default: PostContent } = await import(`@/content/blog/${params.slug}.mdx`)
+  const { default: PostContent } = await import(`@/content/blog/${slug}.mdx`)
 
   return (
     <div className="min-h-screen pt-24 pb-20">
@@ -147,16 +149,16 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         {/* Likes */}
         <div className="mb-10">
-          <LikeButton slug={params.slug} />
+          <LikeButton slug={slug} />
         </div>
 
         {/* Newsletter */}
         <div className="mb-16">
-          <NewsletterForm source={`blog-post-${params.slug}`} />
+          <NewsletterForm source={`blog-post-${slug}`} />
         </div>
 
         {/* Comments */}
-        <CommentSection slug={params.slug} />
+        <CommentSection slug={slug} />
 
         {/* Related posts */}
         {related.length > 0 && (

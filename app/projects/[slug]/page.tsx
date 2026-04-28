@@ -9,7 +9,7 @@ import { analytics }       from '@/lib/analytics'
 import { PROJECT_CATEGORIES } from '@/types'
 
 interface PageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -18,7 +18,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const project = getProjectBySlug(params.slug)
+  const { slug } = await params
+  const project = getProjectBySlug(slug)
   if (!project) return {}
   const fm = project.frontmatter
   return {
@@ -34,7 +35,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ProjectPage({ params }: PageProps) {
-  const projectData = getProjectBySlug(params.slug)
+  const { slug } = await params
+  const projectData = getProjectBySlug(slug)
   if (!projectData) notFound()
 
   const fm  = projectData.frontmatter
@@ -44,7 +46,7 @@ export default async function ProjectPage({ params }: PageProps) {
     fm.category === 'analytics'       ? 'accent'  :
     fm.category === 'experimentation' ? 'neutral' : 'primary'
 
-  const { default: ProjectContent } = await import(`@/content/projects/${params.slug}.mdx`)
+  const { default: ProjectContent } = await import(`@/content/projects/${slug}.mdx`)
 
   return (
     <div className="min-h-screen pt-24 pb-20">
@@ -75,7 +77,7 @@ export default async function ProjectPage({ params }: PageProps) {
               <Button
                 variant="primary"
                 size="md"
-                onClick={() => analytics.ctaClick('View Live Project', params.slug)}
+                onClick={() => analytics.ctaClick('View Live Project', slug)}
               >
                 <a href={fm.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                   View live project <ExternalLink size={15} />
@@ -147,7 +149,7 @@ export default async function ProjectPage({ params }: PageProps) {
 
         {/* CTA */}
         <div className="pt-10 border-t border-white/[0.06] flex flex-wrap gap-4">
-          <Button variant="primary" size="lg" onClick={() => analytics.ctaClick('Contact After Project', params.slug)}>
+          <Button variant="primary" size="lg" onClick={() => analytics.ctaClick('Contact After Project', slug)}>
             <Link href="/contact">Work with me</Link>
           </Button>
           <Button variant="ghost" size="lg">
