@@ -1,5 +1,5 @@
 {
-  "buildCommand": null,
+  "buildCommand": "node scripts/generate-sitemap.mjs",
   "outputDirectory": ".",
   "framework": null,
   "installCommand": null
