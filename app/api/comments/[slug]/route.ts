@@ -1,12 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-interface RouteParams {
-  params: {
-    slug: string
-  }
-}
-
 function getSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -14,8 +8,11 @@ function getSupabase() {
   return createClient(url, key)
 }
 
-export async function GET(request: Request, { params }: RouteParams) {
-  const { slug } = params
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const { slug } = await params
   const supabase = getSupabase()
   if (!supabase) return NextResponse.json([])
 
@@ -34,8 +31,11 @@ export async function GET(request: Request, { params }: RouteParams) {
   return NextResponse.json(data ?? [])
 }
 
-export async function POST(req: Request, { params }: RouteParams) {
-  const { slug } = params
+export async function POST(
+  req: Request,
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const { slug } = await params
   try {
     const { author_name, content } = await req.json()
 
@@ -55,7 +55,7 @@ export async function POST(req: Request, { params }: RouteParams) {
     const { error } = await supabase
       .from('post_comments')
       .insert({
-        post_slug:   params.slug,
+        post_slug:   slug,
         author_name: author_name.trim(),
         content:     content.trim(),
         approved:    false,

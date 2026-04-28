@@ -1,11 +1,5 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-
-interface RouteParams {
-  params: {
-    slug: string
-  }
-}
 
 function getSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -14,8 +8,11 @@ function getSupabase() {
   return createClient(url, key)
 }
 
-export async function GET(request: Request, { params }: RouteParams) {
-  const { slug } = params
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const { slug } = await params
   const browserId = req.nextUrl.searchParams.get('browser_id') ?? ''
 
   const supabase = getSupabase()
@@ -40,9 +37,12 @@ export async function GET(request: Request, { params }: RouteParams) {
   return NextResponse.json({ count: count ?? 0, liked })
 }
 
-export async function POST(req: Request, { params }: RouteParams) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
+) {
   try {
-    const { slug } = params
+    const { slug } = await params
     const { browser_id } = await req.json()
 
     if (!browser_id) {
