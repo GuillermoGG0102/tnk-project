@@ -11,13 +11,10 @@ import { BlogCard }       from '@/components/blog/BlogCard'
 import { formatDate }     from '@/lib/utils'
 import { BLOG_CATEGORIES } from '@/types'
 
+export const dynamic = 'force-dynamic'
+
 interface PageProps {
   params: Promise<{ slug: string }>
-}
-
-export async function generateStaticParams() {
-  const posts = getAllBlogPosts()
-  return posts.map(p => ({ slug: p.slug }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

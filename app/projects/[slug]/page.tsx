@@ -8,13 +8,10 @@ import { Button }          from '@/components/ui/Button'
 import { analytics }       from '@/lib/analytics'
 import { PROJECT_CATEGORIES } from '@/types'
 
+export const dynamic = 'force-dynamic'
+
 interface PageProps {
   params: Promise<{ slug: string }>
-}
-
-export async function generateStaticParams() {
-  const projects = getAllProjects()
-  return projects.map(p => ({ slug: p.slug }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
