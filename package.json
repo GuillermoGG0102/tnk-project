@@ -323,7 +323,7 @@
     "nanoid": "^3.3.11",
     "napi-postinstall": "^0.3.4",
     "natural-compare": "^1.4.0",
-    "next": "^16.1.6",
+    "next": "^15.1.6",
     "next-themes": "^0.2.1",
     "node-exports-info": "^1.6.0",
     "node-releases": "^2.0.36",
