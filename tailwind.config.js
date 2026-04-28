@@ -5,6 +5,16 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './content/**/*.{md,mdx}',
+    './lib/**/*.{js,ts,jsx,tsx}',
+    './types/**/*.{js,ts,jsx,tsx}',
+  ],
+  safelist: [
+    {
+      pattern: /(bg|text|border|from|to|via|ring)-\[#[0-9A-Fa-f]+\]/,
+    },
+    {
+      pattern: /(bg|text|border)-(white|black)\/\[?[0-9.]+\]?/,
+    },
   ],
   theme: {
     extend: {
