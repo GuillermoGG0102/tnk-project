@@ -8,7 +8,8 @@ function getSupabase() {
   return createClient(url, key)
 }
 
-export async function GET(_req: NextRequest, { params }: { params: { slug: string } }) {
+export async function GET(_req: NextRequest, context: { params: { slug: string } }) {
+  const { params } = context
   const supabase = getSupabase()
   if (!supabase) return NextResponse.json([])
 
@@ -27,7 +28,8 @@ export async function GET(_req: NextRequest, { params }: { params: { slug: strin
   return NextResponse.json(data ?? [])
 }
 
-export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
+export async function POST(req: NextRequest, context: { params: { slug: string } }) {
+  const { params } = context
   try {
     const { author_name, content } = await req.json()
 

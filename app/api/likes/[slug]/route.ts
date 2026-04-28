@@ -8,7 +8,8 @@ function getSupabase() {
   return createClient(url, key)
 }
 
-export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
+export async function GET(req: NextRequest, context: { params: { slug: string } }) {
+  const { params } = context
   const { slug } = params
   const browserId = req.nextUrl.searchParams.get('browser_id') ?? ''
 
@@ -34,8 +35,9 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
   return NextResponse.json({ count: count ?? 0, liked })
 }
 
-export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
+export async function POST(req: NextRequest, context: { params: { slug: string } }) {
   try {
+    const { params } = context
     const { slug } = params
     const { browser_id } = await req.json()
 
