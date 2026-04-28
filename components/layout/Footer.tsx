@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { Linkedin, Instagram, Github, Mail, ArrowUpRight } from 'lucide-react'
 import { analytics } from '@/lib/analytics'
