@@ -13,22 +13,23 @@ export const metadata: Metadata = {
 }
 
 interface BlogPageProps {
-  searchParams: {
+  searchParams: Promise<{
     category?: BlogCategory
     search?:   string
-  }
+  }>
 }
 
-export default function BlogPage({ searchParams }: BlogPageProps) {
+export default async function BlogPage({ searchParams }: BlogPageProps) {
+  const params   = await searchParams
   const allPosts = getAllBlogPosts()
 
   // Filter by category
-  const categoryFiltered = searchParams.category
-    ? allPosts.filter(p => p.category === searchParams.category)
+  const categoryFiltered = params.category
+    ? allPosts.filter(p => p.category === params.category)
     : allPosts
 
   // Filter by search
-  const query   = (searchParams.search ?? '').toLowerCase()
+  const query   = (params.search ?? '').toLowerCase()
   const filtered = query
     ? categoryFiltered.filter(
         p =>
@@ -70,12 +71,12 @@ export default function BlogPage({ searchParams }: BlogPageProps) {
             <Search size={15} className="text-[#4D5E87] shrink-0" />
             <input
               name="search"
-              defaultValue={searchParams.search}
+              defaultValue={params.search}
               placeholder="Search articles…"
               className="bg-transparent text-sm text-[#F0F4FF] placeholder:text-[#4D5E87] outline-none w-44"
             />
-            {searchParams.category && (
-              <input type="hidden" name="category" value={searchParams.category} />
+            {params.category && (
+              <input type="hidden" name="category" value={params.category} />
             )}
           </form>
         </div>
@@ -88,7 +89,7 @@ export default function BlogPage({ searchParams }: BlogPageProps) {
         ) : (
           <>
             {/* Featured / first post */}
-            {featured && !query && !searchParams.category && (
+            {featured && !query && !params.category && (
               <div className="mb-10">
                 <BlogCard post={featured} featured />
               </div>
@@ -96,7 +97,7 @@ export default function BlogPage({ searchParams }: BlogPageProps) {
 
             {/* Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-              {(query || searchParams.category ? filtered : rest).map(post => (
+              {(query || params.category ? filtered : rest).map(post => (
                 <BlogCard key={post.slug} post={post} />
               ))}
             </div>

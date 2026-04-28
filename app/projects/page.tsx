@@ -11,13 +11,14 @@ export const metadata: Metadata = {
 }
 
 interface ProjectsPageProps {
-  searchParams: { category?: ProjectCategory }
+  searchParams: Promise<{ category?: ProjectCategory }>
 }
 
-export default function ProjectsPage({ searchParams }: ProjectsPageProps) {
+export default async function ProjectsPage({ searchParams }: ProjectsPageProps) {
+  const params   = await searchParams
   const all      = getAllProjects()
-  const filtered = searchParams.category
-    ? all.filter(p => p.category === searchParams.category)
+  const filtered = params.category
+    ? all.filter(p => p.category === params.category)
     : all
 
   return (
