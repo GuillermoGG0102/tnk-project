@@ -31,7 +31,7 @@ export function NewsletterForm({ source = 'blog', variant = 'default' }: Newslet
 
       if (res.ok) {
         setStatus('success')
-        setMessage(data.message ?? 'You're subscribed! Check your inbox.')
+        setMessage(data.message ?? "You're subscribed! Check your inbox.")
         analytics.blogSubscribe(source)
         setEmail('')
       } else {
