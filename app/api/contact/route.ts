@@ -42,9 +42,9 @@ export async function POST(req: NextRequest) {
       const resend     = new Resend(resendKey)
 
       await resend.emails.send({
-        from:    'onboarding@resend.dev',
-        to:      contactEmail,
-        replyTo: email,
+        from:     'onboarding@resend.dev',
+        to:       contactEmail,
+        reply_to: email,
         subject: `[TNK Contact] ${subject} — from ${name}`,
         html: `
           <p><strong>From:</strong> ${name} (${email})</p>
