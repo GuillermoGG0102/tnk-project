@@ -43,7 +43,20 @@ export function getAllBlogPosts(): BlogPost[] {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
-export function getBlogPostBySlug(slug: string) {
+interface BlogFrontmatter {
+  title: string
+  excerpt: string
+  date: string
+  category: BlogPost['category']
+  tags: string[]
+  coverImage?: string
+  readingTime: string
+  author: BlogPost['author']
+  published: boolean
+  [key: string]: any
+}
+
+export function getBlogPostBySlug(slug: string): { slug: string; frontmatter: BlogFrontmatter; content: string } | null {
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`)
   if (!fs.existsSync(filePath)) return null
   const raw = fs.readFileSync(filePath, 'utf8')
@@ -54,7 +67,7 @@ export function getBlogPostBySlug(slug: string) {
       ...data,
       readingTime: readingTime(content).text,
       author: data.author ?? defaultAuthor,
-    },
+    } as BlogFrontmatter,
     content,
   }
 }
@@ -97,12 +110,28 @@ export function getAllProjects(): Project[] {
     .sort((a, b) => b.year.localeCompare(a.year))
 }
 
-export function getProjectBySlug(slug: string) {
+interface ProjectFrontmatter {
+  title: string
+  shortDescription: string
+  description: string
+  category: Project['category']
+  tags: string[]
+  tools: string[]
+  coverImage?: string
+  results?: string[]
+  impact?: string
+  year: string
+  link?: string
+  featured: boolean
+  [key: string]: any
+}
+
+export function getProjectBySlug(slug: string): { slug: string; frontmatter: ProjectFrontmatter; content: string } | null {
   const filePath = path.join(PROJECT_DIR, `${slug}.mdx`)
   if (!fs.existsSync(filePath)) return null
   const raw = fs.readFileSync(filePath, 'utf8')
   const { data, content } = matter(raw)
-  return { slug, frontmatter: data, content }
+  return { slug, frontmatter: data as ProjectFrontmatter, content }
 }
 
 // ─── Author ───────────────────────────────────────────────────────
