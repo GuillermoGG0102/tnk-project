@@ -40,6 +40,31 @@
 - Placeholder images: `https://placehold.co/WIDTHxHEIGHT`
 - Mobile-first responsive
 
+## Blog Article Management
+- **File structure:** All blog articles live in `/blog/` directory with filename pattern: `article-slug.html`
+- **HTML structure:** Use semantic HTML with `<article>`, proper heading hierarchy, and inline styles matching existing articles
+- **Always update blog.html:** When adding a new article, you MUST add a new `<article>` card element in the `#posts-grid` div in `blog.html`
+- **Card structure required:**
+  ```html
+  <article class="card post-card" onclick="tnkNavigate('blog/SLUG.html',{content_type:'blog_card',content_id:'SLUG',content_name:'Full Title',item_list_name:'blog_listing'})" data-category="CATEGORY">
+    <!-- Image/visual preview div with aspect-ratio:16/9 -->
+    <div style="padding:22px 22px;flex:1;display:flex;flex-direction:column;">
+      <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
+        <span class="tag-primary">Category</span>
+        <span class="tag-neutral" style="font-size:10px;">Tag</span>
+        <span style="font-size:11px;color:#4D5E87;">X min read</span>
+      </div>
+      <h3>Article Title</h3>
+      <p>Article description/excerpt</p>
+      <div style="padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);">
+        <time>Published date</time>
+      </div>
+    </div>
+  </article>
+  ```
+- **Categories:** Use existing categories (analytics, design, dev) or define new ones with matching `data-category` attribute
+- **SEO:** Include meta tags in article head (title, description, keywords)
+
 ## Brand Assets
 - Always check the `assets/brand/` folder before designing. It contains the logo, color guide, and style guide.
 - If assets exist there, use them. Do not use placeholders where real assets are available.
