@@ -1,200 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Discover 10 powerful Claude tips that most users don't know about. Learn hidden features, tricks, and best practices to supercharge your AI workflow.">
-    <meta name="keywords" content="Claude AI tips, Claude tricks, how to use Claude better, Claude hidden features">
-    <title>10 Claude Tips Most Users Don't Know About | AI Power User Guide</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; line-height: 1.7; color: #333; background: #fafafa; }
-        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
-        h1 { font-size: 2.5em; margin-bottom: 20px; color: #1a1a1a; line-height: 1.2; }
-        h2 { font-size: 1.8em; margin-top: 40px; margin-bottom: 20px; color: #1a1a1a; border-bottom: 3px solid #6366f1; padding-bottom: 10px; }
-        h3 { font-size: 1.3em; margin-top: 30px; margin-bottom: 15px; color: #2d2d2d; }
-        p { margin-bottom: 16px; font-size: 1.05em; }
-        .intro { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 40px; }
-        .intro h1 { color: white; margin-bottom: 15px; }
-        .intro p { color: rgba(255, 255, 255, 0.95); font-size: 1.1em; }
-        .tip { background: white; padding: 30px; margin-bottom: 30px; border-left: 5px solid #6366f1; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .tip h3 { margin-top: 0; color: #6366f1; }
-        code { background: #f5f5f5; padding: 2px 6px; border-radius: 4px; font-family: 'Monaco', 'Courier New', monospace; color: #e11d48; }
-        pre { background: #1a1a1a; color: #00ff00; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 20px 0; line-height: 1.5; }
-        pre code { background: none; padding: 0; color: #00ff00; }
-        .example-label { display: inline-block; background: #6366f1; color: white; padding: 4px 12px; border-radius: 4px; font-size: 0.85em; font-weight: bold; margin-bottom: 10px; }
-        .faq { background: white; padding: 30px; margin-top: 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .faq-item { margin-bottom: 25px; }
-        .faq-item h4 { font-size: 1.1em; color: #6366f1; margin-bottom: 10px; }
-        .resources { background: #f0f4ff; padding: 30px; border-radius: 8px; margin-top: 40px; }
-        .resources h3 { color: #6366f1; margin-top: 0; }
-        .resource-item { margin-bottom: 20px; padding-left: 25px; position: relative; }
-        .resource-item::before { content: "→"; position: absolute; left: 0; color: #6366f1; font-weight: bold; }
-        .cta { background: #6366f1; color: white; padding: 30px; border-radius: 8px; text-align: center; margin-top: 40px; }
-        .cta a { color: white; text-decoration: underline; font-weight: bold; }
-        strong { color: #6366f1; }
-    </style>
+<meta charset="UTF-8" /><meta name="google-site-verification" content="8KMQyefycnnSHdz84SHb2ZdQlS2lDIuoKL" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>10 Claude Tips Most Users Don't Know About | TNK – Design & Analytics</title>
+<script>window.TNK_PAGE = { name: '10 Claude Tips', category: 'blog', type: 'article', group: 'content' };</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KW97DTMV');</script>
+<!-- End Google Tag Manager -->
+<script src="/analytics.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { background:#0A0F1E; color:#F0F4FF; font-family:'Inter',sans-serif; margin:0; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; }
+  .navbar { position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06); }
+  .card { background:#0F1629; border:1px solid rgba(255,255,255,0.07); border-radius:14px; }
+  .tag-accent { background:rgba(0,255,179,0.1);color:#00FFB3;border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-primary { background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-neutral { background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .text-gradient { background:linear-gradient(135deg,#00CFFF,#00FFB3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+  /* Prose */
+  .prose { color:#8A9CC8; line-height:1.8; font-size:17px; }
+  .prose h2 { font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#F0F4FF;letter-spacing:-0.03em;margin:2.5em 0 0.75em; }
+  .prose h3 { font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#F0F4FF;letter-spacing:-0.02em;margin:2em 0 0.6em; }
+  .prose p { margin:0 0 1.4em; }
+  .prose strong { color:#F0F4FF;font-weight:600; }
+  .prose em { color:#F0F4FF;font-style:italic; }
+  .prose a { color:#00CFFF;text-decoration:underline;text-decoration-color:rgba(0,207,255,0.3); }
+  .prose ul,.prose ol { padding-left:1.5rem;margin-bottom:1.5em; }
+  .prose li { margin-bottom:0.5em; }
+  .prose hr { border:none;border-top:1px solid rgba(255,255,255,0.08);margin:3em 0; }
+  .prose pre { background:#162038;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px 24px;overflow-x:auto;margin:1.5em 0;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.6;color:#F0F4FF; }
+  .prose code { font-family:'JetBrains Mono',monospace;font-size:13px;padding:2px 6px;background:#162038;border-radius:4px;color:#00FFB3; }
+  .prose pre code { background:transparent;padding:0;color:#F0F4FF; }
+  .prose blockquote { border-left:3px solid #00CFFF;padding-left:1.5rem;margin:2em 0;font-style:italic; }
+  .prose table { width:100%;border-collapse:collapse;margin:2em 0; }
+  .prose th { background:#162038;color:#F0F4FF;font-weight:600;font-size:13px;padding:10px 14px;text-align:left;border:1px solid rgba(255,255,255,0.08); }
+  .prose td { padding:10px 14px;border:1px solid rgba(255,255,255,0.06);font-size:14px; }
+  .prose tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+  .fade-up { animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="intro">
-            <h1>10 Claude Tips Most Users Don't Know About</h1>
-            <p>You're probably using Claude already, but I bet you're missing some game-changing features that could transform your workflow. After spending months exploring every corner of Claude's capabilities, I've discovered tricks that separate casual users from AI power users. Let me share the ones that genuinely surprised me—and will save you hours of time.</p>
-        </div>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KW97DTMV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
-        <h2>The 10 Hidden Gems</h2>
+<!-- NAVBAR -->
+<header class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <nav style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="../assets/images/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
+      </a>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <a href="../index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
+        <a href="../projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="../blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
+        <a href="../contact.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+      </div>
+    </nav>
+  </div>
+</header>
 
-        <div class="tip">
-            <h3>1. Pin Important Projects to the Top for Instant Access</h3>
-            <p>This sounds simple, but it's a massive time-saver. Instead of scrolling through your conversation history hunting for that one project, you can pin it. I pin my active projects—the ones I'm currently developing—right at the top of my sidebar so they're always one click away.</p>
-            <p>Why this matters: I was wasting 10-15 seconds every time I switched between projects. Over a day, that adds up. Pinning means I've eliminated friction from my workflow entirely.</p>
-            <p class="example-label">Real-world use</p>
-            <p>When I'm building a website, I pin the design project, the implementation project, and the testing project all at the top. I never lose context about where I am in the development cycle.</p>
-        </div>
+<!-- CONTENT -->
+<div style="max-width:780px;margin:0 auto;padding:110px 24px 80px;">
 
-        <div class="tip">
-            <h3>2. Use Custom Instructions to Create Your Personal AI Assistant</h3>
-            <p>This changed everything for me. Custom instructions let you define how Claude behaves across every conversation. Instead of repeating "I want you to write in a casual tone" or "always use markdown formatting," I set it once and it applies everywhere.</p>
-            <p>I've crafted instructions that match my communication style, technical preferences, and output format. Now every response feels like it was written specifically for me.</p>
-            <p class="example-label">What I set up</p>
-            <pre><code>"I prefer responses in markdown format. When writing code, always include comments explaining the logic. Use a conversational tone but stay technical. For any multi-step process, break it into numbered steps."</code></pre>
-            <p>This single instruction has probably saved me 20+ hours of reformatting responses and repeating preferences.</p>
-        </div>
+  <!-- Back -->
+  <a href="../blog.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#8A9CC8;text-decoration:none;margin-bottom:40px;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">
+    ← Back to Blog
+  </a>
 
-        <div class="tip">
-            <h3>3. Leverage System Prompts vs. User Prompts for Maximum Control</h3>
-            <p>Most people don't realize the difference between system-level prompting and conversation-level prompting. System prompts (your custom instructions) set the baseline behavior. User prompts within conversations override and refine it. I use system prompts for my default style and conversation prompts for specific task requirements.</p>
-            <p>Think of system prompts as your standing order, and conversation prompts as the one-off adjustments.</p>
-            <p class="example-label">How I use this</p>
-            <pre><code>System Instruction: "Write code with detailed comments"
+  <!-- Header -->
+  <div class="fade-up">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:20px;">
+      <span class="tag-primary">Development</span>
+      <span style="font-size:12px;color:#4D5E87;display:flex;align-items:center;gap:4px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8 min read
+      </span>
+      <span style="font-size:12px;color:#4D5E87;">Apr 30, 2026</span>
+    </div>
+    <h1 style="font-size:clamp(28px,4.5vw,46px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:#F0F4FF;margin:0 0 20px 0;">10 Claude Tips Most Users Don't Know About</h1>
+    <p style="font-size:19px;color:#8A9CC8;line-height:1.7;margin:0 0 36px 0;">Hidden features, power-user tricks, and workflow optimizations that will fundamentally change how you use Claude. These aren't the basics—they're the insights that separate casual users from productivity powerhouses.</p>
+  </div>
 
-Conversation Prompt: "For this specific function, write minimal comments and optimize for readability over explanation"</code></pre>
-        </div>
+  <!-- Cover -->
+  <div style="border-radius:18px;overflow:hidden;margin-bottom:44px;border:1px solid rgba(255,255,255,0.07);">
+    <img src="https://placehold.co/1200x600/0F1629/00CFFF?text=Claude+Tips+%26+Tricks" style="width:100%;display:block;" />
+  </div>
 
-        <div class="tip">
-            <h3>4. Break Complex Tasks Into Sequential Steps for Clarity</h3>
-            <p>Instead of dumping a massive request into one prompt, I've learned to split it into logical steps. This isn't just better for Claude—it's better for me. I understand my own needs better when I articulate them step-by-step.</p>
-            <p>The magic: Claude maintains context across messages, so each step builds on the previous one. But I guide the direction explicitly.</p>
-            <p class="example-label">Example workflow</p>
-            <pre><code>Step 1: "Analyze these requirements and identify the core user flows"
-Step 2: "For each flow, suggest the optimal technical architecture"
-Step 3: "Draft the implementation plan based on that architecture"</code></pre>
-            <p>This approach has cut my iteration cycles in half because I'm constantly validating direction rather than discovering problems at the end.</p>
-        </div>
+  <!-- Author -->
+  <div class="card" style="display:flex;align-items:center;gap:14px;padding:16px 20px;margin-bottom:52px;">
+    <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00CFFF,#00FFB3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#0A0F1E;font-size:16px;">G</span></div>
+    <div>
+      <div style="font-weight:600;font-size:14px;color:#F0F4FF;">Guillermo García</div>
+      <div style="font-size:12px;color:#8A9CC8;">AI Productivity & Design Systems</div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:10px;">
+      <a href="https://www.linkedin.com/in/guillermo-garc%C3%ADa-gonz%C3%A1lez-l%C3%B3pez/" target="_blank" style="color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#00CFFF'" onmouseout="this.style.color='#4D5E87'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    </div>
+  </div>
 
-        <div class="tip">
-            <h3>5. Use Few-Shot Prompting to Train Claude on Your Style</h3>
-            <p>Few-shot prompting means giving Claude examples of exactly what you want. Instead of describing the format, I show it. This is incredibly powerful for consistent outputs, especially when I'm generating marketing copy, documentation, or structured data.</p>
-            <p class="example-label">Here's how I use it</p>
-            <pre><code>Example 1 (what I want):
-"Feature: One-click export
-Description: Save your document as PDF with a single click"
+  <!-- Article body -->
+  <div class="prose">
 
-Example 2 (what I want):
-"Feature: Dark mode toggle
-Description: Switch between light and dark themes instantly"
+    <p>You're probably using Claude already. But I guarantee you're missing features and workflows that could cut your work in half. After months of exploring every corner of Claude's capabilities, I've discovered tricks that separate power users from the rest. Let me share the ones that genuinely changed how I work.</p>
+
+    <hr />
+
+    <h2>1. Pin Critical Projects to the Top</h2>
+    <p>This one's deceptively simple, but it's saved me more time than almost anything else. Instead of scrolling through conversation history hunting for that one active project, I pin it.</p>
+    <p>I pin my three most active projects at the top—currently: design system work, analytics implementation, and content strategy. Switching between them takes one click instead of three.</p>
+    <p><strong>Why it matters:</strong> Over a workday, those extra clicks compound. Multiply 10 seconds times dozens of switches, and you're talking hours saved per week.</p>
+
+    <h2>2. Use Custom Instructions to Build Your Perfect AI Assistant</h2>
+    <p>Custom instructions let you define how Claude behaves globally. Instead of repeating "write in markdown" or "explain your reasoning," you set it once and never again.</p>
+    <p>I've built instructions that define my preferred tone (conversational but technical), output format (always markdown), and context handling (think out loud, don't assume what I know).</p>
+    <p>The result: Every response feels tailored to my workflow without me having to ask for it.</p>
+    <p><strong>Pro tip:</strong> Your custom instructions are the "standing order" for how Claude behaves. Use them for your defaults, not for one-off preferences.</p>
+
+    <h2>3. Understand System Prompts vs. User Prompts</h2>
+    <p>Here's something most people miss: your custom instructions are <em>system-level</em> prompts. They set the baseline. But user prompts (what you type in conversations) can override them.</p>
+    <p>I use this strategically. System prompts define my defaults. In specific conversations, I can say "for this task, ignore the usual format and do X instead"—and Claude understands the temporary override.</p>
+    <p>This two-layer system gives you both consistency and flexibility.</p>
+
+    <h2>4. Break Complex Tasks Into Sequential Steps</h2>
+    <p>Don't dump everything into one massive prompt. Split it into logical steps. Claude maintains full context across messages, so each step builds on the previous one—but you guide the direction explicitly.</p>
+    <p>Instead of: "Design a database schema, generate SQL, create indexes, and write migration scripts," I do:</p>
+    <ul>
+      <li>Step 1: "Analyze these requirements. What are the core entities?"</li>
+      <li>Step 2: "Design the schema based on those entities."</li>
+      <li>Step 3: "Generate optimized SQL for this schema."</li>
+      <li>Step 4: "Write migration scripts."</li>
+    </ul>
+    <p>This approach has cut my iteration cycles in half because I'm validating direction constantly rather than discovering problems at the end.</p>
+
+    <h2>5. Use Few-Shot Prompting for Consistent Output</h2>
+    <p>Few-shot prompting means showing Claude examples of exactly what you want. Instead of describing the format, you demonstrate it.</p>
+    <p>When I'm generating marketing copy, documentation, or structured data, I give 2-3 examples of the exact style and format I want. Claude learns the pattern instantly.</p>
+    <pre><code>Example 1:
+Feature: Dark mode toggle
+Description: Switch themes instantly with one click
+
+Example 2:
+Feature: Keyboard shortcuts
+Description: Work faster with custom keyboard bindings
 
 Now generate 5 more features in this exact format...</code></pre>
-            <p>The results are almost always perfect on the first try because Claude understands my exact style and structure.</p>
-        </div>
+    <p>Results are almost always perfect on the first try.</p>
 
-        <div class="tip">
-            <h3>6. Master Role-Playing Prompts for Specialized Expertise</h3>
-            <p>When I need Claude to think like a specific expert—a security auditor, a UX designer, a backend architect—I explicitly assign the role. This isn't gimmicky; it fundamentally changes how Claude approaches the problem.</p>
-            <p class="example-label">Example</p>
-            <pre><code>Instead of: "Review this code for security issues"
+    <h2>6. Assign Roles for Specialized Expertise</h2>
+    <p>When I need Claude to think like a specific expert—a security auditor, a UX designer, a backend architect—I explicitly assign the role. This fundamentally changes how Claude approaches the problem.</p>
+    <p><strong>Instead of:</strong> "Review this code for security issues"</p>
+    <p><strong>Better:</strong> "You are a security engineer with 10 years of experience auditing production systems. Review this code and identify vulnerabilities..."</p>
+    <p>The difference is striking. Role-based prompts produce deeper, more nuanced analysis because Claude commits fully to the perspective.</p>
 
-Better: "You are a security engineer with 10 years of experience auditing production systems. Review this code and identify vulnerabilities..."</code></pre>
-            <p>The difference is striking. Role-based prompts produce deeper, more nuanced analysis because Claude commits to the perspective.</p>
-        </div>
+    <h2>7. Specify Output Format Upfront</h2>
+    <p>I used to get responses and spend 5 minutes reformatting them. Now I specify format upfront: JSON, markdown tables, bullet points, HTML. This single habit saves the most time of any tip here.</p>
+    <pre><code>"Generate a comparison table. Format as:
+| Feature | Option A | Option B |
+| --- | --- | --- |
+| Feature name | description | description |
 
-        <div class="tip">
-            <h3>7. Explicitly Specify Output Format to Eliminate Reformatting</h3>
-            <p>I used to get responses and then spend 5 minutes reformatting them. Now I specify the format upfront: JSON, markdown tables, bullet points, structured HTML. This single habit has probably saved me the most time of any tip on this list.</p>
-            <p class="example-label">What I do</p>
-            <pre><code>"Generate a list of best practices. Format as a JSON array with 'category', 'practice', and 'impact' fields. Example:
-{
-  'category': 'Performance',
-  'practice': 'Use caching',
-  'impact': 'Reduces latency by 40%'
-}"</code></pre>
-            <p>No guessing, no reformatting. The response arrives ready to use.</p>
-        </div>
+Include 5 comparisons."</code></pre>
+    <p>The response arrives ready to use. No guessing, no reformatting.</p>
 
-        <div class="tip">
-            <h3>8. Use Claude Projects to Organize Long-Form Work</h3>
-            <p>For major projects—writing a book chapter, building a complex app, designing a system—I create a dedicated Claude Project. It keeps related conversations organized, maintains context across discussions, and lets me reference earlier decisions instantly.</p>
-            <p>I've found projects invaluable for anything spanning more than 5-10 conversations. The organizational clarity is worth it alone.</p>
-        </div>
+    <h2>8. Organize Long-Form Work with Claude Projects</h2>
+    <p>For major projects—writing a strategy document, building a complex system, creating a comprehensive guide—I use Claude Projects. It keeps related conversations organized and maintains context across discussions.</p>
+    <p>I can reference earlier decisions instantly: "Remember when we decided on this architecture in conversation 3? Here's how it affects this new requirement."</p>
+    <p>Projects are invaluable for anything spanning more than 5-10 conversations.</p>
 
-        <div class="tip">
-            <h3>9. Understand When to Use Different Claude Models</h3>
-            <p>Not all tasks need the most powerful model. I use Claude Haiku for quick lookups and simple formatting. Claude Sonnet for balanced work—most of my writing and coding. Claude Opus for complex architectural decisions and security reviews.</p>
-            <p>Matching the model to the task means faster responses, lower costs, and better resource usage.</p>
-            <p class="example-label">My breakdown</p>
-            <p><strong>Haiku:</strong> "Summarize this article," "Format this data"<br>
-            <strong>Sonnet:</strong> "Write a blog post," "Refactor this function"<br>
-            <strong>Opus:</strong> "Design our system architecture," "Security audit"</p>
-        </div>
+    <h2>9. Choose the Right Model for the Task</h2>
+    <p>Not all tasks need the most powerful model. I use <strong>Claude Haiku</strong> for quick lookups and simple formatting. <strong>Claude Sonnet</strong> for balanced work—most of my writing and coding. <strong>Claude Opus</strong> only for complex architectural decisions and security reviews.</p>
+    <p>Matching the model to the task means faster responses, lower costs, and better resource allocation:</p>
+    <ul>
+      <li><strong>Haiku:</strong> "Summarize this article," "Format this data"</li>
+      <li><strong>Sonnet:</strong> "Write a blog post," "Refactor this function"</li>
+      <li><strong>Opus:</strong> "Design system architecture," "Security audit"</li>
+    </ul>
 
-        <div class="tip">
-            <h3>10. Create Reusable Prompt Templates for Your Most Common Tasks</h3>
-            <p>I've built a personal library of prompts for things I do repeatedly: code review, documentation writing, project planning, content outlines. I copy the template, fill in the specifics, and I'm done.</p>
-            <p>This is my secret weapon. Every prompt is battle-tested and refined. I'm not starting from scratch each time.</p>
-            <p class="example-label">Template example (code review)</p>
-            <pre><code>"Review this [LANGUAGE] code for:
+    <h2>10. Build a Personal Library of Prompt Templates</h2>
+    <p>The final tip: I've created a personal library of battle-tested prompts for things I do repeatedly—code review, documentation writing, project planning, content outlines. I copy the template, fill in specifics, and I'm done.</p>
+    <p>Every template is refined through use. I'm not starting from scratch each time.</p>
+    <p><strong>Example template (code review):</strong></p>
+    <pre><code>Review this [LANGUAGE] code for:
 1. Logic errors and edge cases
 2. Performance bottlenecks
 3. Security vulnerabilities
 4. Code style improvements
 
-Format response as: Issue | Severity | Line # | Suggestion"</code></pre>
-        </div>
+Format response as:
+| Issue | Severity | Line # | Suggestion |</code></pre>
 
-        <div class="faq">
-            <h2>Frequently Asked Questions</h2>
+    <hr />
 
-            <div class="faq-item">
-                <h4>Q: How do custom instructions differ from pinned notes?</h4>
-                <p>Custom instructions apply globally across every conversation and shape Claude's baseline behavior. Pinned notes are conversation-specific reminders you can reference. I use custom instructions for my standing preferences (tone, format, expertise) and pinned notes for project-specific context (like team guidelines or API documentation).</p>
-            </div>
+    <h2>The Compound Effect</h2>
+    <p>These aren't revolutionary individually. But together, they compound. Pinning projects saves seconds. Custom instructions save minutes. Better prompts save hours.</p>
+    <p>Start with one. The one that solves your biggest friction point right now. Master it. Then add another.</p>
+    <p>Your future self—the one moving faster and feeling more in control—will thank you.</p>
 
-            <div class="faq-item">
-                <h4>Q: Can I use prompts to make Claude faster?</h4>
-                <p>Absolutely. Being specific and clear actually makes Claude faster because it doesn't need to ask clarifying questions or explore multiple directions. Also, using the smaller models (Haiku) for simple tasks is dramatically faster than always defaulting to Opus. Clear prompts + right model = speed.</p>
-            </div>
+  </div>
 
-            <div class="faq-item">
-                <h4>Q: What if Claude doesn't understand my prompt on the first try?</h4>
-                <p>Iterate. Tell it what's wrong. I'll say things like "That's close, but I need it formatted differently" or "Add more detail to the security section." Claude learns from feedback within a conversation. The feedback itself becomes part of the context for the next response.</p>
-            </div>
-        </div>
+</div>
 
-        <div class="resources">
-            <h3>Recommended Resources</h3>
-            <p>These resources have genuinely shaped how I work with Claude:</p>
-
-            <div class="resource-item">
-                <strong>Official Anthropic YouTube Channel</strong>
-                <p>I watched several of their video walkthroughs and they're phenomenal. Seeing Claude in action—especially the advanced features—is so much clearer than reading about them. They cover everything from basics to enterprise use cases. I particularly enjoyed their prompt engineering tutorials.</p>
-            </div>
-
-            <div class="resource-item">
-                <strong>Anthropic's Prompt Engineering Guide</strong>
-                <p>Available at <code>docs.anthropic.com</code>, this guide is the authoritative resource. It goes deep into techniques like chain-of-thought prompting, few-shot learning, and system prompts. I've referenced it dozens of times when I hit a new use case. It's dense but incredibly practical.</p>
-            </div>
-
-            <div class="resource-item">
-                <strong>The Article "Claude's Character" from Anthropic's Blog</strong>
-                <p>This essay completely changed how I think about interacting with Claude. Understanding Claude's design philosophy and limitations helped me craft better prompts and have more realistic expectations. It's the "why" behind many of the tips I shared above.</p>
-            </div>
-        </div>
-
-        <div class="cta">
-            <h2 style="color: white; border: none; padding: 0; margin: 0 0 20px 0;">Ready to level up?</h2>
-            <p>Start with just one of these tips this week. Pinning a project, setting up custom instructions, or breaking your next task into steps. Pick the one that solves your biggest friction point right now. You'll be surprised how quickly small habits compound into serious workflow improvements.</p>
-            <p style="margin-top: 20px; font-size: 0.95em;">Your future self—the one moving faster and feeling more in control—is thanking you.</p>
-        </div>
-    </div>
 </body>
 </html>
