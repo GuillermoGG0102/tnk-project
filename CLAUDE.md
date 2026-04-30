@@ -40,30 +40,66 @@
 - Placeholder images: `https://placehold.co/WIDTHxHEIGHT`
 - Mobile-first responsive
 
-## Blog Article Management
-- **File structure:** All blog articles live in `/blog/` directory with filename pattern: `article-slug.html`
-- **HTML structure:** Use semantic HTML with `<article>`, proper heading hierarchy, and inline styles matching existing articles
-- **Always update blog.html:** When adding a new article, you MUST add a new `<article>` card element in the `#posts-grid` div in `blog.html`
-- **Card structure required:**
-  ```html
-  <article class="card post-card" onclick="tnkNavigate('blog/SLUG.html',{content_type:'blog_card',content_id:'SLUG',content_name:'Full Title',item_list_name:'blog_listing'})" data-category="CATEGORY">
-    <!-- Image/visual preview div with aspect-ratio:16/9 -->
-    <div style="padding:22px 22px;flex:1;display:flex;flex-direction:column;">
-      <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
-        <span class="tag-primary">Category</span>
-        <span class="tag-neutral" style="font-size:10px;">Tag</span>
-        <span style="font-size:11px;color:#4D5E87;">X min read</span>
-      </div>
-      <h3>Article Title</h3>
-      <p>Article description/excerpt</p>
-      <div style="padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);">
-        <time>Published date</time>
-      </div>
+## Blog Article Creation Checklist
+**CRITICAL: Follow this exact process to avoid mismatched articles.**
+
+### Step 1: Create Article File (`/blog/article-slug.html`)
+Use `getting-started-with-ga4.html` as the exact template. **Copy its entire structure**, then update:
+- `<title>` tag — your article title + "| TNK – Design & Analytics"
+- `<meta name="description">` — 155 chars, include SEO keywords
+- `window.TNK_PAGE.name` — your article title
+- Head tags: `<script>` for GTM, `<meta>` tags
+- Navbar links (all point up one level with `../`)
+- Back button href: `../blog.html`
+- Header section: tags (use `tag-primary` or `tag-accent`), read time, date
+- H1 title + description paragraph
+- Cover image: `<img src="https://placehold.co/1200x600/0F1629/00CFFF?text=Your+Text">`
+- Author card: name, title, LinkedIn link
+- Article body: wrap in `<div class="prose">` — **this class handles all styling**
+  - Use h2 for major sections, h3 for subsections
+  - Use `<p>`, `<ul>`, `<li>`, `<strong>`, `<em>`, `<code>`, `<pre>`, `<blockquote>`, `<hr />`
+  - All styling is inherited from `.prose` CSS — do NOT add inline styles to content
+
+### Step 2: Add Card to `/blog.html`
+Find `#posts-grid` div. Before the "Coming soon cards" comment, add:
+```html
+<article class="card post-card" onclick="tnkNavigate('blog/SLUG.html',{content_type:'blog_card',content_id:'SLUG',content_name:'Article Title',item_list_name:'blog_listing'})" data-category="CATEGORY" style="overflow:hidden;display:flex;flex-direction:column;">
+  <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:#0d1528;display:flex;align-items:center;justify-content:center;padding:20px;">
+    <!-- Visual preview: code snippet, diagram, or image -->
+  </div>
+  <div style="padding:22px 22px;flex:1;display:flex;flex-direction:column;">
+    <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
+      <span class="tag-primary">Category</span>
+      <span class="tag-neutral" style="font-size:10px;">Tag</span>
+      <span style="font-size:11px;color:#4D5E87;">X min read</span>
     </div>
-  </article>
-  ```
-- **Categories:** Use existing categories (analytics, design, dev) or define new ones with matching `data-category` attribute
-- **SEO:** Include meta tags in article head (title, description, keywords)
+    <h3 style="font-size:17px;font-weight:700;color:#F0F4FF;line-height:1.35;margin:0 0 10px 0;">Article Title</h3>
+    <p style="font-size:13px;color:#8A9CC8;line-height:1.6;flex:1;margin:0 0 16px 0;">Description/excerpt</p>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);">
+      <time style="font-size:12px;color:#4D5E87;">Published date</time>
+      <span style="font-size:12px;color:#4D5E87;">Read →</span>
+    </div>
+  </div>
+</article>
+```
+
+### Step 3: Theme & Colors (DO NOT CHANGE)
+- **Background:** #0A0F1E (dark navy)
+- **Text:** #F0F4FF (light)
+- **Secondary text:** #8A9CC8 (muted blue)
+- **Primary accent:** #00CFFF (cyan)
+- **Secondary accent:** #00FFB3 (green)
+- **Code background:** #162038 (slightly lighter navy)
+- **Fonts:** Space Grotesk (headings), Inter (body), JetBrains Mono (code)
+
+### Step 4: Commit & Push
+```bash
+git add blog/SLUG.html blog.html
+git commit -m "Add blog article: [Title]"
+git push origin main
+```
+
+**REMEMBER:** The `.prose` class handles all article content styling. Do NOT add inline styles to h2, h3, p, ul, code, etc. within the prose div.
 
 ## Brand Assets
 - Always check the `assets/brand/` folder before designing. It contains the logo, color guide, and style guide.

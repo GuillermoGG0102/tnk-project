@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="google-site-verification" content="8KMQyefycnnSHdz84SHb2ZdQlS2lDIuoKL" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>The Complete Guide to Claude Commands and Shortcuts | TNK – Design & Analytics</title>
+<meta name="description" content="Master Claude slash commands, Claude.ai shortcuts, and Projects. Complete reference guide with keyboard shortcuts, system prompts, and workflow optimization." />
+<script>window.TNK_PAGE = { name: 'Claude Commands Guide', category: 'blog', type: 'article', group: 'content' };</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KW97DTMV');</script>
+<!-- End Google Tag Manager -->
+<script src="/analytics.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { background:#0A0F1E; color:#F0F4FF; font-family:'Inter',sans-serif; margin:0; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; }
+  .navbar { position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06); }
+  .card { background:#0F1629; border:1px solid rgba(255,255,255,0.07); border-radius:14px; }
+  .tag-accent { background:rgba(0,255,179,0.1);color:#00FFB3;border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-primary { background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-neutral { background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .text-gradient { background:linear-gradient(135deg,#00CFFF,#00FFB3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+  /* Prose */
+  .prose { color:#8A9CC8; line-height:1.8; font-size:17px; }
+  .prose h2 { font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#F0F4FF;letter-spacing:-0.03em;margin:2.5em 0 0.75em; }
+  .prose h3 { font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#F0F4FF;letter-spacing:-0.02em;margin:2em 0 0.6em; }
+  .prose p { margin:0 0 1.4em; }
+  .prose strong { color:#F0F4FF;font-weight:600; }
+  .prose em { color:#F0F4FF;font-style:italic; }
+  .prose a { color:#00CFFF;text-decoration:underline;text-decoration-color:rgba(0,207,255,0.3); }
+  .prose ul,.prose ol { padding-left:1.5rem;margin-bottom:1.5em; }
+  .prose li { margin-bottom:0.5em; }
+  .prose hr { border:none;border-top:1px solid rgba(255,255,255,0.08);margin:3em 0; }
+  .prose pre { background:#162038;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px 24px;overflow-x:auto;margin:1.5em 0;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.6;color:#F0F4FF; }
+  .prose code { font-family:'JetBrains Mono',monospace;font-size:13px;padding:2px 6px;background:#162038;border-radius:4px;color:#00FFB3; }
+  .prose pre code { background:transparent;padding:0;color:#F0F4FF; }
+  .prose blockquote { border-left:3px solid #00CFFF;padding-left:1.5rem;margin:2em 0;font-style:italic; }
+  .prose table { width:100%;border-collapse:collapse;margin:2em 0; }
+  .prose th { background:#162038;color:#F0F4FF;font-weight:600;font-size:13px;padding:10px 14px;text-align:left;border:1px solid rgba(255,255,255,0.08); }
+  .prose td { padding:10px 14px;border:1px solid rgba(255,255,255,0.06);font-size:14px; }
+  .prose tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+  .fade-up { animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KW97DTMV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <nav style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="../assets/images/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
+      </a>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <a href="../index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
+        <a href="../projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="../blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
+        <a href="../contact.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<div style="max-width:780px;margin:0 auto;padding:110px 24px 80px;">
+
+  <!-- Back -->
+  <a href="../blog.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#8A9CC8;text-decoration:none;margin-bottom:40px;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">
+    ← Back to Blog
+  </a>
+
+  <!-- Header -->
+  <div class="fade-up">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:20px;">
+      <span class="tag-primary">Development</span>
+      <span style="font-size:12px;color:#4D5E87;display:flex;align-items:center;gap:4px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>9 min read
+      </span>
+      <span style="font-size:12px;color:#4D5E87;">May 1, 2026</span>
+    </div>
+    <h1 style="font-size:clamp(28px,4.5vw,46px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:#F0F4FF;margin:0 0 20px 0;">The Complete Guide to Claude Commands and Shortcuts</h1>
+    <p style="font-size:19px;color:#8A9CC8;line-height:1.7;margin:0 0 36px 0;">Master slash commands, keyboard shortcuts, and Claude Projects. Everything you need to know about Claude.ai's power features—from basic commands to advanced workflows.</p>
+  </div>
+
+  <!-- Cover -->
+  <div style="border-radius:18px;overflow:hidden;margin-bottom:44px;border:1px solid rgba(255,255,255,0.07);">
+    <img src="https://placehold.co/1200x600/0F1629/00CFFF?text=Claude+Commands+%26+Shortcuts" style="width:100%;display:block;" />
+  </div>
+
+  <!-- Author -->
+  <div class="card" style="display:flex;align-items:center;gap:14px;padding:16px 20px;margin-bottom:52px;">
+    <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00CFFF,#00FFB3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#0A0F1E;font-size:16px;">G</span></div>
+    <div>
+      <div style="font-weight:600;font-size:14px;color:#F0F4FF;">Guillermo García</div>
+      <div style="font-size:12px;color:#8A9CC8;">AI Productivity & Workflow Systems</div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:10px;">
+      <a href="https://www.linkedin.com/in/guillermo-garc%C3%ADa-gonz%C3%A1lez-l%C3%B3pez/" target="_blank" style="color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#00CFFF'" onmouseout="this.style.color='#4D5E87'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    </div>
+  </div>
+
+  <!-- Article body -->
+  <div class="prose">
+
+    <p>Claude's command system is one of the least understood but most powerful features in Claude.ai. After months of using it daily, I've learned that most people only use a fraction of what's available—and they're missing out on massive productivity gains.</p>
+    <p>This guide is the reference I wish I'd had when I started. It covers everything: slash commands, keyboard shortcuts, how Projects work as your command center, and how to chain commands into powerful workflows.</p>
+
+    <hr />
+
+    <h2>What Are Slash Commands?</h2>
+    <p>Slash commands are shortcuts that trigger specific Claude behaviors. They start with <code>/</code> and handle everything from code review to task organization. They're context-aware—Claude understands what you're asking for and adjusts its response style accordingly.</p>
+    <p>Think of them as preset instructions that save you from repeating yourself. Instead of: "Please review this code for security vulnerabilities, performance issues, and style problems," you type <code>/review</code> and Claude knows exactly what you need.</p>
+
+    <h2>Available Slash Commands</h2>
+    <table>
+      <tr>
+        <th>Command</th>
+        <th>What It Does</th>
+        <th>Best For</th>
+      </tr>
+      <tr>
+        <td><code>/help</code></td>
+        <td>Opens help documentation</td>
+        <td>Learning about Claude features</td>
+      </tr>
+      <tr>
+        <td><code>/clear</code></td>
+        <td>Clears conversation history</td>
+        <td>Starting fresh without context</td>
+      </tr>
+      <tr>
+        <td><code>/code</code></td>
+        <td>Specializes in code generation</td>
+        <td>Writing functions, scripts, algorithms</td>
+      </tr>
+      <tr>
+        <td><code>/research</code></td>
+        <td>Gathers information and summarizes</td>
+        <td>Understanding complex topics</td>
+      </tr>
+      <tr>
+        <td><code>/summarize</code></td>
+        <td>Condenses long text</td>
+        <td>Extracting key points from articles</td>
+      </tr>
+      <tr>
+        <td><code>/explain</code></td>
+        <td>Breaks down difficult concepts</td>
+        <td>Learning new technologies</td>
+      </tr>
+      <tr>
+        <td><code>/review</code></td>
+        <td>Critiques code or content</td>
+        <td>Quality assurance and feedback</td>
+      </tr>
+    </table>
+
+    <h2>How Projects Work as Your Command Center</h2>
+    <p>Projects are like folders for related conversations. Instead of drowning in a flat list of discussions, you group related work together—and Claude maintains context across all conversations within that project.</p>
+    <p>I use Projects for major initiatives. Right now I have three active: a design system overhaul, an analytics implementation, and a content strategy. Each project keeps related conversations organized, and I can reference earlier decisions instantly.</p>
+    <p><strong>Project workflow:</strong> Create a project → add descriptions and context → start conversations within it. Claude remembers everything from previous conversations in that project, so it never loses context about your goals or decisions.</p>
+
+    <h2>Essential Keyboard Shortcuts</h2>
+    <ul>
+      <li><strong>Cmd/Ctrl + Shift + L</strong> — Focus the input field (start typing immediately)</li>
+      <li><strong>Cmd/Ctrl + Enter</strong> — Send message (faster than clicking submit)</li>
+      <li><strong>Cmd/Ctrl + K</strong> — Open command palette (access features quickly)</li>
+      <li><strong>Cmd/Ctrl + Shift + N</strong> — New conversation</li>
+      <li><strong>Cmd/Ctrl + ,</strong> — Open settings</li>
+      <li><strong>Escape</strong> — Close modal/exit mode</li>
+    </ul>
+    <p>These shortcuts compound throughout your day. Cmd+Enter alone saves you hundreds of mouse clicks per week.</p>
+
+    <h2>System Prompts: Setting Up Your Foundation</h2>
+    <p>Your custom instructions are system-level prompts. They set the baseline behavior for every conversation. I use mine to define:</p>
+    <ul>
+      <li>Preferred tone (conversational, technical, no corporate jargon)</li>
+      <li>Output format (always markdown, code blocks with language specified)</li>
+      <li>Thinking style (show your reasoning, don't assume what I know)</li>
+    </ul>
+    <p>This single setup saves me from repeating preferences thousands of times. Every response arrives exactly how I want it.</p>
+
+    <h2>Chaining Commands Into Workflows</h2>
+    <p>The real power emerges when you combine commands. Here's how I use them sequentially:</p>
+    <ol>
+      <li><strong>Step 1:</strong> <code>/research</code> to gather information</li>
+      <li><strong>Step 2:</strong> <code>/summarize</code> to extract key points</li>
+      <li><strong>Step 3:</strong> <code>/explain</code> to understand implications</li>
+      <li><strong>Step 4:</strong> <code>/code</code> to implement solutions</li>
+      <li><strong>Step 5:</strong> <code>/review</code> to catch issues</li>
+    </ol>
+    <p>Each step builds on the previous one. Claude maintains full context, so later steps reference earlier decisions. This sequential approach has cut my iteration cycles in half.</p>
+
+    <hr />
+
+    <h2>My Personal Top 5 Commands & Shortcuts (What I Use Every Day)</h2>
+
+    <h3>1. Cmd+Enter (Send Message)</h3>
+    <p>This is muscle memory now. One keystroke instead of reaching for the mouse. Over a full workday, it saves 2-3 minutes. Sounds small—but it eliminates friction from the workflow that matters most.</p>
+
+    <h3>2. /code</h3>
+    <p>I use this before writing any function or implementing logic. It switches Claude's mode to code-first thinking. Responses are more structured, examples are immediate, and explanations assume technical context. It's my most-used command.</p>
+
+    <h3>3. /clear</h3>
+    <p>I use this when starting a fundamentally new task. It resets the conversation so Claude doesn't carry assumptions from previous work. Essential for keeping contexts clean and preventing confusion.</p>
+
+    <h3>4. Cmd+K (Command Palette)</h3>
+    <p>Opens everything. Need to access settings? Search for a command? Cmd+K. It's faster than remembering where things are in the UI. This single shortcut has probably saved me more time than everything else combined.</p>
+
+    <h3>5. Projects (Not a command, but essential)</h3>
+    <p>I pin my three active projects at the top. Switching between them takes one click. Without Projects, I'd spend 20+ minutes per day hunting through conversation history. With them, I'm instantly back in context.</p>
+
+    <hr />
+
+    <h2>Pro Tips for Command Mastery</h2>
+    <p><strong>Combine commands with custom instructions.</strong> Your system prompt defines defaults, slash commands handle specific tasks. Use them together: system prompt says "always markdown," <code>/code</code> specializes that for programming work.</p>
+    <p><strong>Create conversation templates.</strong> For repetitive workflows, I create a template conversation with the exact sequence of steps I always follow. I reference it when starting similar work, saving setup time.</p>
+    <p><strong>Build project hierarchies.</strong> Instead of flat Projects, I organize by domain: Design (with sub-projects for components, patterns), Development (with sub-projects for frontend, backend), Content (with sub-projects for blog, docs).</p>
+
+    <hr />
+
+    <h2>Further Reading</h2>
+    <p>Want to go deeper? These resources have shaped my understanding of Claude:</p>
+    <ul>
+      <li><strong>Anthropic's Official Documentation</strong> — Visit <code>docs.anthropic.com</code> for the authoritative reference on features, API usage, and best practices. I reference it constantly for feature details I might have missed.</li>
+      <li><strong>r/ClaudeAI Community</strong> — The Reddit community is goldmine of user-discovered tricks. People share workflows, integrations, and creative uses that official docs don't cover. This is where I learn about features in the wild.</li>
+      <li><strong>Claude Productivity YouTube Channel</strong> — [Note: Add your preferred YouTube channel URL here once you identify the best one] Video walkthroughs of workflows and features are incredibly valuable. Seeing commands and shortcuts in action clarifies things that text alone can't explain.</li>
+    </ul>
+
+    <h2>Next Steps</h2>
+    <p>Start small. Pick one command from this list and use it intentionally for a week. Let it become habit. Then add another. The compound effect of small optimizations builds into massive productivity gains.</p>
+    <p>Your future self—the one working faster and never losing context—will thank you.</p>
+
+  </div>
+
+</div>
+
+</body>
+</html>
