@@ -101,6 +101,22 @@ git push origin main
 
 **REMEMBER:** The `.prose` class handles all article content styling. Do NOT add inline styles to h2, h3, p, ul, code, etc. within the prose div.
 
+### Step 5: Add Interactive Elements AFTER Article Body
+Before closing `</div>` and before `</body>`, add (in order):
+
+1. **Likes & Comments Section** (with Supabase integration)
+2. **Tags Section** — `<span class="tag-neutral">Tag Name</span>`
+3. **Newsletter "Enjoyed this post?" Section**
+4. **Related Posts Section** — links to 1-2 related articles
+5. **Footer** — copyright, links
+6. **JavaScript** — Supabase client setup with POST_SLUG and POST_TITLE variables
+
+Use `getting-started-with-ga4.html` lines 229-349 as exact template. Update:
+- `POST_SLUG` — kebab-case article slug (e.g., 'claude-tips', 'claude-commands-guide')
+- `POST_TITLE` — full article title
+- Tags — relevant category tags for filtering
+- Related posts — 1-2 related article titles/links
+
 ## Brand Assets
 - Always check the `assets/brand/` folder before designing. It contains the logo, color guide, and style guide.
 - If assets exist there, use them. Do not use placeholders where real assets are available.
