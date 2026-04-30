@@ -19,6 +19,12 @@
 - Before reading any file >30KB in full, use `Grep` to locate the specific section first, then read with `limit`/`offset`.
 - For searches spanning multiple unknown files, use the Explore subagent — large reads stay out of the main context.
 
+## Sub-Agents Optimized by Model
+- **Haiku 4.5** (fast, cheap): Code search, file navigation, reading, grep queries, quick lookups, task validation
+- **Sonnet 4.6** (balanced): Writing code, documentation, normal implementations, refactoring, test creation
+- **Opus 4.7** (powerful): Architecture reviews, critical decisions, complex refactors, security/performance analysis, system design
+- **Rule:** Never spawn Opus for simple tasks or Haiku for writing. Match subagent model to task complexity.
+
 ## Screenshot Workflow
 - **Always screenshot from localhost:** `node scripts/screenshot.mjs http://localhost:3000`
 - Screenshots are saved automatically to `./temporary screenshots/screenshot-N.png` (auto-incremented, never overwritten).
