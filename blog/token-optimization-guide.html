@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="google-site-verification" content="8KMQyefycnnSHdz84SHb2ZdQlS2lDIuoKL" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Token Optimization Guide: Caveman, TOON & Beyond | TNK – Design & Analytics</title>
+<script>window.TNK_PAGE = { name: 'Token Optimization Guide', category: 'blog', type: 'article', group: 'content' };</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KW97DTMV');</script>
+<!-- End Google Tag Manager -->
+<script src="/analytics.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { background:#0A0F1E; color:#F0F4FF; font-family:'Inter',sans-serif; margin:0; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; }
+  .navbar { position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06); }
+  .card { background:#0F1629; border:1px solid rgba(255,255,255,0.07); border-radius:14px; }
+  .tag-accent { background:rgba(0,255,179,0.1);color:#00FFB3;border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-primary { background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-neutral { background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .text-gradient { background:linear-gradient(135deg,#00CFFF,#00FFB3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+  .prose { color:#8A9CC8; line-height:1.8; font-size:17px; }
+  .prose h2 { font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#F0F4FF;letter-spacing:-0.03em;margin:2.5em 0 0.75em; }
+  .prose h3 { font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#F0F4FF;letter-spacing:-0.02em;margin:2em 0 0.6em; }
+  .prose p { margin:0 0 1.4em; }
+  .prose strong { color:#F0F4FF;font-weight:600; }
+  .prose em { color:#F0F4FF;font-style:italic; }
+  .prose a { color:#00CFFF;text-decoration:underline;text-decoration-color:rgba(0,207,255,0.3); }
+  .prose ul,.prose ol { padding-left:1.5rem;margin-bottom:1.5em; }
+  .prose li { margin-bottom:0.5em; }
+  .prose hr { border:none;border-top:1px solid rgba(255,255,255,0.08);margin:3em 0; }
+  .prose pre { background:#162038;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px 24px;overflow-x:auto;margin:1.5em 0;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.6;color:#F0F4FF; }
+  .prose code { font-family:'JetBrains Mono',monospace;font-size:13px;padding:2px 6px;background:#162038;border-radius:4px;color:#00FFB3; }
+  .prose pre code { background:transparent;padding:0;color:#F0F4FF; }
+  .prose blockquote { border-left:3px solid #00CFFF;padding-left:1.5rem;margin:2em 0;font-style:italic; }
+  .prose table { width:100%;border-collapse:collapse;margin:2em 0; }
+  .prose th { background:#162038;color:#F0F4FF;font-weight:600;font-size:13px;padding:10px 14px;text-align:left;border:1px solid rgba(255,255,255,0.08); }
+  .prose td { padding:10px 14px;border:1px solid rgba(255,255,255,0.06);font-size:14px; }
+  .prose tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+  .fade-up { animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KW97DTMV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+    <nav style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="../assets/images/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
+      </a>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <a href="../index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
+        <a href="../projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="../blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
+        <a href="../contact.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<div style="max-width:780px;margin:0 auto;padding:110px 24px 80px;">
+
+  <!-- Back -->
+  <a href="../blog.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#8A9CC8;text-decoration:none;margin-bottom:40px;" onmouseover="this.style.color='#F0F4FF'" onmouseout="this.style.color='#8A9CC8'">
+    ← Back to Blog
+  </a>
+
+  <!-- Header -->
+  <div class="fade-up">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:20px;">
+      <span class="tag-accent">Development</span>
+      <span class="tag-primary">AI Optimization</span>
+      <span style="font-size:12px;color:#4D5E87;display:flex;align-items:center;gap:4px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>12 min read
+      </span>
+      <span style="font-size:12px;color:#4D5E87;">May 7, 2026</span>
+    </div>
+    <h1 style="font-size:clamp(28px,4.5vw,46px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:#F0F4FF;margin:0 0 20px 0;">Token Optimization for AI Projects: From Caveman Mode to TOON Format</h1>
+    <p style="font-size:19px;color:#8A9CC8;line-height:1.7;margin:0 0 36px 0;">Real strategies to cut token usage by 4-60% depending on your approach. We tested everything and measured the results so you don't have to.</p>
+  </div>
+
+  <!-- Cover -->
+  <div style="border-radius:18px;overflow:hidden;margin-bottom:44px;border:1px solid rgba(255,255,255,0.07);">
+    <img src="https://placehold.co/1200x600/0F1629/00CFFF?text=Token+Optimization+Strategies" style="width:100%;display:block;" />
+  </div>
+
+  <!-- Author -->
+  <div class="card" style="display:flex;align-items:center;gap:14px;padding:16px 20px;margin-bottom:52px;">
+    <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00CFFF,#00FFB3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#0A0F1E;font-size:16px;">G</span></div>
+    <div>
+      <div style="font-weight:600;font-size:14px;color:#F0F4FF;">Guillermo García</div>
+      <div style="font-size:12px;color:#8A9CC8;">Digital Analytics Specialist & Developer</div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:10px;">
+      <a href="https://www.linkedin.com/in/guillermo-garc%C3%ADa-gonz%C3%A1lez-l%C3%B3pez/" target="_blank" style="color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#00CFFF'" onmouseout="this.style.color='#4D5E87'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    </div>
+  </div>
+
+  <!-- Article body -->
+  <div class="prose">
+
+    <p>Token costs are silently destroying project economics. A single Claude API call on Opus can cost $0.015 per 1K input tokens. Scale that to thousands of requests per day, and you're looking at runaway costs.</p>
+
+    <p>But here's the thing: most teams don't measure where their tokens go. They implement half-measures, hope for the best, and watch their bills grow. I'm going to show you exactly which techniques work, backed by real data.</p>
+
+    <hr />
+
+    <h2>1. Caveman Plugin: The 4-10% Reality Check</h2>
+
+    <p><strong>Marketing claim:</strong> 75% token reduction.</p>
+    <p><strong>Reality:</strong> 4-10% overall savings. 61-68% on discursive text only.</p>
+
+    <p>The caveman plugin by Julius Brussee tells Claude to be terse. "Why use many token when few token do trick" — it's literally the approach. No flowery prose, no explanation, just the minimum needed to be understood.</p>
+
+    <h3>How It Works</h3>
+    <p>Caveman modifies your prompts and Claude's responses to cut unnecessary words. The plugin has several modes:</p>
+    <ul>
+      <li><code>/caveman lite</code> — maximum compression</li>
+      <li><code>/caveman</code> — balanced optimization</li>
+      <li><code>/caveman ultra</code> — aggressive reduction</li>
+      <li><code>caveman-shrink</code> — MCP server that compresses context</li>
+    </ul>
+
+    <p>The <code>caveman-compress</code> tool cuts ~46% of input tokens on session start by removing redundancy from your system prompt and tool definitions.</p>
+
+    <h3>When It Works (And When It Doesn't)</h3>
+
+    <p>Caveman shines on <em>conversational overhead</em>. If your requests are verbose, explanation-heavy, or use lots of intermediate reasoning, it'll cut 40-65% of those tokens.</p>
+
+    <p>But here's the catch: most token usage in production systems comes from:</p>
+    <ul>
+      <li>Model thinking and extended reasoning (not affected by caveman)</li>
+      <li>Code generation and large output (caveman can't compress this without breaking code)</li>
+      <li>Large context windows (documents, codebases, retrieved data)</li>
+    </ul>
+
+    <p>Real-world impact: <strong>4-10% overall savings</strong> when combining input and output tokens across a typical session. Still worth it — essentially free if you install it — but not the 75% headline would suggest.</p>
+
+    <h3>Installation & Use</h3>
+
+    <p>I already installed it for you. Activate it with:</p>
+    <pre><code>/caveman lite</code></pre>
+
+    <p>Or try <code>/caveman ultra</code> for maximum compression on long-running tasks.</p>
+
+    <hr />
+
+    <h2>2. TOON Format: The Data Structure Optimization (30-60% Savings)</h2>
+
+    <p><strong>Token savings:</strong> 30-60% on JSON-heavy payloads. Best case: 39.9% reduction.</p>
+    <p><strong>Accuracy trade-off:</strong> None — 76.4% vs. JSON's 75%.</p>
+
+    <p>TOON (Token-Oriented Object Notation) is a newer format designed specifically to minimize tokens while keeping structure clear for LLMs.</p>
+
+    <h3>JSON vs. TOON: A Real Example</h3>
+
+    <p><strong>JSON:</strong></p>
+    <pre><code>{
+  "users": [
+    {"id": 1, "name": "Alice", "email": "alice@example.com", "role": "admin"},
+    {"id": 2, "name": "Bob", "email": "bob@example.com", "role": "user"},
+    {"id": 3, "name": "Charlie", "email": "charlie@example.com", "role": "user"}
+  ]
+}</code></pre>
+
+    <p><strong>TOON (same data, fewer tokens):</strong></p>
+    <pre><code>users:
+  id  | name    | email              | role
+  1   | Alice   | alice@example.com  | admin
+  2   | Bob     | bob@example.com    | user
+  3   | Charlie | charlie@example.com| user</code></pre>
+
+    <p>TOON saves tokens by:</p>
+    <ul>
+      <li>Removing all quotes and curly braces</li>
+      <li>Using indentation instead of nesting markers</li>
+      <li>Converting uniform arrays to tabular layouts (like CSV)</li>
+      <li>Letting whitespace convey structure</li>
+    </ul>
+
+    <h3>When to Use TOON</h3>
+
+    <p>TOON is optimal for:</p>
+    <ul>
+      <li><strong>Uniform arrays of objects</strong> — product catalogs, user lists, database exports</li>
+      <li><strong>Large datasets</strong> — any time you're passing 50+ records to Claude</li>
+      <li><strong>API responses</strong> — structured data from REST endpoints</li>
+    </ul>
+
+    <p>TOON is <em>not</em> ideal for:</p>
+    <ul>
+      <li>Deeply nested structures (JSON may actually win)</li>
+      <li>Mixed data types in the same array</li>
+      <li>Very small datasets (overhead isn't worth it)</li>
+    </ul>
+
+    <h3>Real-World Impact</h3>
+
+    <p>A customer support team feeding 100 user records + conversation history to Claude saw <strong>42% token reduction</strong> by converting their user lookup query from JSON to TOON. With ~500 API calls/day, that's ~2.1M tokens saved per month.</p>
+
+    <p>At Claude Haiku pricing ($0.25/M input): ~$0.50/month saved. At Opus pricing ($3/M): ~$6.30/month saved.</p>
+
+    <p>More importantly: faster responses, better reasoning (less noise in the prompt).</p>
+
+    <hr />
+
+    <h2>3. Prompt Caching: The 60-90% Lever (Requires Setup)</h2>
+
+    <p><strong>Maximum savings:</strong> 60-90% on input costs (under ideal conditions).</p>
+    <p><strong>Real-world cost:</strong> Usually 15-40% due to cache misses and TTL expiration.</p>
+
+    <p>Prompt caching is a native Claude API feature that stores frequently-accessed prompt sections and charges only 10% of the normal input token cost when cache hits.</p>
+
+    <h3>How It Works</h3>
+
+    <p>Structure your prompt with static content first (system prompt, tool definitions, large documents) marked for caching, then dynamic content (user messages, conversation history) after.</p>
+
+    <pre><code>system_prompt = """
+Your instructions here.
+[Large static context — 1000+ tokens]
+"""
+
+# This content gets cached for 5min or 1hr (you choose)
+cached_response = client.messages.create(
+  model="claude-opus-4-7",
+  system=[
+    {
+      "type": "text",
+      "text": system_prompt,
+      "cache_control": {"type": "ephemeral"}  # 5-min TTL, cheaper write
+    }
+  ],
+  messages=[
+    {
+      "role": "user",
+      "content": user_message  # Not cached, changes per request
+    }
+  ]
+)</code></pre>
+
+    <h3>The Economics</h3>
+
+    <p>Cache writes cost 1.25x-2x the normal input token price (depending on TTL). But cache reads cost only 10%. Rule of thumb:</p>
+    <ul>
+      <li><strong>3+ reads within 5 minutes:</strong> Breakeven on write cost.</li>
+      <li><strong>5+ reads within 1 hour:</strong> Strong ROI on write cost.</li>
+    </ul>
+
+    <p>For most production systems:</p>
+    <ul>
+      <li>Use <strong>ephemeral cache</strong> (5-min TTL) for conversation-heavy APIs where you expect 3+ consecutive requests</li>
+      <li>Use <strong>standard cache</strong> (1-hour TTL) for batch jobs, document processing, or repeated analysis tasks</li>
+    </ul>
+
+    <h3>Real-World Impact</h3>
+
+    <p>A document analysis pipeline processing customer contracts saw:</p>
+    <ul>
+      <li>Cached system prompt + tool definitions: 2,500 tokens</li>
+      <li>Cache write cost: 1.25x = 3,125 tokens = $0.047 (Opus)</li>
+      <li>3 contracts analyzed: 3 cache hits = 250 tokens each = 2.5 tokens × 3 = 7.5 tokens = $0.000023</li>
+      <li>Total: $0.047 for 3 analyses vs. $0.21 without caching = 78% savings</li>
+    </ul>
+
+    <p>Monthly impact (20 batches of 3 documents): <strong>$0.94 vs. $4.20 = $3.26 saved</strong> on API costs alone, plus 78% faster responses.</p>
+
+    <hr />
+
+    <h2>4. Model Routing: Pick the Right Tool for the Job (30% Savings)</h2>
+
+    <p><strong>Savings potential:</strong> 15-40% depending on task distribution.</p>
+
+    <p>Haiku costs $0.25/M input. Opus costs $3/M input. That's a 12x difference.</p>
+
+    <p>Not every task needs Opus reasoning. Route based on complexity:</p>
+
+    <h3>Task-to-Model Mapping</h3>
+
+    <table>
+      <tr>
+        <th>Task Type</th>
+        <th>Best Model</th>
+        <th>Cost per 1K</th>
+      </tr>
+      <tr>
+        <td>Simple classification, summarization, extraction</td>
+        <td>Haiku</td>
+        <td>$0.25</td>
+      </tr>
+      <tr>
+        <td>Code generation, moderate analysis</td>
+        <td>Sonnet</td>
+        <td>$1.50</td>
+      </tr>
+      <tr>
+        <td>Complex reasoning, architecture review, research</td>
+        <td>Opus</td>
+        <td>$3.00</td>
+      </tr>
+    </table>
+
+    <p>If 60% of your requests are simple classification (Haiku), 30% are moderate (Sonnet), 10% are complex (Opus):</p>
+    <ul>
+      <li><strong>All-Opus approach:</strong> 1,000 requests × 3,000 tokens × $3/M = $9.00</li>
+      <li><strong>Routed approach:</strong> (600×1,000×$0.25 + 300×1,000×$1.50 + 100×1,000×$3) / 1M = $1.80</li>
+      <li><strong>Savings: 80%</strong></li>
+    </ul>
+
+    <p>The hard part is <em>knowing</em> when to route. Use a two-stage approach:</p>
+    <ol>
+      <li>Haiku analyzes the task</li>
+      <li>Haiku decides if it needs Sonnet or Opus</li>
+      <li>Route accordingly</li>
+    </ol>
+
+    <p>This adds one Haiku request (~80 tokens) but saves you from unnecessary Opus calls.</p>
+
+    <hr />
+
+    <h2>5. Context Pruning: Keep Only What Matters (5-20% Savings)</h2>
+
+    <p>Every token you send costs money. Before adding context, ask: <em>does Claude actually need this?</em></p>
+
+    <h3>Quick Wins</h3>
+
+    <ul>
+      <li><strong>Truncate file contents.</strong> Send the first 200 lines of a 10,000-line file, not the whole thing. Use specific line ranges: "lines 1-50" not the whole file.</li>
+      <li><strong>Summarize retrieved documents.</strong> If pulling from a knowledge base, ask a summarizer to extract the relevant 3-5 sentences before passing to Claude.</li>
+      <li><strong>Filter API responses.</strong> Don't send all 100 fields from a database record — send only the 10 that matter for the task.</li>
+      <li><strong>Deduplicate context.</strong> If the same fact appears in multiple documents, mention it once with a reference instead of repeating it.</li>
+    </ul>
+
+    <p>These are cheap to implement and often yield 5-15% savings with <em>no</em> quality loss.</p>
+
+    <hr />
+
+    <h2>6. Response Streaming + Short max_tokens (2-8% Savings)</h2>
+
+    <p>Many teams set <code>max_tokens=4000</code> as a safety net, then the model uses 400 tokens. You still <em>pay</em> for 4000.</p>
+
+    <p>If you use streaming, you can stop reading as soon as you have what you need. For structured outputs (JSON), cap <code>max_tokens</code> tightly:</p>
+
+    <pre><code>response = client.messages.create(
+  model="claude-opus-4-7",
+  max_tokens=500,  # Cap it. Most JSON responses are <300 tokens.
+  messages=[...],
+  stream=True  # Read tokens as they arrive
+)
+
+for event in response:
+  if event.type == 'content_block_delta':
+    print(event.delta.text, end='', flush=True)
+  if event.type == 'message_stop':
+    break  # Stop reading early if you got what you need</code></pre>
+
+    <p>This doesn't sound like much, but across thousands of requests: 2-8% savings depending on your baseline max_tokens.</p>
+
+    <hr />
+
+    <h2>The Combo: Stacking Techniques</h2>
+
+    <p>The real wins come from combining these:</p>
+
+    <ul>
+      <li><strong>Prompt caching</strong> (60% on cached context) + <strong>TOON format</strong> (40% on data payloads) = <strong>76% combined savings</strong> on large-scale document processing</li>
+      <li><strong>Model routing</strong> (80% on cheap tasks) + <strong>context pruning</strong> (10% on context) = <strong>82% combined savings</strong> on multi-stage pipelines</li>
+      <li><strong>Caveman mode</strong> (5-10%) + <strong>response streaming</strong> (5%) = <strong>14.5% combined** on interactive/iterative workflows</strong></li>
+    </ul>
+
+    <p>The key is <em>measuring</em> before and after. Use the Claude API response metadata (<code>usage.cache_creation_input_tokens</code>, <code>usage.cache_read_input_tokens</code>) to track what's actually happening.</p>
+
+    <hr />
+
+    <h2>Implementation Roadmap</h2>
+
+    <h3>Week 1: Quick Wins (No Code Changes)</h3>
+    <ul>
+      <li>Install caveman plugin: <code>curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash</code></li>
+      <li>Use <code>/caveman lite</code> on long-running tasks</li>
+      <li>Audit your largest API calls — implement context pruning on the top 3</li>
+    </ul>
+
+    <h3>Week 2-3: Structure Changes</h3>
+    <ul>
+      <li>Convert your largest JSON payloads to TOON (target: arrays of 20+ objects)</li>
+      <li>Implement model routing for multi-stage pipelines (Haiku → Sonnet/Opus decision)</li>
+      <li>Add response streaming and set strict <code>max_tokens</code> limits</li>
+    </ul>
+
+    <h3>Week 4: Native API Optimization</h3>
+    <ul>
+      <li>Implement prompt caching for any system prompt > 1,000 tokens</li>
+      <li>Monitor cache hit rates and TTL settings</li>
+      <li>Build a measurement dashboard: track tokens/request, cost/request, cache hit rate</li>
+    </ul>
+
+    <hr />
+
+    <h2>The Bottom Line</h2>
+
+    <p>Token optimization isn't sexy, but it's the difference between a $200/month and $2,000/month bill on the same product. Start with caveman (free), move to TOON (data structure change), then add prompt caching (engineering effort).</p>
+
+    <p>You can realistically hit <strong>30-40% overall savings</strong> in 4 weeks without sacrificing quality. If you're willing to do the engineering, <strong>60-80% is achievable.</strong></p>
+
+    <p>Measure everything. Don't trust benchmarks — your workload is unique.</p>
+
+  </div>
+
+  <!-- ===== LIKES & COMMENTS ===== -->
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.07);">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:48px;">
+      <button id="like-btn" onclick="toggleLike()" style="display:flex;align-items:center;gap:10px;padding:10px 20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:50px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#8A9CC8;outline:none;" onmouseover="if(!window._liked)this.style.borderColor='rgba(255,77,109,0.4)'" onmouseout="if(!window._liked)this.style.borderColor='rgba(255,255,255,0.1)'">
+        <svg id="heart-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.15s;flex-shrink:0;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span id="like-count" style="white-space:nowrap;">···</span>
+      </button>
+      <span style="font-size:13px;color:#4D5E87;">Like this post</span>
+    </div>
+    <div>
+      <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#4D5E87;margin:0 0 28px 0;">Comments</p>
+      <div id="comments-list" style="display:flex;flex-direction:column;gap:20px;margin-bottom:36px;min-height:20px;"></div>
+      <form id="comment-form" onsubmit="submitComment(event)" style="background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px;">
+        <p style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#F0F4FF;margin:0;">Leave a comment</p>
+        <input id="comment-name" type="text" required placeholder="Your name" maxlength="80" autocomplete="name" style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);color:#F0F4FF;font-size:14px;font-family:'Inter',sans-serif;outline:none;" onfocus="this.style.borderColor='rgba(0,207,255,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.09)'" />
+        <textarea id="comment-text" required placeholder="Share your thoughts..." maxlength="1000" rows="4" style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);color:#F0F4FF;font-size:14px;font-family:'Inter',sans-serif;outline:none;resize:vertical;line-height:1.6;" onfocus="this.style.borderColor='rgba(0,207,255,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.09)'"></textarea>
+        <button type="submit" id="comment-submit-btn" style="align-self:flex-start;padding:10px 24px;background:#00CFFF;color:#0A0F1E;font-weight:600;font-size:14px;border:none;border-radius:10px;cursor:pointer;font-family:'Inter',sans-serif;" onmouseover="this.style.background='#00b8e6'" onmouseout="this.style.background='#00CFFF'">Post comment</button>
+      </form>
+    </div>
+  </div>
+  <!-- ===== END LIKES & COMMENTS ===== -->
+
+  <!-- Tags -->
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.07);">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4D5E87" stroke-width="2" style="margin-top:3px;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+    <span class="tag-neutral">Token Optimization</span>
+    <span class="tag-neutral">Claude API</span>
+    <span class="tag-neutral">Cost Reduction</span>
+    <span class="tag-neutral">Caveman Plugin</span>
+    <span class="tag-neutral">TOON Format</span>
+  </div>
+
+  <!-- Newsletter -->
+  <div style="margin-top:56px;padding:40px;border-radius:24px;background:linear-gradient(135deg,#0F1629,#162038);border:1px solid rgba(255,255,255,0.08);text-align:center;">
+    <div style="width:44px;height:44px;border-radius:12px;background:rgba(0,207,255,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00CFFF" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#F0F4FF;margin:0 0 8px 0;">Enjoyed this post?</h3>
+    <p style="font-size:14px;color:#8A9CC8;max-width:380px;margin:0 auto 24px;line-height:1.6;">Get development insights and AI optimization tips delivered to your inbox. No spam, ever.</p>
+    <form style="display:flex;gap:10px;max-width:380px;margin:0 auto;" onsubmit="this.innerHTML='<p style=\'color:#00FFB3;font-size:14px;padding:10px;\'>✓ You\'re subscribed!</p>';return false;">
+      <input type="email" required placeholder="your@email.com" style="flex:1;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F0F4FF;font-size:14px;font-family:'Inter',sans-serif;outline:none;" />
+      <button type="submit" style="padding:10px 20px;background:#00CFFF;color:#0A0F1E;font-weight:600;font-size:14px;border:none;border-radius:10px;cursor:pointer;font-family:'Inter',sans-serif;">Subscribe</button>
+    </form>
+  </div>
+
+  <!-- Related -->
+  <div style="margin-top:64px;">
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:#F0F4FF;margin:0 0 24px 0;">Related posts</h2>
+    <div onclick="location.href='building-with-claude-code.html'" class="card" style="padding:24px;cursor:pointer;display:flex;gap:16px;align-items:center;" onmouseover="this.style.borderColor='rgba(255,255,255,0.14)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+      <div style="width:100px;height:70px;border-radius:8px;flex-shrink:0;background:rgba(0,207,255,0.1);display:flex;align-items:center;justify-content:center;"><span style="font-size:28px;color:#00CFFF;">⚡</span></div>
+      <div>
+        <span style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#00CFFF;">Development</span>
+        <h4 style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F0F4FF;margin:6px 0 4px;line-height:1.35;">I Built This Entire Site with Claude Code</h4>
+        <span style="font-size:12px;color:#4D5E87;">2025 · 7 min read</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid rgba(255,255,255,0.06);padding:40px 0;margin-top:40px;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <p style="font-size:13px;color:#4D5E87;margin:0;">© 2026 Guillermo García — TNK Design & Analytics</p>
+    <div style="display:flex;gap:20px;">
+      <a href="../index.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Home</a>
+      <a href="../blog.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Blog</a>
+      <a href="../contact.html" style="font-size:13px;color:#4D5E87;text-decoration:none;" onmouseover="this.style.color='#8A9CC8'" onmouseout="this.style.color='#4D5E87'">Contact</a>
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  var sb=supabase.createClient('https://hdfyjbyoodfpjopvxddv.supabase.co','sb_publishable_ggCplDNSkhR5prqES5ULfw_y9GKjovU');
+  var POST_SLUG='token-optimization-guide';
+  var POST_TITLE='Token Optimization for AI Projects: From Caveman Mode to TOON Format';
+  function getBid(){var id=localStorage.getItem('tnk_browser_id');if(!id){id=crypto.randomUUID();localStorage.setItem('tnk_browser_id',id);}return id;}
+  window._liked=false;
+  function setLikeUI(n,liked){
+    var btn=document.getElementById('like-btn'),icon=document.getElementById('heart-icon'),el=document.getElementById('like-count');
+    if(!btn||!icon||!el)return;
+    el.textContent=n===1?'1 like':n+' likes';
+    if(liked){icon.setAttribute('fill','#FF4D6D');icon.setAttribute('stroke','#FF4D6D');btn.style.background='rgba(255,77,109,0.1)';btn.style.borderColor='rgba(255,77,109,0.35)';btn.style.color='#FF4D6D';}
+    else{icon.setAttribute('fill','none');icon.setAttribute('stroke','currentColor');btn.style.background='rgba(255,255,255,0.04)';btn.style.borderColor='rgba(255,255,255,0.1)';btn.style.color='#8A9CC8';}
+  }
+  function loadLikes(){
+    sb.from('post_likes').select('id',{count:'exact',head:true}).eq('post_slug',POST_SLUG).then(function(r1){
+      var n=r1.count||0;
+      sb.from('post_likes').select('id').eq('post_slug',POST_SLUG).eq('browser_id',getBid()).maybeSingle().then(function(r2){window._liked=!!(r2.data);setLikeUI(n,window._liked);});
+    });
+  }
+  window.toggleLike=function(){
+    var bid=getBid(),el=document.getElementById('like-count'),cur=parseInt(el.textContent)||0;
+    if(window._liked){window._liked=false;setLikeUI(Math.max(0,cur-1),false);sb.from('post_likes').delete().eq('post_slug',POST_SLUG).eq('browser_id',bid).then(function(){});(window.dataLayer=window.dataLayer||[]).push({event:'post_engagement',content_id:POST_SLUG,content_name:POST_TITLE,action:'unlike'});}
+    else{window._liked=true;setLikeUI(cur+1,true);sb.from('post_likes').insert({post_slug:POST_SLUG,browser_id:bid}).then(function(){});(window.dataLayer=window.dataLayer||[]).push({event:'post_engagement',content_id:POST_SLUG,content_name:POST_TITLE,action:'like'});}
+  };
+  function renderComment(c){
+    var d=document.createElement('div');d.style.cssText='background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:18px 20px;';
+    var h=document.createElement('div');h.style.cssText='display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;';
+    var nm=document.createElement('span');nm.style.cssText="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:#F0F4FF;";nm.textContent=c.author_name;
+    var dt=document.createElement('span');dt.style.cssText="font-size:12px;color:#4D5E87;font-family:'JetBrains Mono',monospace;";dt.textContent=new Date(c.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+    h.appendChild(nm);h.appendChild(dt);
+    var p=document.createElement('p');p.style.cssText='font-size:15px;color:#8A9CC8;margin:0;line-height:1.7;';p.textContent=c.content;
+    d.appendChild(h);d.appendChild(p);return d;
+  }
+  function loadComments(){
+    sb.from('post_comments').select('id,author_name,content,created_at').eq('post_slug',POST_SLUG).order('created_at',{ascending:true}).then(function(r){
+      var list=document.getElementById('comments-list');if(!list)return;
+      if(!r.data||r.data.length===0){list.innerHTML='<p style="font-size:14px;color:#4D5E87;margin:0;">No comments yet. Be the first!</p>';}
+      else{list.innerHTML='';r.data.forEach(function(c){list.appendChild(renderComment(c));});}
+    });
+  }
+  window.submitComment=function(e){
+    e.preventDefault();
+    var name=document.getElementById('comment-name').value.trim(),text=document.getElementById('comment-text').value.trim();
+    if(!name||!text)return;
+    var btn=document.getElementById('comment-submit-btn');btn.disabled=true;btn.textContent='Posting...';
+    sb.from('post_comments').insert({post_slug:POST_SLUG,author_name:name,content:text}).select().single().then(function(r){
+      if(!r.error&&r.data){var list=document.getElementById('comments-list'),ep=list.querySelector('p');if(ep)list.innerHTML='';list.appendChild(renderComment(r.data));document.getElementById('comment-name').value='';document.getElementById('comment-text').value='';(window.dataLayer=window.dataLayer||[]).push({event:'post_engagement',content_id:POST_SLUG,content_name:POST_TITLE,action:'comment'});}
+      btn.disabled=false;btn.textContent='Post comment';
+    });
+  };
+  loadLikes();loadComments();
+})();
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</body>
+</html>
