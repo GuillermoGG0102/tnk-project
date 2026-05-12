@@ -2,5 +2,21 @@
   "buildCommand": "node scripts/generate-sitemap.mjs",
   "outputDirectory": ".",
   "framework": null,
-  "installCommand": null
+  "installCommand": null,
+  "routes": [
+    {
+      "src": "/robots.txt",
+      "dest": "/robots.txt",
+      "headers": {
+        "content-type": "text/plain; charset=utf-8"
+      }
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "/sitemap.xml",
+      "headers": {
+        "content-type": "application/xml; charset=utf-8"
+      }
+    }
+  ]
 }
