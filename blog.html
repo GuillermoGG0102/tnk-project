@@ -52,10 +52,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <img src="assets/images/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
       </a>
       <div style="display:flex;align-items:center;gap:4px;">
-        <a href="index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
-        <a href="projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
-        <a href="blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
-        <a href="contact.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+        <a href="index.html" data-track='{"content_type":"nav_link","content_id":"home","content_name":"Home","item_list_name":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
+        <a href="projects.html" data-track='{"content_type":"nav_link","content_id":"projects","content_name":"Projects","item_list_name":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="blog.html" data-track='{"content_type":"nav_link","content_id":"blog","content_name":"Blog","item_list_name":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
+        <a href="contact.html" data-track='{"content_type":"nav_link","content_id":"contact","content_name":"Contact","item_list_name":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
       </div>
     </nav>
   </div>
@@ -86,15 +86,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- Filters -->
   <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:48px;" id="filters">
-    <button class="filter-btn active" onclick="filterPosts('all',this)">All</button>
-    <button class="filter-btn" onclick="filterPosts('analytics',this)">Analytics</button>
-    <button class="filter-btn" onclick="filterPosts('design',this)">Design</button>
-    <button class="filter-btn" onclick="filterPosts('league-of-legends',this)" style="color:#C89B3C;border-color:rgba(200,155,60,0.2);" onmouseover="this.style.borderColor='rgba(200,155,60,0.5)'" onmouseout="this.style.borderColor='rgba(200,155,60,0.2)'">League of Legends</button>
-    <button class="filter-btn" onclick="filterPosts('padel',this)" style="color:#FF6B6B;border-color:rgba(255,107,107,0.2);" onmouseover="this.style.borderColor='rgba(255,107,107,0.5)'" onmouseout="this.style.borderColor='rgba(255,107,107,0.2)'">Padel</button>
+    <button class="filter-btn active" onclick="window.tnkTrack({content_type:'filter_pill',content_id:'all',content_name:'All',item_list_name:'blog_filters'}); filterPosts('all',this)">All</button>
+    <button class="filter-btn" onclick="window.tnkTrack({content_type:'filter_pill',content_id:'Analytics',content_name:'Analytics',item_list_name:'blog_filters'}); filterPosts('analytics',this)">Analytics</button>
+    <button class="filter-btn" onclick="window.tnkTrack({content_type:'filter_pill',content_id:'Design',content_name:'Design',item_list_name:'blog_filters'}); filterPosts('design',this)">Design</button>
+    <button class="filter-btn" onclick="window.tnkTrack({content_type:'filter_pill',content_id:'Claude',content_name:'Claude',item_list_name:'blog_filters'}); filterPosts('dev',this)">Claude</button>
   </div>
 
   <!-- Featured post -->
-  <div class="card post-card" id="featured" onclick="tnkNavigate('blog/datalayer-medicion-robusta.html',{content_type:'blog_card',content_id:'datalayer-medicion-robusta',content_name:'DataLayer: Medición Robusta',item_list_name:'featured_post'})" data-category="analytics" style="display:grid;grid-template-columns:1fr 1fr;margin-bottom:32px;overflow:hidden;border-color:rgba(0,207,255,0.15);">
+  <div class="card post-card" id="featured" onclick="tnkNavigate('blog/datalayer-medicion-robusta.html',{content_type:'blog_card',content_id:'datalayer-medicion-robusta',content_name:'DataLayer: Medición Robusta',item_list_name:'blog_listing'})" data-category="analytics" style="display:grid;grid-template-columns:1fr 1fr;margin-bottom:32px;overflow:hidden;border-color:rgba(0,207,255,0.15);">
     <div style="position:relative;overflow:hidden;min-height:260px;background:#0d1528;display:flex;align-items:center;justify-content:center;">
       <!-- dataLayer visual diagram -->
       <div style="padding:28px;width:100%;">
