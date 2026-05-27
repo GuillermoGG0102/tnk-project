@@ -536,7 +536,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" class="projects-grid">
 
       <!-- TNK Designs -->
-      <article class="card" style="overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.3s;" onclick="tnkNavigate('projects/tnk-designs.html',{content_type:'project_card',content_id:'tnk-designs',content_name:'TNK Designs',item_list_name:'featured'})" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+      <article class="card" style="overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.3s;" onclick="tnkNavigate('projects/tnk-designs.html',{content_type:'project_card',content_id:'tnk-designs',content_name:'TNK Designs',section:'featured'})" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
         <div style="position:relative;aspect-ratio:16/10;overflow:hidden;">
           <img src="assets/images/SKRINTRO.png" style="width:100%;height:100%;object-fit:cover;" />
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.8),transparent);"></div>
@@ -556,7 +556,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </article>
 
       <!-- TNK Portfolio Web -->
-      <article class="card" style="overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.3s;" onclick="tnkNavigate('projects/tnk-portfolio-web.html',{content_type:'project_card',content_id:'tnk-portfolio-web',content_name:'TNK Portfolio Web',item_list_name:'featured'})" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+      <article class="card" style="overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.3s;" onclick="tnkNavigate('projects/tnk-portfolio-web.html',{content_type:'project_card',content_id:'tnk-portfolio-web',content_name:'TNK Portfolio Web',section:'featured'})" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
         <div style="position:relative;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#0A0F1E,#0F1629,#0A1830);">
           <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
             <img src="assets/images/TNK LOGOPNG.png" alt="TNK Logo" style="height:38px;width:auto;opacity:0.9;" />
@@ -916,7 +916,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" class="blog-grid">
       <!-- Post 1 -->
-      <article class="card" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.3s;" onclick="tnkNavigate('blog/getting-started-with-ga4.html',{content_type:'blog_card',content_id:'getting-started-with-ga4',content_name:'Getting Started with GA4',item_list_name:'blog_listing'})" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+      <article class="card" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.3s;" onclick="tnkNavigate('blog/getting-started-with-ga4.html',{content_type:'blog_card',content_id:'getting-started-with-ga4',content_name:'Getting Started with GA4',section:'blog_listing'})" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
         <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;">
           <img src="https://placehold.co/800x450/0F1629/00CFFF?text=GA4+Guide" style="width:100%;height:100%;object-fit:cover;" />
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);"></div>
@@ -938,7 +938,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </article>
 
       <!-- Post 2 -->
-      <article class="card" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform 0.2s;" onclick="tnkNavigate('blog/design-principles-for-data-products.html',{content_type:'blog_card',content_id:'design-principles-for-data-products',content_name:'Design Principles for Data Products',item_list_name:'blog_listing'})" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+      <article class="card" style="overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform 0.2s;" onclick="tnkNavigate('blog/design-principles-for-data-products.html',{content_type:'blog_card',content_id:'design-principles-for-data-products',content_name:'Design Principles for Data Products',section:'blog_listing'})" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
         <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;">
           <img src="https://placehold.co/800x450/0F1629/00FFB3?text=Data+Design" style="width:100%;height:100%;object-fit:cover;" />
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);"></div>
@@ -1013,6 +1013,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </a>
           <a href="https://www.instagram.com/tnkdesigns_/" target="_blank" data-track='{"content_type":"social_link","content_id":"instagram","content_name":"Instagram","section":"footer"}' style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:#4D5E87;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.color='#00CFFF';this.style.background='rgba(0,207,255,0.1)'" onmouseout="this.style.color='#4D5E87';this.style.background='rgba(255,255,255,0.05)'">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://github.com/guillermogg0102" target="_blank" data-track='{"content_type":"social_link","content_id":"github","content_name":"GitHub","section":"footer"}' style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:#4D5E87;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.color='#00CFFF';this.style.background='rgba(0,207,255,0.1)'" onmouseout="this.style.color='#4D5E87';this.style.background='rgba(255,255,255,0.05)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zm0 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18z"/><path d="M8 14c0-1 2-2 4-2s4 1 4 2" fill="currentColor"/></svg>
           </a>
           <a href="mailto:guillermogg0102@gmail.com" data-track='{"content_type":"social_link","content_id":"email","content_name":"Email","section":"footer"}' style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:#4D5E87;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.color='#00CFFF';this.style.background='rgba(0,207,255,0.1)'" onmouseout="this.style.color='#4D5E87';this.style.background='rgba(255,255,255,0.05)'">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
