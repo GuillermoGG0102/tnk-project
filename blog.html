@@ -52,10 +52,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <img src="assets/images/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
       </a>
       <div style="display:flex;align-items:center;gap:4px;">
-        <a href="index.html" data-track='{"content_type":"nav_link","content_id":"home","content_name":"Home","item_list_name":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
-        <a href="projects.html" data-track='{"content_type":"nav_link","content_id":"projects","content_name":"Projects","item_list_name":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
-        <a href="blog.html" data-track='{"content_type":"nav_link","content_id":"blog","content_name":"Blog","item_list_name":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
-        <a href="contact.html" data-track='{"content_type":"nav_link","content_id":"contact","content_name":"Contact","item_list_name":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+        <a href="index.html" data-track='{"content_type":"nav_link","content_id":"home","content_name":"Home","section":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
+        <a href="projects.html" data-track='{"content_type":"nav_link","content_id":"projects","content_name":"Projects","section":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
+        <a href="blog.html" data-track='{"content_type":"nav_link","content_id":"blog","content_name":"Blog","section":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
+        <a href="contact.html" data-track='{"content_type":"nav_link","content_id":"contact","content_name":"Contact","section":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
       </div>
     </nav>
   </div>
@@ -93,7 +93,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   <!-- Featured post -->
-  <div class="card post-card" id="featured" onclick="tnkNavigate('blog/datalayer-medicion-robusta.html',{content_type:'blog_card',content_id:'datalayer-medicion-robusta',content_name:'DataLayer: Medición Robusta',item_list_name:'blog_listing'})" data-category="analytics" style="display:grid;grid-template-columns:1fr 1fr;margin-bottom:32px;overflow:hidden;border-color:rgba(0,207,255,0.15);">
+  <div class="card post-card" id="featured" onclick="tnkNavigate('blog/datalayer-medicion-robusta.html',{content_type:'blog_card',content_id:'datalayer-medicion-robusta',content_name:'DataLayer: Medición Robusta',section:'blog_listing'})" data-category="analytics" style="display:grid;grid-template-columns:1fr 1fr;margin-bottom:32px;overflow:hidden;border-color:rgba(0,207,255,0.15);">
     <div style="position:relative;overflow:hidden;min-height:260px;background:#0d1528;display:flex;align-items:center;justify-content:center;">
       <!-- dataLayer visual diagram -->
       <div style="padding:28px;width:100%;">
@@ -138,7 +138,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- Grid -->
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" id="posts-grid">
 
-    <article class="card post-card" onclick="tnkNavigate('blog/analytics-doc-automation.html',{content_type:'blog_card',content_id:'analytics-doc-automation',content_name:'Analytics Documentation That Never Goes Stale',item_list_name:'blog_listing'})" data-category="analytics" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/analytics-doc-automation.html',{content_type:'blog_card',content_id:'analytics-doc-automation',content_name:'Analytics Documentation That Never Goes Stale',section:'blog_listing'})" data-category="analytics" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:#0d1528;display:flex;align-items:center;justify-content:center;padding:16px;">
         <!-- Mini version/automation diagram -->
         <div style="width:100%;display:flex;flex-direction:column;gap:5px;font-family:'JetBrains Mono',monospace;font-size:10px;">
@@ -171,7 +171,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </article>
 
-    <article class="card post-card" onclick="tnkNavigate('blog/getting-started-with-ga4.html',{content_type:'blog_card',content_id:'getting-started-with-ga4',content_name:'Getting Started with GA4',item_list_name:'blog_listing'})" data-category="analytics" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/getting-started-with-ga4.html',{content_type:'blog_card',content_id:'getting-started-with-ga4',content_name:'Getting Started with GA4',section:'blog_listing'})" data-category="analytics" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;">
         <img src="blog/cover-analytics-workflow.png" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'" />
         <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);"></div>
@@ -190,7 +190,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </article>
 
-    <article class="card post-card" onclick="tnkNavigate('blog/design-principles-for-data-products.html',{content_type:'blog_card',content_id:'design-principles-for-data-products',content_name:'Design Principles for Data Products',item_list_name:'blog_listing'})" data-category="design" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/design-principles-for-data-products.html',{content_type:'blog_card',content_id:'design-principles-for-data-products',content_name:'Design Principles for Data Products',section:'blog_listing'})" data-category="design" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;">
         <img src="blog/cover-data-products.png" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'" />
         <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);"></div>
@@ -209,7 +209,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </article>
 
-    <article class="card post-card" onclick="tnkNavigate('blog/building-with-claude-code.html',{content_type:'blog_card',content_id:'building-with-claude-code',content_name:'Building with Claude Code',item_list_name:'blog_listing'})" data-category="dev" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/building-with-claude-code.html',{content_type:'blog_card',content_id:'building-with-claude-code',content_name:'Building with Claude Code',section:'blog_listing'})" data-category="dev" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:#0d1528;display:flex;align-items:center;justify-content:center;">
         <div style="padding:20px;width:100%;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.9;">
           <div><span style="color:#4D5E87;">$ </span><span style="color:#00CFFF;">claude</span></div>
@@ -234,7 +234,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </article>
 
-    <article class="card post-card" onclick="tnkNavigate('blog/beautiful-dashboards.html',{content_type:'blog_card',content_id:'beautiful-dashboards',content_name:'Smart Solutions to Build Beautiful Dashboards',item_list_name:'blog_listing'})" data-category="design" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/beautiful-dashboards.html',{content_type:'blog_card',content_id:'beautiful-dashboards',content_name:'Smart Solutions to Build Beautiful Dashboards',section:'blog_listing'})" data-category="design" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#0A0F1E,#0d1528);display:flex;align-items:center;justify-content:center;padding:16px;">
         <div style="width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6px;">
           <div style="background:rgba(0,207,255,0.07);border:1px solid rgba(0,207,255,0.2);border-radius:7px;padding:8px;">
@@ -275,7 +275,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </article>
 
-    <article class="card post-card" onclick="tnkNavigate('blog/portfolio-security-audit.html',{content_type:'blog_card',content_id:'portfolio-security-audit',content_name:'Security Audit of My AI-Built Portfolio',item_list_name:'blog_listing'})" data-category="dev" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/portfolio-security-audit.html',{content_type:'blog_card',content_id:'portfolio-security-audit',content_name:'Security Audit of My AI-Built Portfolio',section:'blog_listing'})" data-category="dev" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:#0d1528;display:flex;align-items:center;justify-content:center;padding:20px;">
         <div style="display:flex;flex-direction:column;gap:8px;width:100%;font-family:'JetBrains Mono',monospace;font-size:11px;">
           <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(0,255,179,0.06);border:1px solid rgba(0,255,179,0.2);border-radius:7px;">
@@ -308,7 +308,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </article>
 
-    <article class="card post-card" onclick="tnkNavigate('blog/analytics-first-workflow.html',{content_type:'blog_card',content_id:'analytics-first-workflow',content_name:'Analytics-First Workflow with CLAUDE.md',item_list_name:'blog_listing'})" data-category="analytics" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/analytics-first-workflow.html',{content_type:'blog_card',content_id:'analytics-first-workflow',content_name:'Analytics-First Workflow with CLAUDE.md',section:'blog_listing'})" data-category="analytics" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:#0d1528;display:flex;align-items:center;justify-content:center;padding:20px;">
         <div style="width:100%;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.9;">
           <div style="color:#4D5E87;margin-bottom:6px;">## Measurement-First Rule</div>
@@ -335,7 +335,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </article>
 
-    <article class="card post-card" onclick="tnkNavigate('blog/claude-tips.html',{content_type:'blog_card',content_id:'claude-tips',content_name:'10 Claude Tips Most Users Don\'t Know About',item_list_name:'blog_listing'})" data-category="dev" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/claude-tips.html',{content_type:'blog_card',content_id:'claude-tips',content_name:'10 Claude Tips Most Users Don\'t Know About',section:'blog_listing'})" data-category="dev" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:#0d1528;display:flex;align-items:center;justify-content:center;padding:20px;">
         <div style="width:100%;font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.8;color:#00CFFF;">
           <div style="color:#4D5E87;margin-bottom:6px;">// 10 Claude tips that</div>
@@ -366,7 +366,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </article>
 
-    <article class="card post-card" onclick="tnkNavigate('blog/claude-commands-guide.html',{content_type:'blog_card',content_id:'claude-commands-guide',content_name:'The Complete Guide to Claude Commands and Shortcuts',item_list_name:'blog_listing'})" data-category="dev" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/claude-commands-guide.html',{content_type:'blog_card',content_id:'claude-commands-guide',content_name:'The Complete Guide to Claude Commands and Shortcuts',section:'blog_listing'})" data-category="dev" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:#0d1528;display:flex;align-items:center;justify-content:center;padding:20px;">
         <div style="width:100%;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.8;color:#00CFFF;">
           <div style="color:#4D5E87;margin-bottom:8px;">// Master your workflow</div>
@@ -461,7 +461,7 @@ function filterPosts(cat, btn) {
   btn.classList.add('active');
   currentFilter = cat;
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event: 'select_content', content_type: 'filter', content_id: cat, content_name: btn.textContent.trim(), item_list_name: 'blog_filters' });
+  window.dataLayer.push({ event: 'select_content', content_type: 'filter', content_id: cat, content_name: btn.textContent.trim(), section: 'blog_filters' });
   applyFilters();
 }
 
