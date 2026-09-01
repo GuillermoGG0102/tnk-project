@@ -126,7 +126,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .utm-shot-chrome .d{width:8px;height:8px;border-radius:50%;}
   .utm-shot-chrome .d.r{background:#FF6B5E;} .utm-shot-chrome .d.y{background:#FFB454;} .utm-shot-chrome .d.g{background:#00FFB3;}
   .utm-shot-chrome .lbl{margin-left:8px;font-size:10px;color:#8A9CC8;font-family:'JetBrains Mono',monospace;}
-  .utm-shot-body{padding:20px;min-height:120px;display:flex;flex-direction:column;justify-content:center;gap:8px;}
   .utm-shot-caption{padding:12px 16px;font-size:11.5px;color:#8A9CC8;line-height:1.6;border-top:1px solid rgba(255,255,255,0.08);}
   .utm-shot-caption b{color:#00FFB3;font-weight:600;}
 
@@ -410,20 +409,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="utm-shot">
         <div class="utm-shot-chrome"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="lbl">analytics.google.com · Validación de la importación de datos de campañas</span></div>
-        <div class="utm-shot-body">
-          <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#4D5E87;padding:0 4px 6px;border-bottom:1px solid rgba(255,255,255,0.06);">
-            <span>Fuente / Medio</span><span>Coste</span><span>Clics</span><span>Estado</span>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 4px;color:#8A9CC8;">
-            <span>ig / paid</span><span>—</span><span>—</span><span style="color:#FF6B5E;">Sin datos</span>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 4px;color:#8A9CC8;">
-            <span>fb / paid</span><span>—</span><span>—</span><span style="color:#FF6B5E;">Sin datos</span>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 4px;color:#8A9CC8;">
-            <span>tiktok / cpc</span><span>€412</span><span>3.8k</span><span style="color:#00FFB3;">OK</span>
-          </div>
-        </div>
+        <img src="utm-shot-validacion.png" alt="Informe de validación de la importación de datos de campañas en GA4" style="width:100%;display:block;" />
         <div class="utm-shot-caption"><b>Lectura rápida:</b> "ig / paid" y "fb / paid" llegan sin coste, clics ni impresiones — estado de unión: sin datos sobre campañas. El informe deja claro que la importación está conectada, pero el naming de utm_source/utm_medium aún no coincide con lo que espera la fuente de importación.</div>
       </div>
       <div class="utm-news-cta">↳ Informes · Importación de datos · Validación de la importación de datos de campañas</div>
@@ -455,30 +441,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="utm-gallery">
       <div class="utm-shot" style="margin-top:0;">
         <div class="utm-shot-chrome"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="lbl" style="font-size:9px;">Instrucciones</span></div>
-        <div class="utm-shot-body" style="gap:6px;">
-          <div style="height:8px;width:80%;background:rgba(0,207,255,0.25);border-radius:3px;"></div>
-          <div style="height:6px;width:95%;background:rgba(255,255,255,0.08);border-radius:3px;"></div>
-          <div style="height:6px;width:70%;background:rgba(255,255,255,0.08);border-radius:3px;"></div>
-          <div style="height:6px;width:85%;background:rgba(255,255,255,0.08);border-radius:3px;"></div>
-        </div>
+        <img src="utm-shot-instrucciones.png" alt="Pestaña Instrucciones de la plantilla Generador de UTMs" style="width:100%;display:block;" />
         <div class="utm-shot-caption" style="font-size:10.5px;">Cómo compartirla como plantilla, reglas de nomenclatura y leyenda de color.</div>
       </div>
       <div class="utm-shot" style="margin-top:0;">
         <div class="utm-shot-chrome"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="lbl" style="font-size:9px;">Generador_UTMs</span></div>
-        <div class="utm-shot-body" style="gap:5px;">
-          <div style="display:flex;gap:4px;"><div style="height:14px;flex:1;background:rgba(0,255,179,0.18);border-radius:3px;"></div><div style="height:14px;flex:1;background:rgba(0,207,255,0.18);border-radius:3px;"></div><div style="height:14px;flex:1;background:rgba(255,255,255,0.06);border-radius:3px;"></div></div>
-          <div style="display:flex;gap:4px;"><div style="height:14px;flex:1;background:rgba(255,255,255,0.06);border-radius:3px;"></div><div style="height:14px;flex:1;background:rgba(0,255,179,0.18);border-radius:3px;"></div><div style="height:14px;flex:1;background:rgba(0,207,255,0.18);border-radius:3px;"></div></div>
-        </div>
+        <img src="utm-shot-generador.png" alt="Pestaña Generador_UTMs de la plantilla" style="width:100%;display:block;" />
         <div class="utm-shot-caption" style="font-size:10.5px;">Un desplegable por parámetro, "na" precargado y la URL final a la derecha.</div>
       </div>
       <div class="utm-shot" style="margin-top:0;">
         <div class="utm-shot-chrome"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="lbl" style="font-size:9px;">Listas</span></div>
-        <div class="utm-shot-body" style="gap:6px;">
-          <div style="height:6px;width:60%;background:rgba(255,255,255,0.08);border-radius:3px;"></div>
-          <div style="height:6px;width:75%;background:rgba(255,255,255,0.08);border-radius:3px;"></div>
-          <div style="height:6px;width:50%;background:rgba(255,255,255,0.08);border-radius:3px;"></div>
-          <div style="height:6px;width:65%;background:rgba(255,255,255,0.08);border-radius:3px;"></div>
-        </div>
+        <img src="utm-shot-listas.png" alt="Pestaña Listas de la plantilla Generador de UTMs" style="width:100%;display:block;" />
         <div class="utm-shot-caption" style="font-size:10.5px;">Los valores aprobados que alimentan cada desplegable — se amplía a mano.</div>
       </div>
     </div>
