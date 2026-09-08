@@ -28,3 +28,9 @@ search_section,string,search,blog,Section where search occurred (always 'blog' c
 search_active_filter,string,search,Analytics,Active filter pill at time of search (or 'all')
 destination_domain,string,outbound_click,linkedin.com,Hostname of the external link destination
 template_type,string,resource_download,utm_generator,Type of downloadable template (utm_generator · other)
+scroll_percentage,integer,scroll_depth,25,Scroll milestone reached (25 · 50 · 75 · 100 percent)
+time_to_scroll,integer,scroll_depth,12,Seconds elapsed from page load to reaching scroll threshold
+engagement_duration_seconds,integer,engagement_time,42,Total active reading time (excludes tab background time)
+code_language,string,code_copy,javascript,Programming language detected from code block class
+code_lines,integer,code_copy,7,Number of non-empty lines in copied code snippet
+snippet_index,integer,code_copy,0,Zero-indexed position of code block on page
