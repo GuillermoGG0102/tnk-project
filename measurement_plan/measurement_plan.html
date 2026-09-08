@@ -366,7 +366,7 @@
 <header class="site-header">
   <h1>TNK Designs</h1>
   <span>Web Measurement Plan</span>
-  <div class="badge">v5.2 · 2026-09-08</div>
+  <div class="badge">v5.3 · 2026-09-08</div>
 </header>
 
 <nav class="tabs">
@@ -1141,6 +1141,25 @@ PE_DATA.forEach((d, i) => {
   <h3>Changelog — every major update to this measurement plan</h3>
 
   <div style="display:flex;flex-direction:column;gap:24px;margin-top:8px">
+
+    <!-- v5.3 -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <span style="font-family:var(--font-m);font-size:13px;font-weight:600;color:var(--primary)">v5.3</span>
+        <span style="font-size:12px;color:var(--muted)">2026-09-08</span>
+        <span style="margin-left:auto;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:rgba(0,255,179,0.1);border:1px solid rgba(0,255,179,0.25);padding:2px 8px;border-radius:20px">Engagement &amp; Interactivity</span>
+      </div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px">Implemented comprehensive engagement tracking for blog posts. Captures scroll behavior, active reading time, and code snippet interactions. Includes automatic injection of copy buttons on all code blocks with language detection and line counting.</p>
+      <ul style="font-size:13px;color:var(--text);line-height:2;padding-left:20px">
+        <li>New event: <code style="font-family:var(--font-m);color:var(--primary)">scroll_depth</code> — Tracks scroll milestones (25%, 50%, 75%, 100%) with time-to-scroll metric</li>
+        <li>New event: <code style="font-family:var(--font-m);color:var(--primary)">engagement_time</code> — Measures active reading time, excludes tab background visibility</li>
+        <li>New event: <code style="font-family:var(--font-m);color:var(--primary)">code_copy</code> — Tracks code snippet copies with language and line count</li>
+        <li>New tracking script: <code style="font-family:var(--font-m);color:var(--accent)">/js/engagement-tracking.js</code> — Auto-injects copy buttons, detects code language from class</li>
+        <li>New parameters: <code style="font-family:var(--font-m);color:var(--accent)">scroll_percentage</code>, <code style="font-family:var(--font-m);color:var(--accent)">time_to_scroll</code>, <code style="font-family:var(--font-m);color:var(--accent)">engagement_duration_seconds</code>, <code style="font-family:var(--font-m);color:var(--accent)">code_language</code>, <code style="font-family:var(--font-m);color:var(--accent)">code_lines</code>, <code style="font-family:var(--font-m);color:var(--accent)">snippet_index</code></li>
+        <li>GTM changes: 3 new GA4 event tags (scroll_depth, engagement_time, code_copy) in container GTM-KW97DTMV</li>
+        <li>Applied to all 11 blog posts</li>
+      </ul>
+    </div>
 
     <!-- v5.2 -->
     <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">
