@@ -1,0 +1,4 @@
+Index,Event,Metric,Trigger,Parameters,Example DataLayer Push,Page / Context,Thresholds
+1,web_vitals,LCP,Page fully loaded,metric_name · metric_value · metric_rating,"{""event"":""web_vitals"",""metric_name"":""LCP"",""metric_value"":2145,""metric_rating"":""good""}",All pages — when Largest Contentful Paint metric is available,"Good: ≤2.5s, Poor: >4.0s"
+2,web_vitals,INP,User interacts with page,metric_name · metric_value · metric_rating,"{""event"":""web_vitals"",""metric_name"":""INP"",""metric_value"":85,""metric_rating"":""good""}",All pages — when Interaction to Next Paint metric is available,"Good: ≤200ms, Poor: >500ms"
+3,web_vitals,CLS,Layout shifts occur,metric_name · metric_value · metric_rating,"{""event"":""web_vitals"",""metric_name"":""CLS"",""metric_value"":0.05,""metric_rating"":""good""}",All pages — when Cumulative Layout Shift metric is available,"Good: ≤0.1, Poor: >0.25"

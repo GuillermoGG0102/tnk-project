@@ -367,7 +367,7 @@
 <header class="site-header">
   <h1>TNK Designs</h1>
   <span>Web Measurement Plan</span>
-  <div class="badge">v5.3 · 2026-09-08</div>
+  <div class="badge">v5.4 · 2026-09-08</div>
 </header>
 
 <nav class="tabs">
@@ -379,8 +379,10 @@
   <button class="tab" data-tab="orbit_interaction">06 — orbit_interaction</button>
   <button class="tab" data-tab="search">07 — search</button>
   <button class="tab" data-tab="post_engagement">08 — post_engagement</button>
-  <button class="tab" data-tab="gtm_setup">09 — GTM &amp; GA4 Setup</button>
-  <button class="tab" data-tab="history">10 — Version History</button>
+  <button class="tab" data-tab="engagement_events">09 — Engagement Events</button>
+  <button class="tab" data-tab="performance_vitals">10 — Performance Vitals</button>
+  <button class="tab" data-tab="gtm_setup">11 — GTM &amp; GA4 Setup</button>
+  <button class="tab" data-tab="history">12 — Version History</button>
 </nav>
 
 <!-- ════════════════════════════════════════════════════════ TAB 01 — INTRO -->
@@ -496,6 +498,236 @@
   <div id="pe-rows"></div>
 </div>
 
+<!-- ════════════════════════════════════════ TAB 09 — ENGAGEMENT EVENTS -->
+<div class="panel" id="tab-engagement_events">
+  <h2>Engagement Tracking — Frente 2</h2>
+  <h3>Scroll depth, reading time, and code copying on blog posts</h3>
+
+  <div class="event-section">
+    <h3 style="margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);">scroll_depth</h3>
+    <p>Fires at 25%, 50%, 75%, 100% scroll thresholds on every blog post</p>
+    <p style="font-size:12px;color:#8A9CC8;margin:16px 0;"><strong>Trigger:</strong> User scrolls page · <strong>Frequency:</strong> Once per threshold per session</p>
+
+    <table style="margin:20px 0;width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Parameter</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Type</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Example</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">scroll_percentage</td>
+          <td style="padding:12px 8px;">integer</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">25</td>
+          <td style="padding:12px 8px;">Milestones: 25 · 50 · 75 · 100</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">time_to_scroll</td>
+          <td style="padding:12px 8px;">integer</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">12</td>
+          <td style="padding:12px 8px;">Seconds from page load to milestone</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">content_id</td>
+          <td style="padding:12px 8px;">string</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">"Getting Started with GA4"</td>
+          <td style="padding:12px 8px;">Post title from window.TNK_PAGE.name</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="event-section">
+    <h3 style="margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);">engagement_time</h3>
+    <p>Fires on tab close or navigation away — total active reading time excluding background tab time</p>
+    <p style="font-size:12px;color:#8A9CC8;margin:16px 0;"><strong>Trigger:</strong> beforeunload event · <strong>Threshold:</strong> Only if > 10 seconds active time</p>
+
+    <table style="margin:20px 0;width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Parameter</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Type</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Example</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">engagement_duration_seconds</td>
+          <td style="padding:12px 8px;">integer</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">42</td>
+          <td style="padding:12px 8px;">Active reading time (excludes background time via Page Visibility API)</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">content_id</td>
+          <td style="padding:12px 8px;">string</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">"Getting Started with GA4"</td>
+          <td style="padding:12px 8px;">Post title</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">content_category</td>
+          <td style="padding:12px 8px;">string</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">"Analytics"</td>
+          <td style="padding:12px 8px;">Category from window.TNK_PAGE.category</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="event-section">
+    <h3 style="margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);">code_copy</h3>
+    <p>Fires when user clicks "Copy" button on code blocks in blog posts</p>
+    <p style="font-size:12px;color:#8A9CC8;margin:16px 0;"><strong>Trigger:</strong> User clicks copy button · <strong>Frequency:</strong> Once per code block per session</p>
+
+    <table style="margin:20px 0;width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Parameter</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Type</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Example</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">code_language</td>
+          <td style="padding:12px 8px;">string</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">"javascript"</td>
+          <td style="padding:12px 8px;">Detected from class attribute on &lt;code&gt; element (e.g., class="language-javascript")</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">code_lines</td>
+          <td style="padding:12px 8px;">integer</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">7</td>
+          <td style="padding:12px 8px;">Number of non-empty lines in copied snippet</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">snippet_index</td>
+          <td style="padding:12px 8px;">integer</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">0</td>
+          <td style="padding:12px 8px;">Zero-indexed position of code block on page</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">content_id</td>
+          <td style="padding:12px 8px;">string</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">"Getting Started with GA4"</td>
+          <td style="padding:12px 8px;">Post title</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ TAB 10 — PERFORMANCE VITALS -->
+<div class="panel" id="tab-performance_vitals">
+  <h2>Web Vitals — Frente 3</h2>
+  <h3>Core Web Vitals tracking: LCP (Largest Contentful Paint), INP (Interaction to Next Paint), CLS (Cumulative Layout Shift)</h3>
+
+  <div class="event-section">
+    <h3 style="margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);">LCP — Largest Contentful Paint</h3>
+    <p>Measures when the largest content element becomes visible to the user</p>
+    <p style="font-size:12px;color:#8A9CC8;margin:16px 0;"><strong>Trigger:</strong> Page fully loaded · <strong>Frequency:</strong> Once per session</p>
+
+    <table style="margin:20px 0;width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Threshold</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Rating</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Definition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">≤ 2.5 seconds</td>
+          <td style="padding:12px 8px;color:#00FFB3;">good</td>
+          <td style="padding:12px 8px;">Excellent user experience</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">2.5 — 4.0 seconds</td>
+          <td style="padding:12px 8px;color:#FFB347;">needs_improvement</td>
+          <td style="padding:12px 8px;">Acceptable but could be better</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">> 4.0 seconds</td>
+          <td style="padding:12px 8px;color:#FF6B6B;">poor</td>
+          <td style="padding:12px 8px;">Poor user experience — needs optimization</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="event-section">
+    <h3 style="margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);">INP — Interaction to Next Paint</h3>
+    <p>Measures how quickly a page responds to user interactions (clicks, taps, keyboard input)</p>
+    <p style="font-size:12px;color:#8A9CC8;margin:16px 0;"><strong>Trigger:</strong> After user interaction · <strong>Frequency:</strong> Multiple times per session</p>
+
+    <table style="margin:20px 0;width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Threshold</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Rating</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Definition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">≤ 200 ms</td>
+          <td style="padding:12px 8px;color:#00FFB3;">good</td>
+          <td style="padding:12px 8px;">Responsive and interactive</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">200 — 500 ms</td>
+          <td style="padding:12px 8px;color:#FFB347;">needs_improvement</td>
+          <td style="padding:12px 8px;">Acceptable response time</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">> 500 ms</td>
+          <td style="padding:12px 8px;color:#FF6B6B;">poor</td>
+          <td style="padding:12px 8px;">Slow interactions — frustrating for users</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="event-section">
+    <h3 style="margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);">CLS — Cumulative Layout Shift</h3>
+    <p>Measures visual stability — how much the page layout shifts during loading and interaction</p>
+    <p style="font-size:12px;color:#8A9CC8;margin:16px 0;"><strong>Trigger:</strong> Layout shifts occur · <strong>Frequency:</strong> Continuous during page interactions</p>
+
+    <table style="margin:20px 0;width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Threshold</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Rating</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Definition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">≤ 0.1</td>
+          <td style="padding:12px 8px;color:#00FFB3;">good</td>
+          <td style="padding:12px 8px;">Minimal layout shifts — stable page</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">0.1 — 0.25</td>
+          <td style="padding:12px 8px;color:#FFB347;">needs_improvement</td>
+          <td style="padding:12px 8px;">Some unexpected shifts</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">> 0.25</td>
+          <td style="padding:12px 8px;color:#FF6B6B;">poor</td>
+          <td style="padding:12px 8px;">Significant shifts — poor user experience</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:20px;font-size:12px;color:#8A9CC8;"><strong>Note:</strong> CLS is unitless (0–1 scale). Each 1 is a shift of 100% of viewport. A shift of 0.05 means 5% of viewport height shifted unexpectedly.</p>
+  </div>
+</div>
+
 <div class="copied-toast" id="toast">Copied!</div>
 
 <script>
@@ -557,6 +789,15 @@ const PARAMS = [
   ['search_section','string','search','blog','Section where search occurred (always blog currently)'],
   ['search_active_filter','string','search','Analytics','Active filter pill at time of search (or all)'],
   ['action','string','post_engagement','"like" | "unlike" | "comment"','Interaction type — "like" on first click, "unlike" on second click, "comment" on form submit'],
+  ['scroll_percentage','integer','scroll_depth','25','Scroll milestone reached: 25 · 50 · 75 · 100 percent'],
+  ['time_to_scroll','integer','scroll_depth','12','Seconds elapsed from page load to scroll threshold'],
+  ['engagement_duration_seconds','integer','engagement_time','42','Total active reading time (excludes tab background time via Page Visibility API)'],
+  ['code_language','string','code_copy','javascript','Programming language detected from class attribute on code element'],
+  ['code_lines','integer','code_copy','7','Number of non-empty lines in copied code snippet'],
+  ['snippet_index','integer','code_copy','0','Zero-indexed position of code block on page'],
+  ['metric_name','string','web_vitals','LCP','Core Web Vital metric: LCP (Largest Contentful Paint) · INP (Interaction to Next Paint) · CLS (Cumulative Layout Shift)'],
+  ['metric_value','number','web_vitals','2345','Metric value in milliseconds (LCP/INP) or unitless (CLS: 0–1 scale)'],
+  ['metric_rating','string','web_vitals','good','Performance rating based on thresholds: good · needs_improvement · poor']
 ];
 
 const tbody = document.getElementById('params-tbody');
@@ -1143,6 +1384,24 @@ PE_DATA.forEach((d, i) => {
   <h3>Changelog — every major update to this measurement plan</h3>
 
   <div style="display:flex;flex-direction:column;gap:24px;margin-top:8px">
+
+    <!-- v5.4 -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <span style="font-family:var(--font-m);font-size:13px;font-weight:600;color:var(--primary)">v5.4</span>
+        <span style="font-size:12px;color:var(--muted)">2026-09-08</span>
+        <span style="margin-left:auto;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary);background:rgba(0,207,255,0.1);border:1px solid rgba(0,207,255,0.25);padding:2px 8px;border-radius:20px">Core Web Vitals</span>
+      </div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px">Implemented Core Web Vitals tracking to monitor real user experience metrics. Automatically captures LCP (Largest Contentful Paint), INP (Interaction to Next Paint), and CLS (Cumulative Layout Shift) on all pages with automatic performance rating classification.</p>
+      <ul style="font-size:13px;color:var(--text);line-height:2;padding-left:20px">
+        <li>New event: <code style="font-family:var(--font-m);color:var(--primary)">web_vitals</code> — Tracks Core Web Vitals: LCP, INP, CLS with automatic performance ratings</li>
+        <li>New parameters: <code style="font-family:var(--font-m);color:var(--accent)">metric_name</code> (LCP/INP/CLS), <code style="font-family:var(--font-m);color:var(--accent)">metric_value</code> (ms or unitless), <code style="font-family:var(--font-m);color:var(--accent)">metric_rating</code> (good/needs_improvement/poor)</li>
+        <li>New tracking script: <code style="font-family:var(--font-m);color:var(--accent)">/js/web-vitals-tracking.js</code> — Uses Google web-vitals library via CDN for automatic metric collection</li>
+        <li>Performance thresholds: LCP (good ≤2.5s), INP (good ≤200ms), CLS (good ≤0.1) — follows Core Web Vitals official standards</li>
+        <li>Loaded on all pages in <code style="font-family:var(--font-m);color:var(--accent)">&lt;head&gt;</code> with web-vitals library (v3.5.2 via CDN)</li>
+        <li>GTM changes: 1 new GA4 event tag for web_vitals in container GTM-KW97DTMV — all 3 metrics dispatched as separate events with metric_name parameter</li>
+      </ul>
+    </div>
 
     <!-- v5.3 -->
     <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">

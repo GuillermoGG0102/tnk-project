@@ -34,3 +34,6 @@ engagement_duration_seconds,integer,engagement_time,42,Total active reading time
 code_language,string,code_copy,javascript,Programming language detected from code block class
 code_lines,integer,code_copy,7,Number of non-empty lines in copied code snippet
 snippet_index,integer,code_copy,0,Zero-indexed position of code block on page
+metric_name,string,web_vitals,LCP,Core Web Vital metric name (LCP · INP · CLS)
+metric_value,number,web_vitals,2345,Metric value in milliseconds (LCP/INP) or unitless (CLS)
+metric_rating,string,web_vitals,good,Performance rating (good · needs_improvement · poor)
