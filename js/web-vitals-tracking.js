@@ -32,6 +32,16 @@
     }
   }
 
+  // Helper to push events with retry logic if dataLayer not ready yet
+  function pushEvent(eventData) {
+    if (!window.dataLayer) {
+      console.warn('dataLayer not ready, retrying web_vitals event...');
+      setTimeout(() => pushEvent(eventData), 100);
+      return;
+    }
+    window.dataLayer.push(eventData);
+  }
+
   // Track Cumulative Layout Shift (CLS)
   window.webVitals.getCLS(function(metric) {
     var formattedValue = formatValue('CLS', metric.value);

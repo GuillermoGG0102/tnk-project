@@ -278,7 +278,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>All events push to <code>window.dataLayer</code> and are picked up by GTM. The schema uses a consistent set of shared parameters across all events:</p>
 
-    <pre><code>// Every event carries page context
+    <pre><code class="language-javascript">// Every event carries page context
 window.dataLayer.push({
   event: 'select_content',
   content_type: 'cta',
@@ -338,7 +338,7 @@ window.dataLayer.push({
       <li>Removes the overlay</li>
     </ol>
 
-    <pre><code>// The highlight injection — position:fixed so it
+    <pre><code class="language-javascript">// The highlight injection — position:fixed so it
 // stays in view regardless of scroll position
 const r = el.getBoundingClientRect();
 const div = document.createElement('div');

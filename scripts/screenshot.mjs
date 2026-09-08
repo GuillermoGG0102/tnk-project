@@ -21,7 +21,10 @@ while (fs.existsSync(path.join(dir, label ? `screenshot-${n}-${label}.png` : `sc
 const filename = label ? `screenshot-${n}-${label}.png` : `screenshot-${n}.png`;
 const outPath  = path.join(dir, filename);
 
-const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+const browser = await puppeteer.launch({
+  executablePath: '/opt/pw-browsers/chromium',
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
 const page    = await browser.newPage();
 await page.setViewport({ width: 1280, height: 900 });
 await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });

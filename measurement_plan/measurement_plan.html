@@ -378,10 +378,11 @@
   <button class="tab" data-tab="orbit_interaction">06 — orbit_interaction</button>
   <button class="tab" data-tab="search">07 — search</button>
   <button class="tab" data-tab="post_engagement">08 — post_engagement</button>
-  <button class="tab" data-tab="engagement_events">09 — Engagement Events</button>
-  <button class="tab" data-tab="performance_vitals">10 — Performance Vitals</button>
-  <button class="tab" data-tab="gtm_setup">11 — GTM &amp; GA4 Setup</button>
-  <button class="tab" data-tab="history">12 — Version History</button>
+  <button class="tab" data-tab="utm_outbound">09 — UTM &amp; Outbound Tracking</button>
+  <button class="tab" data-tab="engagement_events">10 — Engagement Events</button>
+  <button class="tab" data-tab="performance_vitals">11 — Performance Vitals</button>
+  <button class="tab" data-tab="gtm_setup">12 — GTM &amp; GA4 Setup</button>
+  <button class="tab" data-tab="history">13 — Version History</button>
 </nav>
 
 <!-- ════════════════════════════════════════════════════════ TAB 01 — INTRO -->
@@ -497,7 +498,93 @@
   <div id="pe-rows"></div>
 </div>
 
-<!-- ════════════════════════════════════════ TAB 09 — ENGAGEMENT EVENTS -->
+<!-- ════════════════════════════════════════ TAB 09 — UTM & OUTBOUND TRACKING -->
+<div class="panel" id="tab-utm_outbound">
+  <h2>UTM & Outbound Tracking — Frente 1</h2>
+  <h3>Campaign tracking and external link measurement for UTM templates and social/resource links</h3>
+
+  <div class="event-section">
+    <h3 style="margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);">resource_download</h3>
+    <p>Fires when user clicks on a downloadable resource link (Google Sheets UTM template, etc.)</p>
+    <p style="font-size:12px;color:#8A9CC8;margin:16px 0;"><strong>Trigger:</strong> User clicks resource link with data-track-resource attribute · <strong>Frequency:</strong> Once per resource per session</p>
+
+    <table style="margin:20px 0;width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Parameter</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Type</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Example</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">content_type</td>
+          <td style="padding:12px 8px;">string</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">"utm_template"</td>
+          <td style="padding:12px 8px;">Type of resource being downloaded</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">destination_url</td>
+          <td style="padding:12px 8px;">string</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">https://docs.google.com/spreadsheets/...</td>
+          <td style="padding:12px 8px;">URL of the resource being downloaded</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">template_type</td>
+          <td style="padding:12px 8px;">string</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">"utm_generator"</td>
+          <td style="padding:12px 8px;">Specific template type (optional)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="event-section">
+    <h3 style="margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);">outbound_click</h3>
+    <p>Automatically detects and tracks clicks on all external links (social profiles, GitHub, external resources, etc.)</p>
+    <p style="font-size:12px;color:#8A9CC8;margin:16px 0;"><strong>Trigger:</strong> User clicks external link · <strong>Frequency:</strong> Once per unique external domain per session</p>
+
+    <table style="margin:20px 0;width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Parameter</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Type</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Example</th>
+          <th style="text-align:left;padding:12px 8px;color:#00CFFF;">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">destination_domain</td>
+          <td style="padding:12px 8px;">string</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">"linkedin.com"</td>
+          <td style="padding:12px 8px;">Domain only (no path or query params for privacy)</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">destination_url</td>
+          <td style="padding:12px 8px;">string</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">https://www.linkedin.com/in/guillermo/</td>
+          <td style="padding:12px 8px;">Full URL of the external link</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">link_text</td>
+          <td style="padding:12px 8px;">string</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">"Follow on LinkedIn"</td>
+          <td style="padding:12px 8px;">Anchor text (max 100 chars)</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+          <td style="padding:12px 8px;">section</td>
+          <td style="padding:12px 8px;">string</td>
+          <td style="padding:12px 8px;font-family:monospace;color:#00FFB3;">"article_footer"</td>
+          <td style="padding:12px 8px;">Page section: article_footer, article_body, navbar, footer, etc.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ TAB 10 — ENGAGEMENT EVENTS -->
 <div class="panel" id="tab-engagement_events">
   <h2>Engagement Tracking — Frente 2</h2>
   <h3>Scroll depth, reading time, and code copying on blog posts</h3>
@@ -620,7 +707,7 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════════ TAB 10 — PERFORMANCE VITALS -->
+<!-- ════════════════════════════════════════ TAB 11 — PERFORMANCE VITALS -->
 <div class="panel" id="tab-performance_vitals">
   <h2>Web Vitals — Frente 3</h2>
   <h3>Core Web Vitals tracking: LCP (Largest Contentful Paint), INP (Interaction to Next Paint), CLS (Cumulative Layout Shift)</h3>
@@ -766,10 +853,10 @@ const PARAMS = [
   ['content_group','string','page_view','portfolio','GA4 content group — equals page_group or page_category'],
   ['page_author','string','page_view','Guillermo García','Fixed string on all pages'],
   ['content_type','string','select_content','nav_link','Interaction class: nav_link · cta · project_card · blog_card · filter_pill · social_link'],
-  ['content_id','string','select_content · post_engagement','beautiful_dashboards','Stable machine ID for the destination — always underscore-separated'],
-  ['content_name','string','select_content','Blog','Human-readable label of the clicked element'],
+  ['content_id','string','select_content · scroll_depth · engagement_time · code_copy · post_engagement','beautiful_dashboards','Stable machine ID for the destination — always underscore-separated'],
+  ['content_name','string','select_content · post_engagement','Blog','Human-readable label of the clicked element'],
   ['item_list_name','string','select_content','hero','Section/list the item belongs to: hero · nav · featured · blog_listing · footer…'],
-  ['destination_url','string','select_content','/blog.html','Target href where available'],
+  ['destination_url','string','select_content · outbound_click · resource_download','/blog.html','Target href where available'],
   ['form_name','string','generate_lead','contact_form','Value of data-track-form attribute on the form'],
   ['form_id','string','generate_lead','contactForm','HTML id of the form element'],
   ['subject','string','generate_lead','Project enquiry','Non-PII select field value'],
@@ -795,7 +882,11 @@ const PARAMS = [
   ['snippet_index','integer','code_copy','0','Zero-indexed position of code block on page'],
   ['metric_name','string','web_vitals','LCP','Core Web Vital metric: LCP (Largest Contentful Paint) · INP (Interaction to Next Paint) · CLS (Cumulative Layout Shift)'],
   ['metric_value','number','web_vitals','2345','Metric value in milliseconds (LCP/INP) or unitless (CLS: 0–1 scale)'],
-  ['metric_rating','string','web_vitals','good','Performance rating based on thresholds: good · needs_improvement · poor']
+  ['metric_rating','string','web_vitals','good','Performance rating based on thresholds: good · needs_improvement · poor'],
+  ['destination_domain','string','outbound_click','linkedin.com','Domain of external link (no path or query params for privacy)'],
+  ['link_text','string','outbound_click','Follow on LinkedIn','Anchor text of the link (max 100 chars)'],
+  ['section','string','outbound_click · resource_download','article_footer','Page section: article_footer · article_body · navbar · footer · etc'],
+  ['template_type','string','resource_download','utm_generator','Specific template type for the downloaded resource']
 ];
 
 const tbody = document.getElementById('params-tbody');
@@ -1124,7 +1215,7 @@ PE_DATA.forEach((d, i) => {
 });
 </script>
 
-<!-- ════════════════════════════════════════════════════ TAB 09 — GTM & GA4 SETUP -->
+<!-- ════════════════════════════════════════════════════ TAB 12 — GTM & GA4 SETUP -->
 <div class="panel" id="tab-gtm_setup">
   <h2>GTM &amp; GA4 Setup</h2>
   <h3>Naming conventions and configuration reference for GTM-KW97DTMV · G-25V933JKJD</h3>
@@ -1376,7 +1467,7 @@ PE_DATA.forEach((d, i) => {
 
 </div>
 
-<!-- ═══════════════════════════════════════════════ TAB 10 — VERSION HISTORY -->
+<!-- ═══════════════════════════════════════════════ TAB 13 — VERSION HISTORY -->
 <div class="panel" id="tab-history">
   <h2>Version History</h2>
   <h3>Changelog — every major update to this measurement plan</h3>
@@ -1394,7 +1485,7 @@ PE_DATA.forEach((d, i) => {
       <ul style="font-size:13px;color:var(--text);line-height:2;padding-left:20px">
         <li>New event: <code style="font-family:var(--font-m);color:var(--primary)">web_vitals</code> — Tracks Core Web Vitals: LCP, INP, CLS with automatic performance ratings</li>
         <li>New parameters: <code style="font-family:var(--font-m);color:var(--accent)">metric_name</code> (LCP/INP/CLS), <code style="font-family:var(--font-m);color:var(--accent)">metric_value</code> (ms or unitless), <code style="font-family:var(--font-m);color:var(--accent)">metric_rating</code> (good/needs_improvement/poor)</li>
-        <li>New tracking script: <code style="font-family:var(--font-m);color:var(--accent)">/js/web-vitals-direct.js</code> — Uses Google web-vitals library via CDN for automatic metric collection</li>
+        <li>New tracking script: <code style="font-family:var(--font-m);color:var(--accent)">/js/web-vitals-tracking.js</code> — Uses Google web-vitals library via CDN for automatic metric collection</li>
         <li>Performance thresholds: LCP (good ≤2.5s), INP (good ≤200ms), CLS (good ≤0.1) — follows Core Web Vitals official standards</li>
         <li>Loaded on all pages in <code style="font-family:var(--font-m);color:var(--accent)">&lt;head&gt;</code> with web-vitals library (v3.5.2 via CDN)</li>
         <li>GTM changes: 1 new GA4 event tag for web_vitals in container GTM-KW97DTMV — all 3 metrics dispatched as separate events with metric_name parameter</li>
