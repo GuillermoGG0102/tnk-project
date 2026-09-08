@@ -367,7 +367,7 @@
 <header class="site-header">
   <h1>TNK Designs</h1>
   <span>Web Measurement Plan</span>
-  <div class="badge">v5.1 · 2026-09-01</div>
+  <div class="badge">v5.2 · 2026-09-08</div>
 </header>
 
 <nav class="tabs">
@@ -1143,6 +1143,24 @@ PE_DATA.forEach((d, i) => {
   <h3>Changelog — every major update to this measurement plan</h3>
 
   <div style="display:flex;flex-direction:column;gap:24px;margin-top:8px">
+
+    <!-- v5.2 -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <span style="font-family:var(--font-m);font-size:13px;font-weight:600;color:var(--primary)">v5.2</span>
+        <span style="font-size:12px;color:var(--muted)">2026-09-08</span>
+        <span style="margin-left:auto;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:rgba(0,255,179,0.1);border:1px solid rgba(0,255,179,0.25);padding:2px 8px;border-radius:20px">UTM &amp; Outbound Tracking</span>
+      </div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px">Added new event types to close the UTM tracking loop and capture outbound link engagement. Implemented automatic detection and tracking of external links, plus specific resource download tracking for Google Sheets templates and other downloadable assets.</p>
+      <ul style="font-size:13px;color:var(--text);line-height:2;padding-left:20px">
+        <li>New event: <code style="font-family:var(--font-m);color:var(--primary)">resource_download</code> — Tracks clicks to downloadable resources (Google Sheets UTM generator template, etc.)</li>
+        <li>New event: <code style="font-family:var(--font-m);color:var(--primary)">outbound_click</code> — Automatically detects and tracks all external links to social profiles, resources, and external sites</li>
+        <li>New parameters: <code style="font-family:var(--font-m);color:var(--accent)">destination_domain</code>, <code style="font-family:var(--font-m);color:var(--accent)">template_type</code> added to tab2_parameters.csv</li>
+        <li>New tracking scripts: <code style="font-family:var(--font-m);color:var(--accent)">/js/outbound-tracking.js</code> (auto-detection), <code style="font-family:var(--font-m);color:var(--accent)">/js/resource-tracking.js</code> (resource downloads)</li>
+        <li>Updated UTM post: <code style="font-family:var(--font-m);color:var(--accent)">blog/utms-importacion-campanas-ga4.html</code> now has resource_download tracking on the Google Sheets template link</li>
+        <li>GTM changes: 2 new GA4 event tags for resource_download and outbound_click in container GTM-KW97DTMV</li>
+      </ul>
+    </div>
 
     <!-- v5.1 -->
     <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:24px 28px">
