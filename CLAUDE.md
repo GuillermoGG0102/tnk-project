@@ -152,6 +152,14 @@ Use `getting-started-with-ga4.html` lines 229-349 as exact template. Update:
 - Minor fixes (typos, broken links, screenshot refreshes) do NOT require a version bump
 - Major changes that require a bump: new event added, existing event removed or renamed, new parameter added/removed, tracking approach changed
 
+## Sitemap Management
+- **Every time a new page is added** to the website (new blog post, new project page, new main page section):
+  1. Verify the page exists and has proper `<title>`, meta tags, and `window.TNK_PAGE` object
+  2. Update `/sitemap.xml` to include the new page URL with proper priority and lastmod date
+  3. If it's a blog post, add the blog card entry to `blog.html` with proper data-track attributes
+  4. The sitemap is critical for SEO discoverability — always update it before committing
+  5. Run `node scripts/update-sitemap.mjs` if automated sitemap generation is available, otherwise manually update
+
 ## Hard Rules
 - Do not add sections, features, or content not in the reference
 - Do not "improve" a reference design — match it

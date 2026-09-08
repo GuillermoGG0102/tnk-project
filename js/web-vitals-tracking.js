@@ -32,10 +32,20 @@
     }
   }
 
+  // Helper to push events with retry logic if dataLayer not ready yet
+  function pushEvent(eventData) {
+    if (!window.dataLayer) {
+      console.warn('dataLayer not ready, retrying web_vitals event...');
+      setTimeout(() => pushEvent(eventData), 100);
+      return;
+    }
+    window.dataLayer.push(eventData);
+  }
+
   // Track Cumulative Layout Shift (CLS)
   window.webVitals.getCLS(function(metric) {
     var formattedValue = formatValue('CLS', metric.value);
-    window.dataLayer.push({
+    pushEvent({
       event: 'web_vitals',
       metric_name: 'CLS',
       metric_value: formattedValue,
@@ -46,7 +56,7 @@
   // Track Largest Contentful Paint (LCP)
   window.webVitals.getLCP(function(metric) {
     var formattedValue = formatValue('LCP', metric.value);
-    window.dataLayer.push({
+    pushEvent({
       event: 'web_vitals',
       metric_name: 'LCP',
       metric_value: formattedValue,
@@ -57,7 +67,7 @@
   // Track Interaction to Next Paint (INP)
   window.webVitals.getINP(function(metric) {
     var formattedValue = formatValue('INP', metric.value);
-    window.dataLayer.push({
+    pushEvent({
       event: 'web_vitals',
       metric_name: 'INP',
       metric_value: formattedValue,
