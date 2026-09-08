@@ -21,6 +21,16 @@ const MIME = {
   '.woff': 'font/woff',
 };
 
+// Security headers
+const securityHeaders = {
+  'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://tagmanager.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://hdfyjbyoodfpjopvxddv.supabase.co https://www.googletagmanager.com; frame-src 'self' https://www.googletagmanager.com;",
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'SAMEORIGIN',
+  'X-XSS-Protection': '1; mode=block',
+  'Referrer-Policy': 'strict-no-referrer-when-downgrade',
+  'Permissions-Policy': 'geolocation=(), microphone=(), camera=(), payment=()'
+};
+
 http.createServer((req, res) => {
   let urlPath = req.url.split('?')[0];
   if (urlPath === '/') urlPath = '/index.html';
@@ -31,13 +41,14 @@ http.createServer((req, res) => {
 
   fs.readFile(filePath, (err, data) => {
     if (err) {
-      res.writeHead(404);
+      res.writeHead(404, securityHeaders);
       res.end('Not found: ' + urlPath);
       return;
     }
-    res.writeHead(200, { 'Content-Type': contentType });
+    res.writeHead(200, { 'Content-Type': contentType, ...securityHeaders });
     res.end(data);
   });
 }).listen(PORT, () => {
-  console.log(`Serving at http://localhost:${PORT}`);
+  console.log(`✓ Serving at http://localhost:${PORT}`);
+  console.log(`✓ Security headers enabled`);
 });

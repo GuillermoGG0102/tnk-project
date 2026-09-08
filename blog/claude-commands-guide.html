@@ -333,7 +333,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 (function(){
-  var sb=supabase.createClient('https://hdfyjbyoodfpjopvxddv.supabase.co','sb_publishable_ggCplDNSkhR5prqES5ULfw_y9GKjovU');
+  // SECURITY: Supabase credentials removed. Use environment variables instead.
+  var sb={};
   var POST_SLUG='claude-commands-guide';
   var POST_TITLE='The Complete Guide to Claude Commands and Shortcuts';
   function getBid(){var id=localStorage.getItem('tnk_browser_id');if(!id){id=crypto.randomUUID();localStorage.setItem('tnk_browser_id',id);}return id;}

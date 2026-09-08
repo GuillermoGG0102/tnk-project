@@ -317,7 +317,8 @@ gtag('event', 'cta_click', {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 (function(){
-  var sb=supabase.createClient('https://hdfyjbyoodfpjopvxddv.supabase.co','sb_publishable_ggCplDNSkhR5prqES5ULfw_y9GKjovU');
+  // SECURITY: Supabase credentials removed. Use environment variables instead.
+  var sb={};
   var POST_SLUG='getting_started_with_ga4';
   var POST_TITLE='Getting Started with GA4: What Every Digital Marketer Needs to Know';
   function getBid(){var id=localStorage.getItem('tnk_browser_id');if(!id){id=crypto.randomUUID();localStorage.setItem('tnk_browser_id',id);}return id;}
