@@ -128,43 +128,46 @@
     }
   }
 
-  // Track INP directly
-  if ('PerformanceObserver' in window) {
+  // Track INP directly - requires PerformanceObserver for 'event' entries
+  if ('PerformanceObserver' in window && 'PerformanceEventTiming' in window) {
     try {
       var maxINP = 0;
       var inpReported = false;
-      var inpEntryCount = 0;
+      var numInteractions = 0;
 
       var inpObserver = new PerformanceObserver(function(list) {
-        for (var i = 0; i < list.getEntries().length; i++) {
-          var entry = list.getEntries()[i];
-          inpEntryCount++;
+        var entries = list.getEntries();
+        for (var i = 0; i < entries.length; i++) {
+          var entry = entries[i];
           if (entry.processingDuration && entry.processingDuration > maxINP) {
             maxINP = entry.processingDuration;
+            numInteractions++;
           }
         }
       });
 
       try {
         inpObserver.observe({ entryTypes: ['event'], durationThreshold: 0 });
-      } catch (e) {
+      } catch (e1) {
         try {
-          inpObserver.observe({ entryTypes: ['event'] });
+          inpObserver.observe({ type: 'event', buffered: true });
         } catch (e2) {
-          console.warn('INP observer setup failed:', e2);
+          inpObserver = null;
         }
       }
 
       var reportINP = function() {
-        if (!inpReported) {
+        if (!inpReported && inpObserver) {
           inpReported = true;
           inpObserver.disconnect();
-          pushEvent({
-            event: 'web_vitals',
-            metric_name: 'INP',
-            metric_value: Math.round(maxINP || 0),
-            metric_rating: getRating('INP', maxINP || 0)
-          });
+          if (maxINP > 0) {
+            pushEvent({
+              event: 'web_vitals',
+              metric_name: 'INP',
+              metric_value: Math.round(maxINP),
+              metric_rating: getRating('INP', maxINP)
+            });
+          }
         }
       };
 

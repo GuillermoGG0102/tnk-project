@@ -85,7 +85,15 @@
         }
       });
 
-      observer.observe({ entryTypes: ['event'], durationThreshold: 0 });
+      try {
+        observer.observe({ entryTypes: ['event'], durationThreshold: 0 });
+      } catch (e) {
+        try {
+          observer.observe({ entryTypes: ['event'] });
+        } catch (e2) {
+          console.warn('INP observer setup failed:', e2);
+        }
+      }
 
       // Report INP on page unload
       function reportINP() {
