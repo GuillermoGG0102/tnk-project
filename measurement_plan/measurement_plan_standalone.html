@@ -367,7 +367,7 @@
 <header class="site-header">
   <h1>TNK Designs</h1>
   <span>Web Measurement Plan</span>
-  <div class="badge">v5.3 · 2026-09-08</div>
+  <div class="badge">v5.4 · 2026-09-08</div>
 </header>
 
 <nav class="tabs">
@@ -1143,6 +1143,24 @@ PE_DATA.forEach((d, i) => {
   <h3>Changelog — every major update to this measurement plan</h3>
 
   <div style="display:flex;flex-direction:column;gap:24px;margin-top:8px">
+
+    <!-- v5.4 -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <span style="font-family:var(--font-m);font-size:13px;font-weight:600;color:var(--primary)">v5.4</span>
+        <span style="font-size:12px;color:var(--muted)">2026-09-08</span>
+        <span style="margin-left:auto;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary);background:rgba(0,207,255,0.1);border:1px solid rgba(0,207,255,0.25);padding:2px 8px;border-radius:20px">Core Web Vitals</span>
+      </div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px">Implemented Core Web Vitals tracking to monitor real user experience metrics. Automatically captures LCP (Largest Contentful Paint), INP (Interaction to Next Paint), and CLS (Cumulative Layout Shift) on all pages with automatic performance rating classification.</p>
+      <ul style="font-size:13px;color:var(--text);line-height:2;padding-left:20px">
+        <li>New event: <code style="font-family:var(--font-m);color:var(--primary)">web_vitals</code> — Tracks Core Web Vitals: LCP, INP, CLS with automatic performance ratings</li>
+        <li>New parameters: <code style="font-family:var(--font-m);color:var(--accent)">metric_name</code> (LCP/INP/CLS), <code style="font-family:var(--font-m);color:var(--accent)">metric_value</code> (ms or unitless), <code style="font-family:var(--font-m);color:var(--accent)">metric_rating</code> (good/needs_improvement/poor)</li>
+        <li>New tracking script: <code style="font-family:var(--font-m);color:var(--accent)">/js/web-vitals-tracking.js</code> — Uses Google web-vitals library via CDN for automatic metric collection</li>
+        <li>Performance thresholds: LCP (good ≤2.5s), INP (good ≤200ms), CLS (good ≤0.1) — follows Core Web Vitals official standards</li>
+        <li>Loaded on all pages in <code style="font-family:var(--font-m);color:var(--accent)">&lt;head&gt;</code> with web-vitals library (v3.5.2 via CDN)</li>
+        <li>GTM changes: 1 new GA4 event tag for web_vitals in container GTM-KW97DTMV — all 3 metrics dispatched as separate events with metric_name parameter</li>
+      </ul>
+    </div>
 
     <!-- v5.3 -->
     <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:10px;padding:24px 28px">
