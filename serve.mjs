@@ -2,6 +2,7 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { handleSupabaseApi } from './supabase-proxy.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = 3000;
@@ -31,8 +32,42 @@ const securityHeaders = {
   'Permissions-Policy': 'geolocation=(), microphone=(), camera=(), payment=()'
 };
 
-http.createServer((req, res) => {
+http.createServer(async (req, res) => {
   let urlPath = req.url.split('?')[0];
+  const queryString = req.url.split('?')[1] || '';
+  const queryParams = new URLSearchParams(queryString);
+
+  // Handle API routes
+  if (urlPath.startsWith('/api/')) {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Handle preflight
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, securityHeaders);
+      res.end();
+      return;
+    }
+
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', async () => {
+      try {
+        const bodyData = body ? JSON.parse(body) : {};
+        const result = await handleSupabaseApi(urlPath, Object.fromEntries(queryParams), bodyData);
+        res.writeHead(200, securityHeaders);
+        res.end(JSON.stringify(result));
+      } catch (error) {
+        res.writeHead(400, securityHeaders);
+        res.end(JSON.stringify({ error: error.message }));
+      }
+    });
+    return;
+  }
+
+  // Serve static files
   if (urlPath === '/') urlPath = '/index.html';
 
   const filePath = path.join(__dirname, urlPath);
@@ -51,4 +86,5 @@ http.createServer((req, res) => {
 }).listen(PORT, () => {
   console.log(`✓ Serving at http://localhost:${PORT}`);
   console.log(`✓ Security headers enabled`);
+  console.log(`✓ Supabase API proxy ready`);
 });
