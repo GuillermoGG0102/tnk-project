@@ -133,27 +133,37 @@
     try {
       var maxINP = 0;
       var inpReported = false;
+      var inpEntryCount = 0;
 
       var inpObserver = new PerformanceObserver(function(list) {
         for (var i = 0; i < list.getEntries().length; i++) {
           var entry = list.getEntries()[i];
-          if (entry.processingDuration > maxINP) {
+          inpEntryCount++;
+          if (entry.processingDuration && entry.processingDuration > maxINP) {
             maxINP = entry.processingDuration;
           }
         }
       });
 
-      inpObserver.observe({ entryTypes: ['event'], durationThreshold: 0 });
+      try {
+        inpObserver.observe({ entryTypes: ['event'], durationThreshold: 0 });
+      } catch (e) {
+        try {
+          inpObserver.observe({ entryTypes: ['event'] });
+        } catch (e2) {
+          console.warn('INP observer setup failed:', e2);
+        }
+      }
 
       var reportINP = function() {
-        if (!inpReported && maxINP > 0) {
+        if (!inpReported) {
           inpReported = true;
           inpObserver.disconnect();
           pushEvent({
             event: 'web_vitals',
             metric_name: 'INP',
-            metric_value: Math.round(maxINP),
-            metric_rating: getRating('INP', maxINP)
+            metric_value: Math.round(maxINP || 0),
+            metric_rating: getRating('INP', maxINP || 0)
           });
         }
       };
