@@ -18,11 +18,28 @@
                        link.closest('.prose') ? 'article_body' :
                        'other');
 
+        // Extract link_text: prefer data-track content_name, fallback to text content
+        var linkText = '';
+        try {
+          var trackData = JSON.parse(link.getAttribute('data-track') || '{}');
+          linkText = trackData.content_name || '';
+        } catch (e) {
+          // data-track is not valid JSON, skip
+        }
+
+        // Fallback to text content if no data-track content_name
+        if (!linkText) {
+          linkText = link.textContent.trim();
+        }
+
+        // Trim to 100 chars
+        linkText = linkText.substring(0, 100);
+
         window.dataLayer.push({
           event: 'outbound_click',
           destination_domain: destinationUrl.hostname,
           destination_url: href,
-          link_text: link.textContent.trim().substring(0, 100),
+          link_text: linkText || 'unknown',
           section: section
         });
       }
