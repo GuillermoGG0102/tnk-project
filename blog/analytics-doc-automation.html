@@ -202,7 +202,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h3>Declarative tracking via data attributes</h3>
     <p>Rather than writing JavaScript event handlers for each element, every trackable link in the site carries its analytics payload directly in the markup:</p>
 
-    <pre><code><span class="cm">&lt;!-- The tracking parameters live here, in the HTML itself --&gt;</span>
+    <pre><code class="language-html"><span class="cm">&lt;!-- The tracking parameters live here, in the HTML itself --&gt;</span>
 <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"blog.html"</span>
    <span class="attr">data-track</span>=<span class="str">'{"content_type":"nav_link",
               "content_id":"blog",
@@ -220,7 +220,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h3>Privacy by architecture, not by configuration</h3>
     <p>The central analytics script handles PII filtering at the system level, before any data touches the dataLayer. This isn't a checkbox in GTM — it's the default behavior of the code:</p>
 
-    <pre><code><span class="cm">// Email → hashed with SHA-256 before it ever reaches the dataLayer</span>
+    <pre><code class="language-javascript"><span class="cm">// Email → hashed with SHA-256 before it ever reaches the dataLayer</span>
 <span class="kw">async function</span> hashEmail(email) {
   <span class="kw">const</span> buf = <span class="kw">await</span> crypto.subtle.digest(
     <span class="str">'SHA-256'</span>,
@@ -237,7 +237,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>The dataLayer push for a form submission looks like this — the raw message is never in there:</p>
 
-    <pre><code>window.dataLayer.push({
+    <pre><code class="language-javascript">window.dataLayer.push({
   <span class="key">event</span>:               <span class="str">'generate_lead'</span>,
   <span class="key">form_name</span>:           <span class="str">'contact'</span>,
   <span class="key">subject</span>:             <span class="str">'analytics audit'</span>,
