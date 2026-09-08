@@ -1,0 +1,53 @@
+{
+  "name": "TNK – Design & Analytics",
+  "short_name": "TNK",
+  "description": "Implementation, governance, and data quality in digital Web and App environments",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0F1E",
+  "theme_color": "#00CFFF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/og/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["analytics", "design", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Blog",
+      "short_name": "Blog",
+      "description": "Read our latest analytics and design insights",
+      "url": "/blog.html",
+      "icons": []
+    },
+    {
+      "name": "Projects",
+      "short_name": "Projects",
+      "description": "View our portfolio",
+      "url": "/projects.html",
+      "icons": []
+    }
+  ]
+}

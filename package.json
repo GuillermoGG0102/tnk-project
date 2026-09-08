@@ -11,8 +11,9 @@
     "build-standalone-measurement": "node scripts/build_standalone_measurement.mjs"
   },
   "dependencies": {
-    "puppeteer": "^24.39.0",
-    "sharp": "^0.34.5"
+    "dotenv": "^17.4.2",
+    "puppeteer": "^25.10.0",
+    "sharp": "^0.35.4"
   },
   "repository": {
     "type": "git",
