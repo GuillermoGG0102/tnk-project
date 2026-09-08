@@ -284,33 +284,15 @@ setGrid();window.addEventListener('resize',setGrid);
 window.dataLayer=window.dataLayer||[];
 window.dataLayer.push({event:'page_view',page_title:'Security Audit of My AI-Built Portfolio',page_category:'blog',content_type:'article',content_id:'portfolio-security-audit'});
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+<script src="/js/likes-client.js"></script>
 <script>
 (function(){
-  // SECURITY: Supabase credentials removed. Use environment variables instead.
-  var sb={};
   var POST_SLUG='portfolio_security_audit';
   var POST_TITLE='Security Audit of My AI-Built Portfolio: What I Found';
-  function getBid(){var id=localStorage.getItem('tnk_browser_id');if(!id){id=crypto.randomUUID();localStorage.setItem('tnk_browser_id',id);}return id;}
-  window._liked=false;
-  function setLikeUI(n,liked){
-    var btn=document.getElementById('like-btn'),icon=document.getElementById('heart-icon'),el=document.getElementById('like-count');
-    if(!btn||!icon||!el)return;
-    el.textContent=n===1?'1 like':n+' likes';
-    if(liked){icon.setAttribute('fill','#FF4D6D');icon.setAttribute('stroke','#FF4D6D');btn.style.background='rgba(255,77,109,0.1)';btn.style.borderColor='rgba(255,77,109,0.35)';btn.style.color='#FF4D6D';}
-    else{icon.setAttribute('fill','none');icon.setAttribute('stroke','currentColor');btn.style.background='rgba(255,255,255,0.04)';btn.style.borderColor='rgba(255,255,255,0.1)';btn.style.color='#8A9CC8';}
-  }
-  function loadLikes(){
-    sb.from('post_likes').select('id',{count:'exact',head:true}).eq('post_slug',POST_SLUG).then(function(r1){
-      var n=r1.count||0;
-      sb.from('post_likes').select('id').eq('post_slug',POST_SLUG).eq('browser_id',getBid()).maybeSingle().then(function(r2){window._liked=!!(r2.data);setLikeUI(n,window._liked);});
-    });
-  }
-  window.toggleLike=function(){
-    var bid=getBid(),el=document.getElementById('like-count'),cur=parseInt(el.textContent)||0;
-    if(window._liked){window._liked=false;setLikeUI(Math.max(0,cur-1),false);sb.from('post_likes').delete().eq('post_slug',POST_SLUG).eq('browser_id',bid).then(function(){});(window.dataLayer=window.dataLayer||[]).push({event:'post_engagement',content_id:POST_SLUG,content_name:POST_TITLE,action:'unlike'});}
-    else{window._liked=true;setLikeUI(cur+1,true);sb.from('post_likes').insert({post_slug:POST_SLUG,browser_id:bid}).then(function(){});(window.dataLayer=window.dataLayer||[]).push({event:'post_engagement',content_id:POST_SLUG,content_name:POST_TITLE,action:'like'});}
-  };
+
+  // Initialize likes from backend proxy
+  window.initLikes(POST_SLUG);
   function renderComment(c){
     var d=document.createElement('div');d.style.cssText='background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:18px 20px;';
     var h=document.createElement('div');h.style.cssText='display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;';
