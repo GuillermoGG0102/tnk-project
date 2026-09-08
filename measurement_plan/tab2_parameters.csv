@@ -26,3 +26,5 @@ search_has_results,boolean,search,true,Whether any results were returned
 search_term_length,integer,search,19,Character length of search term
 search_section,string,search,blog,Section where search occurred (always 'blog' currently)
 search_active_filter,string,search,Analytics,Active filter pill at time of search (or 'all')
+destination_domain,string,outbound_click,linkedin.com,Hostname of the external link destination
+template_type,string,resource_download,utm_generator,Type of downloadable template (utm_generator · other)
