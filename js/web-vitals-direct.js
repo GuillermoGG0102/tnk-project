@@ -1,11 +1,6 @@
 // Web Vitals Tracking - Direct PerformanceObserver implementation
 // Captures Core Web Vitals: LCP, INP, CLS using native browser APIs
 (function() {
-  if (!window.dataLayer) {
-    console.warn('dataLayer not available');
-    return;
-  }
-
   var thresholds = {
     'LCP': { good: 2500, poor: 4000 },
     'INP': { good: 200, poor: 500 },
