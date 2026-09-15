@@ -65,6 +65,14 @@
 <meta name="author" content="TNK – Design & Analytics" />
 <meta name="reply-to" content="hola@tnkproject.com" />
 
+<script>
+// Language detection on first visit
+if (!localStorage.getItem('tnk_lang')) {
+  const browserLang = navigator.language.startsWith('es') ? 'es' : 'en';
+  localStorage.setItem('tnk_lang', browserLang);
+}
+window.TNK_LANG = localStorage.getItem('tnk_lang') || 'en';
+</script>
 <script>window.TNK_PAGE = { name: 'Blog', category: 'blog', type: 'listing', group: 'content' };</script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -74,6 +82,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KW97DTMV');</script>
 <!-- End Google Tag Manager -->
 <script src="/analytics.js"></script>
+<script src="/js/i18n.js"></script>
+<!-- SEO: Language Alternates -->
+<link rel="alternate" hreflang="en" href="https://tnkproject.com/blog.html" />
+<link rel="alternate" hreflang="es" href="https://tnkproject.com/blog.html" />
+<link rel="alternate" hreflang="x-default" href="https://tnkproject.com/blog.html" />
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
@@ -135,10 +148,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <img src="assets/images/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
       </a>
       <div style="display:flex;align-items:center;gap:4px;">
-        <a href="index.html" data-track='{"content_type":"nav_link","content_id":"home","content_name":"Home","section":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
-        <a href="projects.html" data-track='{"content_type":"nav_link","content_id":"projects","content_name":"Projects","section":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
-        <a href="blog.html" data-track='{"content_type":"nav_link","content_id":"blog","content_name":"Blog","section":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;">Blog</a>
-        <a href="contact.html" data-track='{"content_type":"nav_link","content_id":"contact","content_name":"Contact","section":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+        <a href="index.html" data-track='{"content_type":"nav_link","content_id":"home","content_name":"Home","section":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'" data-i18n="nav.home">Home</a>
+        <a href="projects.html" data-track='{"content_type":"nav_link","content_id":"projects","content_name":"Projects","section":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'" data-i18n="nav.projects">Projects</a>
+        <a href="blog.html" data-track='{"content_type":"nav_link","content_id":"blog","content_name":"Blog","section":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#F0F4FF;background:rgba(255,255,255,0.06);text-decoration:none;" data-i18n="nav.blog">Blog</a>
+        <button class="lang-toggle" style="padding:7px 12px;border-radius:8px;font-size:12px;font-weight:600;background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);cursor:pointer;transition:all 0.2s;" onclick="tnkSwitchLanguage()" onmouseover="this.style.background='rgba(0,207,255,0.15)'" onmouseout="this.style.background='rgba(0,207,255,0.1)'"><span id="lang-indicator">ES</span></button>
+        <a href="contact.html" data-track='{"content_type":"nav_link","content_id":"contact","content_name":"Contact","section":"nav"}' style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;" data-i18n="nav.contact">Get in touch</a>
       </div>
     </nav>
   </div>
@@ -506,7 +520,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </article>
 
-    <article class="card post-card" onclick="tnkNavigate('blog/ga4-beginners-guide-2024.html',{content_type:'blog_card',content_id:'ga4-beginners-guide-2024',content_name:'Getting Started with GA4 – Complete Beginner\'s Guide 2024',section:'blog_listing'})" data-category="analytics" style="overflow:hidden;display:flex;flex-direction:column;">
+    <article class="card post-card" onclick="tnkNavigate('blog/ga4-beginners-guide-2026.html',{content_type:'blog_card',content_id:'ga4-beginners-guide-2026',content_name:'Getting Started with GA4 – Complete Beginner\'s Guide 2026',section:'blog_listing'})" data-category="analytics" style="overflow:hidden;display:flex;flex-direction:column;">
       <div style="position:relative;aspect-ratio:16/9;overflow:hidden;flex-shrink:0;background:#0d1528;display:flex;align-items:center;justify-content:center;padding:20px;">
         <div style="width:100%;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.9;color:#00CFFF;">
           <div style="color:#4D5E87;margin-bottom:8px;">// GA4 Setup Checklist</div>

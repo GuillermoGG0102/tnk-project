@@ -65,6 +65,14 @@
 <meta name="author" content="TNK – Design & Analytics" />
 <meta name="reply-to" content="hola@tnkproject.com" />
 
+<script>
+// Language detection on first visit
+if (!localStorage.getItem('tnk_lang')) {
+  const browserLang = navigator.language.startsWith('es') ? 'es' : 'en';
+  localStorage.setItem('tnk_lang', browserLang);
+}
+window.TNK_LANG = localStorage.getItem('tnk_lang') || 'en';
+</script>
 <script>window.TNK_PAGE = { name: 'Contact', category: 'contact', type: 'form', group: 'portfolio' };</script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -74,6 +82,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KW97DTMV');</script>
 <!-- End Google Tag Manager -->
 <script src="/analytics.js"></script>
+<script src="/js/i18n.js"></script>
+<!-- SEO: Language Alternates -->
+<link rel="alternate" hreflang="en" href="https://tnkproject.com/contact.html" />
+<link rel="alternate" hreflang="es" href="https://tnkproject.com/contact.html" />
+<link rel="alternate" hreflang="x-default" href="https://tnkproject.com/contact.html" />
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
@@ -134,10 +147,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <img src="assets/images/TNK LOGOPNG.png" alt="TNK Logo" style="height:36px;width:auto;display:block;" />
       </a>
       <div style="display:flex;align-items:center;gap:4px;">
-        <a href="index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Home</a>
-        <a href="projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Projects</a>
-        <a href="blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'">Blog</a>
-        <a href="contact.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;">Get in touch</a>
+        <a href="index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'" data-i18n="nav.home">Home</a>
+        <a href="projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'" data-i18n="nav.projects">Projects</a>
+        <a href="blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;" onmouseover="this.style.color='#F0F4FF';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='#8A9CC8';this.style.background='transparent'" data-i18n="nav.blog">Blog</a>
+        <button class="lang-toggle" style="padding:7px 12px;border-radius:8px;font-size:12px;font-weight:600;background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);cursor:pointer;transition:all 0.2s;" onclick="tnkSwitchLanguage()" onmouseover="this.style.background='rgba(0,207,255,0.15)'" onmouseout="this.style.background='rgba(0,207,255,0.1)'"><span id="lang-indicator">ES</span></button>
+        <a href="contact.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#00CFFF;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);text-decoration:none;margin-left:6px;" data-i18n="nav.contact">Get in touch</a>
       </div>
     </nav>
   </div>
