@@ -1,0 +1,371 @@
+{
+  "totalFiles": 35,
+  "filesWithContent": [
+    {
+      "file": "assets/brand/branding_guide.html",
+      "textNodeCount": 153
+    },
+    {
+      "file": "blog/analytics-doc-automation.html",
+      "textNodeCount": 208
+    },
+    {
+      "file": "blog/analytics-first-workflow.html",
+      "textNodeCount": 239
+    },
+    {
+      "file": "blog/beautiful-dashboards.html",
+      "textNodeCount": 146
+    },
+    {
+      "file": "blog/building-with-claude-code.html",
+      "textNodeCount": 122
+    },
+    {
+      "file": "blog/claude-ai-data-analysis.html",
+      "textNodeCount": 138
+    },
+    {
+      "file": "blog/claude-commands-guide.html",
+      "textNodeCount": 147
+    },
+    {
+      "file": "blog/claude-tips.html",
+      "textNodeCount": 107
+    },
+    {
+      "file": "blog/data-driven-design-ux-analytics.html",
+      "textNodeCount": 154
+    },
+    {
+      "file": "blog/datalayer-medicion-robusta.html",
+      "textNodeCount": 112
+    },
+    {
+      "file": "blog/design-principles-for-data-products.html",
+      "textNodeCount": 121
+    },
+    {
+      "file": "blog/ga4-beginners-guide-2026.html",
+      "textNodeCount": 209
+    },
+    {
+      "file": "blog/ga4-events-explained.html",
+      "textNodeCount": 188
+    },
+    {
+      "file": "blog/ga4-measurement-plan-template.html",
+      "textNodeCount": 171
+    },
+    {
+      "file": "blog/getting-started-with-ga4.html",
+      "textNodeCount": 156
+    },
+    {
+      "file": "blog/portfolio-security-audit.html",
+      "textNodeCount": 146
+    },
+    {
+      "file": "blog/utms-importacion-campanas-ga4.html",
+      "textNodeCount": 316
+    },
+    {
+      "file": "blog.html",
+      "textNodeCount": 236
+    },
+    {
+      "file": "contact.html",
+      "textNodeCount": 58
+    },
+    {
+      "file": "index.html",
+      "textNodeCount": 211
+    },
+    {
+      "file": "measurement_plan/archive/measurement_plan_v1.html",
+      "textNodeCount": 82
+    },
+    {
+      "file": "measurement_plan/archive/measurement_plan_v2.html",
+      "textNodeCount": 109
+    },
+    {
+      "file": "measurement_plan/archive/measurement_plan_v3.html",
+      "textNodeCount": 149
+    },
+    {
+      "file": "measurement_plan/archive/measurement_plan_v4.html",
+      "textNodeCount": 478
+    },
+    {
+      "file": "measurement_plan/archive/measurement_plan_v5.1.html",
+      "textNodeCount": 501
+    },
+    {
+      "file": "measurement_plan/measurement_plan.html",
+      "textNodeCount": 743
+    },
+    {
+      "file": "measurement_plan/measurement_plan_standalone.html",
+      "textNodeCount": 743
+    },
+    {
+      "file": "projects/tnk-designs.html",
+      "textNodeCount": 68
+    },
+    {
+      "file": "projects/tnk-portfolio-web.html",
+      "textNodeCount": 100
+    },
+    {
+      "file": "projects.html",
+      "textNodeCount": 38
+    },
+    {
+      "file": "tools/ga4-dashboard-background.html",
+      "textNodeCount": 23
+    },
+    {
+      "file": "tools/ga4-dashboard-mockup.html",
+      "textNodeCount": 104
+    },
+    {
+      "file": "tools/linkedin-visual.html",
+      "textNodeCount": 39
+    }
+  ],
+  "totalTextNodes": 6515,
+  "contentByFile": {
+    "assets/brand/branding_guide.html": [
+      "Branding Guide: TNK Project",
+      "Branding Guide: TNK Project",
+      "Identidad de Marca",
+      "Misión:",
+      "Impulsar el análisis digital y el diseño estratégico combinando"
+    ],
+    "blog/analytics-doc-automation.html": [
+      "Analytics Documentation Automation: Tools & Best Practices | TNK",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "blog/analytics-first-workflow.html": [
+      "Analytics-First Workflow: Measurement Before Development | TNK",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "blog/beautiful-dashboards.html": [
+      "Creating Beautiful Analytics Dashboards: Design Guide | TNK",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "blog/building-with-claude-code.html": [
+      "Building with Claude Code: Complete Developer Guide 2024 | TNK",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "blog/claude-ai-data-analysis.html": [
+      "Claude AI for Data Analysis – Automating Analytics Tasks 2024 | TNK",
+      "Home",
+      "Blog",
+      "Projects",
+      "Get in touch"
+    ],
+    "blog/claude-commands-guide.html": [
+      "Claude Commands Guide: Complete Keyboard Shortcuts & Tips 2024 | TNK",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "blog/claude-tips.html": [
+      "10 Claude AI Tips for Developers 2024 | TNK – Design & Analytics",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "blog/data-driven-design-ux-analytics.html": [
+      "Data-Driven Design: How to Measure UX Impact with Analytics 2024 | TNK",
+      "Home",
+      "Blog",
+      "Projects",
+      "Get in touch"
+    ],
+    "blog/datalayer-medicion-robusta.html": [
+      "GA4 dataLayer Implementation Guide – Robust Measurement 2024 | TNK",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "blog/design-principles-for-data-products.html": [
+      "Design Principles for Data Products: User-Centric Analytics | TNK",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "blog/ga4-beginners-guide-2026.html": [
+      "Getting Started with GA4 – Complete Beginner's Guide 2026 | TNK",
+      "Home",
+      "Blog",
+      "Projects",
+      "Get in touch"
+    ],
+    "blog/ga4-events-explained.html": [
+      "GA4 Events Explained – Complete Guide with Examples 2024 | TNK",
+      "Home",
+      "Blog",
+      "Projects",
+      "Get in touch"
+    ],
+    "blog/ga4-measurement-plan-template.html": [
+      "GA4 Measurement Plan Template – Framework for Success 2024 | TNK",
+      "Home",
+      "Blog",
+      "Projects",
+      "Get in touch"
+    ],
+    "blog/getting-started-with-ga4.html": [
+      "Getting Started with GA4 – Beginner's Guide 2024 | TNK",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "blog/portfolio-security-audit.html": [
+      "Portfolio Security Audit: Web Application Security Checklist | TNK",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "blog/utms-importacion-campanas-ga4.html": [
+      "GA4 UTM Parameters: Complete Setup Guide [2024] | TNK",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "blog.html": [
+      "Blog | TNK – Design & Analytics",
+      "Home",
+      "Projects",
+      "Blog",
+      "ES"
+    ],
+    "contact.html": [
+      "Contact | TNK – Design & Analytics",
+      "Home",
+      "Projects",
+      "Blog",
+      "ES"
+    ],
+    "index.html": [
+      "TNK – Design & Analytics",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "measurement_plan/archive/measurement_plan_v1.html": [
+      "TNK Designs — Measurement Plan",
+      "TNK Designs",
+      "Web Measurement Plan",
+      "v1.0 · 2026-03-10",
+      "01 — Intro"
+    ],
+    "measurement_plan/archive/measurement_plan_v2.html": [
+      "TNK Designs — Measurement Plan",
+      "TNK Designs",
+      "Web Measurement Plan",
+      "v2.0 · 2026-03-11",
+      "01 — Intro"
+    ],
+    "measurement_plan/archive/measurement_plan_v3.html": [
+      "TNK Designs — Measurement Plan",
+      "📂 Screenshots not visible? Download the",
+      "standalone version",
+      "— single file, all screenshots embedded, works offline.",
+      "✕"
+    ],
+    "measurement_plan/archive/measurement_plan_v4.html": [
+      "TNK Designs — Measurement Plan",
+      "📂 Screenshots not visible? Download the",
+      "standalone version",
+      "— single file, all screenshots embedded, works offline.",
+      "✕"
+    ],
+    "measurement_plan/archive/measurement_plan_v5.1.html": [
+      "TNK Designs — Measurement Plan",
+      "📂 Screenshots not visible? Download the",
+      "standalone version",
+      "— single file, all screenshots embedded, works offline.",
+      "✕"
+    ],
+    "measurement_plan/measurement_plan.html": [
+      "TNK Designs — Measurement Plan",
+      "📂 Screenshots not visible? Download the",
+      "standalone version",
+      "— single file, all screenshots embedded, works offline.",
+      "✕"
+    ],
+    "measurement_plan/measurement_plan_standalone.html": [
+      "TNK Designs — Measurement Plan",
+      "📂 Screenshots not visible? Download the",
+      "standalone version",
+      "— single file, all screenshots embedded, works offline.",
+      "✕"
+    ],
+    "projects/tnk-designs.html": [
+      "TNK Design Projects – Analytics & Dashboard Design Portfolio | TNK",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "projects/tnk-portfolio-web.html": [
+      "TNK Portfolio Web Design – Case Study & Implementation | TNK",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "projects.html": [
+      "Projects | TNK – Design & Analytics",
+      "Home",
+      "Projects",
+      "Blog",
+      "Get in touch"
+    ],
+    "tools/ga4-dashboard-background.html": [
+      "GA4 Dashboard Template – Data Visualization Background | TNK",
+      "Header · Logo · Título · Filtro de fechas · Badges",
+      "KPI 1",
+      "sessions",
+      "KPI 2"
+    ],
+    "tools/ga4-dashboard-mockup.html": [
+      "GA4 Dashboard Mockup – Analytics Dashboard Template | TNK",
+      "TNK",
+      "GA4 Analytics Dashboard",
+      "guillermogg0102 · tnk-project",
+      "📅 &nbsp;"
+    ],
+    "tools/linkedin-visual.html": [
+      "LinkedIn Visual Creator – Social Media Design Tool | TNK",
+      "TNK Designs",
+      "How I built",
+      "this",
+      "portfolio"
+    ]
+  }
+}
