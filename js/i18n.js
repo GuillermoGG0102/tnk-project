@@ -154,8 +154,12 @@ const TNK_TRANSLATIONS = {
   // ════════════════════════════════════════
   // PROJECTS PAGE
   // ════════════════════════════════════════
-  'projects.title': { en: 'Projects', es: 'Proyectos' },
-  'projects.description': { en: 'A selection of my work in analytics, design, and development.', es: 'Una selección de mi trabajo en análisis, diseño y desarrollo.' },
+  'projects.label': { en: 'Portfolio', es: 'Portafolio' },
+  'projects.title': { en: 'Selected work', es: 'Trabajo seleccionado' },
+  'projects.description': { en: 'Analytics implementations, design systems, and digital art — each built to solve real problems with measurable outcomes.', es: 'Implementaciones de analytics, sistemas de diseño y arte digital — cada uno construido para resolver problemas reales con resultados medibles.' },
+  'projects.cta.heading': { en: 'Have a project in mind?', es: '¿Tienes un proyecto en mente?' },
+  'projects.cta.description': { en: 'Let\'s discuss how analytics and design can work together to move your metrics.', es: 'Hablemos de cómo analytics y diseño pueden trabajar juntos para mover tus métricas.' },
+  'projects.cta.button': { en: 'Get in touch →', es: 'Contáctanos →' },
   'projects.category-all': { en: 'All', es: 'Todos' },
   'projects.category-analytics': { en: 'Analytics', es: 'Analytics' },
   'projects.category-design': { en: 'Design', es: 'Diseño' },
@@ -169,6 +173,9 @@ const TNK_TRANSLATIONS = {
   'footer.copyright': { en: '© 2026 TNK. All rights reserved.', es: '© 2026 TNK. Todos los derechos reservados.' },
   'footer.made-by': { en: 'Made with data and design', es: 'Hecho con datos y diseño' },
   'footer.quicklinks': { en: 'Site', es: 'Sitio' },
+  'footer.quicklinks.home': { en: 'Home', es: 'Inicio' },
+  'footer.quicklinks.blog': { en: 'Blog', es: 'Blog' },
+  'footer.quicklinks.contact': { en: 'Contact', es: 'Contacto' },
   'footer.topics': { en: 'Topics', es: 'Temas' },
   'footer.topic-design': { en: 'Design', es: 'Diseño' },
   'footer.topic-analytics': { en: 'Analytics', es: 'Analytics' },
