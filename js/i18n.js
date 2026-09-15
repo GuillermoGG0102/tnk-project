@@ -1,18 +1,24 @@
-// TNK Translation Dictionary - Phase 1 (Core Pages)
+// TNK Translation Dictionary - Phase 2 (Complete Website Translation)
 const TNK_TRANSLATIONS = {
-  // Navbar
+  // ════════════════════════════════════════
+  // NAVBAR & COMMON
+  // ════════════════════════════════════════
   'nav.home': { en: 'Home', es: 'Inicio' },
   'nav.blog': { en: 'Blog', es: 'Blog' },
   'nav.projects': { en: 'Projects', es: 'Proyectos' },
   'nav.contact': { en: 'Get in touch', es: 'Contáctanos' },
   'nav.lang-toggle': { en: 'ES', es: 'EN' },
 
-  // Homepage
+  // ════════════════════════════════════════
+  // HOMEPAGE (HERO & SECTIONS)
+  // ════════════════════════════════════════
   'home.title': { en: 'TNK – Design & Analytics', es: 'TNK – Diseño & Analytics' },
   'home.tagline': {
     en: 'Implementation, governance, and data quality in digital Web and App environments.',
     es: 'Implementación, gobernanza y calidad de datos en entornos Web y App digitales.'
   },
+  'home.hero.main1': { en: 'Design meets', es: 'El diseño se encuentra con' },
+  'home.hero.main2': { en: 'Analytics.', es: 'Analytics.' },
   'home.hero.heading': {
     en: 'End-to-end measurement. From strategy to validation.',
     es: 'Medición de extremo a extremo. De la estrategia a la validación.'
@@ -22,10 +28,52 @@ const TNK_TRANSLATIONS = {
     es: 'Diseña arquitectura de datos, implementa tracking, y valida calidad de datos.'
   },
   'home.hero.cta': { en: 'Explore my work', es: 'Explora mi trabajo' },
-  'home.services': { en: 'Services', es: 'Servicios' },
-  'home.blog': { en: 'Latest Articles', es: 'Últimos Artículos' },
 
-  // Blog
+  // About section
+  'home.about.label': { en: 'About me', es: 'Sobre mí' },
+  'home.about.heading': { en: 'Data meets craft', es: 'Los datos se encuentran con la artesanía' },
+  'home.about.p1': {
+    en: 'Marketing and Digital Business graduate (Esic University) and Business Analytics graduate (European University) with experience in Digital Analytics Consultancy.',
+    es: 'Graduado en Marketing y Negocio Digital (Universidad Esic) y graduado en Business Analytics (Universidad Europea) con experiencia en Consultoría de Digital Analytics.'
+  },
+  'home.about.p2': {
+    en: 'From my perspective, data and its analysis begin with a solid measurement logic defined in the central analytics framework.',
+    es: 'Desde mi perspectiva, los datos y su análisis comienzan con una sólida lógica de medición definida en el marco de análisis central.'
+  },
+  'home.about.p3': {
+    en: 'Without a clear definition, both analysis and visualization may become superficial and lack the robustness required for data-driven decision-making.',
+    es: 'Sin una definición clara, tanto el análisis como la visualización pueden volverse superficiales y carecer de la solidez requerida para la toma de decisiones basada en datos.'
+  },
+
+  // Work history
+  'home.work.label': { en: 'Work history', es: 'Historial laboral' },
+  'home.work.heading': { en: 'Where I\'ve worked', es: 'Dónde he trabajado' },
+  'home.work.role1': { en: 'Digital Analytics Engineer', es: 'Ingeniero de Digital Analytics' },
+  'home.work.role2': { en: 'Digital Analytics Consultant', es: 'Consultor de Digital Analytics' },
+  'home.work.role3': { en: 'Paid Social — Marketing Associate', es: 'Paid Social — Asociado de Marketing' },
+
+  // Featured work
+  'home.projects.label': { en: 'Featured work', es: 'Trabajo destacado' },
+  'home.projects.heading': { en: 'Selected projects', es: 'Proyectos seleccionados' },
+  'home.projects.description': { en: 'A curated selection across analytics and digital art.', es: 'Una selección curada de análisis y arte digital.' },
+  'home.projects.digital-art': { en: 'Digital Art', es: 'Arte Digital' },
+  'home.projects.web-dev': { en: 'Web Development', es: 'Desarrollo Web' },
+  'home.projects.tnk-designs.title': { en: 'TNK Designs', es: 'TNK Designs' },
+  'home.projects.tnk-designs.desc': { en: 'Personal graphic design brand — cover art for underground artists, photo manipulations, illustrations, and creative multimedia content.', es: 'Marca personal de diseño gráfico — portadas para artistas underground, manipulaciones de fotos, ilustraciones y contenido multimedia creativo.' },
+  'home.projects.tnk-web.title': { en: 'TNK Design & Analytics', es: 'TNK Design & Analytics' },
+  'home.projects.tnk-web.desc': { en: 'This very website — 13 pages built entirely with Claude Code. Static HTML, Tailwind CSS, consistent design system. Zero lines hand-written.', es: 'Este mismo sitio web — 13 páginas construidas completamente con Claude Code. HTML estático, Tailwind CSS, sistema de diseño consistente. Cero líneas escritas a mano.' },
+  'home.projects.social-links': { en: 'Instagram · YouTube · Twitter', es: 'Instagram · YouTube · Twitter' },
+  'home.projects.stats': { en: '13 pages · 0 lines hand-written · 100% AI', es: '13 páginas · 0 líneas escritas a mano · 100% IA' },
+
+  // Skills section
+  'home.skills.label': { en: 'Expertise', es: 'Experiencia' },
+  'home.skills.heading': { en: 'Skills & tools', es: 'Habilidades y herramientas' },
+  'home.skills.description': { en: 'Two distinct but complementary skill sets — data-driven thinking and visual craft.', es: 'Dos conjuntos de habilidades distintos pero complementarios: pensamiento basado en datos y artesanía visual.' },
+  'home.skills.also-familiar': { en: 'Also familiar with', es: 'También familiarizado con' },
+
+  // ════════════════════════════════════════
+  // BLOG & ARTICLES
+  // ════════════════════════════════════════
   'blog.title': { en: 'Blog', es: 'Blog' },
   'blog.description': {
     en: 'Articles on analytics, design, and data-driven strategies',
@@ -38,8 +86,16 @@ const TNK_TRANSLATIONS = {
   'blog.coming-soon': { en: 'Coming Soon', es: 'Próximamente' },
   'blog.min-read': { en: 'min read', es: 'min de lectura' },
   'blog.read-more': { en: 'Read →', es: 'Leer →' },
+  'blog.published': { en: 'Published', es: 'Publicado' },
+  'blog.updated': { en: 'Updated', es: 'Actualizado' },
+  'blog.by-author': { en: 'By', es: 'Por' },
+  'blog.share': { en: 'Share this article', es: 'Compartir este artículo' },
+  'blog.copy-link': { en: 'Copy link', es: 'Copiar enlace' },
+  'blog.back-to-blog': { en: 'Back to Blog', es: 'Volver al Blog' },
 
-  // Contact
+  // ════════════════════════════════════════
+  // CONTACT
+  // ════════════════════════════════════════
   'contact.title': { en: 'Get in touch', es: 'Contáctanos' },
   'contact.description': {
     en: 'Have a question or want to work together? Reach out.',
@@ -49,11 +105,50 @@ const TNK_TRANSLATIONS = {
   'contact.form.email': { en: 'Email', es: 'Correo electrónico' },
   'contact.form.message': { en: 'Message', es: 'Mensaje' },
   'contact.form.send': { en: 'Send', es: 'Enviar' },
+  'contact.form.sending': { en: 'Sending...', es: 'Enviando...' },
+  'contact.form.success': { en: 'Message sent! I\'ll get back to you soon.', es: '¡Mensaje enviado! Me pondré en contacto pronto.' },
   'contact.email-link': { en: 'hola@tnkproject.com', es: 'hola@tnkproject.com' },
+  'contact.direct-email': { en: 'Or email directly:', es: 'O envía un correo directamente:' },
 
-  // Footer
+  // ════════════════════════════════════════
+  // PROJECTS PAGE
+  // ════════════════════════════════════════
+  'projects.title': { en: 'Projects', es: 'Proyectos' },
+  'projects.description': { en: 'A selection of my work in analytics, design, and development.', es: 'Una selección de mi trabajo en análisis, diseño y desarrollo.' },
+  'projects.category-all': { en: 'All', es: 'Todos' },
+  'projects.category-analytics': { en: 'Analytics', es: 'Analytics' },
+  'projects.category-design': { en: 'Design', es: 'Diseño' },
+  'projects.category-dev': { en: 'Development', es: 'Desarrollo' },
+  'projects.view-project': { en: 'View project', es: 'Ver proyecto' },
+  'projects.back': { en: 'Back to projects', es: 'Volver a proyectos' },
+
+  // ════════════════════════════════════════
+  // FOOTER
+  // ════════════════════════════════════════
   'footer.copyright': { en: '© 2026 TNK. All rights reserved.', es: '© 2026 TNK. Todos los derechos reservados.' },
   'footer.made-by': { en: 'Made with data and design', es: 'Hecho con datos y diseño' },
+  'footer.quicklinks': { en: 'Quick links', es: 'Enlaces rápidos' },
+  'footer.follow': { en: 'Follow me', es: 'Sígueme' },
+  'footer.email': { en: 'Email', es: 'Correo' },
+  'footer.linkedin': { en: 'LinkedIn', es: 'LinkedIn' },
+  'footer.github': { en: 'GitHub', es: 'GitHub' },
+  'footer.twitter': { en: 'Twitter', es: 'Twitter' },
+
+  // ════════════════════════════════════════
+  // COMMON UI ELEMENTS
+  // ════════════════════════════════════════
+  'common.loading': { en: 'Loading...', es: 'Cargando...' },
+  'common.error': { en: 'An error occurred', es: 'Ocurrió un error' },
+  'common.close': { en: 'Close', es: 'Cerrar' },
+  'common.submit': { en: 'Submit', es: 'Enviar' },
+  'common.cancel': { en: 'Cancel', es: 'Cancelar' },
+  'common.search': { en: 'Search', es: 'Buscar' },
+  'common.filter': { en: 'Filter', es: 'Filtrar' },
+  'common.sort': { en: 'Sort', es: 'Ordenar' },
+  'common.date': { en: 'Date', es: 'Fecha' },
+  'common.author': { en: 'Author', es: 'Autor' },
+  'common.category': { en: 'Category', es: 'Categoría' },
+  'common.tags': { en: 'Tags', es: 'Etiquetas' },
 };
 
 // Get current language from localStorage or default to 'en'
