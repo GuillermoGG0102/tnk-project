@@ -176,6 +176,7 @@ const TNK_TRANSLATIONS = {
   'footer.quicklinks.home': { en: 'Home', es: 'Inicio' },
   'footer.quicklinks.blog': { en: 'Blog', es: 'Blog' },
   'footer.quicklinks.contact': { en: 'Contact', es: 'Contacto' },
+  'footer.quicklinks.projects': { en: 'Projects', es: 'Proyectos' },
   'footer.topics': { en: 'Topics', es: 'Temas' },
   'footer.topic-design': { en: 'Design', es: 'Diseño' },
   'footer.topic-analytics': { en: 'Analytics', es: 'Analytics' },
