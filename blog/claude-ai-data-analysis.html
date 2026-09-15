@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="google-site-verification" content="8KMQyefycnnSHdz84SHb2ZdQlS2lDIuoKL" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Claude AI for Data Analysis – Automating Analytics Tasks 2024 | TNK</title>
+<meta name="description" content="Learn how to use Claude AI for data analysis tasks. Automate report generation, SQL queries, data validation, and analytics insights with AI." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Claude AI for Data Analysis – Automating Analytics Tasks 2024 | TNK" />
+<meta property="og:description" content="Automate analytics workflows with Claude AI. Learn practical use cases for data analysis, report generation, and insights automation." />
+<meta property="og:image" content="https://tnkproject.com/assets/og/og-image.png" />
+<meta property="og:url" content="https://tnkproject.com/blog/claude-ai-data-analysis.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Claude AI for Data Analysis – Automating Analytics Tasks 2024 | TNK" />
+<meta name="twitter:description" content="Use Claude for analytics automation. SQL generation, report writing, data validation, and insights at scale." />
+<meta name="twitter:image" content="https://tnkproject.com/assets/og/og-image.png" />
+
+<!-- SEO Meta Tags -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+<link rel="canonical" href="https://tnkproject.com/blog/claude-ai-data-analysis.html" />
+<link rel="sitemap" href="https://tnkproject.com/sitemap.xml" />
+<meta property="article:published_time" content="2026-09-15" />
+<meta property="article:modified_time" content="2026-09-15" />
+<meta property="article:author" content="https://tnkproject.com" />
+<!-- Security Meta Tags -->
+<meta name="referrer" content="strict-no-referrer-when-downgrade" />
+<!-- Device & Browser Tags -->
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="theme-color" content="#00CFFF" />
+<meta name="color-scheme" content="dark light" />
+<meta name="msapplication-config" content="/browserconfig.xml" />
+<meta name="msapplication-TileColor" content="#0A0F1E" />
+<!-- Progressive Web App -->
+<link rel="manifest" href="/site.webmanifest" />
+<!-- Performance Optimization -->
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com" />
+<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Social Media Meta Tags -->
+<meta property="og:locale" content="es_ES" />
+<meta property="og:site_name" content="TNK – Design & Analytics" />
+<meta name="twitter:creator" content="@tnkproject" />
+<meta name="twitter:site" content="@tnkproject" />
+<!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Claude AI for Data Analysis – Automating Analytics Tasks 2024",
+  "description": "Learn how to use Claude AI for data analysis tasks. Automate report generation, SQL queries, data validation, and analytics insights.",
+  "url": "https://tnkproject.com/blog/claude-ai-data-analysis.html",
+  "image": "https://tnkproject.com/assets/og/og-image.png",
+  "publisher": {
+    "@type": "Organization",
+    "name": "TNK – Design & Analytics",
+    "url": "https://tnkproject.com",
+    "logo": "https://tnkproject.com/assets/og/og-image.png"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Guillermo García",
+    "url": "https://www.linkedin.com/in/guillermo-garcía-analytics"
+  },
+  "datePublished": "2026-09-15",
+  "dateModified": "2026-09-15"
+}
+</script>
+<!-- Additional Meta Tags -->
+<meta name="format-detection" content="telephone=no" />
+<meta name="copyright" content="© 2024 TNK. All rights reserved." />
+<meta name="author" content="TNK – Design & Analytics" />
+<meta name="reply-to" content="hola@tnkproject.com" />
+
+<script>window.TNK_PAGE = { name: 'Claude AI for Data Analysis – Automating Analytics Tasks', category: 'AI', type: 'article', group: 'content' };</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KW97DTMV');</script>
+<!-- End Google Tag Manager -->
+<script src="/analytics.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { background:#0A0F1E; color:#F0F4FF; font-family:'Inter',sans-serif; margin:0; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; }
+  .navbar { position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06); }
+  .card { background:#0F1629; border:1px solid rgba(255,255,255,0.07); border-radius:14px; }
+  .tag-accent { background:rgba(0,255,179,0.1);color:#00FFB3;border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-primary { background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-neutral { background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .text-gradient { background:linear-gradient(135deg,#00CFFF,#00FFB3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+  /* Prose */
+  .prose { color:#8A9CC8; line-height:1.8; font-size:17px; }
+  .prose h2 { font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#F0F4FF;letter-spacing:-0.03em;margin:2.5em 0 0.75em; }
+  .prose h3 { font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#F0F4FF;letter-spacing:-0.02em;margin:2em 0 0.6em; }
+  .prose p { margin:0 0 1.4em; }
+  .prose strong { color:#F0F4FF;font-weight:600; }
+  .prose em { color:#F0F4FF;font-style:italic; }
+  .prose a { color:#00CFFF;text-decoration:underline;text-decoration-color:rgba(0,207,255,0.3); }
+  .prose ul,.prose ol { padding-left:1.5rem;margin-bottom:1.5em; }
+  .prose li { margin-bottom:0.5em; }
+  .prose hr { border:none;border-top:1px solid rgba(255,255,255,0.08);margin:3em 0; }
+  .prose pre { background:#162038;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px 24px;overflow-x:auto;margin:1.5em 0;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.6;color:#F0F4FF; }
+  .prose code { font-family:'JetBrains Mono',monospace;font-size:13px;padding:2px 6px;background:#162038;border-radius:4px;color:#00FFB3; }
+  .prose pre code { background:transparent;padding:0;color:#F0F4FF; }
+  .prose blockquote { border-left:3px solid #00CFFF;padding-left:1.5rem;margin:2em 0;font-style:italic; }
+  .prose table { width:100%;border-collapse:collapse;margin:2em 0; }
+  .prose th { background:#162038;color:#F0F4FF;font-weight:600;font-size:13px;padding:10px 14px;text-align:left;border:1px solid rgba(255,255,255,0.08); }
+  .prose td { padding:10px 14px;border:1px solid rgba(255,255,255,0.06);font-size:14px; }
+  .prose tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+  .fade-up { animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+</style>
+<script src="/js/web-vitals-polyfill.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://tnkproject.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://tnkproject.com/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Claude AI for Data Analysis",
+      "item": "https://tnkproject.com/blog/claude-ai-data-analysis.html"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KW97DTMV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px;">
+    <a href="../index.html" class="logo" style="display:flex;align-items:center;gap:12px;text-decoration:none;transition:opacity 0.2s;">
+      <svg width="44" height="44" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="23" fill="#0A0F1E" stroke="white" stroke-width="2"/>
+        <path d="M24 10C31.732 10 38 16.268 38 24" fill="white"/>
+        <path d="M24 38C16.268 38 10 31.732 10 24" fill="white"/>
+        <circle cx="24" cy="24" r="6" fill="black"/>
+      </svg>
+      <span style="font-size:18px;font-weight:700;font-family:'Space Grotesk',sans-serif;color:#F0F4FF;letter-spacing:-0.02em;">TNK</span>
+    </a>
+    <div style="display:flex;gap:4px;align-items:center;">
+      <a href="../index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;transition:all 0.2s;">Home</a>
+      <a href="../blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;transition:all 0.2s;">Blog</a>
+      <a href="../projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;transition:all 0.2s;">Projects</a>
+      <a href="#" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;transition:all 0.2s;">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Container -->
+<div style="max-width:900px;margin:0 auto;padding:120px 24px 60px;">
+  <!-- Header -->
+  <div style="margin-bottom:60px;">
+    <div style="display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap;">
+      <span class="tag-primary">AI & Automation</span>
+      <span class="tag-neutral" style="font-size:10px;">Practical</span>
+      <span style="font-size:11px;color:#4D5E87;">7 min read</span>
+    </div>
+
+    <h1 style="font-size:52px;font-weight:700;line-height:1.15;margin:0 0 20px;letter-spacing:-0.04em;color:#F0F4FF;">Claude AI for Data Analysis</h1>
+
+    <p style="font-size:18px;color:#8A9CC8;margin:0 0 30px;line-height:1.6;">Automate analytics workflows with Claude AI. Learn practical use cases for SQL generation, report automation, and data analysis at scale.</p>
+
+    <img src="https://placehold.co/900x500/0F1629/00CFFF?text=AI+Data+Analysis+Automation" alt="AI Data Analysis" style="width:100%;border-radius:12px;margin-bottom:30px;aspect-ratio:16/9;object-fit:cover;" />
+
+    <!-- Author Card -->
+    <div style="display:flex;gap:16px;padding:20px;background:rgba(15,22,41,0.6);border:1px solid rgba(255,255,255,0.07);border-radius:12px;margin-top:40px;">
+      <img src="https://placehold.co/60x60/00CFFF/0A0F1E?text=G" alt="Author" style="width:60px;height:60px;border-radius:50%;flex-shrink:0;background:#162038;" />
+      <div>
+        <div style="font-weight:600;color:#F0F4FF;font-size:14px;">Guillermo García</div>
+        <div style="font-size:13px;color:#8A9CC8;margin-bottom:8px;">Analytics Architect & Design Strategist</div>
+        <a href="https://www.linkedin.com/in/guillermo-garcía-analytics" target="_blank" rel="noopener noreferrer" style="font-size:12px;color:#00CFFF;text-decoration:underline;">LinkedIn →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article Body -->
+  <div class="prose">
+    <h2>What Can Claude Do for Analytics?</h2>
+    <p>Claude is an AI assistant that excels at understanding context and working with data. For analytics professionals, this opens possibilities for automating repetitive tasks and gaining insights faster.</p>
+
+    <p><strong>What Claude does well:</strong></p>
+    <ul>
+      <li>Write and debug SQL queries from natural language descriptions</li>
+      <li>Explain complex analytics concepts in plain English</li>
+      <li>Generate formatted reports from raw data</li>
+      <li>Validate data quality and suggest improvements</li>
+      <li>Create documentation for analytics processes</li>
+      <li>Analyze text data for insights and patterns</li>
+    </ul>
+
+    <p><strong>What Claude doesn't do:</strong></p>
+    <ul>
+      <li>Execute queries directly against databases (you provide data, Claude analyzes it)</li>
+      <li>Make autonomous decisions about your data</li>
+      <li>Guarantee 100% accurate SQL (always validate output)</li>
+      <li>Replace domain expertise (you interpret the insights)</li>
+    </ul>
+
+    <h2>Use Case 1: SQL Query Generation</h2>
+    <p>One of Claude's superpowers is writing SQL from natural language descriptions.</p>
+
+    <h3>Before (without Claude):</h3>
+    <p>You spend 20 minutes mentally translating: "Show me users who made a purchase in the last 30 days, grouped by acquisition channel, with their total spend and purchase count."</p>
+
+    <h3>After (with Claude):</h3>
+    <p>Prompt:</p>
+    <pre><code class="language-text">Write a SQL query that shows:
+- Users who made a purchase in the last 30 days
+- Grouped by acquisition channel
+- Include total spend and count of purchases
+- Sort by total spend descending
+
+My tables:
+- users (id, email, acquisition_channel, created_at)
+- orders (id, user_id, amount, created_at)
+</code></pre>
+
+    <p>Claude returns production-ready SQL in seconds:</p>
+
+    <pre><code class="language-sql">SELECT
+  u.acquisition_channel,
+  COUNT(DISTINCT u.id) as user_count,
+  COUNT(o.id) as purchase_count,
+  SUM(o.amount) as total_spend,
+  AVG(o.amount) as avg_order_value
+FROM users u
+INNER JOIN orders o ON u.id = o.user_id
+WHERE o.created_at >= NOW() - INTERVAL '30 days'
+GROUP BY u.acquisition_channel
+ORDER BY total_spend DESC;</code></pre>
+
+    <p><strong>Productivity gain:</strong> 20 minutes → 2 minutes (90% faster)</p>
+
+    <h3>Pro tips for SQL generation:</h3>
+    <ul>
+      <li>Provide table schemas (column names, types) for accuracy</li>
+      <li>Be specific about date ranges and conditions</li>
+      <li>Ask Claude to explain the query to verify it's correct</li>
+      <li>Request pagination if results might be large</li>
+    </ul>
+
+    <h2>Use Case 2: Report Generation & Documentation</h2>
+    <p>Claude can turn raw data into formatted, narrative reports.</p>
+
+    <h3>Example: Monthly analytics recap</h3>
+    <p>Prompt with your data:</p>
+    <pre><code class="language-text">Create a monthly analytics report from this data:
+
+Key Metrics (Aug 2026):
+- Total Users: 45,230 (+12% MoM)
+- Active Users: 28,450 (-3% MoM)
+- Conversion Rate: 3.2% (+0.4pp MoM)
+- Average Order Value: $87.50 (-$5.20 MoM)
+- Revenue: $285,400 (+8% MoM)
+
+Top performing channels:
+- Organic Search: 12,340 users (27%)
+- Paid Social: 8,920 users (20%)
+- Direct: 6,780 users (15%)
+
+Trends to highlight:
+- Newsletter engagement up 18%
+- Mobile traffic now 60% of total
+- Bounce rate down to 42%
+
+Focus areas for Sept:
+- Improve AOV through upsells
+- Test new ad creative for paid social
+- Optimize mobile checkout flow</code></pre>
+
+    <p>Claude generates:</p>
+    <blockquote>
+    <p><strong>August 2026 Analytics Summary</strong></p>
+    <p>August showed strong revenue growth (+8% MoM) despite a slight dip in active user engagement (-3%). This suggests improved monetization from fewer, higher-value users.</p>
+    <p><strong>Standout Wins:</strong></p>
+    <p>Newsletter engagement surged 18%, indicating strong audience interest in email content. Mobile traffic reached 60% of overall volume, highlighting the importance of mobile-first optimization.</p>
+    <p><strong>Challenges:</strong></p>
+    <p>While overall conversion improved to 3.2%, average order value declined $5.20, showing that growth came from frequency rather than order size. This suggests an opportunity for upsell and bundle strategies.</p>
+    <p><strong>Priorities for September:</strong></p>
+    <p>Focus on AOV recovery through targeted product bundles and upsells. Paid social creative needs testing (20% of traffic but lower conversion). Mobile checkout optimization should be immediate given its volume contribution.</p>
+    </blockquote>
+
+    <h3>Why this matters:</h3>
+    <p>Instead of spending an hour formatting reports, you spend 5 minutes providing data to Claude and 5 minutes editing its output. The narrative structure makes insights digestible for stakeholders.</p>
+
+    <h2>Use Case 3: Data Validation & Quality Checks</h2>
+    <p>Claude can review data for quality issues and suggest improvements.</p>
+
+    <p>Prompt:</p>
+    <pre><code class="language-text">Review this GA4 event data for quality issues:
+
+Sample data from scroll_depth events:
+- Event 1: scroll_percentage: 125 (impossible value)
+- Event 2: scroll_percentage: 50, time_to_scroll: -5 (negative seconds)
+- Event 3: scroll_percentage: "75" (string instead of integer)
+- Event 4: content_id: null (missing value)
+- Event 5: scroll_percentage: 50, page_path: "/" (normal)
+
+What issues do you see? How should we fix them?</code></pre>
+
+    <p>Claude identifies:</p>
+    <ul>
+      <li>scroll_percentage > 100: Filter out or cap at 100</li>
+      <li>Negative time values: Indicate timestamp errors or client-side bugs</li>
+      <li>Type mismatches: Convert strings to integers at ingestion</li>
+      <li>Null values: Implement default behavior or exclude from analysis</li>
+      <li>Suggests adding data validation at the point of collection (dataLayer tracking)</li>
+    </ul>
+
+    <h2>Use Case 4: SQL Debugging & Optimization</h2>
+    <p>Stuck on a query that isn't working? Claude debugs it:</p>
+
+    <p>Prompt:</p>
+    <pre><code class="language-text">This query returns wrong results. Debug it:
+
+SELECT u.user_id, u.name, COUNT(o.id) as order_count
+FROM users u
+LEFT JOIN orders o ON u.user_id = o.user_id
+WHERE o.status = 'completed'
+GROUP BY u.user_id
+
+Problem: Users with no completed orders show up with count=1</code></pre>
+
+    <p>Claude spots the issue: LEFT JOIN + WHERE clause on the joined table converts it to an INNER JOIN. Fix:</p>
+
+    <pre><code class="language-sql">SELECT u.user_id, u.name, COUNT(o.id) as order_count
+FROM users u
+LEFT JOIN orders o ON u.user_id = o.user_id AND o.status = 'completed'
+GROUP BY u.user_id;</code></pre>
+
+    <p><strong>Key insight:</strong> Move the WHERE condition to the JOIN clause for LEFT JOINs.</p>
+
+    <h2>Use Case 5: Documentation & Runbook Creation</h2>
+    <p>Claude can turn your analytics processes into clear documentation:</p>
+
+    <p>Prompt: "Create a runbook for tracking new GA4 events. Include setup checklist, testing steps, and monitoring checklist."</p>
+
+    <p>Output: A formatted, comprehensive guide that new team members can follow immediately.</p>
+
+    <h2>Prompting Tips for Better Results</h2>
+
+    <h3>1. Be specific, not vague</h3>
+    <p>❌ "Write a SQL query for our sales data"<br/>
+    ✅ "Write a SQL query showing daily revenue for the past 90 days, by product category, with counts of transactions"</p>
+
+    <h3>2. Provide context</h3>
+    <p>Share table structures, column names, and data types. Claude works better with full context.</p>
+
+    <h3>3. Request explanations</h3>
+    <p>"Write this SQL query and explain what each clause does" ensures Claude's logic is clear.</p>
+
+    <h3>4. Iterate interactively</h3>
+    <p>"Now modify this to also include products that haven't sold anything in 30 days" is easier than rewriting from scratch.</p>
+
+    <h3>5. Ask for alternatives</h3>
+    <p>"Show me 2 different approaches to this problem" reveals trade-offs in performance vs. readability.</p>
+
+    <h2>When NOT to Use Claude for Analytics</h2>
+
+    <p><strong>❌ Don't rely on Claude for:</strong></p>
+    <ul>
+      <li>Direct database access (Claude can't query your database; you provide the data)</li>
+      <li>Real-time decisions (delays from API calls make it unsuitable for live systems)</li>
+      <li>Sensitive data analysis (never paste PII like customer emails into Claude)</li>
+      <li>Financial/legal interpretations (always validate with domain experts)</li>
+      <li>Mission-critical queries without review (always have a human verify SQL)</li>
+    </ul>
+
+    <h2>Best Practices for AI-Assisted Analytics</h2>
+
+    <ul>
+      <li><strong>Verify, don't trust blindly:</strong> Claude generates plausible-sounding SQL that might be wrong. Always validate output.</li>
+      <li><strong>Maintain a decision log:</strong> Document why you chose Claude's output over alternatives for audit trails.</li>
+      <li><strong>Never share sensitive data:</strong> Redact customer info before sharing data with Claude.</li>
+      <li><strong>Explain to stakeholders:</strong> Be transparent that AI assisted the analysis. They need to know.</li>
+      <li><strong>Use Claude for drafts, not finals:</strong> View Claude as a first-pass generator. Polish and validate before publishing.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <h3>Can Claude access my database directly?</h3>
+    <p>No. You query your database, paste the results or schema into Claude, and Claude analyzes it. This is actually safer—your data never leaves your systems.</p>
+
+    <h3>Is it safe to use Claude with customer data?</h3>
+    <p>Only if you redact PII (names, emails, phone numbers). Use aggregated or anonymized data instead. Never paste raw customer records.</p>
+
+    <h3>How accurate are Claude's SQL queries?</h3>
+    <p>Claude produces syntactically correct SQL 95%+ of the time, but logic errors are possible (especially with complex JOINs). Always test queries on sample data first.</p>
+
+    <h3>Can Claude replace my data analyst?</h3>
+    <p>No. Claude is a tool that makes analysts more productive. It handles routine query generation and documentation, freeing analysts for strategic work: defining metrics, designing dashboards, interpreting insights.</p>
+
+    <h3>What's the cost of using Claude for analytics?</h3>
+    <p>Claude charges per token (words/code). A typical analytics query costs less than $0.01. For high-volume automation, costs are negligible compared to labor savings.</p>
+
+    <h3>Can I use Claude for real-time analytics?</h3>
+    <p>Not recommended. Claude has latency (~seconds per response). Use it for batch processing, dashboards, and historical analysis—not live monitoring.</p>
+  </div>
+
+  <!-- CTA Section -->
+  <div style="margin-top:60px;padding:40px;background:rgba(0,207,255,0.05);border:1px solid rgba(0,207,255,0.2);border-radius:12px;text-align:center;">
+    <h3 style="font-size:22px;font-weight:600;color:#F0F4FF;margin:0 0 16px;">Ready to automate your analytics?</h3>
+    <p style="font-size:15px;color:#8A9CC8;margin:0 0 20px;line-height:1.6;">Start by documenting your analytics measurement strategy with a clear measurement plan.</p>
+    <a href="../blog/ga4-measurement-plan-template.html" style="display:inline-block;padding:13px 32px;background:#00CFFF;color:#0A0F1E;font-weight:600;font-size:14px;border:none;border-radius:12px;cursor:pointer;text-decoration:none;transition:all 0.2s;">Read Measurement Plan Guide →</a>
+  </div>
+
+  <!-- Related Posts -->
+  <div style="margin-top:60px;">
+    <h3 style="font-size:22px;font-weight:600;color:#F0F4FF;margin:0 0 32px;">Related Articles</h3>
+    <div style="display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));">
+      <a href="../blog/claude-tips.html" style="padding:20px;background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.2s;display:flex;flex-direction:column;">
+        <h4 style="font-size:16px;font-weight:600;color:#F0F4FF;margin:0 0 10px;">Claude AI Tips for Developers</h4>
+        <p style="font-size:13px;color:#8A9CC8;flex:1;margin:0;">10 advanced Claude techniques to boost productivity for developers and analysts.</p>
+        <span style="font-size:12px;color:#00CFFF;margin-top:12px;">Read →</span>
+      </a>
+
+      <a href="../blog/analytics-first-workflow.html" style="padding:20px;background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.2s;display:flex;flex-direction:column;">
+        <h4 style="font-size:16px;font-weight:600;color:#F0F4FF;margin:0 0 10px;">Analytics-First Development</h4>
+        <p style="font-size:13px;color:#8A9CC8;flex:1;margin:0;">Build products with analytics at the foundation. Strategy from ideation to measurement.</p>
+        <span style="font-size:12px;color:#00CFFF;margin-top:12px;">Read →</span>
+      </a>
+
+      <a href="../blog/building-with-claude-code.html" style="padding:20px;background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.2s;display:flex;flex-direction:column;">
+        <h4 style="font-size:16px;font-weight:600;color:#F0F4FF;margin:0 0 10px;">Building with Claude Code</h4>
+        <p style="font-size:13px;color:#8A9CC8;flex:1;margin:0;">Use Claude Code to accelerate product development and ship features faster.</p>
+        <span style="font-size:12px;color:#00CFFF;margin-top:12px;">Read →</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="margin-top:80px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;color:#4D5E87;font-size:13px;">
+    <p>© 2026 TNK – Design & Analytics. All rights reserved. <a href="../privacy.html" style="color:#4D5E87;text-decoration:none;">Privacy Policy</a></p>
+  </footer>
+</div>
+
+<!-- Engagement Tracking Scripts -->
+<script src="/js/engagement-tracking.js"></script>
+<script src="/js/web-vitals-tracking.js"></script>
+</body>
+</html>

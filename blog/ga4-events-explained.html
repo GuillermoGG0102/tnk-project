@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="google-site-verification" content="8KMQyefycnnSHdz84SHb2ZdQlS2lDIuoKL" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>GA4 Events Explained – Complete Guide with Examples 2024 | TNK</title>
+<meta name="description" content="Master GA4 events with complete guide covering event types, parameters, implementation patterns, and real-world examples for analytics tracking." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="GA4 Events Explained – Complete Guide with Examples 2024 | TNK" />
+<meta property="og:description" content="Learn how GA4 events work with detailed examples, event parameters, and implementation best practices for tracking user interactions." />
+<meta property="og:image" content="https://tnkproject.com/assets/og/og-image.png" />
+<meta property="og:url" content="https://tnkproject.com/blog/ga4-events-explained.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="GA4 Events Explained – Complete Guide with Examples 2024 | TNK" />
+<meta name="twitter:description" content="Learn how GA4 events work with detailed examples, event parameters, and implementation best practices." />
+<meta name="twitter:image" content="https://tnkproject.com/assets/og/og-image.png" />
+
+<!-- SEO Meta Tags -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+<link rel="canonical" href="https://tnkproject.com/blog/ga4-events-explained.html" />
+<link rel="sitemap" href="https://tnkproject.com/sitemap.xml" />
+<meta property="article:published_time" content="2026-09-15" />
+<meta property="article:modified_time" content="2026-09-15" />
+<meta property="article:author" content="https://tnkproject.com" />
+<!-- Security Meta Tags -->
+<meta name="referrer" content="strict-no-referrer-when-downgrade" />
+<!-- Device & Browser Tags -->
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="theme-color" content="#00CFFF" />
+<meta name="color-scheme" content="dark light" />
+<meta name="msapplication-config" content="/browserconfig.xml" />
+<meta name="msapplication-TileColor" content="#0A0F1E" />
+<!-- Progressive Web App -->
+<link rel="manifest" href="/site.webmanifest" />
+<!-- Performance Optimization -->
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com" />
+<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Social Media Meta Tags -->
+<meta property="og:locale" content="es_ES" />
+<meta property="og:site_name" content="TNK – Design & Analytics" />
+<meta name="twitter:creator" content="@tnkproject" />
+<meta name="twitter:site" content="@tnkproject" />
+<!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "GA4 Events Explained – Complete Guide with Examples 2024",
+  "description": "Master GA4 events with complete guide covering event types, parameters, implementation patterns, and real-world examples.",
+  "url": "https://tnkproject.com/blog/ga4-events-explained.html",
+  "image": "https://tnkproject.com/assets/og/og-image.png",
+  "publisher": {
+    "@type": "Organization",
+    "name": "TNK – Design & Analytics",
+    "url": "https://tnkproject.com",
+    "logo": "https://tnkproject.com/assets/og/og-image.png"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Guillermo García",
+    "url": "https://www.linkedin.com/in/guillermo-garcía-analytics"
+  },
+  "datePublished": "2026-09-15",
+  "dateModified": "2026-09-15"
+}
+</script>
+<!-- Additional Meta Tags -->
+<meta name="format-detection" content="telephone=no" />
+<meta name="copyright" content="© 2024 TNK. All rights reserved." />
+<meta name="author" content="TNK – Design & Analytics" />
+<meta name="reply-to" content="hola@tnkproject.com" />
+
+<script>window.TNK_PAGE = { name: 'GA4 Events Explained – Complete Guide with Examples', category: 'Analytics', type: 'article', group: 'content' };</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KW97DTMV');</script>
+<!-- End Google Tag Manager -->
+<script src="/analytics.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { background:#0A0F1E; color:#F0F4FF; font-family:'Inter',sans-serif; margin:0; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; }
+  .navbar { position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06); }
+  .card { background:#0F1629; border:1px solid rgba(255,255,255,0.07); border-radius:14px; }
+  .tag-accent { background:rgba(0,255,179,0.1);color:#00FFB3;border:1px solid rgba(0,255,179,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-primary { background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .tag-neutral { background:rgba(255,255,255,0.06);color:#8A9CC8;border:1px solid rgba(255,255,255,0.09);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500; }
+  .text-gradient { background:linear-gradient(135deg,#00CFFF,#00FFB3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+  /* Prose */
+  .prose { color:#8A9CC8; line-height:1.8; font-size:17px; }
+  .prose h2 { font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#F0F4FF;letter-spacing:-0.03em;margin:2.5em 0 0.75em; }
+  .prose h3 { font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#F0F4FF;letter-spacing:-0.02em;margin:2em 0 0.6em; }
+  .prose p { margin:0 0 1.4em; }
+  .prose strong { color:#F0F4FF;font-weight:600; }
+  .prose em { color:#F0F4FF;font-style:italic; }
+  .prose a { color:#00CFFF;text-decoration:underline;text-decoration-color:rgba(0,207,255,0.3); }
+  .prose ul,.prose ol { padding-left:1.5rem;margin-bottom:1.5em; }
+  .prose li { margin-bottom:0.5em; }
+  .prose hr { border:none;border-top:1px solid rgba(255,255,255,0.08);margin:3em 0; }
+  .prose pre { background:#162038;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px 24px;overflow-x:auto;margin:1.5em 0;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.6;color:#F0F4FF; }
+  .prose code { font-family:'JetBrains Mono',monospace;font-size:13px;padding:2px 6px;background:#162038;border-radius:4px;color:#00FFB3; }
+  .prose pre code { background:transparent;padding:0;color:#F0F4FF; }
+  .prose blockquote { border-left:3px solid #00CFFF;padding-left:1.5rem;margin:2em 0;font-style:italic; }
+  .prose table { width:100%;border-collapse:collapse;margin:2em 0; }
+  .prose th { background:#162038;color:#F0F4FF;font-weight:600;font-size:13px;padding:10px 14px;text-align:left;border:1px solid rgba(255,255,255,0.08); }
+  .prose td { padding:10px 14px;border:1px solid rgba(255,255,255,0.06);font-size:14px; }
+  .prose tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+  .fade-up { animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+</style>
+<script src="/js/web-vitals-polyfill.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://tnkproject.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://tnkproject.com/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "GA4 Events Explained",
+      "item": "https://tnkproject.com/blog/ga4-events-explained.html"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KW97DTMV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px;">
+    <a href="../index.html" class="logo" style="display:flex;align-items:center;gap:12px;text-decoration:none;transition:opacity 0.2s;">
+      <svg width="44" height="44" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="23" fill="#0A0F1E" stroke="white" stroke-width="2"/>
+        <path d="M24 10C31.732 10 38 16.268 38 24" fill="white"/>
+        <path d="M24 38C16.268 38 10 31.732 10 24" fill="white"/>
+        <circle cx="24" cy="24" r="6" fill="black"/>
+      </svg>
+      <span style="font-size:18px;font-weight:700;font-family:'Space Grotesk',sans-serif;color:#F0F4FF;letter-spacing:-0.02em;">TNK</span>
+    </a>
+    <div style="display:flex;gap:4px;align-items:center;">
+      <a href="../index.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;transition:all 0.2s;">Home</a>
+      <a href="../blog.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;transition:all 0.2s;">Blog</a>
+      <a href="../projects.html" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;transition:all 0.2s;">Projects</a>
+      <a href="#" style="padding:7px 14px;border-radius:8px;font-size:13px;color:#8A9CC8;text-decoration:none;transition:all 0.2s;">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Container -->
+<div style="max-width:900px;margin:0 auto;padding:120px 24px 60px;">
+  <!-- Header -->
+  <div style="margin-bottom:60px;">
+    <div style="display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap;">
+      <span class="tag-primary">Analytics</span>
+      <span class="tag-neutral" style="font-size:10px;">Technical</span>
+      <span style="font-size:11px;color:#4D5E87;">10 min read</span>
+    </div>
+
+    <h1 style="font-size:52px;font-weight:700;line-height:1.15;margin:0 0 20px;letter-spacing:-0.04em;color:#F0F4FF;">GA4 Events Explained – Complete Guide</h1>
+
+    <p style="font-size:18px;color:#8A9CC8;margin:0 0 30px;line-height:1.6;">Master GA4's event-based tracking architecture with detailed explanations, real-world examples, and best practices for every event type.</p>
+
+    <img src="https://placehold.co/900x500/0F1629/00CFFF?text=GA4+Events+Architecture" alt="GA4 Events" style="width:100%;border-radius:12px;margin-bottom:30px;aspect-ratio:16/9;object-fit:cover;" />
+
+    <!-- Author Card -->
+    <div style="display:flex;gap:16px;padding:20px;background:rgba(15,22,41,0.6);border:1px solid rgba(255,255,255,0.07);border-radius:12px;margin-top:40px;">
+      <img src="https://placehold.co/60x60/00CFFF/0A0F1E?text=G" alt="Author" style="width:60px;height:60px;border-radius:50%;flex-shrink:0;background:#162038;" />
+      <div>
+        <div style="font-weight:600;color:#F0F4FF;font-size:14px;">Guillermo García</div>
+        <div style="font-size:13px;color:#8A9CC8;margin-bottom:8px;">Analytics Architect & Design Strategist</div>
+        <a href="https://www.linkedin.com/in/guillermo-garcía-analytics" target="_blank" rel="noopener noreferrer" style="font-size:12px;color:#00CFFF;text-decoration:underline;">LinkedIn →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article Body -->
+  <div class="prose">
+    <h2>What are GA4 Events?</h2>
+    <p>A GA4 <strong>event</strong> is a record of something specific that happens on your website or app. Every interaction—from clicking a button to completing a purchase—is an event. This event-based architecture is what makes GA4 fundamentally different from Universal Analytics.</p>
+
+    <p>Each event has two components: an <strong>event name</strong> (what happened) and <strong>parameters</strong> (additional context). Think of an event like a sentence: the event name is the verb, and parameters are the nouns and adjectives that describe it.</p>
+
+    <h3>Event vs. Session vs. User</h3>
+    <p>Understanding these three concepts prevents confusion:</p>
+    <ul>
+      <li><strong>Event:</strong> A specific action (page view, click, purchase)</li>
+      <li><strong>Session:</strong> A group of events that happened within 30 minutes (default timeout)</li>
+      <li><strong>User:</strong> The person taking the actions across multiple sessions and devices</li>
+    </ul>
+
+    <p>A single user might have 5 sessions per day, with each session containing 20 events. Grasping this hierarchy prevents misinterpreting your analytics.</p>
+
+    <h2>Automatic Events GA4 Tracks</h2>
+    <p>GA4 automatically tracks certain events without any setup required. These include:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Event Name</th>
+          <th>Triggered When</th>
+          <th>Common Uses</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>page_view</td>
+          <td>A user views a page</td>
+          <td>Track website traffic and navigation</td>
+        </tr>
+        <tr>
+          <td>session_start</td>
+          <td>A new session begins</td>
+          <td>Measure new vs. returning visitors</td>
+        </tr>
+        <tr>
+          <td>user_engagement</td>
+          <td>User actively engages with content (auto-generated)</td>
+          <td>Measure session quality and time-on-site</td>
+        </tr>
+        <tr>
+          <td>scroll</td>
+          <td>User scrolls past 90% of page height (if enhanced measurement enabled)</td>
+          <td>Understand content engagement depth</td>
+        </tr>
+        <tr>
+          <td>click</td>
+          <td>User clicks outbound links (if enhanced measurement enabled)</td>
+          <td>Track clicks to external sites</td>
+        </tr>
+        <tr>
+          <td>file_download</td>
+          <td>User downloads a file (PDF, ZIP, etc.)</td>
+          <td>Track resource downloads</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>These automatic events provide a foundation, but custom events give you the power to track what matters to your business.</p>
+
+    <h2>Google's Recommended Events</h2>
+    <p>Google optimizes GA4 reporting for a set of <strong>Recommended Events</strong>. Using these standardized event names ensures you get proper reports, forecasting, and insights.</p>
+
+    <h3>E-commerce Events</h3>
+    <p>If you run an online store, these are essential:</p>
+
+    <pre><code class="language-javascript">// Track when someone views a product
+window.dataLayer.push({
+  event: 'view_item',
+  items: [{
+    item_id: 'SKU123',
+    item_name: 'Blue Sneakers',
+    price: 89.99,
+    currency: 'USD',
+    item_category: 'Footwear'
+  }]
+});
+
+// Track when someone adds to cart
+window.dataLayer.push({
+  event: 'add_to_cart',
+  items: [{
+    item_id: 'SKU123',
+    item_name: 'Blue Sneakers',
+    quantity: 1,
+    price: 89.99,
+    currency: 'USD'
+  }]
+});
+
+// Track a completed purchase
+window.dataLayer.push({
+  event: 'purchase',
+  transaction_id: 'ORDER-2024-001',
+  value: 149.98,
+  currency: 'USD',
+  items: [{
+    item_id: 'SKU123',
+    item_name: 'Blue Sneakers',
+    quantity: 1,
+    price: 89.99
+  }]
+});</code></pre>
+
+    <h3>Lead Generation Events</h3>
+    <p>For SaaS, agencies, and service businesses:</p>
+
+    <pre><code class="language-javascript">// Contact form submission
+window.dataLayer.push({
+  event: 'generate_lead',
+  value: 0,
+  currency: 'USD',
+  lead_type: 'contact_form',
+  form_name: 'contact-us',
+  form_destination: 'sales@example.com'
+});
+
+// Newsletter signup
+window.dataLayer.push({
+  event: 'generate_lead',
+  value: 0,
+  currency: 'USD',
+  lead_type: 'newsletter_signup'
+});</code></pre>
+
+    <h3>Engagement Events</h3>
+    <p>Track how users interact with your content:</p>
+
+    <pre><code class="language-javascript">// Video starts playing
+window.dataLayer.push({
+  event: 'video_start',
+  video_title: 'Getting Started with GA4',
+  video_duration: 420
+});
+
+// Search performed on your site
+window.dataLayer.push({
+  event: 'search',
+  search_term: 'GA4 setup'
+});</code></pre>
+
+    <h2>Custom Events for Your Business</h2>
+    <p>Beyond recommended events, create custom events for actions unique to your business. The process is simple:</p>
+
+    <h3>Step 1: Define the event</h3>
+    <p>Decide what action you want to track and name it clearly (use snake_case, all lowercase):</p>
+
+    <ul>
+      <li>❌ Bad: "UserAction", "click_button_submit"</li>
+      <li>✅ Good: "demo_request", "whitepaper_download", "chat_opened"</li>
+    </ul>
+
+    <h3>Step 2: Push to dataLayer</h3>
+    <p>Use the dataLayer to send the event:</p>
+
+    <pre><code class="language-javascript">// Track a demo request
+document.getElementById('demo-button').addEventListener('click', function() {
+  window.dataLayer.push({
+    event: 'demo_request',
+    product: 'analytics_platform',
+    company_size: 'enterprise'
+  });
+});</code></pre>
+
+    <h3>Step 3: Configure GTM (if using GTM)</h3>
+    <p>In Google Tag Manager:</p>
+    <ol>
+      <li>Create a trigger for custom event "demo_request"</li>
+      <li>Create a GA4 event tag that fires on this trigger</li>
+      <li>Map parameters from dataLayer variables</li>
+      <li>Publish and test</li>
+    </ol>
+
+    <h3>Step 4: Verify in GA4</h3>
+    <p>Open GA4's real-time reports and confirm events appear with correct parameters.</p>
+
+    <h2>Event Parameters Explained</h2>
+    <p>Parameters add context to events. Without parameters, you know <em>that</em> something happened, but not <em>what</em> or <em>why</em>.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Purpose</th>
+          <th>Example Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>value</td>
+          <td>Monetary value of the action (e.g., revenue, lead value)</td>
+          <td>49.99</td>
+        </tr>
+        <tr>
+          <td>currency</td>
+          <td>Currency code (ISO 4217)</td>
+          <td>USD, EUR, GBP</td>
+        </tr>
+        <tr>
+          <td>transaction_id</td>
+          <td>Unique ID for a purchase or transaction</td>
+          <td>ORDER-2024-001</td>
+        </tr>
+        <tr>
+          <td>user_id</td>
+          <td>Your system's user ID (requires consent)</td>
+          <td>user_12345</td>
+        </tr>
+        <tr>
+          <td>items</td>
+          <td>Array of products/items in the action</td>
+          <td>[{item_id: 'SKU123', price: 29.99}]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Custom Parameters</h3>
+    <p>You can create custom parameters for your business needs:</p>
+
+    <pre><code class="language-javascript">// Track a feature usage with custom parameters
+window.dataLayer.push({
+  event: 'feature_used',
+  feature_name: 'export_to_csv',
+  user_plan: 'premium',
+  processing_time_ms: 2345
+});</code></pre>
+
+    <p>Keep parameter names consistent across events—if you use "user_plan" on one event, don't switch to "subscription_tier" on another.</p>
+
+    <h2>Comparison: GA4 Events vs. Universal Analytics</h2>
+    <p>If you're migrating from UA, understand the key differences:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Universal Analytics</th>
+          <th>GA4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Architecture</td>
+          <td>Session-based (groups hits into sessions)</td>
+          <td>Event-based (every action is an event)</td>
+        </tr>
+        <tr>
+          <td>Event limit</td>
+          <td>Unlimited but limited reporting</td>
+          <td>500 unique events + custom dimensions/metrics</td>
+        </tr>
+        <tr>
+          <td>Parameters</td>
+          <td>Limited to dimensions/metrics</td>
+          <td>Unlimited custom parameters per event</td>
+        </tr>
+        <tr>
+          <td>Cross-device tracking</td>
+          <td>User ID feature (limited)</td>
+          <td>User ID + Google-based cross-device matching</td>
+        </tr>
+        <tr>
+          <td>Reporting latency</td>
+          <td>24 hours</td>
+          <td>Real-time + 24-hour standard</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Common Event Implementation Mistakes</h2>
+
+    <h3>Mistake #1: Inconsistent event names</h3>
+    <p>Using "form_submit" on one page and "form_submission" on another breaks reporting. Create an <a href="../blog/ga4-measurement-plan-template.html">event naming convention →</a> and stick to it.</p>
+
+    <h3>Mistake #2: Not using recommended event names</h3>
+    <p>Creating custom events when recommended events exist means missing out on GA4's optimized reports (e.g., conversion funnels, revenue attribution). Use recommended events when they fit your tracking needs.</p>
+
+    <h3>Mistake #3: Sending PII in parameters</h3>
+    <p>Never send personally identifiable information (email addresses, phone numbers, credit card info) as event parameters. This violates privacy regulations and GA4's policies.</p>
+
+    <h3>Mistake #4: Over-tracking</h3>
+    <p>Tracking every click on your website creates noise and makes analysis harder. Focus on events that answer business questions.</p>
+
+    <h3>Mistake #5: Not testing before deploying</h3>
+    <p>Always use GTM Preview mode and GA4's real-time reports to verify events fire correctly and include the right parameters before publishing to production.</p>
+
+    <h2>Best Practices for Event Tracking</h2>
+
+    <ul>
+      <li><strong>Document everything:</strong> Keep a spreadsheet of all events, their purposes, and parameters (this is your <a href="../blog/ga4-measurement-plan-template.html">measurement plan →</a>)</li>
+      <li><strong>Use consistent naming:</strong> snake_case, lowercase, descriptive names (e.g., "video_play" not "vp")</li>
+      <li><strong>Validate data:</strong> Ensure parameter values are correct (e.g., currency is "USD" not "us dollar")</li>
+      <li><strong>Test changes:</strong> Use GTM Preview mode before publishing any tracking changes</li>
+      <li><strong>Start small:</strong> Implement 3-5 critical events, then expand based on insights</li>
+      <li><strong>Review quarterly:</strong> Audit your events to remove unused ones and identify gaps</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <h3>How many events can I track?</h3>
+    <p>GA4 supports 500 unique event names per property. This is enough for most businesses. If you're approaching this limit, you likely need to consolidate or restructure your tracking.</p>
+
+    <h3>Can I change event names after publishing?</h3>
+    <p>Once an event is live and collecting data, changing its name doesn't retroactively rename historical data. Create a new event with the correct name, then gradually migrate tracking to it while keeping the old event running temporarily for comparison.</p>
+
+    <h3>Do events cost money?</h3>
+    <p>No. GA4 is free and has no per-event charges. However, Google Ads Smart Bidding does require conversion events for optimization.</p>
+
+    <h3>How do I track specific form fields?</h3>
+    <p>You can't directly track individual form field values (and shouldn't—that's PII). Instead, track form submission with metadata like "form_type: contact" or "form_step: 2_of_3".</p>
+
+    <h3>Can I modify events after they're created?</h3>
+    <p>No. Event definitions in GA4 are immutable. Create a new event if you need to change parameters or logic.</p>
+
+    <h3>How do I track offline events?</h3>
+    <p>Use GA4's Measurement Protocol or Data Import feature to send server-side events (phone calls, in-store purchases, CRM interactions) to GA4.</p>
+  </div>
+
+  <!-- CTA Section -->
+  <div style="margin-top:60px;padding:40px;background:rgba(0,207,255,0.05);border:1px solid rgba(0,207,255,0.2);border-radius:12px;text-align:center;">
+    <h3 style="font-size:22px;font-weight:600;color:#F0F4FF;margin:0 0 16px;">Ready to implement GA4?</h3>
+    <p style="font-size:15px;color:#8A9CC8;margin:0 0 20px;line-height:1.6;">Start with our step-by-step setup guide and learn to configure your GA4 property from scratch.</p>
+    <a href="../blog/ga4-beginners-guide-2024.html" style="display:inline-block;padding:13px 32px;background:#00CFFF;color:#0A0F1E;font-weight:600;font-size:14px;border:none;border-radius:12px;cursor:pointer;text-decoration:none;transition:all 0.2s;">Read the Beginners Guide →</a>
+  </div>
+
+  <!-- Related Posts -->
+  <div style="margin-top:60px;">
+    <h3 style="font-size:22px;font-weight:600;color:#F0F4FF;margin:0 0 32px;">Related Articles</h3>
+    <div style="display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));">
+      <a href="../blog/ga4-beginners-guide-2024.html" style="padding:20px;background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.2s;display:flex;flex-direction:column;">
+        <h4 style="font-size:16px;font-weight:600;color:#F0F4FF;margin:0 0 10px;">Getting Started with GA4</h4>
+        <p style="font-size:13px;color:#8A9CC8;flex:1;margin:0;">Step-by-step setup guide for beginners implementing GA4 for the first time.</p>
+        <span style="font-size:12px;color:#00CFFF;margin-top:12px;">Read →</span>
+      </a>
+
+      <a href="../blog/ga4-measurement-plan-template.html" style="padding:20px;background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.2s;display:flex;flex-direction:column;">
+        <h4 style="font-size:16px;font-weight:600;color:#F0F4FF;margin:0 0 10px;">Measurement Plan Template</h4>
+        <p style="font-size:13px;color:#8A9CC8;flex:1;margin:0;">Framework and template for documenting all GA4 events and parameters.</p>
+        <span style="font-size:12px;color:#00CFFF;margin-top:12px;">Read →</span>
+      </a>
+
+      <a href="../blog/datalayer-medicion-robusta.html" style="padding:20px;background:#0F1629;border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.2s;display:flex;flex-direction:column;">
+        <h4 style="font-size:16px;font-weight:600;color:#F0F4FF;margin:0 0 10px;">Robust DataLayer Implementation</h4>
+        <p style="font-size:13px;color:#8A9CC8;flex:1;margin:0;">Build a clean, maintainable dataLayer architecture for reliable event tracking.</p>
+        <span style="font-size:12px;color:#00CFFF;margin-top:12px;">Read →</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="margin-top:80px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;color:#4D5E87;font-size:13px;">
+    <p>© 2026 TNK – Design & Analytics. All rights reserved. <a href="../privacy.html" style="color:#4D5E87;text-decoration:none;">Privacy Policy</a></p>
+  </footer>
+</div>
+
+<!-- Engagement Tracking Scripts -->
+<script src="/js/engagement-tracking.js"></script>
+<script src="/js/web-vitals-tracking.js"></script>
+</body>
+</html>
